@@ -1,4 +1,4 @@
-package org.variables;
+package com.yokogawa.variables;
 public class VariablesForCatalog {
     public static String Title = "POC-Catalog";
     public String EmailID = "requester@cormsquare.com";
@@ -11,14 +11,16 @@ public class VariablesForCatalog {
     public String BuyerManager = "buyermanager@cormsquare.com";
     public String ProjectManager = "projectmanager@cormsquare.com";
     public int OrderIntake = 9000;
-
-    //TODO AddLineRequisitionItems
     public String Category = "Cable";
     public String Item = "Power Cable 3C x 2.5 Sqmm";
-    public int Quantity = 150;
+    public int Quantity = 9000000;
     public String Notes = "Requisition Notes";
     public String Buyer = "buyer@cormsquare.com";
     public String PorNotes = "Purchase Order Request Notes";
+    public String TaxCode = "PG-8% Foreign currency standard rate purchase";
     public String ChiefFinancialOfficer = "cfo@cormsquare.com";
     public String PresidentDirectorCorporate = "Achyuth@sharklasers.com";
+    public String PRApproverGroupB = "admin@cormsquare.com";
+    public String PRApproverGroupC = "departmentmanager@cormsquare.com";
+    public String PRApproverGroupD = "businessunitmanager@cormsquare.com";
 }

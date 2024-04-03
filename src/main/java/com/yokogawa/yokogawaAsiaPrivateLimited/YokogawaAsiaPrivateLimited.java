@@ -1,9 +1,9 @@
-package org.yokogawaAsiaPrivateLimited;
+package com.yokogawa.yokogawaAsiaPrivateLimited;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
-import org.functions.Functions;
+import com.yokogawa.functions.Functions;
 public class YokogawaAsiaPrivateLimited {
     public static void main(String[] args) throws InterruptedException {
         Playwright playwright = Playwright.create();

@@ -1,8 +1,8 @@
-package org.login;
+package com.yokogawa.login;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import org.variables.VariablesForCatalog;
+import com.yokogawa.variables.VariablesForCatalog;
 public class LoginPage implements Login{
     public void Login(String EmailID, Page page){
         Locator mailId = page.getByPlaceholder("email@address.com");

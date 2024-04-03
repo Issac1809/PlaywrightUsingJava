@@ -1,6 +1,6 @@
-package org.requisition.assign;
+package com.yokogawa.requisition.assign;
 import com.microsoft.playwright.Page;
 public interface PrAssign {
-    void BuyerManagerLogin(String mailId, String password, Page page);
-    void BuyerManagerAssign(String title, String buyerManager, String buyer, Page page);
+    void BuyerManagerLogin(String emailId, Page page);
+    void BuyerManagerAssign(String title, String buyer, Page page);
 }

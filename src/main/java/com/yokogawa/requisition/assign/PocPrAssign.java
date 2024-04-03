@@ -1,24 +1,25 @@
-package org.requisition.assign;
+package com.yokogawa.requisition.assign;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
+import com.yokogawa.login.Login;
+import com.yokogawa.login.LoginPage;
+import com.yokogawa.logout.Logout;
+import com.yokogawa.logout.LogoutPage;
 
 public class PocPrAssign implements PrAssign {
-    public void BuyerManagerLogin(String mailId, String password, Page page) {
-//TODO Login Page
-        page.locator("Input_Email").fill(mailId);
-        page.locator("Input_Password").fill(password);
-        page.locator("login-submit").click();
+    Login login = new LoginPage();
+    Logout logout = new LogoutPage();
+    public void BuyerManagerLogin(String emailId, Page page) {
+        login.Login(emailId, page);
     }
-    public void BuyerManagerAssign(String title, String buyerManager, String buyer, Page page) {
-        page.locator("//*[contains(text(),'"+ title +"')]").click();
+    public void BuyerManagerAssign(String title, String buyer, Page page) {
+        page.locator("//*[contains(text(),'"+ title +"')]").first().click();
 //TODO Assign Buyer
-        page.locator("btnAssignUser").click();
-        page.locator("select2-bgUser-container").click();
-        page.locator("select2-search__field").fill(buyerManager);
-        page.locator("//li[contains(text(),'"+ buyer +"')]").click();
-        page.locator("saveBuyerUser").click();
-
-//TODO Login Avatar Button
-        page.locator("//header/div[1]/div[2]/ul[1]/li[3]/div[1]/a[1]/div[1]/img[1]").click();
-        page.locator("//a[@onclick='user_logout()']").click();
+        page.locator("#btnAssignUser").click();
+        page.locator("#select2-bgUser-container").click();
+        page.getByRole(AriaRole.SEARCHBOX).fill(buyer);
+        page.locator("//li[contains(text(),'"+ buyer +"')]").first().click();
+        page.locator("#saveBuyerUser").click();
+        logout.Logout(page);
     }
 }

@@ -1,13 +1,14 @@
-package org.requisition.create;
+package com.yokogawa.requisition.create;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import org.login.Login;
-import org.login.LoginPage;
+import com.yokogawa.login.Login;
+import com.yokogawa.login.LoginPage;
 public class PocCatalogPrCreate implements PrCreateCatalog {
     Login login = new LoginPage();
     public void RequesterLoginPRCreate(String emailID, Page page) throws InterruptedException {
         login.Login(emailID, page);
+        Thread.sleep(1000);
 
 //TODO Create Button
         page.locator("button.btn.btn-primary:has-text('Create')").click();
@@ -36,11 +37,12 @@ public class PocCatalogPrCreate implements PrCreateCatalog {
         Locator getWbs = page.locator("//li[contains(text(),'" + Wbs + "')]");
         getWbs.click();
     }
-    public void Vendor(String Vendor, Page page) {
+    public void Vendor(String Vendor, Page page) throws InterruptedException {
         page.getByText("-- Select Vendor --").click();
         page.getByRole(AriaRole.SEARCHBOX).fill(Vendor);
         Locator getVendor = page.locator("//li[contains(text(),'" + Vendor + "')]");
         getVendor.click();
+        Thread.sleep(1000);
     }
     public void RateContract(String RateContract, Page page) {
         page.getByLabel("-- Select Rate Contract --").click();

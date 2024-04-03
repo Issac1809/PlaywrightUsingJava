@@ -1,4 +1,4 @@
-package org.requisition.create;
+package com.yokogawa.requisition.create;
 import com.microsoft.playwright.Page;
 public interface PrCreateCatalog {
     void RequesterLoginPRCreate(String EmailID, Page page) throws InterruptedException;
@@ -7,7 +7,7 @@ public interface PrCreateCatalog {
     void ShipToYokogawa(Page page);
     void Project(String Project, Page page) throws InterruptedException;
     void WBS(String Wbs, Page page);
-    void Vendor(String Vendor, Page page);
+    void Vendor(String Vendor, Page page) throws InterruptedException;
     void RateContract(String RateContract, Page page);
     void ShippingAddress(Page page);
     void ShippingMode(String ShippingMode, Page page);

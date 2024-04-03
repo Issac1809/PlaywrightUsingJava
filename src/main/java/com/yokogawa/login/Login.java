@@ -1,4 +1,4 @@
-package org.login;
+package com.yokogawa.login;
 import com.microsoft.playwright.Page;
 
 public interface Login {

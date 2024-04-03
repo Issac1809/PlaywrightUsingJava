@@ -1,38 +1,38 @@
-package org.functions;
+package com.yokogawa.functions;
 import com.microsoft.playwright.Page;
-import org.login.Login;
-import org.login.LoginPage;
-import org.requisition.assign.PocPrAssign;
-import org.requisition.assign.PrAssign;
-import org.purchaseorderrequest.create.PocCatalogPorCreate;
-import org.purchaseorderrequest.create.PorCreateCatalog;
-import org.purchaseorderrequest.approval.PocPorApproval;
-import org.purchaseorderrequest.approval.PorApproval;
-import org.requisition.create.PocCatalogPrCreate;
-import org.requisition.create.PocNonCatalogPrCreate;
-import org.requisition.create.PrCreateCatalog;
-import org.requisition.create.PrCreateNonCatalog;
-import org.requisition.sendforapproval.PocPrSendForApproval;
-import org.requisition.sendforapproval.PrSendForApproval;
-import org.variables.VariablesForCatalog;
-import org.variables.VariablesForNonCatalog;
+import com.yokogawa.purchaseorderrequest.approval.PocPorApproval;
+import com.yokogawa.purchaseorderrequest.approval.PorApproval;
+import com.yokogawa.purchaseorderrequest.create.PocCatalogPorCreate;
+import com.yokogawa.purchaseorderrequest.create.PorCreateCatalog;
+import com.yokogawa.requisition.assign.PocPrAssign;
+import com.yokogawa.requisition.assign.PrAssign;
+import com.yokogawa.requisition.create.PocCatalogPrCreate;
+import com.yokogawa.requisition.create.PocNonCatalogPrCreate;
+import com.yokogawa.requisition.create.PrCreateCatalog;
+import com.yokogawa.requisition.create.PrCreateNonCatalog;
+import com.yokogawa.requisition.sendforapproval.PocPrSendForApproval;
+import com.yokogawa.requisition.sendforapproval.PrSendForApproval;
+import com.yokogawa.variables.VariablesForCatalog;
+import com.yokogawa.variables.VariablesForNonCatalog;
+import java.util.List;
+import static com.yokogawa.variables.VariablesForCatalog.Title;
+
 public class Functions {
+
     VariablesForCatalog variablesForCatalog = new VariablesForCatalog();
     VariablesForNonCatalog variablesForNonCatalog = new VariablesForNonCatalog();
-    Login login = new LoginPage();
     PrCreateCatalog prCreateCatalog = new PocCatalogPrCreate();
     PrCreateNonCatalog prCreateNonCatalog = new PocNonCatalogPrCreate();
     PrSendForApproval prSendForApproval = new PocPrSendForApproval();
     PrAssign prAssign = new PocPrAssign();
     PorCreateCatalog porCreateCatalog = new PocCatalogPorCreate();
     PorApproval porApproval = new PocPorApproval();
-    public void FunctionsForAllTypes(Page page) throws InterruptedException {
+    public void FunctionsForAllTypes(Page page) throws InterruptedException{
 
 //TODO Requester PR Create Catalog
-        login.Login(variablesForCatalog.EmailID, page);
         prCreateCatalog.RequesterLoginPRCreate(variablesForCatalog.EmailID, page);
         prCreateCatalog.CatalogType(page);
-        prCreateCatalog.Title(variablesForCatalog.Title, page);
+        prCreateCatalog.Title(Title, page);
         prCreateCatalog.ShipToYokogawa(page);
         prCreateCatalog.Project(variablesForCatalog.Project, page);
         prCreateCatalog.WBS(variablesForCatalog.Wbs, page);
@@ -54,20 +54,20 @@ public class Functions {
         prSendForApproval.PrSendForApproval(page);
 
 //TODO BuyerManager PR Assign Catalog
-        prAssign.BuyerManagerLogin(variablesForCatalog.BuyerManager, variablesForCatalog.Password, page);
-        prAssign.BuyerManagerAssign(variablesForCatalog.Title, variablesForCatalog.BuyerManager, variablesForCatalog.Buyer, page);
+        prAssign.BuyerManagerLogin(variablesForCatalog.BuyerManager, page);
+        prAssign.BuyerManagerAssign(Title, variablesForCatalog.Buyer, page);
 
 //TODO Buyer POR Create Non-Catalog
-        porCreateCatalog.BuyerLogin(variablesForCatalog.Buyer, variablesForCatalog.Password, page);
-        porCreateCatalog.BuyerPORCreate(variablesForCatalog.Title, page);
-        porCreateCatalog.TaxCode(page);
+        porCreateCatalog.BuyerLogin(variablesForCatalog.Buyer, page);
+        porCreateCatalog.BuyerPORCreate(Title, page);
+        porCreateCatalog.TaxCode(variablesForCatalog.TaxCode, page);
         porCreateCatalog.PORNotes(variablesForCatalog.PorNotes, page);
         porCreateCatalog.PORCreate(page);
 
 //TODO Buyer Send For Approval
-//        porApproval.SendForApproval(variablesForCatalog.ChiefFinancialOfficer, variablesForCatalog.PresidentDirectorCorporate);
-//        List<String> returnValue = porApproval.GetPorApprovers(page);
-//        porApproval.ApproverLogin(returnValue, variablesForCatalog.Password, page);
+        porApproval.SendForApproval(variablesForCatalog.ChiefFinancialOfficer, page);
+        List<String> returnApprover = porApproval.GetPorApprovers(page);
+        porApproval.ApproverLogin(returnApprover, variablesForCatalog.PRApproverGroupB, variablesForCatalog.PRApproverGroupC, variablesForCatalog.PRApproverGroupD, page);
 
 
 //TODO Requester PR Create Non-Catalog

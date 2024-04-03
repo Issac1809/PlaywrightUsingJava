@@ -1,4 +1,4 @@
-package org.requisition.create;
+package com.yokogawa.requisition.create;
 import com.microsoft.playwright.Page;
 
 public interface PrCreateNonCatalog {
