@@ -1,0 +1,17 @@
+Title = "POC-NonCatalog";
+EmailID = "requester@cormsquare.com";
+Password = "Admin@123";
+Project = "E17145100";
+Wbs = "J11BOPH";
+Incoterm = "EXW - Ex Works";
+ShippingMode = "Courier";
+BuyerManager = "buyermanager@cormsquare.com";
+ProjectManager = "projectmanager@cormsquare.com";
+OrderIntake = 9000;
+TargetPrice = 4500;
+WarrantyRequirement = "2 Years";
+PriceValidity = "3 Months";
+Category = "Cable";
+Item = "Power Cable 3C x 2.5 Sqmm";
+Quantity = 150;
+Notes = "Requisition Notes and Attachments";

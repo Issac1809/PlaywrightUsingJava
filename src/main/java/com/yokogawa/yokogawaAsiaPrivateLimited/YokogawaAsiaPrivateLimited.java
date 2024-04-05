@@ -4,8 +4,9 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
 import com.yokogawa.functions.Functions;
+import java.io.IOException;
 public class YokogawaAsiaPrivateLimited {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         Playwright playwright = Playwright.create();
         LaunchOptions options = new LaunchOptions().setChannel("chrome").setHeadless(false);
         Browser browser = playwright.chromium().launch(options);
@@ -27,6 +28,9 @@ public class YokogawaAsiaPrivateLimited {
 //        BrowserContext browser3 = browser.newContext();
 //        Page page3 = browser3.newPage();
 //        page3.navigate("https://ght-test.cormsquare.com/Identity/Account/Login");
+
+//        GetCatalogProperties getCatalogProperties = new GetCatalogProperties();
+//        getCatalogProperties.method();
 
         Functions functions = new Functions();
         functions.FunctionsForAllTypes(page);

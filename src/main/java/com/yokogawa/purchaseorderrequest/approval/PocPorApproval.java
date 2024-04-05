@@ -31,7 +31,8 @@ public class PocPorApproval implements PorApproval {
 
     public List<String> GetPorApprovers(Page page) {
         List<String> matchingApprovers = new ArrayList<>();
-        List<String> approvalTable = page.locator("#approvalData tbody tr td").allTextContents();
+        List<String> approvalTable = page.locator("#approvalData tbody tr td:nth-child(3)").allTextContents();
+        approvalTable.removeIf(text -> text.contains("PR Approver Group A"));
         String approverMailId = "@cormsquare.com";
         String approverDesignation = "PR Approver Group";
         for (String approver : approvalTable) {
@@ -41,23 +42,26 @@ public class PocPorApproval implements PorApproval {
                 matchingApprovers.add(approver);
             }
         }
+        System.out.println(matchingApprovers);
         return matchingApprovers;
     }
-    public void ApproverLogin(List<String> matchingApprovers, String PRApproverGroupB, String PRApproverGroupC, String PRApproverGroupD, Page page) throws InterruptedException {
-        logout.Logout(page);
+    public void ApproverLogin(List<String> matchingApprovers, String PRApproverGroupB, String PRApproverGroupC, String PRApproverGroupD, Page page) {
         List<String> groupIds = new ArrayList<>();
+        logout.Logout(page);
 
-        for (int i = 0; i <= matchingApprovers.size(); i++) {
+        for (int i = 0; i < matchingApprovers.size(); i++) {
             String approverMailId = matchingApprovers.get(i);
+            System.out.println("ApproverMailId: " + approverMailId);
             if (approverMailId.endsWith("@cormsquare.com")) {
                 login.Login(approverMailId, page);
+                System.out.println("Approver : " + approverMailId + i);
+
 //TODO Approver Approves POR
                 page.locator("//span[contains(text(), 'Purchase Order Requests')]").click();
                 page.locator("//span[contains(text(), '" + Title + "')]").first().click();
                 Locator addApprovers = page.locator("#btnAddApprovers");
-                page.pause();
 
-                if (addApprovers.isEnabled()) {
+                if (i == 0 && addApprovers.isEnabled()) {
                     addApprovers.click();
 
                     //TODO PR Approver Group B
@@ -87,23 +91,28 @@ public class PocPorApproval implements PorApproval {
                     page.locator("#btnSendUserFromPM").click();
                     page.locator("#btnApprove").click();
                     page.locator(".btn.btn-primary.bootbox-accept").click();
-
-                } else {
+                    logout.Logout(page);
+                } else if (addApprovers.isDisabled()) {
                     page.locator("#btnApprove").click();
                     page.locator(".btn.btn-primary.bootbox-accept").click();
+                    logout.Logout(page);
                 }
-                if (approverMailId.startsWith("PR Approver Group")) {
-                    int j = 1;
-                    while (j <= 3) {
-                        login.Login(groupIds.get(j), page);
-                        page.locator("//span[contains(text(), 'Purchase Order Requests')]").click();
-                        page.locator("//span[contains(text(), '" + Title + "')]").first().click();
-                        page.locator("#btnApprove").click();
-                        page.locator("//button[contains(text(), 'Submit')]").click();
-                        logout.Logout(page);
-                        j++;
-                    }
+            }
+            if (approverMailId.startsWith("PR Approver Group")) {
+                if(approverMailId.contains("PR Approver Group A")){
+                    continue;
                 }
+                int j = 0;
+                while (j <= 2) {
+                    login.Login(groupIds.get(j), page);
+                    page.locator("//span[contains(text(), 'My Approvals')]").click();
+                    page.locator("//span[contains(text(), '" + Title + "')]").first().click();
+                    page.locator("#btnApprove").click();
+                    page.locator(".btn.btn-primary.bootbox-accept").click();
+                    logout.Logout(page);
+                    j++;
+                }
+                    i += 3; //TODO For loop has index 0 to 7. But while loop has already completed index 1, 2, 3. So I'm hardcoding i+3.
             }
         }
     }
