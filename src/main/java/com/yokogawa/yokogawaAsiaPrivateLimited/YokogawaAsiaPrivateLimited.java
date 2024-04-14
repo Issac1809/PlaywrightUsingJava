@@ -14,13 +14,9 @@ public class YokogawaAsiaPrivateLimited {
         Page page = browser.newPage();
         page.navigate("https://yea-test.cormsquare.com/Identity/Account/Login");
 
-        BrowserContext browser1 = browser.newContext();
-        Page page1 = browser1.newPage();
-        page1.navigate("https://yea-test.cormsquare.com/VendorPortal/RequestForQuotations");
-
 //        BrowserContext browser1 = browser.newContext();
-//        Page page1 = browser1.newPage();
-//        page1.navigate("https://dprocure-test.cormsquare.com/Identity/Account/Login");
+//        Page page = browser1.newPage();
+//        page.navigate("https://dprocure-test.cormsquare.com/Identity/Account/Login");
 //
 //        BrowserContext browser2 = browser.newContext();
 //        Page page2 = browser2.newPage();
@@ -36,6 +32,6 @@ public class YokogawaAsiaPrivateLimited {
         FunctionsCatalog functionsCatalog = new FunctionsCatalog();
         FunctionsNonCatalog functionsNonCatalog = new FunctionsNonCatalog();
 //        functionsCatalog.FunctionsForCatalog(page);
-        functionsNonCatalog.FunctionsForNonCatalog(page, page1);
+        functionsNonCatalog.FunctionsForNonCatalog(page);
     }
 }

@@ -1,5 +1,9 @@
 package com.yokogawa.functions;
 import com.microsoft.playwright.Page;
+import com.yokogawa.orderschedule.approve.OrderScheduleApprove;
+import com.yokogawa.orderschedule.approve.OrderScheduleApproveInterface;
+import com.yokogawa.orderschedule.create.OrderScheduleCreate;
+import com.yokogawa.orderschedule.create.OrderScheduleInterface;
 import com.yokogawa.purchaseorder.BuyerPurchaseOrder;
 import com.yokogawa.purchaseorder.PurchaseOrderInterface;
 import com.yokogawa.purchaseorderrequest.approval.PocPorApproval;
@@ -39,7 +43,9 @@ public class FunctionsNonCatalog {
     PorCreateNonCatalog porCreateNonCatalog = new PocNonCatalogPorCreate();
     PorApproval porApproval = new PocPorApproval();
     PurchaseOrderInterface purchaseOrderInterface = new BuyerPurchaseOrder();
-    public void FunctionsForNonCatalog(Page page, Page page1) throws InterruptedException{
+    OrderScheduleInterface orderScheduleInterface = new OrderScheduleCreate();
+    OrderScheduleApproveInterface orderScheduleApproveInterface = new OrderScheduleApprove();
+    public void FunctionsForNonCatalog(Page page) throws InterruptedException{
 
 //TODO Requester PR Create Non-Catalog
         prCreateNonCatalog.RequesterLoginPRCreate(variablesForNonCatalog.EmailID, Password, page);
@@ -78,14 +84,14 @@ public class FunctionsNonCatalog {
 
 //TODO Buyer Invites Registered Vendor
         quotationSubmit.InviteRegisteredVendor(variablesForNonCatalog.Vendor, page);
-        quotationSubmit.VendorLogin(variablesForNonCatalog.VendorMailId, variablesForNonCatalog.IncotermLocation, variablesForNonCatalog.QuotationReferenceNumber, page1);
-        quotationSubmit.LiquidatedDamages(page1);
-        quotationSubmit.RoHSCompliance(page1);
-        quotationSubmit.WarrantyRequirements(page1);
-        quotationSubmit.QuotationItems(variablesForNonCatalog.HSCode, variablesForNonCatalog.Make, variablesForNonCatalog.Model, variablesForNonCatalog.PartNumber, variablesForNonCatalog.CountryOfOrigin, variablesForNonCatalog.Rate, variablesForNonCatalog.Discount, variablesForNonCatalog.LeadTime, variablesForNonCatalog.QuotationNotes, page1);
-        quotationSubmit.Gst(variablesForNonCatalog.GST, page1);
-        quotationSubmit.QuotationAttachments(page1);
-        quotationSubmit.QuotationSubmitButton(page1);
+        quotationSubmit.VendorLogin(variablesForNonCatalog.VendorMailId, variablesForNonCatalog.IncotermLocation, variablesForNonCatalog.QuotationReferenceNumber, page);
+        quotationSubmit.LiquidatedDamages(page);
+        quotationSubmit.RoHSCompliance(page);
+        quotationSubmit.WarrantyRequirements(page);
+        quotationSubmit.QuotationItems(variablesForNonCatalog.HSCode, variablesForNonCatalog.Make, variablesForNonCatalog.Model, variablesForNonCatalog.PartNumber, variablesForNonCatalog.CountryOfOrigin, variablesForNonCatalog.Rate, variablesForNonCatalog.Discount, variablesForNonCatalog.LeadTime, variablesForNonCatalog.QuotationNotes, page);
+        quotationSubmit.Gst(variablesForNonCatalog.GST, page);
+        quotationSubmit.QuotationAttachments(page);
+        quotationSubmit.QuotationSubmitButton(page);
 
 //TODO Buyer Ready For Evaluation
         readyForEvalutationInterface.ReadyForEvaluationButton(variablesForNonCatalog.Buyer, page);
@@ -110,5 +116,11 @@ public class FunctionsNonCatalog {
 
 //TODO Buyer Send For Vendor
         purchaseOrderInterface.SendForVendor(variablesForNonCatalog.Buyer, page);
+
+//TODO Vendor Order Schedule Create
+        orderScheduleInterface.OSCreate(variablesForNonCatalog.VendorMailId, page);
+
+//TODO Buyer Order Schedule Approve
+        orderScheduleApproveInterface.OSApprove(variablesForNonCatalog.Buyer, page);
     }
 }
