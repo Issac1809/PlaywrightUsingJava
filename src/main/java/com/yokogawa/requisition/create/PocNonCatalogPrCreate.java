@@ -2,7 +2,6 @@ package com.yokogawa.requisition.create;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-
 public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
     public void RequesterLoginPRCreate(String EmailID, String Password, Page page) throws InterruptedException {
 //TODO Login Page
@@ -64,7 +63,7 @@ public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
         today.click();
     }
     public void ExpectedPOIssue(Page page) {
-        Locator expectedPOIssue = page.locator("///*[@id=\"dates\"]/div[2]/input[2]");
+        Locator expectedPOIssue = page.locator("//*[@id=\"dates\"]/div[2]/input[2]");
         expectedPOIssue.click();
         Locator today = page.locator("//span[@class='flatpickr-day today']").first();
         today.click();
@@ -108,18 +107,18 @@ public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
         getPriceValidity.click();
     }
     public void InspectionRequired(Page page) {
-        page.locator("#inspectRequired").check();
+        page.locator("#inspectrequired").check();
     }
     public void AddLineRequisitionItems(String Category, String Item, int Quantity, Page page) {
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add line Requisition Items")).click();
 //TODO Category
-        page.locator("#select2-categoryId-container").click();
+        page.getByLabel("-- Select Categories --").click();
         page.getByRole(AriaRole.SEARCHBOX).fill(Category);
-        Locator getCategory = page.locator("//li[contains(text(),'" + Category + "')]");
+        Locator getCategory = page.locator("//li[contains(text(),'" + Category + "')]").first();
         getCategory.click();
 //TODO Items
         page.getByLabel("-- Select Item --").click();
-        Locator getItem = page.locator("//li[contains(text(),'" + Item + "')]");
+        Locator getItem = page.locator("//li[contains(text(),'" + Item + "')]").first();
         getItem.click();
 //TODO Quantity
         page.getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("* Quantity :")).click();

@@ -1,6 +1,6 @@
 package com.yokogawa.variables;
 public class VariablesForCatalog {
-    public static String Title = "POC-Catalog";
+    public static String CatalogTitle = "POC-Catalog";
     public String EmailID = "requester@cormsquare.com";
     public static String Password = "Admin@123";
     public String Project = "E17145100";

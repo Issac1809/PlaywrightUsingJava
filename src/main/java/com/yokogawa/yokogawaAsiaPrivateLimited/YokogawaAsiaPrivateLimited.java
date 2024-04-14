@@ -1,21 +1,22 @@
 package com.yokogawa.yokogawaAsiaPrivateLimited;
 import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
-import com.yokogawa.functions.Functions;
-import java.io.IOException;
+import com.yokogawa.functions.FunctionsCatalog;
+import com.yokogawa.functions.FunctionsNonCatalog;
 public class YokogawaAsiaPrivateLimited {
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) throws InterruptedException {
         Playwright playwright = Playwright.create();
         LaunchOptions options = new LaunchOptions().setChannel("chrome").setHeadless(false);
         Browser browser = playwright.chromium().launch(options);
         Page page = browser.newPage();
         page.navigate("https://yea-test.cormsquare.com/Identity/Account/Login");
 
-//        BrowserContext browser1 = browser.newContext();
-//        Page page1 = browser1.newPage();
-//        page1.navigate("https://yea-test.cormsquare.com/Identity/Account/Login");
+        BrowserContext browser1 = browser.newContext();
+        Page page1 = browser1.newPage();
+        page1.navigate("https://yea-test.cormsquare.com/VendorPortal/RequestForQuotations");
 
 //        BrowserContext browser1 = browser.newContext();
 //        Page page1 = browser1.newPage();
@@ -32,7 +33,9 @@ public class YokogawaAsiaPrivateLimited {
 //        GetCatalogProperties getCatalogProperties = new GetCatalogProperties();
 //        getCatalogProperties.method();
 
-        Functions functions = new Functions();
-        functions.FunctionsForAllTypes(page);
+        FunctionsCatalog functionsCatalog = new FunctionsCatalog();
+        FunctionsNonCatalog functionsNonCatalog = new FunctionsNonCatalog();
+//        functionsCatalog.FunctionsForCatalog(page);
+        functionsNonCatalog.FunctionsForNonCatalog(page, page1);
     }
 }

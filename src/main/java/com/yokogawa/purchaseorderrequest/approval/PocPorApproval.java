@@ -8,12 +8,13 @@ import com.yokogawa.logout.Logout;
 import com.yokogawa.logout.LogoutPage;
 import java.util.ArrayList;
 import java.util.List;
-import static com.yokogawa.variables.VariablesForCatalog.Title;
+import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
+
 public class PocPorApproval implements PorApproval {
     Login login = new LoginPage();
     Logout logout = new LogoutPage();
     public void SendForApproval(String cfo, Page page) throws InterruptedException {
-        page.locator("//*[contains(text(),'" + Title + "')]").first().click();
+        page.locator("//*[contains(text(),'" + NonCatalogTitle + "')]").first().click();
         page.locator("#btnNewSendApproval").click();
         Locator approvalPopup = page.locator("//h3[contains(text(), 'Purchase Order Request Send For Approval')]").first();
         if (approvalPopup.isEnabled()) {
@@ -58,7 +59,7 @@ public class PocPorApproval implements PorApproval {
 
 //TODO Approver Approves POR
                 page.locator("//span[contains(text(), 'Purchase Order Requests')]").click();
-                page.locator("//span[contains(text(), '" + Title + "')]").first().click();
+                page.locator("//span[contains(text(), '" + NonCatalogTitle + "')]").first().click();
                 Locator addApprovers = page.locator("#btnAddApprovers");
 
                 if (i == 0 && addApprovers.isEnabled()) {
@@ -106,7 +107,7 @@ public class PocPorApproval implements PorApproval {
                 while (j <= 2) {
                     login.Login(groupIds.get(j), page);
                     page.locator("//span[contains(text(), 'My Approvals')]").click();
-                    page.locator("//span[contains(text(), '" + Title + "')]").first().click();
+                    page.locator("//span[contains(text(), '" + NonCatalogTitle + "')]").first().click();
                     page.locator("#btnApprove").click();
                     page.locator(".btn.btn-primary.bootbox-accept").click();
                     logout.Logout(page);

@@ -7,32 +7,26 @@ import com.yokogawa.purchaseorderrequest.create.PorCreateCatalog;
 import com.yokogawa.requisition.assign.PocPrAssign;
 import com.yokogawa.requisition.assign.PrAssign;
 import com.yokogawa.requisition.create.PocCatalogPrCreate;
-import com.yokogawa.requisition.create.PocNonCatalogPrCreate;
 import com.yokogawa.requisition.create.PrCreateCatalog;
-import com.yokogawa.requisition.create.PrCreateNonCatalog;
 import com.yokogawa.requisition.sendforapproval.PocPrSendForApproval;
 import com.yokogawa.requisition.sendforapproval.PrSendForApproval;
 import com.yokogawa.variables.VariablesForCatalog;
-import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.List;
-import static com.yokogawa.variables.VariablesForCatalog.Title;
+import static com.yokogawa.variables.VariablesForCatalog.CatalogTitle;
 
-public class Functions {
-
+public class FunctionsCatalog {
     VariablesForCatalog variablesForCatalog = new VariablesForCatalog();
-    VariablesForNonCatalog variablesForNonCatalog = new VariablesForNonCatalog();
     PrCreateCatalog prCreateCatalog = new PocCatalogPrCreate();
-    PrCreateNonCatalog prCreateNonCatalog = new PocNonCatalogPrCreate();
     PrSendForApproval prSendForApproval = new PocPrSendForApproval();
     PrAssign prAssign = new PocPrAssign();
     PorCreateCatalog porCreateCatalog = new PocCatalogPorCreate();
     PorApproval porApproval = new PocPorApproval();
-    public void FunctionsForAllTypes(Page page) throws InterruptedException{
+    public void FunctionsForCatalog(Page page) throws InterruptedException{
 
 //TODO Requester PR Create Catalog
         prCreateCatalog.RequesterLoginPRCreate(variablesForCatalog.EmailID, page);
         prCreateCatalog.CatalogType(page);
-        prCreateCatalog.Title(Title, page);
+        prCreateCatalog.Title(CatalogTitle, page);
         prCreateCatalog.ShipToYokogawa(page);
         prCreateCatalog.Project(variablesForCatalog.Project, page);
         prCreateCatalog.WBS(variablesForCatalog.Wbs, page);
@@ -55,11 +49,11 @@ public class Functions {
 
 //TODO BuyerManager PR Assign Catalog
         prAssign.BuyerManagerLogin(variablesForCatalog.BuyerManager, page);
-        prAssign.BuyerManagerAssign(Title, variablesForCatalog.Buyer, page);
+        prAssign.BuyerManagerAssign(CatalogTitle, variablesForCatalog.Buyer, page);
 
-//TODO Buyer POR Create Non-Catalog
+//TODO Buyer POR Create Catalog
         porCreateCatalog.BuyerLogin(variablesForCatalog.Buyer, page);
-        porCreateCatalog.BuyerPORCreate(Title, page);
+        porCreateCatalog.BuyerPORCreate(CatalogTitle, page);
         porCreateCatalog.TaxCode(variablesForCatalog.TaxCode, page);
         porCreateCatalog.PORNotes(variablesForCatalog.PorNotes, page);
         porCreateCatalog.PORCreate(page);
@@ -68,32 +62,5 @@ public class Functions {
         porApproval.SendForApproval(variablesForCatalog.ChiefFinancialOfficer, page);
         List<String> returnApprover = porApproval.GetPorApprovers(page);
         porApproval.ApproverLogin(returnApprover, variablesForCatalog.PRApproverGroupB, variablesForCatalog.PRApproverGroupC, variablesForCatalog.PRApproverGroupD, page);
-
-
-//TODO Requester PR Create Non-Catalog
-//        prCreateNonCatalog.RequesterLoginPRCreate(variablesForNonCatalog.EmailID, variablesForNonCatalog.Password, page);
-//        prCreateNonCatalog.PRType(page);
-//        prCreateNonCatalog.Title(variablesForNonCatalog.Title, page);
-//        prCreateNonCatalog.ShipToYokogawa(page);
-//        prCreateNonCatalog.Project(variablesForNonCatalog.Project, page);
-//        prCreateNonCatalog.WBS(variablesForNonCatalog.Wbs, page);
-//        prCreateNonCatalog.Incoterm(variablesForNonCatalog.Incoterm, page);
-//        prCreateNonCatalog.ShippingAddress(page);
-//        prCreateNonCatalog.ShippingMode(variablesForNonCatalog.ShippingMode, page);
-//        prCreateNonCatalog.QuotationRequiredBy(page);
-//        prCreateNonCatalog.ExpectedPOIssue(page);
-//        prCreateNonCatalog.ExpectedDelivery(page);
-//        prCreateNonCatalog.BuyerManager(variablesForNonCatalog.BuyerManager, page);
-//        prCreateNonCatalog.ProjectManager(variablesForNonCatalog.ProjectManager, page);
-//        prCreateNonCatalog.OrderIntake(variablesForNonCatalog.OrderIntake, page);
-//        prCreateNonCatalog.TargetPrice(variablesForNonCatalog.TargetPrice, page);
-//        prCreateNonCatalog.WarrantyRequirements(variablesForNonCatalog.WarrantyRequirement, page);
-//        prCreateNonCatalog.PriceValidity(variablesForNonCatalog.PriceValidity, page);
-//        prCreateNonCatalog.InspectionRequired(page);
-//        prCreateNonCatalog.AddLineRequisitionItems(variablesForNonCatalog.Category, variablesForNonCatalog.Item, variablesForNonCatalog.Quantity, page);
-//        prCreateNonCatalog.Notes(variablesForNonCatalog.Notes, page);
-//        prCreateNonCatalog.PRCreate(page);
-        }
     }
-
-
+}
