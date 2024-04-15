@@ -1,5 +1,13 @@
 package com.yokogawa.functions;
 import com.microsoft.playwright.Page;
+import com.yokogawa.dispatchnotes.assign.DispatchNotesAssign;
+import com.yokogawa.dispatchnotes.assign.DispatchNotesAssignInterface;
+import com.yokogawa.dispatchnotes.create.DispatchNoteCreate;
+import com.yokogawa.dispatchnotes.create.DispatchNoteCreateInterface;
+import com.yokogawa.inspections.assign.InspectionAssign;
+import com.yokogawa.inspections.assign.InspectionAssignInterface;
+import com.yokogawa.inspections.create.InspectionCreate;
+import com.yokogawa.inspections.create.InspectionCreateInterface;
 import com.yokogawa.orderschedule.approve.OrderScheduleApprove;
 import com.yokogawa.orderschedule.approve.OrderScheduleApproveInterface;
 import com.yokogawa.orderschedule.create.OrderScheduleCreate;
@@ -27,6 +35,10 @@ import com.yokogawa.requisition.create.PrCreateNonCatalog;
 import com.yokogawa.requisition.sendforapproval.PocPrSendForApproval;
 import com.yokogawa.requisition.sendforapproval.PrSendForApproval;
 import com.yokogawa.variables.VariablesForNonCatalog;
+import com.yokogawa.workorder.create.WorkOrderCreate;
+import com.yokogawa.workorder.create.WorkOrderCreateInterface;
+import com.yokogawa.workorder.trackerstatus.WOTrackerStatus;
+import com.yokogawa.workorder.trackerstatus.WOTrackerStatusInterface;
 import java.util.List;
 import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
 import static com.yokogawa.variables.VariablesForNonCatalog.Password;
@@ -45,6 +57,12 @@ public class FunctionsNonCatalog {
     PurchaseOrderInterface purchaseOrderInterface = new BuyerPurchaseOrder();
     OrderScheduleInterface orderScheduleInterface = new OrderScheduleCreate();
     OrderScheduleApproveInterface orderScheduleApproveInterface = new OrderScheduleApprove();
+    InspectionCreateInterface inspectionCreateInterface = new InspectionCreate();
+    InspectionAssignInterface inspectionAssignInterface = new InspectionAssign();
+    DispatchNoteCreateInterface dispatchNoteCreateInterface = new DispatchNoteCreate();
+    DispatchNotesAssignInterface dispatchNotesAssignInterface = new DispatchNotesAssign();
+    WorkOrderCreateInterface workOrderCreateInterface = new WorkOrderCreate();
+    WOTrackerStatusInterface woTrackerStatusInterface = new WOTrackerStatus();
     public void FunctionsForNonCatalog(Page page) throws InterruptedException{
 
 //TODO Requester PR Create Non-Catalog
@@ -118,9 +136,27 @@ public class FunctionsNonCatalog {
         purchaseOrderInterface.SendForVendor(variablesForNonCatalog.Buyer, page);
 
 //TODO Vendor Order Schedule Create
-        orderScheduleInterface.OSCreate(variablesForNonCatalog.VendorMailId, page);
+        String POReferenceId = orderScheduleInterface.OSCreate(variablesForNonCatalog.VendorMailId, page);
 
 //TODO Buyer Order Schedule Approve
-        orderScheduleApproveInterface.OSApprove(variablesForNonCatalog.Buyer, page);
+        orderScheduleApproveInterface.OSApprove(variablesForNonCatalog.Buyer, POReferenceId, page);
+
+//TODO Vendor Send For Inspection
+        inspectionCreateInterface.VendorInspectionCreate(variablesForNonCatalog.VendorMailId, POReferenceId, page);
+
+//TODO Requester Assign && Create Inspection
+        inspectionAssignInterface.RequesterInspectionAssign(variablesForNonCatalog.EmailID, variablesForNonCatalog.EmailID, POReferenceId, page);
+
+//TODO Vendor Create Dispatch Notes
+        dispatchNoteCreateInterface.DNCreate(variablesForNonCatalog.VendorMailId, variablesForNonCatalog.SourceCountry, variablesForNonCatalog.DestinationCountry, variablesForNonCatalog.PackageType, variablesForNonCatalog.GrossWeight, variablesForNonCatalog.NetWeight, variablesForNonCatalog.Volume, variablesForNonCatalog.Quantity, page);
+
+//TODO Logistics Manager Assign Dispatch Notes
+        dispatchNotesAssignInterface.DNAssign(variablesForNonCatalog.LogisticsManager, POReferenceId, variablesForNonCatalog.LogisticsManager, page);
+
+//TODO Logistics Manager Work Order Create
+        workOrderCreateInterface.WOCreate(variablesForNonCatalog.LogisticsManager, POReferenceId, variablesForNonCatalog.Vendor, page);
+
+//TODO Vendor Update Tracker Status
+        woTrackerStatusInterface.VendorTrackerStatus(variablesForNonCatalog.VendorMailId, POReferenceId, page);
     }
 }

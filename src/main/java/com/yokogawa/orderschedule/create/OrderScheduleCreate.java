@@ -11,10 +11,11 @@ import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
 public class OrderScheduleCreate implements OrderScheduleInterface {
     Login login = new LoginPage();
     Logout logout = new LogoutPage();
-    public void OSCreate(String mailId, Page page){
+    public String OSCreate(String mailId, Page page){
         login.Login(mailId, page);
         page.locator("//*[contains(text(), 'Purchase Orders')]").click();
         page.locator("//*[contains(text(), '"+ NonCatalogTitle +"'").first().click();
+        String poReferenceId = page.locator("#referenceId2").textContent();
         page.locator("#btnCreateOR").click();
         Locator orderScheduleDate = page.locator("#scheduleDate-1");
         orderScheduleDate.click();
@@ -22,6 +23,6 @@ public class OrderScheduleCreate implements OrderScheduleInterface {
         today.click();
         page.locator("#btnCreate").click();
         logout.Logout(page);
+        return poReferenceId;
     }
-
 }

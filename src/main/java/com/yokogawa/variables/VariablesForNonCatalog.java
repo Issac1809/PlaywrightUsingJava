@@ -1,4 +1,5 @@
 package com.yokogawa.variables;
+
 public class VariablesForNonCatalog {
     public static String NonCatalogTitle = "POC-NonCatalog";
     public String EmailID = "requester@cormsquare.com";
@@ -43,4 +44,11 @@ public class VariablesForNonCatalog {
     public String PRApproverGroupB = "admin@cormsquare.com";
     public String PRApproverGroupC = "departmentmanager@cormsquare.com";
     public String PRApproverGroupD = "businessunitmanager@cormsquare.com";
+    public String SourceCountry = "India";
+    public String DestinationCountry = "India";
+    public String PackageType = "Drum";
+    public int GrossWeight = 25;
+    public int NetWeight = 35;
+    public int Volume = 50;
+    public String LogisticsManager = "logisticsmanager@cormsquare.com";
 }
