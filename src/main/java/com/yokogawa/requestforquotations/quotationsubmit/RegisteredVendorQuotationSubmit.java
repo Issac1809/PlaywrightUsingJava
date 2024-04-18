@@ -3,6 +3,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.yokogawa.login.Login;
 import com.yokogawa.login.LoginPage;
+import com.yokogawa.logout.Logout;
+import com.yokogawa.logout.LogoutPage;
 import com.yokogawa.requestforquotations.quotationsubmit.QuotationSubmit;
 
 import java.nio.file.Paths;
@@ -10,6 +12,7 @@ import java.time.LocalDate;
 import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
 public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
     Login login = new LoginPage();
+    Logout logout = new LogoutPage();
     LocalDate currentDate = LocalDate.now(); // Get the current date
     int daysInCurrentMonth = currentDate.lengthOfMonth(); // Get the maximum number of days in the current month
     int tomorrowDayOfMonth = currentDate.getDayOfMonth() + 1; // Calculate the day for tomorrow
@@ -21,6 +24,7 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
         page.locator("//li[contains(text(), '"+ vendor +"')]").first().click();
         page.locator("#saveRequestForQuotationVendor").click();
         page.locator("#vendorSendMailBtnId").click();
+        logout.Logout(page);
     }
     public void VendorLogin(String vendorMailId, String incortermLocation, String quotationReferenceNumber, Page page){
         login.Login(vendorMailId, page);
@@ -28,17 +32,21 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
         page.locator("#btnSendQuote").click();
         page.locator("#incotermLocation").fill(incortermLocation);
         page.locator("#quotationReferenceNumber").fill(quotationReferenceNumber);
-        page.locator("#dates").click();
+        Locator validityDate = page.locator("#dates");
+        validityDate.click();
+        Locator today = page.locator("//span[@class='flatpickr-day today']").first();
+        today.click();
 
-        if (tomorrowDayOfMonth > daysInCurrentMonth) {
-            currentDate = currentDate.plusMonths(1); // Move to the next month
-            tomorrowDayOfMonth = 1; // Set tomorrow's day to the first day of the next month
-            Locator tomorrowDate = page.locator("//span[@class='flatpickr-day' and text()='" + tomorrowDayOfMonth + "']");
-            tomorrowDate.click();
-        } else {
-            Locator tomorrowDate = page.locator("//span[@class='flatpickr-day' and text()='" + tomorrow.getDayOfMonth() + "']");
-            tomorrowDate.click();
-        }
+
+//        if (tomorrowDayOfMonth > daysInCurrentMonth) {
+//            currentDate = currentDate.plusMonths(1); // Move to the next month
+//            tomorrowDayOfMonth = 1; // Set tomorrow's day to the first day of the next month
+//            Locator tomorrowDate = page.locator("//span[@class='flatpickr-day' and text()='" + tomorrowDayOfMonth + "']");
+//            tomorrowDate.click();
+//        } else {
+//            Locator tomorrowDate = page.locator("//span[@class='flatpickr-day' and text()='" + tomorrow.getDayOfMonth() + "']");
+//            tomorrowDate.click();
+//        }
     }
     public void LiquidatedDamages(Page page){
         page.locator("#liquidatedComplyId").click();
@@ -76,7 +84,6 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
         //TODO Technical Attachment
         page.locator("#attachFile").click();
         Locator TechnicalFile = page.locator("#formFilePreupload");
-        TechnicalFile.click();
         TechnicalFile.setInputFiles(Paths.get("./Downloads/Technical Documents.xlsx"));
         page.locator("#select2-attachmentTypeId-container").click();
         page.locator("//li[contains(text(), 'Technical')]").click();
@@ -84,7 +91,6 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
         //TODO Commercial Attachment
         page.locator("#attachFile").click();
         Locator CommercialFile = page.locator("#formFilePreupload");
-        CommercialFile.click();
         CommercialFile.setInputFiles(Paths.get("./Downloads/Commercial Documents.xlsx"));
         page.locator("#select2-attachmentTypeId-container").click();
         page.locator("//li[contains(text(), 'Commercial')]").click();
@@ -93,5 +99,6 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
     public void QuotationSubmitButton(Page page){
         page.locator("#btnCreate").click();
         page.locator(".bootbox-accept").click();
+        logout.Logout(page);
     }
 }

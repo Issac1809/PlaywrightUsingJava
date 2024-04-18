@@ -5,7 +5,6 @@ import com.yokogawa.login.Login;
 import com.yokogawa.login.LoginPage;
 import com.yokogawa.logout.Logout;
 import com.yokogawa.logout.LogoutPage;
-import java.util.List;
 
 public class POInvoiceCreate {
     Login login = new LoginPage();

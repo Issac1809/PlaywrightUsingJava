@@ -4,13 +4,13 @@ import com.yokogawa.login.Login;
 import com.yokogawa.login.LoginPage;
 public class PocNonCatalogPorCreate implements PorCreateNonCatalog {
     public void BuyerPORCreate(Page page) {
-        page.locator("//*[contains(text(),'Create POR')]").click();
+        page.locator("//*[contains(text(),'Create POR')]").first().click();
     }
     public void Justification(Page page){
         page.locator("#below5L").click();
     }
     public void TaxCode(String taxCode, Page page){
-        page.getByText("-- Select Tax Codes --").click();
+        page.getByText("-- Select Tax Codes --").last().click();
         page.locator("//li[contains(text(),'"+ taxCode +"')]").click();
     }
     public void PORNotes(String notes, Page page) {

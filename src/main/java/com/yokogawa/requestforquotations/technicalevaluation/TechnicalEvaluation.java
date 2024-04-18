@@ -4,11 +4,16 @@ import com.yokogawa.login.Login;
 import com.yokogawa.login.LoginPage;
 import com.yokogawa.logout.Logout;
 import com.yokogawa.logout.LogoutPage;
+
+import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
+
 public class TechnicalEvaluation implements TechnicalEvaluationInterface{
     Login login = new LoginPage();
     Logout logout = new LogoutPage();
     public void TechnicalEvaluationButton(String mailId, String TEApprover, Page page){
         login.Login(mailId, page);
+        page.locator("//*[contains(text(), 'Request For Quotations')]").click();
+        page.locator("//span[contains(text(), '"+ NonCatalogTitle +"')]").first().click();
         page.locator("#btnCreateTE").click();
         page.locator(".border-primary").click();
         page.locator("#btnCreate").click();
