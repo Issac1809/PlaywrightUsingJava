@@ -18,7 +18,7 @@ public class VariablesForNonCatalog {
     //TODO AddLineRequisitionItems
     public String Category = "Cable";
     public String Item = "Power Cable 3C x 2.5 Sqmm";
-    public int Quantity = 150000;
+    public int Quantity = 8500;
 
     public String Notes = "Requisition Notes and Attachments";
     public String Buyer = "buyer@cormsquare.com";
