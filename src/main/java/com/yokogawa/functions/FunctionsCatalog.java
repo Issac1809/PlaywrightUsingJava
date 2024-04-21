@@ -59,8 +59,8 @@ public class FunctionsCatalog {
         porCreateCatalog.PORCreate(page);
 
 //TODO Buyer Send For Approval
-        porApproval.SendForApproval(variablesForCatalog.ChiefFinancialOfficer, page);
-        List<String> returnApprover = porApproval.GetPorApprovers(page);
+        List<String> returnApprover = porApproval.SendForApproval(variablesForCatalog.ChiefFinancialOfficer, variablesForCatalog.PresidentDirectorCorporate, page);
+        //List<String> returnApprover = porApproval.GetPorApprovers(page);
         porApproval.ApproverLogin(returnApprover, variablesForCatalog.PRApproverGroupB, variablesForCatalog.PRApproverGroupC, variablesForCatalog.PRApproverGroupD, page);
     }
 }

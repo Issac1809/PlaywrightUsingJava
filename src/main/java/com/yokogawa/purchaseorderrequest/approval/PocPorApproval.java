@@ -13,52 +13,61 @@ import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
 public class PocPorApproval implements PorApproval {
     Login login = new LoginPage();
     Logout logout = new LogoutPage();
-    public void SendForApproval(String cfo, Page page) throws InterruptedException {
+    public List<String> SendForApproval(String cfo, String president, Page page) {
         page.locator("//*[contains(text(),'" + NonCatalogTitle + "')]").first().click();
         page.locator("#btnNewSendApproval").click();
         Locator approvalPopup = page.locator("//h3[contains(text(), 'Purchase Order Request Send For Approval')]").first();
-        if (approvalPopup.isEnabled()) {
-            //TODO CFO
-            page.locator("#select2-role-7-container").click();
-            page.locator("//li[contains(text(), '" + cfo + "')]").click();
-//            //TODO President/Director (Corporate)
-//            page.locator("#role-8").click();
-//            page.locator("//*[contains(text(), '" + president + "')]").click();
-            //TODO Submit
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
-            Thread.sleep(3000);
-        }
-    }
-
-    public List<String> GetPorApprovers(Page page) {
         List<String> matchingApprovers = new ArrayList<>();
-        List<String> approvalTable = page.locator("#approvalData tbody tr td:nth-child(3)").allTextContents();
-        approvalTable.removeIf(text -> text.contains("PR Approver Group A"));
-        String approverMailId = "@cormsquare.com";
-        String approverDesignation = "PR Approver Group";
-        for (String approver : approvalTable) {
-            if (approver.endsWith(approverMailId)) {
-                matchingApprovers.add(approver);
-            } else if (approver.startsWith(approverDesignation)) {
-                matchingApprovers.add(approver);
+        if (approvalPopup.isEnabled()) {
+//TODO CFO
+//            page.locator("#role-7").click();
+//            page.locator("//li[contains(text(), '" + cfo + "')]").click();
+//TODO President/Director (Corporate)
+            page.locator("#select2-role-8-container").click();
+            page.locator("//li[contains(text(), '" + president + "')]").click();
+//TODO Submit
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
+            page.pause();
+            List<String> approvalTable = page.locator("#approvalData tbody tr td").allTextContents();
+            approvalTable.removeIf(text -> text.contains("PR Approver Group A"));
+            String approverMailId = "@cormsquare.com";
+            String approverMailId2 = "@sharklasers.com";
+            String approverMailId3 = "@yokogawa.com";
+            String approverDesignation = "PR Approver Group";
+            for (String approver : approvalTable) {
+                if (approver.endsWith(approverMailId)) {
+                    matchingApprovers.add(approver);
+                } if (approver.startsWith(approverDesignation) && !approver.contains("PR Approver Group A")) {
+                    matchingApprovers.add(approver);
+                } if (approver.endsWith(approverMailId2)) {
+                    matchingApprovers.add(approver);
+                } if (approver.endsWith(approverMailId3)) {
+                    matchingApprovers.add(approver);
+                }
             }
+            logout.Logout(page);
+            return matchingApprovers;
+        } else {
+            List<String> approvalTable = page.locator("#approvalData tbody tr td").allTextContents();
+            String approverMailId = "@cormsquare.com";
+            for (String approver : approvalTable) {
+                if (approver.endsWith(approverMailId)) {
+                    matchingApprovers.add(approver);
+                }
+            }
+            logout.Logout(page);
         }
-        System.out.println(matchingApprovers);
         return matchingApprovers;
     }
     public void ApproverLogin(List<String> matchingApprovers, String PRApproverGroupB, String PRApproverGroupC, String PRApproverGroupD, Page page) {
         List<String> groupIds = new ArrayList<>();
-        logout.Logout(page);
-
         for (int i = 0; i < matchingApprovers.size(); i++) {
             String approverMailId = matchingApprovers.get(i);
-            System.out.println("ApproverMailId: " + approverMailId);
-            if (approverMailId.endsWith("@cormsquare.com")) {
+            if (approverMailId.endsWith("@cormsquare.com") || approverMailId.endsWith("@sharklasers.com") || approverMailId.endsWith("@yokogawa.com")) {
                 login.Login(approverMailId, page);
-                System.out.println("Approver : " + approverMailId + i);
 
 //TODO Approver Approves POR
-                page.locator("//span[contains(text(), 'Purchase Order Requests')]").click();
+                page.locator("//span[contains(text(), 'My Approvals')]").click();
                 page.locator("//span[contains(text(), '" + NonCatalogTitle + "')]").first().click();
                 Locator addApprovers = page.locator("#btnAddApprovers");
 
@@ -91,29 +100,26 @@ public class PocPorApproval implements PorApproval {
 
                     page.locator("#btnSendUserFromPM").click();
                     page.locator("#btnApprove").click();
-                    page.locator(".btn.btn-primary.bootbox-accept").click();
+                    page.locator(".bootbox-accept").click();
                     logout.Logout(page);
-                } else if (addApprovers.isDisabled()) {
+                } else if (addApprovers.isDisabled() || !addApprovers.isVisible() || addApprovers.isHidden()) {
                     page.locator("#btnApprove").click();
-                    page.locator(".btn.btn-primary.bootbox-accept").click();
+                    page.locator(".bootbox-accept").click();
                     logout.Logout(page);
                 }
             }
             if (approverMailId.startsWith("PR Approver Group")) {
-                if(approverMailId.contains("PR Approver Group A")){
-                    continue;
-                }
                 int j = 0;
                 while (j <= 2) {
                     login.Login(groupIds.get(j), page);
                     page.locator("//span[contains(text(), 'My Approvals')]").click();
                     page.locator("//span[contains(text(), '" + NonCatalogTitle + "')]").first().click();
                     page.locator("#btnApprove").click();
-                    page.locator(".btn.btn-primary.bootbox-accept").click();
+                    page.locator(".bootbox-accept").click();
                     logout.Logout(page);
                     j++;
                 }
-                    i += 3; //TODO For loop has index 0 to 7. But while loop has already completed index 1, 2, 3. So I'm hardcoding i+3.
+                    i += 2; //TODO For loop has index 0 to 7. But while loop has already completed index 1, 2, 3. So I'm hardcoding i+2.
             }
         }
     }

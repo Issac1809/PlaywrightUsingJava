@@ -4,7 +4,7 @@ import com.yokogawa.login.Login;
 import com.yokogawa.login.LoginPage;
 public class PocNonCatalogPorCreate implements PorCreateNonCatalog {
     public void BuyerPORCreate(Page page) {
-        page.locator("//*[contains(text(),'Create POR')]").first().click();
+        page.locator("//a[contains(text(),' Create POR ')]").first().click();
     }
     public void Justification(Page page){
         page.locator("#below5L").click();

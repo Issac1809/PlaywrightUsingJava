@@ -9,6 +9,8 @@ import com.yokogawa.requestforquotations.quotationsubmit.QuotationSubmit;
 
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.List;
+
 import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
 public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
     Login login = new LoginPage();
@@ -26,27 +28,36 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
         page.locator("#vendorSendMailBtnId").click();
         logout.Logout(page);
     }
-    public void VendorLogin(String vendorMailId, String incortermLocation, String quotationReferenceNumber, Page page){
+    public void VendorLogin(String vendorMailId, String incortermLocation, String quotationReferenceNumber, Page page) {
         login.Login(vendorMailId, page);
-        page.locator("//span[contains(text(), '"+ NonCatalogTitle +"')]").first().click();
+        page.locator("//span[contains(text(), '" + NonCatalogTitle + "')]").first().click();
         page.locator("#btnSendQuote").click();
         page.locator("#incotermLocation").fill(incortermLocation);
         page.locator("#quotationReferenceNumber").fill(quotationReferenceNumber);
         Locator validityDate = page.locator("#dates");
         validityDate.click();
-        Locator today = page.locator("//span[@class='flatpickr-day today']").first();
-        today.click();
-
-
-//        if (tomorrowDayOfMonth > daysInCurrentMonth) {
-//            currentDate = currentDate.plusMonths(1); // Move to the next month
-//            tomorrowDayOfMonth = 1; // Set tomorrow's day to the first day of the next month
-//            Locator tomorrowDate = page.locator("//span[@class='flatpickr-day' and text()='" + tomorrowDayOfMonth + "']");
-//            tomorrowDate.click();
-//        } else {
-//            Locator tomorrowDate = page.locator("//span[@class='flatpickr-day' and text()='" + tomorrow.getDayOfMonth() + "']");
-//            tomorrowDate.click();
-//        }
+        Locator today = page.locator("//span[@class='flatpickr-day today']");
+        int getTodayDayNumber = Integer.parseInt(today.textContent());
+        int nextDay = 1;
+        int nextDayAfterThirty = 31;
+        int nextDayAfterThirtyOne = 32;
+        if (getTodayDayNumber == 30) {
+            int excludeDay1 = nextDay + getTodayDayNumber;
+                Locator condition = page.locator("//span[contains(text(), '" + excludeDay1 + "')]");
+            if (condition.isEnabled() && condition.isVisible()) {
+                condition.first().click();
+            } else {
+                int excludeDay2 = nextDayAfterThirty - getTodayDayNumber;
+                page.locator("//span[contains(text(), '"+ excludeDay2 +"')]").first().click();
+            }
+        }
+        if (getTodayDayNumber == 31){
+            int excludeDay3 = nextDayAfterThirtyOne - getTodayDayNumber;
+            page.locator("//span[contains(text(), '"+ excludeDay3 +"')]").first().click();
+        } else {
+            int tomorrow = getTodayDayNumber + 1;
+            page.locator("//span[contains(text(), '" + tomorrow + "')]").first().click();
+        }
     }
     public void LiquidatedDamages(Page page){
         page.locator("#liquidatedComplyId").click();

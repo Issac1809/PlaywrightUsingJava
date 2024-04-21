@@ -2,7 +2,7 @@ package com.yokogawa.requestforquotations.quotationsubmit;
 import com.microsoft.playwright.Page;
 public interface QuotationSubmit {
     void InviteRegisteredVendor(String vendor, Page page);
-    void VendorLogin(String vendorMailId, String incortermLocation, String quotationReferenceNumber, Page page);
+    void VendorLogin(String vendorMailId, String incortermLocation, String quotationReferenceNumber, Page page) throws InterruptedException;
     void LiquidatedDamages(Page page);
     void RoHSCompliance(Page page);
     void WarrantyRequirements(Page page);

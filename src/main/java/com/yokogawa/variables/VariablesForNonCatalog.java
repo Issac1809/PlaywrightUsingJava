@@ -18,7 +18,8 @@ public class VariablesForNonCatalog {
     //TODO AddLineRequisitionItems
     public String Category = "Cable";
     public String Item = "Power Cable 3C x 2.5 Sqmm";
-    public int Quantity = 150;
+    public int Quantity = 150000;
+
     public String Notes = "Requisition Notes and Attachments";
     public String Buyer = "buyer@cormsquare.com";
     public String RfQNotes = "Request For Quotation Notes and Attachments";
@@ -40,7 +41,7 @@ public class VariablesForNonCatalog {
     public String TaxCode = "PG-8% Foreign currency standard rate purchase";
     public String PorNotes = "Purchase Order Request Notes";
     public String ChiefFinancialOfficer = "cfo@cormsquare.com";
-    public String PresidentDirectorCorporate = "Achyuth@sharklasers.com";
+    public String PresidentDirectorCorporate = "hazel@sharklasers.com";
     public String PRApproverGroupB = "admin@cormsquare.com";
     public String PRApproverGroupC = "departmentmanager@cormsquare.com";
     public String PRApproverGroupD = "businessunitmanager@cormsquare.com";

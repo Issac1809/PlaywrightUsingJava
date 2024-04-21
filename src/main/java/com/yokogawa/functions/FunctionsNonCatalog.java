@@ -128,8 +128,7 @@ public class FunctionsNonCatalog {
         porCreateNonCatalog.PORCreate(page);
 
 //TODO Buyer Send For Approval
-        porApproval.SendForApproval(variablesForNonCatalog.ChiefFinancialOfficer, page);
-        List<String> returnApprover = porApproval.GetPorApprovers(page);
+        List<String> returnApprover = porApproval.SendForApproval(variablesForNonCatalog.ChiefFinancialOfficer, variablesForNonCatalog.PresidentDirectorCorporate, page);
         porApproval.ApproverLogin(returnApprover, variablesForNonCatalog.PRApproverGroupB, variablesForNonCatalog.PRApproverGroupC, variablesForNonCatalog.PRApproverGroupD, page);
 
 //TODO Buyer Send For Vendor
