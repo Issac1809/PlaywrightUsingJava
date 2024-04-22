@@ -9,11 +9,9 @@ import com.yokogawa.logout.LogoutPage;
 import java.util.ArrayList;
 import java.util.List;
 import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
-
 public class PocPorApproval implements PorApproval {
     Login login = new LoginPage();
     Logout logout = new LogoutPage();
-
     public List<String> SendForApproval(String cfo, String president, Page page) {
         page.pause();
         page.locator("//*[contains(text(),'" + NonCatalogTitle + "')]").first().click();
@@ -56,8 +54,12 @@ public class PocPorApproval implements PorApproval {
             String approverMailId = "@cormsquare.com";
             String approverMailId2 = "@sharklasers.com";
             String approverMailId3 = "@yokogawa.com";
+            String approverDesignation = "PR Approver Group";
             for (String approver : approvalTable) {
                 if (approver.endsWith(approverMailId)) {
+                    matchingApprovers.add(approver);
+                }
+                if (approver.startsWith(approverDesignation) && !approver.contains("PR Approver Group A")) {
                     matchingApprovers.add(approver);
                 }
                 if (approver.endsWith(approverMailId2)) {
@@ -71,20 +73,17 @@ public class PocPorApproval implements PorApproval {
         }
         return matchingApprovers;
     }
-
     public void ApproverLogin(List<String> matchingApprovers, String PRApproverGroupB, String PRApproverGroupC, String PRApproverGroupD, Page page) {
         List<String> groupIds = new ArrayList<>();
         for (int i = 0; i < matchingApprovers.size(); i++) {
             String approverMailId = matchingApprovers.get(i);
             if (approverMailId.endsWith("@cormsquare.com") || approverMailId.endsWith("@sharklasers.com") || approverMailId.endsWith("@yokogawa.com")) {
                 login.Login(approverMailId, page);
-
 //TODO Approver Approves POR
                 page.locator("//span[contains(text(), 'My Approvals')]").click();
                 page.locator("//span[contains(text(), '" + NonCatalogTitle + "')]").first().click();
                 Locator addApprovers = page.locator("#btnAddApprovers");
                 Locator projectManagerPopUp = page.locator("//h3[contains(text(), 'Purchase Order Request Send For Approval')]").last();
-
                 if (i == 0 && addApprovers.isEnabled()) {
                     addApprovers.click();
                     if (projectManagerPopUp.isEnabled() && projectManagerPopUp.isVisible()){
@@ -132,20 +131,19 @@ public class PocPorApproval implements PorApproval {
                     page.locator(".bootbox-accept").click();
                     logout.Logout(page);
                 }
-                if (approverMailId.startsWith("PR Approver Group")) {
-                    int j = 0;
-                    while (j <= 2) {
-                        login.Login(groupIds.get(j), page);
-                        page.locator("//span[contains(text(), 'My Approvals')]").click();
-                        page.locator("//span[contains(text(), '" + NonCatalogTitle + "')]").first().click();
-                        page.locator("#btnApprove").click();
-                        page.locator(".bootbox-accept").click();
-                        logout.Logout(page);
-                        j++;
-                    }
-                    i += 2; //TODO For loop has index 0 to 7. But while loop has already completed index 1, 2, 3. So I'm hardcoding i+2.
+            }
+            int size = groupIds.size() - 1;
+            if (approverMailId.startsWith("PR Approver Group")) {
+                for(int j = 0; j < groupIds.size(); j++){
+                    login.Login(groupIds.get(j), page);
+                    page.locator("//span[contains(text(), 'My Approvals')]").click();
+                    page.locator("//span[contains(text(), '" + NonCatalogTitle + "')]").first().click();
+                    page.locator("#btnApprove").click();
+                    page.locator(".bootbox-accept").click();
+                    logout.Logout(page);
                 }
             }
+            i += size; //TODO For loop has index 0 to 7. But while loop has already completed index 1, 2, 3. So I'm hardcoding i+2.
         }
     }
 }
