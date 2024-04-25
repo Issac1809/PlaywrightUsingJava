@@ -5,5 +5,5 @@ public interface PorCreateCatalog {
     void BuyerPORCreate(String title, Page page);
     void TaxCode(String taxCode, Page page);
     void PORNotes(String notes, Page page);
-    void PORCreate(Page page);
+    void PORCreate(Page page) throws InterruptedException;
 }

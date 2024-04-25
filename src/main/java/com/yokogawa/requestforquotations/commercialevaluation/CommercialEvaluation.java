@@ -15,6 +15,7 @@ public class CommercialEvaluation implements CommercialEvaluationInterface {
         page.locator("#btnCreateCE").click();
         Locator selectionStatus = page.locator("select[onchange='isSelect(event)']");
         selectionStatus.click();
+        selectionStatus.waitFor();
         selectionStatus.selectOption("Yes");
         page.locator("#btnSubmitCE").click();
         page.locator(".bootbox-accept").click();

@@ -16,7 +16,7 @@ public class PocNonCatalogPorCreate implements PorCreateNonCatalog {
     public void PORNotes(String notes, Page page) {
         page.locator("#notes").fill(notes);
     }
-    public void PORCreate(Page page) {
+    public void PORCreate(Page page){
         page.locator("#btnCreate").click();
         page.locator("//button[contains(text(),'Yes')]").click();
     }
