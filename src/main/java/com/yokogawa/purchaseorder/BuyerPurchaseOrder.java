@@ -12,7 +12,7 @@ public class BuyerPurchaseOrder implements PurchaseOrderInterface{
     public void SendForVendor(String mailId, Page page){
         login.Login(mailId, page);
         page.locator("//*[contains(text(), 'Purchase Orders')]").click();
-        page.locator("//*[contains(text(), '"+ NonCatalogTitle +"'").first().click();
+        page.locator("//*[contains(text(), '"+ NonCatalogTitle +"')]").first().click();
         page.locator("#btnSendPO").click();
         page.locator("#vendorSendMailBtnId").click();
         logout.Logout(page);

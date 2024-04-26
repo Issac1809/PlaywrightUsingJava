@@ -14,15 +14,17 @@ public class OrderScheduleCreate implements OrderScheduleInterface {
     public String OSCreate(String mailId, Page page){
         login.Login(mailId, page);
         page.locator("//*[contains(text(), 'Purchase Orders')]").click();
-        page.locator("//*[contains(text(), '"+ NonCatalogTitle +"'").first().click();
+        page.locator("//*[contains(text(), '"+ NonCatalogTitle +"')]").first().click();
         String poReferenceId = page.locator("#referenceId2").textContent();
         page.locator("#btnCreateOR").click();
-        Locator orderScheduleDate = page.locator("#scheduleDate-1");
+        Locator orderScheduleDate = page.locator(".scheduleDate-1").last();
         orderScheduleDate.click();
         Locator today = page.locator("//span[@class='flatpickr-day today']").first();
         today.click();
         page.locator("#btnCreate").click();
+        page.waitForSelector(".bootbox-accept").click();
         logout.Logout(page);
+        System.out.println(poReferenceId);
         return poReferenceId;
     }
 }

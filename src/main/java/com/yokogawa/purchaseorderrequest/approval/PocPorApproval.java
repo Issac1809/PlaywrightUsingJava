@@ -12,7 +12,7 @@ import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
 public class PocPorApproval implements PorApproval {
     Login login = new LoginPage();
     Logout logout = new LogoutPage();
-    public List<String> SendForApproval(String cfo, String president, Page page) throws InterruptedException {
+    public List<String> SendForApproval(String cfo, String president, Page page) {
         page.pause();
         page.locator("//*[contains(text(),'" + NonCatalogTitle + "')]").first().click();
         page.waitForSelector("#btnNewSendApproval").click();

@@ -1,5 +1,4 @@
 package com.yokogawa.variables;
-
 public class VariablesForNonCatalog {
     public static String NonCatalogTitle = "POC-NonCatalog";
     public String EmailID = "requester@cormsquare.com";
@@ -18,7 +17,7 @@ public class VariablesForNonCatalog {
     //TODO AddLineRequisitionItems
     public String Category = "Cable";
     public String Item = "Power Cable 3C x 2.5 Sqmm";
-    public int Quantity = 250000;
+    public int Quantity = 1;
 
     public String Notes = "Requisition Notes and Attachments";
     public String Buyer = "buyer@cormsquare.com";
@@ -45,6 +44,7 @@ public class VariablesForNonCatalog {
     public String PRApproverGroupB = "admin@cormsquare.com";
     public String PRApproverGroupC = "departmentmanager@cormsquare.com";
     public String PRApproverGroupD = "businessunitmanager@cormsquare.com";
+    public String AdminId = "admin@cormsquare.com";
     public String SourceCountry = "India";
     public String DestinationCountry = "India";
     public String PackageType = "Drum";

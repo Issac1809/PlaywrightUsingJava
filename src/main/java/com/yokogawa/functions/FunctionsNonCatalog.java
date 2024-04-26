@@ -8,6 +8,8 @@ import com.yokogawa.inspections.assign.InspectionAssign;
 import com.yokogawa.inspections.assign.InspectionAssignInterface;
 import com.yokogawa.inspections.create.InspectionCreate;
 import com.yokogawa.inspections.create.InspectionCreateInterface;
+import com.yokogawa.msa.PorInspectPO;
+import com.yokogawa.msa.PorInspectPoInterface;
 import com.yokogawa.orderschedule.approve.OrderScheduleApprove;
 import com.yokogawa.orderschedule.approve.OrderScheduleApproveInterface;
 import com.yokogawa.orderschedule.create.OrderScheduleCreate;
@@ -54,6 +56,7 @@ public class FunctionsNonCatalog {
     CommercialEvaluationInterface commercialEvaluationInterface = new CommercialEvaluation();
     PorCreateNonCatalog porCreateNonCatalog = new PocNonCatalogPorCreate();
     PorApproval porApproval = new PocPorApproval();
+    PorInspectPoInterface porInspectPoInterface = new PorInspectPO();
     PurchaseOrderInterface purchaseOrderInterface = new BuyerPurchaseOrder();
     OrderScheduleInterface orderScheduleInterface = new OrderScheduleCreate();
     OrderScheduleApproveInterface orderScheduleApproveInterface = new OrderScheduleApprove();
@@ -130,6 +133,9 @@ public class FunctionsNonCatalog {
 //TODO Buyer Send For Approval
         List<String> returnApprover = porApproval.SendForApproval(variablesForNonCatalog.ChiefFinancialOfficer, variablesForNonCatalog.PresidentDirectorCorporate, page);
         porApproval.ApproverLogin(returnApprover, variablesForNonCatalog.PRApproverGroupB, variablesForNonCatalog.PRApproverGroupC, variablesForNonCatalog.PRApproverGroupD, page);
+
+//TODO Inspect Create POP
+        porInspectPoInterface.InspectCreatePO(variablesForNonCatalog.AdminId, page);
 
 //TODO Buyer Send For Vendor
         purchaseOrderInterface.SendForVendor(variablesForNonCatalog.Buyer, page);
