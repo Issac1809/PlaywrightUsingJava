@@ -13,7 +13,6 @@ public class PocPorApproval implements PorApproval {
     Login login = new LoginPage();
     Logout logout = new LogoutPage();
     public List<String> SendForApproval(String cfo, String president, Page page) {
-        page.pause();
         page.locator("//*[contains(text(),'" + NonCatalogTitle + "')]").first().click();
         page.waitForSelector("#btnNewSendApproval").click();
         Locator approvalPopup = page.locator("//h3[contains(text(), 'Purchase Order Request Send For Approval')]").first();
@@ -21,7 +20,7 @@ public class PocPorApproval implements PorApproval {
         if (approvalPopup.isEnabled() && approvalPopup.isVisible() || !approvalPopup.isHidden()) {
 //TODO CFO
 //            Locator cfoPopup = page.locator("#role-7");
-//            if (cfoPopup.isEnabled() && cfoPopup.isVisible()){
+//            if (cfoPopup.isVisible()){
 //                cfoPopup.click();
 //                page.waitForSelector("//li[contains(text(), '" + cfo + "')]").click();
 //            }

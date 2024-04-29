@@ -14,11 +14,10 @@ public class InspectionAssign implements InspectionAssignInterface {
         public void RequesterInspectionAssign(String mailId, String inspectorMailId, String poReferenceId, Page page){
             login.Login(mailId, page);
             page.locator("//*[contains(text(), 'Order Schedules')]").click();
-            List<String> containerList = page.locator("#listContainer").allTextContents();
+            List<String> containerList = page.locator("#listContainer tr td").allTextContents();
             for(String tr : containerList){
-                if(tr.equals(poReferenceId)){
-                    Locator details = page.locator("//*[contains(text(), ' Details ')]");
-                    details.first().click();
+                if(tr.contains(poReferenceId)){
+                    page.locator(".btn-link").first().click();
                 }
             }
             page.locator("#btnAssignInspector").click();
@@ -29,7 +28,7 @@ public class InspectionAssign implements InspectionAssignInterface {
             page.locator("#btnForCreateInspection").click();
             page.locator("#physicalInspectionNotReq").click();
             page.locator("#btnCreateInspection").click();
-            page.locator(".btnCreateInspection").click();
+            page.locator(".bootbox-accept").click();
             logout.Logout(page);
         }
 }

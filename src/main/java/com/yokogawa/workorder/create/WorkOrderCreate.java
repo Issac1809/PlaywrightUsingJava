@@ -12,11 +12,10 @@ public class WorkOrderCreate implements WorkOrderCreateInterface {
     public void WOCreate(String mailId, String poReferenceId, String vendor, Page page) {
         login.Login(mailId, page);
         page.locator("//*[contains(text(), 'Dispatch Notes')]").click();
-        List<String> containerList = page.locator("#listContainer").allTextContents();
-        for (String tr : containerList) {
-            if (tr.equals(poReferenceId)) {
-                Locator details = page.locator("//*[contains(text(), ' Details ')]");
-                details.first().click();
+        List<String> containerList = page.locator("#listContainer tr td").allTextContents();
+        for(String tr : containerList){
+            if(tr.contains(poReferenceId)){
+                page.locator(".btn-link").first().click();
             }
         }
         page.locator("#dnActionDropdown").click();

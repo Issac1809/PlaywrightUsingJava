@@ -15,16 +15,11 @@ public class OrderScheduleApprove implements OrderScheduleApproveInterface{
     Logout logout = new LogoutPage();
     public void OSApprove(String mailId, String poReferenceId, Page page){
         login.Login(mailId, page);
-        System.out.println(poReferenceId);
         page.locator("//*[contains(text(), 'Purchase Orders')]").click();
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
-        System.out.println(containerList);
         for(String tr : containerList){
-            System.out.println(tr);
-            if(tr.equals(poReferenceId)){
-                System.out.println(poReferenceId);
-                Locator detailsButton = page.locator(".bi-info-square-fill").first();
-                detailsButton.click();
+            if(tr.contains(poReferenceId)){
+                page.locator(".btn-link").first().click();
             }
         }
         page.locator("#BtnToApproveOS").click();

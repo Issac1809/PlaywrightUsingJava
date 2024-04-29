@@ -11,7 +11,7 @@ public class DispatchNoteCreate implements DispatchNoteCreateInterface {
         public void DNCreate(String mailId, String sourceCountry, String destinationCountry, String packagetype, int grossweight, int netWeight, int volume, int quantity, Page page){
             login.Login(mailId, page);
             page.locator("//*[contains(text(), 'Purchase Orders')]").click();
-            page.locator("//*[contains(text(), '"+ NonCatalogTitle +"'").first().click();
+            page.locator("//*[contains(text(), '"+ NonCatalogTitle +"')]").first().click();
             page.locator("#btnCreateDispatchNote").click();
             page.locator("#select2-sourceCountryId-container").click();
             page.locator(".select2-search__field").fill(sourceCountry);

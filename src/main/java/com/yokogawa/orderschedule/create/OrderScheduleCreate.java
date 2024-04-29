@@ -15,7 +15,7 @@ public class OrderScheduleCreate implements OrderScheduleInterface {
         login.Login(mailId, page);
         page.locator("//*[contains(text(), 'Purchase Orders')]").click();
         page.locator("//*[contains(text(), '"+ NonCatalogTitle +"')]").first().click();
-        String poReferenceId = page.locator("#referenceId2").textContent();
+        String poReferenceId = page.locator("#referenceId").first().textContent();
         page.locator("#btnCreateOR").click();
         Locator orderScheduleDate = page.locator(".scheduleDate-1").last();
         orderScheduleDate.click();
@@ -24,7 +24,6 @@ public class OrderScheduleCreate implements OrderScheduleInterface {
         page.locator("#btnCreate").click();
         page.waitForSelector(".bootbox-accept").click();
         logout.Logout(page);
-        System.out.println(poReferenceId);
         return poReferenceId;
     }
 }
