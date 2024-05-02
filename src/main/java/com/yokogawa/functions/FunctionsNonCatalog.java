@@ -8,6 +8,8 @@ import com.yokogawa.inspections.assign.InspectionAssign;
 import com.yokogawa.inspections.assign.InspectionAssignInterface;
 import com.yokogawa.inspections.create.InspectionCreate;
 import com.yokogawa.inspections.create.InspectionCreateInterface;
+import com.yokogawa.invoice.POInvoiceCreate;
+import com.yokogawa.invoice.POInvoiceCreateInterface;
 import com.yokogawa.msa.PorInspectPO;
 import com.yokogawa.msa.PorInspectPoInterface;
 import com.yokogawa.orderschedule.approve.OrderScheduleApprove;
@@ -42,6 +44,7 @@ import com.yokogawa.workorder.create.WorkOrderCreateInterface;
 import com.yokogawa.workorder.trackerstatus.WOTrackerStatus;
 import com.yokogawa.workorder.trackerstatus.WOTrackerStatusInterface;
 import java.util.List;
+
 import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
 import static com.yokogawa.variables.VariablesForNonCatalog.Password;
 public class FunctionsNonCatalog {
@@ -66,6 +69,7 @@ public class FunctionsNonCatalog {
     DispatchNotesAssignInterface dispatchNotesAssignInterface = new DispatchNotesAssign();
     WorkOrderCreateInterface workOrderCreateInterface = new WorkOrderCreate();
     WOTrackerStatusInterface woTrackerStatusInterface = new WOTrackerStatus();
+    POInvoiceCreateInterface poInvoiceCreateInterface = new POInvoiceCreate();
     public void FunctionsForNonCatalog(Page page) throws InterruptedException{
 
 //TODO Requester PR Create Non-Catalog
@@ -90,7 +94,9 @@ public class FunctionsNonCatalog {
         prCreateNonCatalog.InspectionRequired(page);
         prCreateNonCatalog.AddLineRequisitionItems(variablesForNonCatalog.Category, variablesForNonCatalog.Item, variablesForNonCatalog.Quantity, page);
         prCreateNonCatalog.Notes(variablesForNonCatalog.Notes, page);
-        prCreateNonCatalog.PRCreate(page);//TODO Request Sends PR For Approval
+        prCreateNonCatalog.PRCreate(page);
+
+//TODO Request Sends PR For Approval
         prSendForApproval.PrSendForApproval(page);
 
 //TODO BuyerManager PR Assign Non-Catalog
@@ -134,7 +140,7 @@ public class FunctionsNonCatalog {
         List<String> returnApprover = porApproval.SendForApproval(variablesForNonCatalog.ChiefFinancialOfficer, variablesForNonCatalog.PresidentDirectorCorporate, page);
         porApproval.ApproverLogin(returnApprover, variablesForNonCatalog.PRApproverGroupB, variablesForNonCatalog.PRApproverGroupC, variablesForNonCatalog.PRApproverGroupD, page);
 
-//TODO Inspect Create POP
+//TODO Inspect Create PO
         porInspectPoInterface.InspectCreatePO(variablesForNonCatalog.AdminId, page);
 
 //TODO Buyer Send For Vendor
@@ -163,5 +169,8 @@ public class FunctionsNonCatalog {
 
 //TODO Vendor Update Tracker Status
         woTrackerStatusInterface.VendorTrackerStatus(variablesForNonCatalog.VendorMailId, POReferenceId, page);
+
+//TODO Vendor Invoice Create
+        poInvoiceCreateInterface.VendorCreatePOInvoice(variablesForNonCatalog.VendorMailId, POReferenceId, variablesForNonCatalog.InvoiceNumber, page);
     }
 }

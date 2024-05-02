@@ -15,10 +15,6 @@ import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
 public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
     Login login = new LoginPage();
     Logout logout = new LogoutPage();
-    LocalDate currentDate = LocalDate.now(); // Get the current date
-    int daysInCurrentMonth = currentDate.lengthOfMonth(); // Get the maximum number of days in the current month
-    int tomorrowDayOfMonth = currentDate.getDayOfMonth() + 1; // Calculate the day for tomorrow
-    LocalDate tomorrow = LocalDate.now().plusDays(1);
     public void InviteRegisteredVendor(String vendor, Page page){
         page.locator("#addRequestForQuotationVendors").click();
         page.locator("#select2-vendorId-container").click();
@@ -30,6 +26,7 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
     }
     public void VendorLogin(String vendorMailId, String incortermLocation, String quotationReferenceNumber, Page page) {
         login.Login(vendorMailId, page);
+        page.pause();
         page.locator("//span[contains(text(), '" + NonCatalogTitle + "')]").first().click();
         page.locator("#btnSendQuote").click();
         page.locator("#incotermLocation").fill(incortermLocation);
@@ -38,25 +35,17 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
         validityDate.click();
         Locator today = page.locator("//span[@class='flatpickr-day today']");
         int getTodayDayNumber = Integer.parseInt(today.textContent());
-        int nextDay = 1;
         int nextDayAfterThirty = 31;
-        int nextDayAfterThirtyOne = 32;
         if (getTodayDayNumber == 30) {
-            int excludeDay1 = nextDay + getTodayDayNumber;
-                Locator condition = page.locator("//span[contains(text(), '" + excludeDay1 + "')]");
-            if (condition.isEnabled() && condition.isVisible()) {
-                condition.first().click();
+            Locator day = page.locator("//span[contains(text(), '" + nextDayAfterThirty + "')]");
+            if (day.isVisible() || !day.isHidden()) {
+                day.click();
             } else {
-                int excludeDay2 = nextDayAfterThirty - getTodayDayNumber;
-                page.locator("//span[contains(text(), '"+ excludeDay2 +"')]").first().click();
+                page.locator(".flatpickr-day.nextMonthDay").first().click();
             }
         }
-        if (getTodayDayNumber == 31){
-            int excludeDay3 = nextDayAfterThirtyOne - getTodayDayNumber;
-            page.locator("//span[contains(text(), '"+ excludeDay3 +"')]").first().click();
-        } else {
-            int tomorrow = getTodayDayNumber + 1;
-            page.locator("//span[contains(text(), '" + tomorrow + "')]").first().click();
+        if (getTodayDayNumber == 31) {
+            page.locator(".flatpickr-day.nextMonthDay").first().click();
         }
     }
     public void LiquidatedDamages(Page page){

@@ -4,6 +4,7 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
+import com.yokogawa.currencyexchangerate.CurrencyExchangeRate;
 import com.yokogawa.functions.FunctionsCatalog;
 import com.yokogawa.functions.FunctionsNonCatalog;
 public class YokogawaAsiaPrivateLimited {
@@ -31,6 +32,7 @@ public class YokogawaAsiaPrivateLimited {
 
         FunctionsCatalog functionsCatalog = new FunctionsCatalog();
         FunctionsNonCatalog functionsNonCatalog = new FunctionsNonCatalog();
+        CurrencyExchangeRate currencyExchangeRate = new CurrencyExchangeRate();
 //        functionsCatalog.FunctionsForCatalog(page);
         functionsNonCatalog.FunctionsForNonCatalog(page);
     }

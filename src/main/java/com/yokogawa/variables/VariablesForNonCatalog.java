@@ -52,4 +52,5 @@ public class VariablesForNonCatalog {
     public int NetWeight = 35;
     public int Volume = 50;
     public String LogisticsManager = "logisticsmanager@cormsquare.com";
+    public String InvoiceNumber = "INV-001";
 }

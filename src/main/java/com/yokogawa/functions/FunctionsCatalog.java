@@ -12,6 +12,7 @@ import com.yokogawa.requisition.sendforapproval.PocPrSendForApproval;
 import com.yokogawa.requisition.sendforapproval.PrSendForApproval;
 import com.yokogawa.variables.VariablesForCatalog;
 import java.util.List;
+
 import static com.yokogawa.variables.VariablesForCatalog.CatalogTitle;
 
 public class FunctionsCatalog {
@@ -60,7 +61,6 @@ public class FunctionsCatalog {
 
 //TODO Buyer Send For Approval
         List<String> returnApprover = porApproval.SendForApproval(variablesForCatalog.ChiefFinancialOfficer, variablesForCatalog.PresidentDirectorCorporate, page);
-        //List<String> returnApprover = porApproval.GetPorApprovers(page);
         porApproval.ApproverLogin(returnApprover, variablesForCatalog.PRApproverGroupB, variablesForCatalog.PRApproverGroupC, variablesForCatalog.PRApproverGroupD, page);
     }
 }
