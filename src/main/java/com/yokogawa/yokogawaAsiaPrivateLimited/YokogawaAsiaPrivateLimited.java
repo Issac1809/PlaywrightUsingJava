@@ -7,6 +7,9 @@ import com.microsoft.playwright.BrowserType.LaunchOptions;
 import com.yokogawa.currencyexchangerate.CurrencyExchangeRate;
 import com.yokogawa.functions.FunctionsCatalog;
 import com.yokogawa.functions.FunctionsNonCatalog;
+import com.yokogawa.invoice.POInvoiceCreate;
+import com.yokogawa.invoice.POInvoiceCreateInterface;
+
 public class YokogawaAsiaPrivateLimited {
     public static void main(String[] args) throws InterruptedException {
         Playwright playwright = Playwright.create();
@@ -32,8 +35,13 @@ public class YokogawaAsiaPrivateLimited {
 
         FunctionsCatalog functionsCatalog = new FunctionsCatalog();
         FunctionsNonCatalog functionsNonCatalog = new FunctionsNonCatalog();
-        CurrencyExchangeRate currencyExchangeRate = new CurrencyExchangeRate();
+        POInvoiceCreateInterface poInvoiceCreateInterface = new POInvoiceCreate();
 //        functionsCatalog.FunctionsForCatalog(page);
-        functionsNonCatalog.FunctionsForNonCatalog(page);
+//        functionsNonCatalog.FunctionsForNonCatalog(page);
+        String currencyCode = poInvoiceCreateInterface.VendorCreatePOInvoice("usa2@cormsquare.com", "5K0023PO02369", "INV-001", page);
+        double finalGSTPercentage = poInvoiceCreateInterface.VendorGST(page);
+        double finalTotalGSTPercentage = poInvoiceCreateInterface.VendorTotalGST(page);
+        poInvoiceCreateInterface.SGDEquivalentEnable(currencyCode, finalTotalGSTPercentage, finalGSTPercentage, "5K0023PO02369", page);
+        //poInvoiceCreateInterface.GSTEquivalentInputField(finalCurrencyExchangeRate, finalTotalGSTPercentage, page);
     }
 }

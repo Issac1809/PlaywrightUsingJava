@@ -171,6 +171,10 @@ public class FunctionsNonCatalog {
         woTrackerStatusInterface.VendorTrackerStatus(variablesForNonCatalog.VendorMailId, POReferenceId, page);
 
 //TODO Vendor Invoice Create
-        poInvoiceCreateInterface.VendorCreatePOInvoice(variablesForNonCatalog.VendorMailId, POReferenceId, variablesForNonCatalog.InvoiceNumber, page);
+        String currencyCode = poInvoiceCreateInterface.VendorCreatePOInvoice(variablesForNonCatalog.VendorMailId, POReferenceId, variablesForNonCatalog.InvoiceNumber, page);
+        double finalGSTPercentage = poInvoiceCreateInterface.VendorGST(page);
+        double finalTotalGSTPercentage = poInvoiceCreateInterface.VendorTotalGST(page);
+        poInvoiceCreateInterface.SGDEquivalentEnable(currencyCode, finalTotalGSTPercentage, finalGSTPercentage, POReferenceId, page);
+//        poInvoiceCreateInterface.GSTEquivalentInputField(finalCurrencyExchangeRate, finalTotalGSTPercentage, page);
     }
 }
