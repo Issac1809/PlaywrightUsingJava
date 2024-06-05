@@ -2,138 +2,190 @@ package com.yokogawa.requisition.create;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
-    public void RequesterLoginPRCreate(String EmailID, String Password, Page page) throws InterruptedException {
-//TODO Login Page
-        Locator mailId = page.getByPlaceholder("email@address.com");
-        mailId.click();mailId.fill(EmailID);
-        Locator password = page.getByPlaceholder("+ characters required");
-        password.click();password.fill(Password);
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click();
-        Thread.sleep(2000);
+import com.yokogawa.login.LoginPageInterface;
+import com.yokogawa.logout.LogoutPageInterface;
+import com.yokogawa.logout.LogoutPage;
+import com.yokogawa.variables.VariablesForNonCatalog;
+import java.util.Properties;
 
-//TODO Create Button
-        page.locator("button.btn.btn-primary:has-text('Create')").click();
+public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
+
+    Page page;
+    VariablesForNonCatalog variablesForNonCatalog;
+    LoginPageInterface loginPageInterface;
+    LogoutPageInterface logoutPageInterface;
+    Properties properties;
+
+    private PocNonCatalogPrCreate(){
     }
-    public void PRType(Page page) {
-//TODO Type - Catalog
+
+    public PocNonCatalogPrCreate(Properties properties, Page page){
+        this.page = page;
+        this.properties = properties;
+    }
+
+//TODO Test Constructor
+    public PocNonCatalogPrCreate(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
+        this.page = page;
+        this.properties = properties;
+        this.loginPageInterface = loginPageInterface;
+        this.logoutPageInterface = logoutPageInterface;
+    }
+//TODO Main Constructor
+    public PocNonCatalogPrCreate(Page page, VariablesForNonCatalog variablesForNonCatalog, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
+        this.page = page;
+        this.variablesForNonCatalog = variablesForNonCatalog;
+        this.loginPageInterface = loginPageInterface;
+        this.logoutPageInterface = new LogoutPage(page);
+    }
+
+    public void RequesterLoginPRCreate() throws InterruptedException {
+        loginPageInterface.LoginMethod(properties.getProperty("EmailID"));
+        Thread.sleep(2000);
+    }
+
+    public void CreateButton() {
+        Locator prType = page.locator("//*[@id=\"content\"]/div[1]/div[2]/div/div[2]/button");
+        prType.click();
+    }
+
+    public void NonCatalog(){
         Locator prType = page.locator("//*[@id=\"createPRModal\"]/div/div/div[2]/div/div/div/table/tbody/tr[2]/td[1]/a");
         prType.click();
     }
-    public void Title(String Title, Page page) {
+
+    public void Title() {
         Locator title = page.getByPlaceholder("Please Enter Title");
-        title.fill(Title);
+        title.fill(properties.getProperty("Title"));
     }
-    public void ShipToYokogawa(Page page) {
+
+    public void ShipToYokogawa() {
         page.getByLabel("Ship To Yokogawa").check();
     }
-    public void Project(String Project, Page page) throws InterruptedException {
+
+    public void Project() {
         page.locator("#select2-projectId-container").click();
-        page.getByRole(AriaRole.SEARCHBOX).fill(Project);
-        Locator getProject = page.locator("//li[contains(text(),'" + Project + "')]");
+        page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("Project"));
+        Locator getProject = page.locator("//li[contains(text(),'" + properties.getProperty("Project") + "')]");
         getProject.click();
-        Thread.sleep(1000);
     }
-    public void WBS(String Wbs, Page page) {
+
+    public void WBS() {
         page.locator("#select2-wbsId-container").click();
-        page.getByRole(AriaRole.SEARCHBOX).fill(Wbs);
-        Locator getWbs = page.locator("//li[contains(text(),'" + Wbs + "')]");
+        page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("Wbs"));
+        Locator getWbs = page.locator("//li[contains(text(),'" + properties.getProperty("Wbs") + "')]");
         getWbs.click();
     }
-    public void Incoterm(String Incoterm, Page page) {
+
+    public void Incoterm() {
         page.locator("#select2-incoterm-container").click();
-        page.getByRole(AriaRole.SEARCHBOX).fill(Incoterm);
-        Locator getIncoterm = page.locator("//li[contains(text(),'" + Incoterm + "')]");
+        page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("Incoterm"));
+        Locator getIncoterm = page.locator("//li[contains(text(),'" + properties.getProperty("Incoterm") + "')]");
         getIncoterm.click();
     }
-    public void ShippingAddress(Page page) {
+
+    public void ShippingAddress() {
         page.locator("#select2-shippingaddressId-container").click();
         page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("C2400000 - Yokogawa")).click();
     }
-    public void ShippingMode(String ShippingMode, Page page) {
+
+    public void ShippingMode() {
         page.getByText("-- Select Shipping Mode --").click();
-        page.getByRole(AriaRole.SEARCHBOX).fill(ShippingMode);
-        Locator getShippingMode = page.locator("//li[contains(text(),'" + ShippingMode + "')]");
+        page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("ShippingMode"));
+        Locator getShippingMode = page.locator("//li[contains(text(),'" + properties.getProperty("ShippingMode") + "')]");
         getShippingMode.click();
     }
-    public void QuotationRequiredBy(Page page) {
+
+    public void QuotationRequiredBy() {
         Locator quotationRequiredBy = page.locator("//*[@id=\"dates\"]/div[1]/input[2]");
         quotationRequiredBy.click();
         Locator today = page.locator("//span[@class='flatpickr-day today']").first();
         today.click();
     }
-    public void ExpectedPOIssue(Page page) {
+
+    public void ExpectedPOIssue() {
         Locator expectedPOIssue = page.locator("//*[@id=\"dates\"]/div[2]/input[2]");
         expectedPOIssue.click();
         Locator today = page.locator("//span[@class='flatpickr-day today']").first();
         today.click();
     }
-    public void ExpectedDelivery(Page page) {
+
+    public void ExpectedDelivery() {
         Locator expectedDelivery = page.locator("//*[@id=\"dates\"]/div[3]/input[2]");
         expectedDelivery.click();
         Locator today = page.locator("//span[@class='flatpickr-day today']").first();
         today.click();
     }
-    public void BuyerManager(String BuyerManager, Page page){
+
+    public void BuyerManager(){
         page.locator("#select2-buyerManagerId-container").click();
-        page.getByRole(AriaRole.SEARCHBOX).fill(BuyerManager);
-        Locator getBuyerManager = page.locator("//li[contains(text(),'" + BuyerManager + "')]");
+        page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("BuyerManager"));
+        Locator getBuyerManager = page.locator("//li[contains(text(),'" + properties.getProperty("BuyerManager") + "')]");
         getBuyerManager.click();
     }
-    public void ProjectManager(String ProjectManager, Page page){
+
+    public void ProjectManager(){
         page.getByLabel("-- Select Project Manager --").click();
-        page.getByRole(AriaRole.SEARCHBOX).fill(ProjectManager);
-        Locator getProjectManager = page.locator("//li[contains(text(),'" + ProjectManager + "')]");
+        page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("ProjectManager"));
+        Locator getProjectManager = page.locator("//li[contains(text(),'" + properties.getProperty("ProjectManager") + "')]");
         getProjectManager.click();
     }
-    public void OrderIntake(int OrderIntake, Page page){
+
+    public void OrderIntake(){
         page.getByPlaceholder("Enter Order Intake Cost").click();
-        page.getByPlaceholder("Enter Order Intake Cost").fill(String.valueOf(OrderIntake));
+        page.getByPlaceholder("Enter Order Intake Cost").fill(String.valueOf(properties.getProperty("OrderIntake")));
     }
-    public void TargetPrice(int TargetPrice, Page page){
+
+    public void TargetPrice(){
         page.getByPlaceholder("Enter Target Price").click();
-        page.getByPlaceholder("Enter Target Price").fill(String.valueOf(TargetPrice));
+        page.getByPlaceholder("Enter Target Price").fill(String.valueOf(properties.getProperty("TargetPrice")));
     }
-    public void WarrantyRequirements(String WarrantyRequirement, Page page){
+
+    public void WarrantyRequirements(){
         page.getByLabel("-- Select Warranty Requirements --").click();
-        page.getByRole(AriaRole.SEARCHBOX).fill(WarrantyRequirement);
-        Locator getWarrantyRequirement = page.locator("//li[contains(text(),'" + WarrantyRequirement + "')]");
+        page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("WarrantyRequirement"));
+        Locator getWarrantyRequirement = page.locator("//li[contains(text(),'" + properties.getProperty("WarrantyRequirement") + "')]");
         getWarrantyRequirement.click();
     }
-    public void PriceValidity(String PriceValidity, Page page){
+
+    public void PriceValidity(){
         page.getByLabel("-- Select Price Validity --").click();
-        page.getByRole(AriaRole.SEARCHBOX).fill(PriceValidity);
-        Locator getPriceValidity = page.locator("//li[contains(text(),'" + PriceValidity + "')]");
+        page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("PriceValidity"));
+        Locator getPriceValidity = page.locator("//li[contains(text(),'" + properties.getProperty("PriceValidity") + "')]");
         getPriceValidity.click();
     }
-    public void InspectionRequired(Page page) {
+
+    public void InspectionRequired() {
         page.locator("#inspectrequired").check();
     }
-    public void AddLineRequisitionItems(String Category, String Item, int Quantity, Page page) {
+
+    public void AddLineRequisitionItems() {
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add line Requisition Items")).click();
 //TODO Category
         page.getByLabel("-- Select Categories --").click();
-        page.getByRole(AriaRole.SEARCHBOX).fill(Category);
-        Locator getCategory = page.locator("//li[contains(text(),'" + Category + "')]").first();
+        page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("Category"));
+        Locator getCategory = page.locator("//li[contains(text(),'" + properties.getProperty("Category") + "')]").first();
         getCategory.click();
 //TODO Items
         page.getByLabel("-- Select Item --").click();
-        Locator getItem = page.locator("//li[contains(text(),'" + Item + "')]").first();
+        Locator getItem = page.locator("//li[contains(text(),'" + properties.getProperty("Item") + "')]").first();
         getItem.click();
 //TODO Quantity
         page.getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("* Quantity :")).click();
-        page.getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("* Quantity :")).fill(String.valueOf(Quantity));
+        page.getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("* Quantity :")).fill(String.valueOf(properties.getProperty("Quantity")));
 //TODO Add Button
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add").setExact(true)).click();
     }
-    public void Notes(String Notes, Page page) {
-        page.getByPlaceholder("Please Enter Notes").click();
-        page.getByPlaceholder("Please Enter Notes").fill(Notes);
-    }
-    public void PRCreate(Page page) {
 
+    public void Notes() {
+        page.getByPlaceholder("Please Enter Notes").click();
+        page.getByPlaceholder("Please Enter Notes").fill(properties.getProperty("Notes"));
+    }
+
+    public void PRCreate() {
 //TODO Create Draft Button
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create Draft")).click();
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
+        logoutPageInterface.LogoutMethod();
     }
 }

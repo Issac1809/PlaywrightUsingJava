@@ -1,21 +1,42 @@
 package com.yokogawa.orderschedule.approve;
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.yokogawa.login.Login;
-import com.yokogawa.login.LoginPage;
-import com.yokogawa.logout.Logout;
-import com.yokogawa.logout.LogoutPage;
-
+import com.yokogawa.login.LoginPageInterface;
+import com.yokogawa.logout.LogoutPageInterface;
+import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.List;
-
-import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
+import java.util.Properties;
 
 public class OrderScheduleApprove implements OrderScheduleApproveInterface{
-    Login login = new LoginPage();
-    Logout logout = new LogoutPage();
-    public void OSApprove(String mailId, String poReferenceId, Page page){
-        login.Login(mailId, page);
+
+    Properties properties;
+    Page page;
+    VariablesForNonCatalog variablesForNonCatalog;
+    LoginPageInterface loginPageInterface;
+    LogoutPageInterface logoutPageInterface;
+
+    private OrderScheduleApprove(){
+    }
+
+//TODO OS Create Constructor
+    public OrderScheduleApprove(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
+        this.loginPageInterface = loginPageInterface;
+        this.properties = properties;
+        this.page = page;
+        this.logoutPageInterface = logoutPageInterface;
+    }
+
+    public OrderScheduleApprove(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
+        this.variablesForNonCatalog = variablesForNonCatalog;
+        this.page = page;
+        this.loginPageInterface = loginPageInterface;
+        this.logoutPageInterface = logoutPageInterface;
+    }
+
+    public void OSApprove(){
+        loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
         page.locator("//*[contains(text(), 'Purchase Orders')]").click();
+        String poReferenceId = properties.getProperty("poReferenceId");
+        System.out.println(poReferenceId);
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
         for(String tr : containerList){
             if(tr.contains(poReferenceId)){
@@ -25,6 +46,6 @@ public class OrderScheduleApprove implements OrderScheduleApproveInterface{
         page.locator("#BtnToApproveOS").click();
         page.locator("#btnApprove").click();
         page.locator(".bootbox-accept").click();
-        logout.Logout(page);
+        logoutPageInterface.LogoutMethod();
     }
 }

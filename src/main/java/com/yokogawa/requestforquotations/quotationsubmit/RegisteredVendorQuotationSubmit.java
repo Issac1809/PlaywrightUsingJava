@@ -1,40 +1,66 @@
 package com.yokogawa.requestforquotations.quotationsubmit;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.yokogawa.login.Login;
-import com.yokogawa.login.LoginPage;
-import com.yokogawa.logout.Logout;
-import com.yokogawa.logout.LogoutPage;
-import com.yokogawa.requestforquotations.quotationsubmit.QuotationSubmit;
-
+import com.yokogawa.login.LoginPageInterface;
+import com.yokogawa.logout.LogoutPageInterface;
+import com.yokogawa.variables.VariablesForNonCatalog;
 import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.util.List;
+import java.util.Properties;
 
-import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
 public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
-    Login login = new LoginPage();
-    Logout logout = new LogoutPage();
-    public void InviteRegisteredVendor(String vendor, Page page){
+
+    Properties properties;
+    VariablesForNonCatalog variablesForNonCatalog;
+    Page page;
+    LoginPageInterface loginPageInterface;
+    LogoutPageInterface logoutPageInterface;
+
+    private RegisteredVendorQuotationSubmit(){
+    }
+
+//TODO Test Constructor
+    public RegisteredVendorQuotationSubmit(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
+        this.loginPageInterface = loginPageInterface;
+        this.properties = properties;
+        this.page = page;
+        this.logoutPageInterface = logoutPageInterface;
+    }
+
+    public RegisteredVendorQuotationSubmit(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
+        this.variablesForNonCatalog = variablesForNonCatalog;
+        this.page = page;
+        this.loginPageInterface = loginPageInterface;
+        this.logoutPageInterface = logoutPageInterface;
+    }
+
+    public void InviteRegisteredVendor(){
+        loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
+        page.locator("//*[contains(text(), 'Request For Quotations')]").click();
+        String title = properties.getProperty("Title");
+        page.locator("//span[contains(text(), '"+ title +"')]").first().click();
         page.locator("#addRequestForQuotationVendors").click();
         page.locator("#select2-vendorId-container").click();
-        page.locator(".select2-search__field").fill(vendor);
-        page.locator("//li[contains(text(), '"+ vendor +"')]").first().click();
+        String vendorId = properties.getProperty("Vendor");
+        page.locator(".select2-search__field").fill(vendorId);
+        page.locator("//li[contains(text(), '"+ vendorId +"')]").first().click();
         page.locator("#saveRequestForQuotationVendor").click();
         page.locator("#vendorSendMailBtnId").click();
-        logout.Logout(page);
+        logoutPageInterface.LogoutMethod();
     }
-    public void VendorLogin(String vendorMailId, String incortermLocation, String quotationReferenceNumber, Page page) {
-        login.Login(vendorMailId, page);
-        page.pause();
-        page.locator("//span[contains(text(), '" + NonCatalogTitle + "')]").first().click();
+
+    public void VendorLogin() throws InterruptedException {
+        loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
+        String title = properties.getProperty("Title");
+        page.locator("//span[contains(text(), '" + title + "')]").first().click();
         page.locator("#btnSendQuote").click();
-        page.locator("#incotermLocation").fill(incortermLocation);
-        page.locator("#quotationReferenceNumber").fill(quotationReferenceNumber);
+        page.locator("#incotermLocation").fill(properties.getProperty("Incoterm"));
+        page.locator("#quotationReferenceNumber").fill(properties.getProperty("QuotationReferenceNumber"));
+        Thread.sleep(2000);
         Locator validityDate = page.locator("#dates");
         validityDate.click();
         Locator today = page.locator("//span[@class='flatpickr-day today']");
         int getTodayDayNumber = Integer.parseInt(today.textContent());
+        int getTomorrowDayNumber = getTodayDayNumber + 1;
         int nextDayAfterThirty = 31;
         if (getTodayDayNumber == 30) {
             Locator day = page.locator("//span[contains(text(), '" + nextDayAfterThirty + "')]");
@@ -47,58 +73,68 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
         if (getTodayDayNumber == 31) {
             page.locator(".flatpickr-day.nextMonthDay").first().click();
         }
+        else {
+            page.locator("//span[contains(text(), '" + getTomorrowDayNumber + "')]").last().click();
+        }
     }
-    public void LiquidatedDamages(Page page){
+
+    public void LiquidatedDamages(){
         page.locator("#liquidatedComplyId").click();
     }
-    public void RoHSCompliance(Page page){
+
+    public void RoHSCompliance(){
         page.locator("#rohsComplyId").click();
     }
-    public void WarrantyRequirements(Page page){
+
+    public void WarrantyRequirements(){
         page.locator("#warrantyRequirementsComplyId").click();
     }
-    public void QuotationItems(int HSCode, String Make, String Model, String PartNumber, String CountryOfOrigin, int Rate, int Discount, int LeadTime, String QuotationNotes, Page page){
-        String hsCode = Integer.toString(HSCode);
+
+    public void QuotationItems(){
+        String hsCode = Integer.toString(Integer.parseInt(properties.getProperty("HSCode")));
         page.locator("#hsCode-1").fill(hsCode);
-        page.locator("#make-1").fill(Make);
-        page.locator("#model-1").fill(Model);
-        page.locator("#partNumber-1").fill(PartNumber);
-        page.locator("#countryOfOrigin-1").fill(CountryOfOrigin);
-        String rate = Integer.toString(Rate);
+        page.locator("#make-1").fill(properties.getProperty("Make"));
+        page.locator("#model-1").fill(properties.getProperty("Model"));
+        page.locator("#partNumber-1").fill(properties.getProperty("PartNumber"));
+        page.locator("#countryOfOrigin-1").fill(properties.getProperty("CountryOfOrigin"));
+        String rate = Integer.toString(Integer.parseInt(properties.getProperty("Rate")));
         Locator getRateValue = page.locator("#rate-1");
         getRateValue.clear();
         getRateValue.fill(rate);
-        String discount = Integer.toString(Discount);
+        String discount = Integer.toString(Integer.parseInt(properties.getProperty("Discount")));
         Locator getDiscount = page.locator("#discount-1");
         getDiscount.clear();
         getDiscount.fill(discount);
-        String leadTime = Integer.toString(Rate);
+        String leadTime = Integer.toString(Integer.parseInt(properties.getProperty("LeadTime")));
         page.locator("#leadTime-1").fill(leadTime);
-        page.locator("#notes-1").fill(QuotationNotes);
+        page.locator("#notes-1").fill(properties.getProperty("QuotationNotes"));
     }
-    public void Gst(int GST, Page page){
-        String gst = Integer.toString(GST);
+
+    public void Gst(){
+        String gst = Integer.toString(Integer.parseInt(properties.getProperty("Discount")));
         page.locator("#gstId").fill(gst);
     }
-    public void QuotationAttachments(Page page){
+
+    public void QuotationAttachments() {
         //TODO Technical Attachment
         page.locator("#attachFile").click();
         Locator TechnicalFile = page.locator("#formFilePreupload");
-        TechnicalFile.setInputFiles(Paths.get("./Downloads/Technical Documents.xlsx"));
+        TechnicalFile.setInputFiles(Paths.get("D://YokogawaAsiaPrivateLimited//Downloads//Technical Documents.xlsx"));
         page.locator("#select2-attachmentTypeId-container").click();
         page.locator("//li[contains(text(), 'Technical')]").click();
         page.locator("#attachmentSaveId").click();
         //TODO Commercial Attachment
         page.locator("#attachFile").click();
         Locator CommercialFile = page.locator("#formFilePreupload");
-        CommercialFile.setInputFiles(Paths.get("./Downloads/Commercial Documents.xlsx"));
+        CommercialFile.setInputFiles(Paths.get("D://YokogawaAsiaPrivateLimited//Downloads//Commercial Documents.xlsx"));
         page.locator("#select2-attachmentTypeId-container").click();
         page.locator("//li[contains(text(), 'Commercial')]").click();
         page.locator("#attachmentSaveId").click();
     }
-    public void QuotationSubmitButton(Page page){
+
+    public void QuotationSubmitButton(){
         page.locator("#btnCreate").click();
         page.locator(".bootbox-accept").click();
-        logout.Logout(page);
+        logoutPageInterface.LogoutMethod();
     }
 }

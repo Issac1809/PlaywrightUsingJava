@@ -1,17 +1,42 @@
 package com.yokogawa.workorder.create;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.yokogawa.login.Login;
-import com.yokogawa.login.LoginPage;
-import com.yokogawa.logout.Logout;
-import com.yokogawa.logout.LogoutPage;
+import com.yokogawa.login.LoginPageInterface;
+import com.yokogawa.logout.LogoutPageInterface;
+import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.List;
+import java.util.Properties;
+
 public class WorkOrderCreate implements WorkOrderCreateInterface {
-    Login login = new LoginPage();
-    Logout logout = new LogoutPage();
-    public void WOCreate(String mailId, String poReferenceId, String vendor, Page page) {
-        login.Login(mailId, page);
+
+    Properties properties;
+    VariablesForNonCatalog variablesForNonCatalog;
+    Page page;
+    LoginPageInterface loginPageInterface;
+    LogoutPageInterface logoutPageInterface;
+
+    private WorkOrderCreate(){
+    }
+
+//TODO Test Constructor
+    public WorkOrderCreate(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
+        this.properties = properties;
+        this.page = page;
+        this.logoutPageInterface = logoutPageInterface;
+        this.loginPageInterface = loginPageInterface;
+    }
+
+    public WorkOrderCreate(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
+        this.variablesForNonCatalog = variablesForNonCatalog;
+        this.page = page;
+        this.logoutPageInterface = logoutPageInterface;
+        this.loginPageInterface = loginPageInterface;
+    }
+
+    public void WOCreate() {
+        loginPageInterface.LoginMethod(properties.getProperty("LogisticsManager"));
         page.locator("//*[contains(text(), 'Dispatch Notes')]").click();
+        String poReferenceId = properties.getProperty("poReferenceId");
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
         for(String tr : containerList){
             if(tr.contains(poReferenceId)){
@@ -21,8 +46,9 @@ public class WorkOrderCreate implements WorkOrderCreateInterface {
         page.locator("#dnActionDropdown").click();
         page.locator("#btnToCreateWorkOrder").click();
         page.locator("#select2-freightForwarderId-container").first().click();
-        page.locator(".select2-search__field").fill(vendor);
-        page.locator("//li[contains(text(), '" + vendor + "')]").first().click();
+        String vendorId = properties.getProperty("Vendor");
+        page.locator(".select2-search__field").fill(vendorId);
+        page.locator("//li[contains(text(), '" + vendorId + "')]").first().click();
         page.locator("#select2-priority-container").click();
         page.locator("//li[contains(text(), 'High')]").click();
         page.getByPlaceholder("Select Date").last().click();
@@ -32,6 +58,6 @@ public class WorkOrderCreate implements WorkOrderCreateInterface {
         page.locator("//*[contains(text(), 'Proceed')]").click();
         page.locator("#vendorSendMailBtnId").click();
         page.locator(".bootbox-accept").click();
-        logout.Logout(page);
+        logoutPageInterface.LogoutMethod();
     }
 }

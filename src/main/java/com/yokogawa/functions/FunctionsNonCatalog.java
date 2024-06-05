@@ -1,180 +1,208 @@
 package com.yokogawa.functions;
 import com.microsoft.playwright.Page;
-import com.yokogawa.dispatchnotes.assign.DispatchNotesAssign;
+import com.playwrightfactory.PlayWrightFactory;
 import com.yokogawa.dispatchnotes.assign.DispatchNotesAssignInterface;
-import com.yokogawa.dispatchnotes.create.DispatchNoteCreate;
 import com.yokogawa.dispatchnotes.create.DispatchNoteCreateInterface;
-import com.yokogawa.inspections.assign.InspectionAssign;
 import com.yokogawa.inspections.assign.InspectionAssignInterface;
-import com.yokogawa.inspections.create.InspectionCreate;
 import com.yokogawa.inspections.create.InspectionCreateInterface;
-import com.yokogawa.invoice.POInvoiceCreate;
 import com.yokogawa.invoice.POInvoiceCreateInterface;
-import com.yokogawa.msa.PorInspectPO;
+import com.yokogawa.login.LoginPageInterface;
+import com.yokogawa.logout.LogoutPageInterface;
 import com.yokogawa.msa.PorInspectPoInterface;
-import com.yokogawa.orderschedule.approve.OrderScheduleApprove;
 import com.yokogawa.orderschedule.approve.OrderScheduleApproveInterface;
-import com.yokogawa.orderschedule.create.OrderScheduleCreate;
 import com.yokogawa.orderschedule.create.OrderScheduleInterface;
-import com.yokogawa.purchaseorder.BuyerPurchaseOrder;
 import com.yokogawa.purchaseorder.PurchaseOrderInterface;
-import com.yokogawa.purchaseorderrequest.approval.PocPorApproval;
 import com.yokogawa.purchaseorderrequest.approval.PorApproval;
-import com.yokogawa.purchaseorderrequest.create.PocNonCatalogPorCreate;
 import com.yokogawa.purchaseorderrequest.create.PorCreateNonCatalog;
-import com.yokogawa.requestforquotations.commercialevaluation.CommercialEvaluation;
 import com.yokogawa.requestforquotations.commercialevaluation.CommercialEvaluationInterface;
-import com.yokogawa.requestforquotations.create.PocRfqCreate;
-import com.yokogawa.requestforquotations.quotationsubmit.QuotationSubmit;
-import com.yokogawa.requestforquotations.quotationsubmit.RegisteredVendorQuotationSubmit;
 import com.yokogawa.requestforquotations.create.RfqCreate;
-import com.yokogawa.requestforquotations.readyforevaluation.ReadyForEvaluation;
+import com.yokogawa.requestforquotations.quotationsubmit.QuotationSubmit;
 import com.yokogawa.requestforquotations.readyforevaluation.ReadyForEvalutationInterface;
-import com.yokogawa.requestforquotations.technicalevaluation.TechnicalEvaluation;
 import com.yokogawa.requestforquotations.technicalevaluation.TechnicalEvaluationInterface;
-import com.yokogawa.requisition.assign.PocPrAssign;
 import com.yokogawa.requisition.assign.PrAssign;
-import com.yokogawa.requisition.create.PocNonCatalogPrCreate;
 import com.yokogawa.requisition.create.PrCreateNonCatalog;
-import com.yokogawa.requisition.sendforapproval.PocPrSendForApproval;
 import com.yokogawa.requisition.sendforapproval.PrSendForApproval;
-import com.yokogawa.variables.VariablesForNonCatalog;
-import com.yokogawa.workorder.create.WorkOrderCreate;
 import com.yokogawa.workorder.create.WorkOrderCreateInterface;
-import com.yokogawa.workorder.trackerstatus.WOTrackerStatus;
 import com.yokogawa.workorder.trackerstatus.WOTrackerStatusInterface;
 import java.util.List;
+import java.util.Properties;
 
-import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
-import static com.yokogawa.variables.VariablesForNonCatalog.Password;
 public class FunctionsNonCatalog {
-    VariablesForNonCatalog variablesForNonCatalog = new VariablesForNonCatalog();
-    PrCreateNonCatalog prCreateNonCatalog = new PocNonCatalogPrCreate();
-    PrSendForApproval prSendForApproval = new PocPrSendForApproval();
-    PrAssign prAssign = new PocPrAssign();
-    RfqCreate rfqCreate = new PocRfqCreate();
-    QuotationSubmit quotationSubmit = new RegisteredVendorQuotationSubmit();
-    ReadyForEvalutationInterface readyForEvalutationInterface = new ReadyForEvaluation();
-    TechnicalEvaluationInterface technicalEvaluationInterface = new TechnicalEvaluation();
-    CommercialEvaluationInterface commercialEvaluationInterface = new CommercialEvaluation();
-    PorCreateNonCatalog porCreateNonCatalog = new PocNonCatalogPorCreate();
-    PorApproval porApproval = new PocPorApproval();
-    PorInspectPoInterface porInspectPoInterface = new PorInspectPO();
-    PurchaseOrderInterface purchaseOrderInterface = new BuyerPurchaseOrder();
-    OrderScheduleInterface orderScheduleInterface = new OrderScheduleCreate();
-    OrderScheduleApproveInterface orderScheduleApproveInterface = new OrderScheduleApprove();
-    InspectionCreateInterface inspectionCreateInterface = new InspectionCreate();
-    InspectionAssignInterface inspectionAssignInterface = new InspectionAssign();
-    DispatchNoteCreateInterface dispatchNoteCreateInterface = new DispatchNoteCreate();
-    DispatchNotesAssignInterface dispatchNotesAssignInterface = new DispatchNotesAssign();
-    WorkOrderCreateInterface workOrderCreateInterface = new WorkOrderCreate();
-    WOTrackerStatusInterface woTrackerStatusInterface = new WOTrackerStatus();
-    POInvoiceCreateInterface poInvoiceCreateInterface = new POInvoiceCreate();
-    public void FunctionsForNonCatalog(Page page) throws InterruptedException{
+
+    protected PlayWrightFactory playWrightFactory;
+    protected Page page;
+    protected Properties properties;
+    protected FunctionsNonCatalog functionsNonCatalog;
+    protected LoginPageInterface loginPageInterface;
+    protected LogoutPageInterface logoutPageInterface;
+    protected PrCreateNonCatalog prCreateNonCatalog;
+    protected PrSendForApproval prSendForApproval;
+    protected PrAssign prAssign;
+    protected RfqCreate rfqCreate;
+    protected QuotationSubmit quotationSubmit;
+    protected ReadyForEvalutationInterface readyForEvalutationInterface;
+    protected TechnicalEvaluationInterface technicalEvaluationInterface;
+    protected CommercialEvaluationInterface commercialEvaluationInterface;
+    protected PorCreateNonCatalog porCreateNonCatalog;
+    protected PorApproval porApproval;
+    protected PorInspectPoInterface porInspectPoInterface;
+    protected PurchaseOrderInterface purchaseOrderInterface;
+    protected OrderScheduleInterface orderScheduleInterface;
+    protected OrderScheduleApproveInterface orderScheduleApproveInterface;
+    protected InspectionCreateInterface inspectionCreateInterface;
+    protected InspectionAssignInterface inspectionAssignInterface;
+    protected DispatchNoteCreateInterface dispatchNoteCreateInterface;
+    protected DispatchNotesAssignInterface dispatchNotesAssignInterface;
+    protected WorkOrderCreateInterface workOrderCreateInterface;
+    protected WOTrackerStatusInterface woTrackerStatusInterface;
+    protected POInvoiceCreateInterface poInvoiceCreateInterface;
+
+    private FunctionsNonCatalog(){
+    }
+
+    public FunctionsNonCatalog(PlayWrightFactory playWrightFactory, Properties properties, Page page, LoginPageInterface loginPageInterface,
+                               LogoutPageInterface logoutPageInterface, PrCreateNonCatalog prCreateNonCatalog, PrSendForApproval prSendForApproval,
+                               PrAssign prAssign, RfqCreate rfqCreate, QuotationSubmit quotationSubmit, ReadyForEvalutationInterface readyForEvalutationInterface,
+                               TechnicalEvaluationInterface technicalEvaluationInterface, CommercialEvaluationInterface commercialEvaluationInterface,
+                               PorCreateNonCatalog porCreateNonCatalog, PorApproval porApproval, PorInspectPoInterface porInspectPoInterface,
+                               PurchaseOrderInterface purchaseOrderInterface, OrderScheduleInterface orderScheduleInterface,
+                               OrderScheduleApproveInterface orderScheduleApproveInterface, InspectionCreateInterface inspectionCreateInterface,
+                               InspectionAssignInterface inspectionAssignInterface, DispatchNoteCreateInterface dispatchNoteCreateInterface,
+                               DispatchNotesAssignInterface dispatchNotesAssignInterface, WorkOrderCreateInterface workOrderCreateInterface,
+                               WOTrackerStatusInterface woTrackerStatusInterface, POInvoiceCreateInterface poInvoiceCreateInterface){
+        this.playWrightFactory = playWrightFactory;
+        this.properties = properties;
+        this.page = page;
+        this.loginPageInterface = loginPageInterface;
+        this.logoutPageInterface = logoutPageInterface;
+        this.prCreateNonCatalog = prCreateNonCatalog;
+        this.prSendForApproval = prSendForApproval;
+        this.prAssign = prAssign;
+        this.rfqCreate = rfqCreate;
+        this.quotationSubmit = quotationSubmit;
+        this.readyForEvalutationInterface = readyForEvalutationInterface;
+        this.technicalEvaluationInterface = technicalEvaluationInterface;
+        this.commercialEvaluationInterface = commercialEvaluationInterface;
+        this.porCreateNonCatalog = porCreateNonCatalog;
+        this.porApproval = porApproval;
+        this.porInspectPoInterface = porInspectPoInterface;
+        this.purchaseOrderInterface = purchaseOrderInterface;
+        this.orderScheduleInterface = orderScheduleInterface;
+        this.orderScheduleApproveInterface = orderScheduleApproveInterface;
+        this.inspectionCreateInterface = inspectionCreateInterface;
+        this.inspectionAssignInterface = inspectionAssignInterface;
+        this.dispatchNoteCreateInterface = dispatchNoteCreateInterface;
+        this.dispatchNotesAssignInterface = dispatchNotesAssignInterface;
+        this.workOrderCreateInterface = workOrderCreateInterface;
+        this.woTrackerStatusInterface = woTrackerStatusInterface;
+        this.poInvoiceCreateInterface = poInvoiceCreateInterface;
+    }
+
+    public void FunctionsForNonCatalog() throws InterruptedException{
 
 //TODO Requester PR Create Non-Catalog
-        prCreateNonCatalog.RequesterLoginPRCreate(variablesForNonCatalog.EmailID, Password, page);
-        prCreateNonCatalog.PRType(page);
-        prCreateNonCatalog.Title(NonCatalogTitle, page);
-        prCreateNonCatalog.ShipToYokogawa(page);
-        prCreateNonCatalog.Project(variablesForNonCatalog.Project, page);
-        prCreateNonCatalog.WBS(variablesForNonCatalog.Wbs, page);
-        prCreateNonCatalog.Incoterm(variablesForNonCatalog.Incoterm, page);
-        prCreateNonCatalog.ShippingAddress(page);
-        prCreateNonCatalog.ShippingMode(variablesForNonCatalog.ShippingMode, page);
-        prCreateNonCatalog.QuotationRequiredBy(page);
-        prCreateNonCatalog.ExpectedPOIssue(page);
-        prCreateNonCatalog.ExpectedDelivery(page);
-        prCreateNonCatalog.BuyerManager(variablesForNonCatalog.BuyerManager, page);
-        prCreateNonCatalog.ProjectManager(variablesForNonCatalog.ProjectManager, page);
-        prCreateNonCatalog.OrderIntake(variablesForNonCatalog.OrderIntake, page);
-        prCreateNonCatalog.TargetPrice(variablesForNonCatalog.TargetPrice, page);
-        prCreateNonCatalog.WarrantyRequirements(variablesForNonCatalog.WarrantyRequirement, page);
-        prCreateNonCatalog.PriceValidity(variablesForNonCatalog.PriceValidity, page);
-        prCreateNonCatalog.InspectionRequired(page);
-        prCreateNonCatalog.AddLineRequisitionItems(variablesForNonCatalog.Category, variablesForNonCatalog.Item, variablesForNonCatalog.Quantity, page);
-        prCreateNonCatalog.Notes(variablesForNonCatalog.Notes, page);
-        prCreateNonCatalog.PRCreate(page);
+        prCreateNonCatalog.RequesterLoginPRCreate();
+        prCreateNonCatalog.CreateButton();
+        prCreateNonCatalog.NonCatalog();
+        prCreateNonCatalog.Title();
+        prCreateNonCatalog.ShipToYokogawa();
+        prCreateNonCatalog.Project();
+        prCreateNonCatalog.WBS();
+        prCreateNonCatalog.Incoterm();
+        prCreateNonCatalog.ShippingAddress();
+        prCreateNonCatalog.ShippingMode();
+        prCreateNonCatalog.QuotationRequiredBy();
+        prCreateNonCatalog.ExpectedPOIssue();
+        prCreateNonCatalog.ExpectedDelivery();
+        prCreateNonCatalog.BuyerManager();
+        prCreateNonCatalog.ProjectManager();
+        prCreateNonCatalog.OrderIntake();
+        prCreateNonCatalog.TargetPrice();
+        prCreateNonCatalog.WarrantyRequirements();
+        prCreateNonCatalog.PriceValidity();
+        prCreateNonCatalog.InspectionRequired();
+        prCreateNonCatalog.AddLineRequisitionItems();
+        prCreateNonCatalog.Notes();
+        prCreateNonCatalog.PRCreate();
 
 //TODO Request Sends PR For Approval
-        prSendForApproval.PrSendForApproval(page);
+        prSendForApproval.NonCatalogPrSendForApproval();
 
 //TODO BuyerManager PR Assign Non-Catalog
-        prAssign.BuyerManagerLogin(variablesForNonCatalog.BuyerManager, page);
-        prAssign.BuyerManagerAssign(NonCatalogTitle, variablesForNonCatalog.Buyer, page);
+        prAssign.BuyerManagerLogin();
+        prAssign.BuyerManagerAssign();
 
 //TODO Buyer RFQ Create Non-Catalog
-        rfqCreate.BuyerLogin(variablesForNonCatalog.Buyer, page);
-        rfqCreate.BuyerRfqCreate(NonCatalogTitle, page);
-        rfqCreate.RfQNotes(variablesForNonCatalog.RfQNotes, page);
-        rfqCreate.RFQCreate(page);
+        rfqCreate.BuyerLogin();
+        rfqCreate.BuyerRfqCreate();
+        rfqCreate.RfQNotes();
+        rfqCreate.RFQCreate();
 
 //TODO Buyer Invites Registered Vendor
-        quotationSubmit.InviteRegisteredVendor(variablesForNonCatalog.Vendor, page);
-        quotationSubmit.VendorLogin(variablesForNonCatalog.VendorMailId, variablesForNonCatalog.IncotermLocation, variablesForNonCatalog.QuotationReferenceNumber, page);
-        quotationSubmit.LiquidatedDamages(page);
-        quotationSubmit.RoHSCompliance(page);
-        quotationSubmit.WarrantyRequirements(page);
-        quotationSubmit.QuotationItems(variablesForNonCatalog.HSCode, variablesForNonCatalog.Make, variablesForNonCatalog.Model, variablesForNonCatalog.PartNumber, variablesForNonCatalog.CountryOfOrigin, variablesForNonCatalog.Rate, variablesForNonCatalog.Discount, variablesForNonCatalog.LeadTime, variablesForNonCatalog.QuotationNotes, page);
-        quotationSubmit.Gst(variablesForNonCatalog.GST, page);
-        quotationSubmit.QuotationAttachments(page);
-        quotationSubmit.QuotationSubmitButton(page);
+        quotationSubmit.InviteRegisteredVendor();
+        quotationSubmit.VendorLogin();
+        quotationSubmit.LiquidatedDamages();
+        quotationSubmit.RoHSCompliance();
+        quotationSubmit.WarrantyRequirements();
+        quotationSubmit.QuotationItems();
+        quotationSubmit.Gst();
+        quotationSubmit.QuotationAttachments();
+        quotationSubmit.QuotationSubmitButton();
 
 //TODO Buyer Ready For Evaluation
-        readyForEvalutationInterface.ReadyForEvaluationButton(variablesForNonCatalog.Buyer, page);
+        readyForEvalutationInterface.ReadyForEvaluationButton();
 
 //TODO Requester Technical Evaluation
-        technicalEvaluationInterface.TechnicalEvaluationButton(variablesForNonCatalog.EmailID, variablesForNonCatalog.TEApprover, page);
+        technicalEvaluationInterface.TechnicalEvaluationButton();
 
 //TODO Buyer Commercial Evaluation
-        commercialEvaluationInterface.CommercialEvaluationButton(variablesForNonCatalog.Buyer, page);
+        commercialEvaluationInterface.CommercialEvaluationButton();
 
 //TODO Buyer POR Create
-        porCreateNonCatalog.BuyerPORCreate(page);
-        porCreateNonCatalog.Justification(page);
-        porCreateNonCatalog.TaxCode(variablesForNonCatalog.TaxCode, page);
-        porCreateNonCatalog.PORNotes(variablesForNonCatalog.PorNotes, page);
-        porCreateNonCatalog.PORCreate(page);
+        porCreateNonCatalog.BuyerPORCreate();
+        porCreateNonCatalog.Justification();
+        porCreateNonCatalog.TaxCode();
+        porCreateNonCatalog.PORNotes();
+        porCreateNonCatalog.PORCreate();
 
 //TODO Buyer Send For Approval
-        List<String> returnApprover = porApproval.SendForApproval(variablesForNonCatalog.ChiefFinancialOfficer, variablesForNonCatalog.PresidentDirectorCorporate, page);
-        porApproval.ApproverLogin(returnApprover, variablesForNonCatalog.PRApproverGroupB, variablesForNonCatalog.PRApproverGroupC, variablesForNonCatalog.PRApproverGroupD, page);
+        List<String> returnApprover = porApproval.SendForApproval();
+        porApproval.ApproverLogin(returnApprover);
 
 //TODO Inspect Create PO
-        porInspectPoInterface.InspectCreatePO(variablesForNonCatalog.AdminId, page);
+        porInspectPoInterface.InspectCreatePO();
 
 //TODO Buyer Send For Vendor
-        purchaseOrderInterface.SendForVendor(variablesForNonCatalog.Buyer, page);
+        purchaseOrderInterface.SendForVendor();
 
 //TODO Vendor Order Schedule Create
-        String POReferenceId = orderScheduleInterface.OSCreate(variablesForNonCatalog.VendorMailId, page);
+        orderScheduleInterface.OSCreate();
 
 //TODO Buyer Order Schedule Approve
-        orderScheduleApproveInterface.OSApprove(variablesForNonCatalog.Buyer, POReferenceId, page);
+        orderScheduleApproveInterface.OSApprove();
 
 //TODO Vendor Send For Inspection
-        inspectionCreateInterface.VendorInspectionCreate(variablesForNonCatalog.VendorMailId, POReferenceId, page);
+        inspectionCreateInterface.VendorInspectionCreate();
 
 //TODO Requester Assign && Create Inspection
-        inspectionAssignInterface.RequesterInspectionAssign(variablesForNonCatalog.EmailID, variablesForNonCatalog.EmailID, POReferenceId, page);
+        inspectionAssignInterface.RequesterInspectionAssign();
 
 //TODO Vendor Create Dispatch Notes
-        dispatchNoteCreateInterface.DNCreate(variablesForNonCatalog.VendorMailId, variablesForNonCatalog.SourceCountry, variablesForNonCatalog.DestinationCountry, variablesForNonCatalog.PackageType, variablesForNonCatalog.GrossWeight, variablesForNonCatalog.NetWeight, variablesForNonCatalog.Volume, variablesForNonCatalog.Quantity, page);
+        dispatchNoteCreateInterface.DNCreate();
 
 //TODO Logistics Manager Assign Dispatch Notes
-        dispatchNotesAssignInterface.DNAssign(variablesForNonCatalog.LogisticsManager, POReferenceId, variablesForNonCatalog.LogisticsManager, page);
+        dispatchNotesAssignInterface.DNAssign();
 
 //TODO Logistics Manager Work Order Create
-        workOrderCreateInterface.WOCreate(variablesForNonCatalog.LogisticsManager, POReferenceId, variablesForNonCatalog.Vendor, page);
+        workOrderCreateInterface.WOCreate();
 
 //TODO Vendor Update Tracker Status
-        woTrackerStatusInterface.VendorTrackerStatus(variablesForNonCatalog.VendorMailId, POReferenceId, page);
+        woTrackerStatusInterface.VendorTrackerStatus();
 
 //TODO Vendor Invoice Create
-        String currencyCode = poInvoiceCreateInterface.VendorCreatePOInvoice(variablesForNonCatalog.VendorMailId, POReferenceId, variablesForNonCatalog.InvoiceNumber, page);
-        double finalGSTPercentage = poInvoiceCreateInterface.VendorGST(page);
-        double finalTotalGSTPercentage = poInvoiceCreateInterface.VendorTotalGST(page);
-        poInvoiceCreateInterface.SGDEquivalentEnable(currencyCode, finalTotalGSTPercentage, finalGSTPercentage, POReferenceId, page);
-//        poInvoiceCreateInterface.GSTEquivalentInputField(finalCurrencyExchangeRate, finalTotalGSTPercentage, page);
+        poInvoiceCreateInterface.VendorCreatePOInvoice();
+        double finalGSTPercentage = poInvoiceCreateInterface.VendorGST();
+        double finalTotalGSTPercentage = poInvoiceCreateInterface.VendorTotalGST();
+        poInvoiceCreateInterface.SGDEquivalentEnable(finalTotalGSTPercentage, finalGSTPercentage);
     }
 }

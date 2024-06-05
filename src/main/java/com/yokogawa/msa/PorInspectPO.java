@@ -1,23 +1,46 @@
 package com.yokogawa.msa;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.yokogawa.login.Login;
-import com.yokogawa.login.LoginPage;
-import com.yokogawa.logout.Logout;
-import com.yokogawa.logout.LogoutPage;
+import com.yokogawa.login.LoginPageInterface;
+import com.yokogawa.logout.LogoutPageInterface;
+import com.yokogawa.variables.VariablesForNonCatalog;
+import java.util.Properties;
 
-import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
 public class PorInspectPO implements PorInspectPoInterface{
-    Login login = new LoginPage();
-    Logout logout = new LogoutPage();
-    public void InspectCreatePO(String mailId, Page page){
-        login.Login(mailId, page);
+
+    Properties properties;
+    VariablesForNonCatalog variablesForNonCatalog;
+    LoginPageInterface loginPageInterface;
+    Page page;
+    LogoutPageInterface logoutPageInterface;
+
+    private PorInspectPO(){
+    }
+
+//TODO Test Constructor
+    public PorInspectPO(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
+        this.loginPageInterface = loginPageInterface;
+        this.properties = properties;
+        this.page = page;
+        this.logoutPageInterface = logoutPageInterface;
+    }
+
+    public PorInspectPO(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
+        this.variablesForNonCatalog = variablesForNonCatalog;
+        this.page = page;
+        this.loginPageInterface = loginPageInterface;
+        this.logoutPageInterface = logoutPageInterface;
+    }
+
+    public void InspectCreatePO(){
+        loginPageInterface.LoginMethod(properties.getProperty("AdminId"));
         page.locator("//*[contains(text(), 'Purchase Order Requests')]").click();
-        page.locator("//*[contains(text(),'" + NonCatalogTitle + "')]").first().click();
+        String title = properties.getProperty("Title");
+        page.locator("//span[contains(text(),'" + title + "')]").first().click();
         Locator createPOButton = page.locator("#createPOContainer");
         createPOButton.evaluate("(element) => { element.style.display = 'block'; }");
         createPOButton.click();
         page.waitForSelector(".bootbox-accept").click();
-        logout.Logout(page);
+        logoutPageInterface.LogoutMethod();
     }
 }

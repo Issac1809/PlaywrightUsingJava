@@ -1,5 +1,7 @@
 package com.yokogawa.variables;
 public class VariablesForNonCatalog {
+    public VariablesForNonCatalog(){
+    }
     public static String NonCatalogTitle = "POC-NonCatalog";
     public String EmailID = "requester@cormsquare.com";
     public static String Password = "Admin@123";

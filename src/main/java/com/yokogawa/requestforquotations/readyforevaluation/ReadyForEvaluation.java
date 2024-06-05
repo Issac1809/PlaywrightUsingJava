@@ -1,21 +1,45 @@
 package com.yokogawa.requestforquotations.readyforevaluation;
 import com.microsoft.playwright.Page;
-import com.yokogawa.login.Login;
-import com.yokogawa.login.LoginPage;
-import com.yokogawa.logout.Logout;
-import com.yokogawa.logout.LogoutPage;
+import com.yokogawa.login.LoginPageInterface;
+import com.yokogawa.logout.LogoutPageInterface;
+import com.yokogawa.variables.VariablesForNonCatalog;
 
-import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
+import java.util.Properties;
 
 public class ReadyForEvaluation implements ReadyForEvalutationInterface{
-    Login login = new LoginPage();
-    Logout logout = new LogoutPage();
-    public void ReadyForEvaluationButton(String mailId, Page page){
-        login.Login(mailId, page);
+
+    Properties properties;
+    VariablesForNonCatalog variablesForNonCatalog;
+    Page page;
+    LoginPageInterface loginPageInterface;
+    LogoutPageInterface logoutPageInterface;
+
+    private ReadyForEvaluation(){
+    }
+
+//TODO Test Constructor
+    public ReadyForEvaluation(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
+        this.loginPageInterface = loginPageInterface;
+        this.properties = properties;
+        this.page = page;
+        this.logoutPageInterface = logoutPageInterface;
+
+    }
+
+    public ReadyForEvaluation(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
+        this.variablesForNonCatalog = variablesForNonCatalog;
+        this.page = page;
+        this.logoutPageInterface = logoutPageInterface;
+        this.loginPageInterface = loginPageInterface;
+    }
+
+    public void ReadyForEvaluationButton(){
+        loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
         page.locator("//*[contains(text(), 'Request For Quotations')]").click();
-        page.locator("//span[contains(text(), '"+ NonCatalogTitle +"')]").first().click();
+        String title = properties.getProperty("Title");
+        page.locator("//span[contains(text(), '"+ title +"')]").first().click();
         page.locator("#btnReadyForEvalution").click();
         page.locator(".bootbox-accept").click();
-        logout.Logout(page);
+        logoutPageInterface.LogoutMethod();
     }
 }

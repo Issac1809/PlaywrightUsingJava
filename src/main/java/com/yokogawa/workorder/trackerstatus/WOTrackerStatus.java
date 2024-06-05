@@ -1,17 +1,42 @@
 package com.yokogawa.workorder.trackerstatus;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.yokogawa.login.Login;
-import com.yokogawa.login.LoginPage;
-import com.yokogawa.logout.Logout;
-import com.yokogawa.logout.LogoutPage;
+import com.yokogawa.login.LoginPageInterface;
+import com.yokogawa.logout.LogoutPageInterface;
+import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.List;
+import java.util.Properties;
+
 public class WOTrackerStatus implements WOTrackerStatusInterface{
-    Login login = new LoginPage();
-    Logout logout = new LogoutPage();
-    public void VendorTrackerStatus(String mailId, String poReferenceId, Page page) {
-        login.Login(mailId, page);
+
+    Properties properties;
+    Page page;
+    LoginPageInterface loginPageInterface;
+    LogoutPageInterface logoutPageInterface;
+    VariablesForNonCatalog variablesForNonCatalog;
+
+    private WOTrackerStatus(){
+    }
+
+//TODO Test Constructor
+    public WOTrackerStatus(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
+        this.properties = properties;
+        this.page = page;
+        this.loginPageInterface = loginPageInterface;
+        this.logoutPageInterface = logoutPageInterface;
+    }
+
+    public WOTrackerStatus(Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface, VariablesForNonCatalog variablesForNonCatalog){
+        this.page = page;
+        this.loginPageInterface = loginPageInterface;
+        this.logoutPageInterface = logoutPageInterface;
+        this.variablesForNonCatalog = variablesForNonCatalog;
+    }
+
+    public void VendorTrackerStatus() {
+        loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
         page.locator("//*[contains(text(), 'Work Orders')]").click();
+        String poReferenceId = properties.getProperty("poReferenceId");
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
         for(String tr : containerList){
             if(tr.contains(poReferenceId)){
@@ -28,6 +53,6 @@ public class WOTrackerStatus implements WOTrackerStatusInterface{
             page.locator("#btnSubmit").click();
             page.locator(".bootbox-accept").click();
         }
-        logout.Logout(page);
+        logoutPageInterface.LogoutMethod();
     }
 }

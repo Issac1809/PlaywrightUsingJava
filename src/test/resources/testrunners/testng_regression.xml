@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="YEA Playwright Suite" >
+
+    <test name="YEA Login Page Test">
+        <classes>
+            <class name="com.logintest.LoginPageTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Requisition Create Page Test">
+        <classes>
+            <class name="com.requisition.create.NonCatalogPrCreateTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Requisition Send For Approval Page Test">
+        <classes>
+            <class name="com.requisition.sendforapproval.NonCatalogPrSendForApprovalTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Requisition Assign Page Test">
+        <classes>
+            <class name="com.requisition.assign.RequisitionAssignTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Request For Quotation Create Page Test">
+        <classes>
+            <class name="com.requestforquotation.create.RFQCreateTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Quotation Submit Page Test">
+        <classes>
+            <class name="com.requestforquotation.quotationsubmit.QuotationSubmitTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Ready For Evaluation Page Test">
+        <classes>
+            <class name="com.requestforquotation.readyforevaluation.ReadyForEvaluationTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Technical Evaluation Page Test">
+        <classes>
+            <class name="com.requestforquotation.technicalevaluation.TechnicalEvaluationTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Commercial Evaluation Page Test">
+        <classes>
+            <class name="com.requestforquotation.commercialevaluation.CommercialEvaluationTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Purchase Order Request Create Page Test">
+        <classes>
+            <class name="com.purchaseorderrequest.create.PorCreateTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Purchase Order Approval Page Test">
+        <classes>
+            <class name="com.purchaseorderrequest.approval.PorApprovalTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog MSA Page Test">
+        <classes>
+            <class name="com.msa.InspectPOTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Purchase Order Send For Vendor Page Test">
+        <classes>
+            <class name="com.purchaseorder.POSendForVendorTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Order Schedule Create Page Test">
+        <classes>
+            <class name="com.orderschedule.create.OSCreateTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Order Schedule Approve Page Test">
+        <classes>
+            <class name="com.orderschedule.approval.OSApproveTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Inspection Create Page Test">
+        <classes>
+            <class name="com.inspections.create.InspectionCreateTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Inspection Assign Page Test">
+        <classes>
+            <class name="com.inspections.assign.InspectionAssignTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Dispatch Notes Create Page Test">
+        <classes>
+            <class name="com.dispatchnotes.create.DispatchNotesCreateTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Dispatch Notes Assign Page Test">
+        <classes>
+            <class name="com.dispatchnotes.assign.DispatchNotesAssignTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Work Orders Create Page Test">
+        <classes>
+            <class name="com.workorders.create.WorkOrdersCreateTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Work Orders Tracker Status Page Test">
+        <classes>
+            <class name="com.workorders.trackerstatus.WOTrackerStatusTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Invoice Create Page Test">
+        <classes>
+            <class name="com.invoice.InvoiceCreateTest" />
+        </classes>
+    </test>
+
+</suite>

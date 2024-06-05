@@ -1,17 +1,42 @@
 package com.yokogawa.dispatchnotes.assign;
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.yokogawa.login.Login;
-import com.yokogawa.login.LoginPage;
-import com.yokogawa.logout.Logout;
-import com.yokogawa.logout.LogoutPage;
+import com.yokogawa.login.LoginPageInterface;
+import com.yokogawa.logout.LogoutPageInterface;
+import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.List;
+import java.util.Properties;
+
 public class DispatchNotesAssign implements DispatchNotesAssignInterface{
-    Login login = new LoginPage();
-    Logout logout = new LogoutPage();
-    public void DNAssign(String mailId, String poReferenceId, String logisticsManager, Page page) {
-        login.Login(mailId, page);
+
+    Properties properties;
+    Page page;
+    VariablesForNonCatalog variablesForNonCatalog;
+    LoginPageInterface loginPageInterface;
+    LogoutPageInterface logoutPageInterface;
+
+    private DispatchNotesAssign(){
+    }
+
+//TODO Test Constructor
+    public DispatchNotesAssign(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
+        this.properties = properties;
+        this.page = page;
+        this.loginPageInterface = loginPageInterface;
+        this.logoutPageInterface = logoutPageInterface;
+    }
+
+    public DispatchNotesAssign(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
+        this.variablesForNonCatalog = variablesForNonCatalog;
+        this.page = page;
+        this.loginPageInterface = loginPageInterface;
+        this.logoutPageInterface = logoutPageInterface;
+    }
+
+    public void DNAssign() {
+        String logisticsManager = properties.getProperty("LogisticsManager");
+        loginPageInterface.LoginMethod(logisticsManager);
         page.locator("//*[contains(text(), 'Dispatch Notes')]").click();
+        String poReferenceId = properties.getProperty("poReferenceId");
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
         for(String tr : containerList){
             if(tr.contains(poReferenceId)){
@@ -24,7 +49,6 @@ public class DispatchNotesAssign implements DispatchNotesAssignInterface{
         page.locator(".select2-search__field").fill(logisticsManager);
         page.locator("//li[contains(text(), '" + logisticsManager + "')]").click();
         page.locator("#saveAssine").click();
-        logout.Logout(page);
+        logoutPageInterface.LogoutMethod();
     }
 }
-

@@ -17,9 +17,17 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>7.10.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>com.microsoft.playwright</groupId>
       <artifactId>playwright</artifactId>
       <version>1.42.0</version>
     </dependency>
   </dependencies>
+
 </project>

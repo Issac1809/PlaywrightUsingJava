@@ -1,20 +1,37 @@
 package com.yokogawa.orderschedule.create;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.yokogawa.login.Login;
-import com.yokogawa.login.LoginPage;
-import com.yokogawa.logout.Logout;
-import com.yokogawa.logout.LogoutPage;
-
-import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
+import com.playwrightfactory.PlayWrightFactory;
+import com.yokogawa.login.LoginPageInterface;
+import com.yokogawa.logout.LogoutPageInterface;
+import com.yokogawa.variables.VariablesForNonCatalog;
+import java.util.Properties;
 
 public class OrderScheduleCreate implements OrderScheduleInterface {
-    Login login = new LoginPage();
-    Logout logout = new LogoutPage();
-    public String OSCreate(String mailId, Page page){
-        login.Login(mailId, page);
+
+    PlayWrightFactory playWrightFactory;
+    Properties properties;
+    VariablesForNonCatalog variablesForNonCatalog;
+    Page page;
+    LoginPageInterface loginPageInterface;
+    LogoutPageInterface logoutPageInterface;
+
+    private OrderScheduleCreate() {
+    }
+
+    public OrderScheduleCreate(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface, PlayWrightFactory playWrightFactory) {
+        this.loginPageInterface = loginPageInterface;
+        this.properties = properties;
+        this.page = page;
+        this.logoutPageInterface = logoutPageInterface;
+        this.playWrightFactory = playWrightFactory;
+    }
+
+    public void OSCreate() {
+        loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
         page.locator("//*[contains(text(), 'Purchase Orders')]").click();
-        page.locator("//*[contains(text(), '"+ NonCatalogTitle +"')]").first().click();
+        String title = properties.getProperty("Title");
+        page.locator("//*[contains(text(), '" + title + "')]").first().click();
         String poReferenceId = page.locator("#referenceId").first().textContent();
         page.locator("#btnCreateOR").click();
         Locator orderScheduleDate = page.locator(".scheduleDate-1").last();
@@ -23,7 +40,7 @@ public class OrderScheduleCreate implements OrderScheduleInterface {
         today.click();
         page.locator("#btnCreate").click();
         page.waitForSelector(".bootbox-accept").click();
-        logout.Logout(page);
-        return poReferenceId;
+        playWrightFactory.savePropertiesToFile(poReferenceId);
+        logoutPageInterface.LogoutMethod();
     }
 }

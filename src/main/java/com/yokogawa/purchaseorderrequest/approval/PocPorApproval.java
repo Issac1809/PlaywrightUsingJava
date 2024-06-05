@@ -2,19 +2,45 @@ package com.yokogawa.purchaseorderrequest.approval;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import com.yokogawa.login.Login;
-import com.yokogawa.login.LoginPage;
-import com.yokogawa.logout.Logout;
-import com.yokogawa.logout.LogoutPage;
+import com.yokogawa.login.LoginPageInterface;
+import com.yokogawa.logout.LogoutPageInterface;
+import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.ArrayList;
 import java.util.List;
-import static com.yokogawa.variables.VariablesForNonCatalog.NonCatalogTitle;
+import java.util.Properties;
+
 public class PocPorApproval implements PorApproval {
-    Login login = new LoginPage();
-    Logout logout = new LogoutPage();
-    public List<String> SendForApproval(String cfo, String president, Page page) {
-        page.locator("//*[contains(text(),'" + NonCatalogTitle + "')]").first().click();
-        page.waitForSelector("#btnNewSendApproval").click();
+
+    Properties properties;
+    VariablesForNonCatalog variablesForNonCatalog;
+    Page page;
+    LoginPageInterface loginPageInterface;
+    LogoutPageInterface logoutPageInterface;
+
+    private PocPorApproval() {
+    }
+
+    //TODO Test Constructor
+    public PocPorApproval(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface) {
+        this.loginPageInterface = loginPageInterface;
+        this.properties = properties;
+        this.page = page;
+        this.logoutPageInterface = logoutPageInterface;
+    }
+
+    public PocPorApproval(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface) {
+        this.variablesForNonCatalog = variablesForNonCatalog;
+        this.page = page;
+        this.loginPageInterface = loginPageInterface;
+        this.logoutPageInterface = logoutPageInterface;
+    }
+
+    public List<String> SendForApproval() {
+        loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
+        page.locator("//*[contains(text(), 'Purchase Order Requests')]").click();
+        String title = properties.getProperty("Title");
+        page.locator("//span[contains(text(), '"+ title +"')]").first().click();
+        page.locator("#btnNewSendApproval").click();
         Locator approvalPopup = page.locator("//h3[contains(text(), 'Purchase Order Request Send For Approval')]").first();
         List<String> matchingApprovers = new ArrayList<>();
         if (approvalPopup.isEnabled() && approvalPopup.isVisible() || !approvalPopup.isHidden()) {
@@ -22,13 +48,13 @@ public class PocPorApproval implements PorApproval {
 //            Locator cfoPopup = page.locator("#role-7");
 //            if (cfoPopup.isVisible()){
 //                cfoPopup.click();
-//                page.waitForSelector("//li[contains(text(), '" + cfo + "')]").click();
+//                page.waitForSelector("//li[contains(text(), '" + properties.getProperty("cfo") + "')]").click();
 //            }
 //TODO President/Director (Corporate)
             Locator presidentPopup = page.locator("#select2-role-8-container");
-            if (presidentPopup.isVisible()){
+            if (presidentPopup.isVisible()) {
                 presidentPopup.click();
-                page.waitForSelector("//li[contains(text(), '" + president + "')]").click();
+                page.waitForSelector("//li[contains(text(), '" + properties.getProperty("PresidentDirectorCorporate") + "')]").click();
             }
 //TODO Submit
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
@@ -52,7 +78,7 @@ public class PocPorApproval implements PorApproval {
                     matchingApprovers.add(approver);
                 }
             }
-            logout.Logout(page);
+            logoutPageInterface.LogoutMethod();
             return matchingApprovers;
         } else {
             List<String> approvalTable = page.locator("#approvalData tbody tr td").allTextContents();
@@ -74,30 +100,33 @@ public class PocPorApproval implements PorApproval {
                     matchingApprovers.add(approver);
                 }
             }
-            logout.Logout(page);
+            logoutPageInterface.LogoutMethod();
         }
         return matchingApprovers;
     }
-    public void ApproverLogin(List<String> matchingApprovers, String PRApproverGroupB, String PRApproverGroupC, String PRApproverGroupD, Page page) throws InterruptedException {
+
+    public void ApproverLogin(List<String> matchingApprovers) {
         List<String> groupIds = new ArrayList<>();
         for (int i = 0; i < matchingApprovers.size(); i++) {
             String approverMailId = matchingApprovers.get(i);
             if (approverMailId.endsWith("@cormsquare.com") || approverMailId.endsWith("@sharklasers.com") || approverMailId.endsWith("@yokogawa.com")) {
-                login.Login(approverMailId, page);
+                loginPageInterface.LoginMethod(approverMailId, page);
 //TODO Approver Approves POR
                 page.waitForSelector("//span[contains(text(), 'My Approvals')]").click();
-                page.locator("//span[contains(text(), '" + NonCatalogTitle + "')]").first().click();
+                String title = properties.getProperty("Title");
+                page.locator("//span[contains(text(), '" + title + "')]").first().click();
                 Locator addApprovers = page.locator("#btnAddApprovers");
                 Locator projectManagerPopUp = page.locator("//h3[contains(text(), 'Purchase Order Request Send For Approval')]").last();
                 if (i == 0 && addApprovers.isEnabled()) {
                     addApprovers.click();
-                    if (projectManagerPopUp.isEnabled() && projectManagerPopUp.isVisible()){
+                    if (projectManagerPopUp.isEnabled() && projectManagerPopUp.isVisible()) {
 //TODO PR Approver Group B
                         Locator projectManagerDropDown = page.locator("#select2-PMBId-container");
-                        if (projectManagerDropDown.isEnabled() && projectManagerDropDown.isVisible()){
+                        if (projectManagerDropDown.isEnabled() && projectManagerDropDown.isVisible()) {
                             projectManagerDropDown.click();
-                            page.getByRole(AriaRole.SEARCHBOX).fill(PRApproverGroupB);
-                            Locator getGroupB = page.locator("//li[contains(text(), '" + PRApproverGroupB + "')]");
+                            String prApproverGroupB = properties.getProperty("PRApproverGroupB");
+                            page.getByRole(AriaRole.SEARCHBOX).fill(prApproverGroupB);
+                            Locator getGroupB = page.locator("//li[contains(text(), '" + prApproverGroupB + "')]");
                             String groupBId = getGroupB.textContent();
                             getGroupB.first().click();
                             groupIds.add(groupBId);
@@ -106,8 +135,9 @@ public class PocPorApproval implements PorApproval {
                         Locator departmentManagerDropDown = page.locator("#select2-departmentManagerId-container");
                         if (departmentManagerDropDown.isEnabled() && departmentManagerDropDown.isVisible()) {
                             departmentManagerDropDown.click();
-                            page.getByRole(AriaRole.SEARCHBOX).fill(PRApproverGroupC);
-                            Locator getGroupC = page.locator("//li[contains(text(), '" + PRApproverGroupC + "')]");
+                            String prApproverGroupC = properties.getProperty("PRApproverGroupC");
+                            page.getByRole(AriaRole.SEARCHBOX).fill(prApproverGroupC);
+                            Locator getGroupC = page.locator("//li[contains(text(), '" + prApproverGroupC + "')]");
                             String groupCId = getGroupC.textContent();
                             getGroupC.first().click();
                             groupIds.add(groupCId);
@@ -116,8 +146,9 @@ public class PocPorApproval implements PorApproval {
                         Locator divisionManagerDropDown = page.locator("#select2-divisionManagerId-container");
                         if (divisionManagerDropDown.isEnabled() && divisionManagerDropDown.isVisible()) {
                             divisionManagerDropDown.click();
-                            page.getByRole(AriaRole.SEARCHBOX).fill(PRApproverGroupD);
-                            Locator getGroupD = page.locator("//li[contains(text(), '" + PRApproverGroupD + "')]");
+                            String prApproverGroupD = properties.getProperty("PRApproverGroupD");
+                            page.getByRole(AriaRole.SEARCHBOX).fill(prApproverGroupD);
+                            Locator getGroupD = page.locator("//li[contains(text(), '" + prApproverGroupD + "')]");
                             String groupDId = getGroupD.textContent();
                             getGroupD.first().click();
                             groupIds.add(groupDId);
@@ -125,27 +156,28 @@ public class PocPorApproval implements PorApproval {
                         page.locator("#btnSendUserFromPM").click();
                         page.locator("#btnApprove").click();
                         page.locator(".bootbox-accept").click();
-                        logout.Logout(page);
+                        logoutPageInterface.LogoutMethod();
                     } else if (!projectManagerPopUp.isVisible()) {
-                    page.locator("#btnApprove").click();
-                    page.locator(".bootbox-accept").click();
-                    logout.Logout(page);
+                        page.locator("#btnApprove").click();
+                        page.locator(".bootbox-accept").click();
+                        logoutPageInterface.LogoutMethod();
                     }
                 } else {
                     page.locator("#btnApprove").click();
                     page.locator(".bootbox-accept").click();
-                    logout.Logout(page);
+                    logoutPageInterface.LogoutMethod();
                 }
             }
             int size = groupIds.size() - 1;
             if (approverMailId.startsWith("PR Approver Group")) {
-                for(int j = 0; j <= size; j++){
-                    login.Login(groupIds.get(j), page);
+                for (int j = 0; j <= size; j++) {
+                    loginPageInterface.LoginMethod(groupIds.get(j), page);
                     page.waitForSelector("//span[contains(text(), 'My Approvals')]").click();
-                    page.locator("//span[contains(text(), '" + NonCatalogTitle + "')]").first().click();
+                    String title = properties.getProperty("Title");
+                    page.locator("//span[contains(text(), '" + title + "')]").first().click();
                     page.waitForSelector("#btnApprove").click();
                     page.waitForSelector(".bootbox-accept").click();
-                    logout.Logout(page);
+                    logoutPageInterface.LogoutMethod();
                 }
                 i += size;
             }

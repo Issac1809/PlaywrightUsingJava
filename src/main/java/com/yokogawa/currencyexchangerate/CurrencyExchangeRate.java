@@ -1,23 +1,35 @@
 package com.yokogawa.currencyexchangerate;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.yokogawa.login.Login;
-import com.yokogawa.login.LoginPage;
+import com.yokogawa.login.LoginPageInterface;
+import com.yokogawa.logout.LogoutPageInterface;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
 public class CurrencyExchangeRate {
-    Login login = new LoginPage();
-    public void findCurrency(String mailId, Page page) {
-        login.Login(mailId, page);
+
+    Properties properties;
+    Page page;
+    LoginPageInterface loginPageInterface;
+    LogoutPageInterface logoutPageInterface;
+
+    private CurrencyExchangeRate(){
+    }
+
+    public CurrencyExchangeRate(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
+        this.loginPageInterface = loginPageInterface;
+        this.properties = properties;
+        this.page = page;
+        this.logoutPageInterface = logoutPageInterface;
+    }
+
+    public void findCurrency() {
+        loginPageInterface.LoginMethod(properties.getProperty("AdminId"));
         page.pause();
         page.locator("//*[contains(text(), 'Settings')]").click();
 //TODO CurrencyExchangeRate
         page.locator("//*[contains(text(), 'Currency Exchange Rate')]").click();
-//TODO EntriesDropDown
-        Locator selectionStatus = page.locator(".form-select.form-select-sm");
-        selectionStatus.click();
-        selectionStatus.waitFor();
-        selectionStatus.selectOption("100");
 //TODO SearchBoxCurrencyCode
         String invoiceCurrencyCode = "INR SGD";
         Locator searchBox = page.locator("//input[contains(@type,'search')]");
