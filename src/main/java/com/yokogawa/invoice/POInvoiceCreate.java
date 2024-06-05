@@ -5,18 +5,15 @@ import java.util.List;
 import java.util.Properties;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 import com.playwrightfactory.PlayWrightFactory;
 import com.yokogawa.currencyexchangerate.CurrencyExchangeRate;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
-import com.yokogawa.variables.VariablesForNonCatalog;
 
 public class POInvoiceCreate implements POInvoiceCreateInterface {
 
     PlayWrightFactory playWrightFactory;
     Properties properties;
-    VariablesForNonCatalog variablesForNonCatalog;
     Page page;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
@@ -60,7 +57,6 @@ public class POInvoiceCreate implements POInvoiceCreateInterface {
                 page.locator("//li[contains(text(), '2W00')]").last().click();
             }
         }
-        page.pause();
         page.locator("#select2-typeId-container").last().click();
         page.locator(".select2-search__field").fill("Purchase Order");
         page.locator("//li[contains(text(), 'Purchase Order')]").first().click();
@@ -70,6 +66,7 @@ public class POInvoiceCreate implements POInvoiceCreateInterface {
         page.locator("#select2-poId-container").click();
         page.locator(".select2-search__field").fill(poReferenceId);
         page.locator("//li[contains(text(), '" + poReferenceId + "')]").first().click();
+        page.pause();
         String getCurrencyCode = page.locator("#currencyCode").textContent();
         playWrightFactory.savePropertiesToFile2(getCurrencyCode);
     }
@@ -108,8 +105,9 @@ public class POInvoiceCreate implements POInvoiceCreateInterface {
             String foreignSubTotal = getForeignSubTotal.replaceAll("[^\\d.]", "");
             double finalforeignSubTotal = Double.parseDouble(foreignSubTotal);
 //TODO Input Sub-Total
-            double inputSubTotal = 99999999;
+            double inputSubTotal = currencyExchangeRate.findCurrency();
             Locator finalInputSubTotal = page.locator("#SGDsubtotalInput");
+            finalInputSubTotal.click();
             finalInputSubTotal.fill(String.valueOf(inputSubTotal));
 //TODO Currency Exchange Rate
             String totalCurrencyExchangeRate = String.valueOf(inputSubTotal / finalforeignSubTotal);

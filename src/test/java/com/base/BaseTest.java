@@ -1,4 +1,5 @@
 package com.base;
+import com.currencyexchangerate.CurrencyExchangeRateTest;
 import com.dispatchnotes.create.DispatchNotesCreateTest;
 import com.dispatchnotes.assign.DispatchNotesAssignTest;
 import com.inspections.assign.InspectionAssignTest;
@@ -79,6 +80,7 @@ public class BaseTest {
     protected Page page;
     protected Properties properties;
     protected CurrencyExchangeRate currencyExchangeRate;
+    protected CurrencyExchangeRateTest currencyExchangeRateTest;
     protected LoginPageInterface loginPageInterface;
     protected LogoutPageInterface logoutPageInterface;
     protected NonCatalogPrCreateTest nonCatalogPrCreateTest;
@@ -129,9 +131,8 @@ public class BaseTest {
         try {
             playWrightFactory = new PlayWrightFactory();
             properties = playWrightFactory.initializeProperties();
-            page = playWrightFactory.initializeBrowser(properties);
 
-            currencyExchangeRate = new CurrencyExchangeRate(loginPageInterface, properties, page, logoutPageInterface);
+            page = playWrightFactory.initializeBrowser(properties);
 
             loginPageInterface = new LoginPage(properties, page);
             logoutPageInterface = new LogoutPage(page);
@@ -175,6 +176,8 @@ public class BaseTest {
             workOrdersCreateTest = new WorkOrdersCreateTest();
             woTrackerStatusInterface = new WOTrackerStatus(loginPageInterface, properties, page, logoutPageInterface);
             woTrackerStatusTest = new WOTrackerStatusTest();
+            currencyExchangeRate = new CurrencyExchangeRate(loginPageInterface, properties, page, logoutPageInterface);
+            currencyExchangeRateTest = new CurrencyExchangeRateTest();
             poInvoiceCreateInterface = new POInvoiceCreate(playWrightFactory, loginPageInterface, properties, page, logoutPageInterface, currencyExchangeRate);
             invoiceCreateTest = new InvoiceCreateTest();
         } catch (Exception error) {

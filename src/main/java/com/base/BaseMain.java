@@ -87,8 +87,6 @@ public class BaseMain {
             properties = playWrightFactory.initializeProperties();
             page = playWrightFactory.initializeBrowser(properties);
 
-            currencyExchangeRate = new CurrencyExchangeRate(loginPageInterface, properties, page, logoutPageInterface);
-
             loginPageInterface = new LoginPage(properties, page);
             logoutPageInterface = new LogoutPage(page);
             prCreateNonCatalog = new PocNonCatalogPrCreate(loginPageInterface, properties, page, logoutPageInterface);
@@ -118,6 +116,7 @@ public class BaseMain {
                     purchaseOrderInterface, orderScheduleInterface, orderScheduleApproveInterface, inspectionCreateInterface,
                     inspectionAssignInterface, dispatchNoteCreateInterface, dispatchNotesAssignInterface, workOrderCreateInterface,
                     woTrackerStatusInterface, poInvoiceCreateInterface);
+            currencyExchangeRate = new CurrencyExchangeRate(loginPageInterface, properties, page, logoutPageInterface);
     }
 
     public void functions() throws InterruptedException {
