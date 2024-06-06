@@ -176,7 +176,7 @@ public class BaseTest {
             workOrdersCreateTest = new WorkOrdersCreateTest();
             woTrackerStatusInterface = new WOTrackerStatus(loginPageInterface, properties, page, logoutPageInterface);
             woTrackerStatusTest = new WOTrackerStatusTest();
-            currencyExchangeRate = new CurrencyExchangeRate(loginPageInterface, properties, page, logoutPageInterface);
+            currencyExchangeRate = new CurrencyExchangeRate(playWrightFactory, loginPageInterface, properties, logoutPageInterface);
             currencyExchangeRateTest = new CurrencyExchangeRateTest();
             poInvoiceCreateInterface = new POInvoiceCreate(playWrightFactory, loginPageInterface, properties, page, logoutPageInterface, currencyExchangeRate);
             invoiceCreateTest = new InvoiceCreateTest();
@@ -187,6 +187,15 @@ public class BaseTest {
 
     @AfterTest
     public void TearDown() {
+        try {
+            page.context().browser().close();
+        } catch (Exception error) {
+            System.out.println("Error :" + error);
+        }
+    }
+
+    @AfterTest
+    public void TearDown(Page page) {
         try {
             page.context().browser().close();
         } catch (Exception error) {

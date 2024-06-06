@@ -34,8 +34,9 @@ public class InspectionCreate implements InspectionCreateInterface {
 
     public void VendorInspectionCreate(){
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
+        page.pause();
         page.locator("//*[contains(text(), 'Order Schedules')]").click();
-        String poReferenceId = properties.getProperty("poReferenceId");
+        String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
         for(String tr : containerList){
             if(tr.contains(poReferenceId)){

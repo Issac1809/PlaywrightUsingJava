@@ -34,8 +34,9 @@ public class OrderScheduleApprove implements OrderScheduleApproveInterface{
 
     public void OSApprove(){
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
+        page.pause();
         page.locator("//*[contains(text(), 'Purchase Orders')]").click();
-        String poReferenceId = properties.getProperty("poReferenceId");
+        String poReferenceId = properties.getProperty("PoReferenceId");
         System.out.println(poReferenceId);
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
         for(String tr : containerList){

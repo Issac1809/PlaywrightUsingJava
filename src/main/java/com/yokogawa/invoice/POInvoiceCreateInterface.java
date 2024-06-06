@@ -4,6 +4,5 @@ public interface POInvoiceCreateInterface {
 
     void VendorCreatePOInvoice();
     double VendorGST();
-    double VendorTotalGST();
-    void SGDEquivalentEnable(double finalTotalGSTPercentage, double finalGSTPercentage);
+    void SGDEquivalentEnable(double finalGSTPercentage);
 }

@@ -67,11 +67,27 @@ public class PlayWrightFactory {
     public void savePropertiesToFile2(String getCurrencyCode) {
         try {
 
-            fileOutputStream = new FileOutputStream("./src/main/java/com/resources/config/Properties");
+            fileOutputStream = new FileOutputStream("./src/test/resources/config/Properties");
             properties.setProperty("InvoiceCurrencyCode", getCurrencyCode);
             properties.store(fileOutputStream, "InvoiceCurrencyCode");
         } catch (IOException error) {
             throw new RuntimeException(error);
+        }
+    }
+
+    public void TearDown() {
+        try {
+            page.context().browser().close();
+        } catch (Exception error) {
+            System.out.println("Error :" + error);
+        }
+    }
+
+    public void TearDown(Page page) {
+        try {
+            page.context().browser().close();
+        } catch (Exception error) {
+            System.out.println("Error :" + error);
         }
     }
 }

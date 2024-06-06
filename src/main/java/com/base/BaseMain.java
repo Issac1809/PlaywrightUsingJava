@@ -116,18 +116,10 @@ public class BaseMain {
                     purchaseOrderInterface, orderScheduleInterface, orderScheduleApproveInterface, inspectionCreateInterface,
                     inspectionAssignInterface, dispatchNoteCreateInterface, dispatchNotesAssignInterface, workOrderCreateInterface,
                     woTrackerStatusInterface, poInvoiceCreateInterface);
-            currencyExchangeRate = new CurrencyExchangeRate(loginPageInterface, properties, page, logoutPageInterface);
+            currencyExchangeRate = new CurrencyExchangeRate(playWrightFactory, loginPageInterface, properties, logoutPageInterface);
     }
 
     public void functions() throws InterruptedException {
         functionsNonCatalog.FunctionsForNonCatalog();
-    }
-
-    public void TearDown() {
-        try {
-            page.context().browser().close();
-        } catch (Exception error) {
-            System.out.println("Error :" + error);
-        }
     }
 }

@@ -29,10 +29,13 @@ public class OrderScheduleCreate implements OrderScheduleInterface {
 
     public void OSCreate() {
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
+        page.pause();
         page.locator("//*[contains(text(), 'Purchase Orders')]").click();
         String title = properties.getProperty("Title");
         page.locator("//*[contains(text(), '" + title + "')]").first().click();
-        String poReferenceId = page.locator("#referenceId").first().textContent();
+        String poReferenceId = page.locator("#referenceId").textContent();
+        System.out.println(poReferenceId);
+        playWrightFactory.savePropertiesToFile(poReferenceId);
         page.locator("#btnCreateOR").click();
         Locator orderScheduleDate = page.locator(".scheduleDate-1").last();
         orderScheduleDate.click();
@@ -40,7 +43,6 @@ public class OrderScheduleCreate implements OrderScheduleInterface {
         today.click();
         page.locator("#btnCreate").click();
         page.waitForSelector(".bootbox-accept").click();
-        playWrightFactory.savePropertiesToFile(poReferenceId);
         logoutPageInterface.LogoutMethod();
     }
 }

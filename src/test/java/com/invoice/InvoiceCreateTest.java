@@ -8,7 +8,6 @@ public class InvoiceCreateTest extends BaseTest {
     public void InvoiceCreateTestMethod(){
         poInvoiceCreateInterface.VendorCreatePOInvoice();
         double finalGSTPercentage = poInvoiceCreateInterface.VendorGST();
-        double finalTotalGSTPercentage = poInvoiceCreateInterface.VendorTotalGST();
-        poInvoiceCreateInterface.SGDEquivalentEnable(finalTotalGSTPercentage, finalGSTPercentage);
+        poInvoiceCreateInterface.SGDEquivalentEnable(finalGSTPercentage);
     }
 }

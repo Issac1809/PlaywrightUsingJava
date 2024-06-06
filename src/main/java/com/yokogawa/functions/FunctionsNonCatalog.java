@@ -202,7 +202,6 @@ public class FunctionsNonCatalog {
 //TODO Vendor Invoice Create
         poInvoiceCreateInterface.VendorCreatePOInvoice();
         double finalGSTPercentage = poInvoiceCreateInterface.VendorGST();
-        double finalTotalGSTPercentage = poInvoiceCreateInterface.VendorTotalGST();
-        poInvoiceCreateInterface.SGDEquivalentEnable(finalTotalGSTPercentage, finalGSTPercentage);
+        poInvoiceCreateInterface.SGDEquivalentEnable(finalGSTPercentage);
     }
 }

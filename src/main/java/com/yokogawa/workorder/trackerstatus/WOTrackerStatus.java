@@ -35,8 +35,9 @@ public class WOTrackerStatus implements WOTrackerStatusInterface{
 
     public void VendorTrackerStatus() {
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
+        page.pause();
         page.locator("//*[contains(text(), 'Work Orders')]").click();
-        String poReferenceId = properties.getProperty("poReferenceId");
+        String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
         for(String tr : containerList){
             if(tr.contains(poReferenceId)){

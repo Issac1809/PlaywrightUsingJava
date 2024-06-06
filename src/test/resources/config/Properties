@@ -1,5 +1,5 @@
 #InvoiceCurrencyCode
-#Wed Jun 05 16:48:14 IST 2024
+#Thu Jun 06 18:33:20 IST 2024
 //TODO=Non-Catalog (PR to Invoice)
 AdminId=admin@cormsquare.com
 Buyer=buyer@cormsquare.com
@@ -31,6 +31,7 @@ PRApproverGroupD=businessunitmanager@cormsquare.com
 PackageType=Drum
 PartNumber=PN - 1
 Password=Admin@123
+PoReferenceId=240024PO00162
 PorNotes=Purchase Order Request Notes
 PresidentDirectorCorporate=hazel@sharklasers.com
 PriceValidity=3 Months
@@ -55,5 +56,4 @@ Wbs=J11BOPH
 browser=chrome
 custom=inspectiontrue
 headless=false
-poReferenceId=
 url=https\://yea-test.cormsquare.com/Identity/Account/Login

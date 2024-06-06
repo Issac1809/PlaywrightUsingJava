@@ -1,6 +1,7 @@
 package com.yokogawa.invoice;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Properties;
 import com.microsoft.playwright.Locator;
@@ -18,16 +19,15 @@ public class POInvoiceCreate implements POInvoiceCreateInterface {
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
     CurrencyExchangeRate currencyExchangeRate;
-    String poReferenceId = "5K0023PO02376";
 
-    int EUR = 3;
-    int USD = 2;
-    int INR = 1;
+    int EUR = 4;
+    int USD = 3;
+    int INR = 2;
 
-    private POInvoiceCreate(){
+    private POInvoiceCreate() {
     }
 
-    public POInvoiceCreate(PlayWrightFactory playWrightFactory, LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface, CurrencyExchangeRate currencyExchangeRate){
+    public POInvoiceCreate(PlayWrightFactory playWrightFactory, LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface, CurrencyExchangeRate currencyExchangeRate) {
         this.loginPageInterface = loginPageInterface;
         this.properties = properties;
         this.page = page;
@@ -38,22 +38,24 @@ public class POInvoiceCreate implements POInvoiceCreateInterface {
 
     public void VendorCreatePOInvoice() {
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
+        page.pause();
         page.locator("//*[contains(text(), 'Invoices')]").click();
         page.locator(".btn.btn-primary").first().click();
         page.locator("#select2-companyId-container").click();
+        String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> companyId = page.locator("#select2-companyId-results").allTextContents();
         int getCompanyIdSize = companyId.size();
-        for( int i = 0; i < getCompanyIdSize; i++){
-            if(poReferenceId.contains("2400")){
+        for (int i = 0; i < getCompanyIdSize; i++) {
+            if (poReferenceId.contains("2400")) {
                 page.locator("//li[contains(text(), '2400')]").last().click();
             }
-            if(companyId.get(i).contains("5K00")){
+            if (poReferenceId.contains("5K00")) {
                 page.locator("//li[contains(text(), '5K00')]").last().click();
             }
-            if(companyId.get(i).contains("2U00")){
+            if (poReferenceId.contains("2U00")) {
                 page.locator("//li[contains(text(), '2U00')]").last().click();
             }
-            if(companyId.get(i).contains("2W00")){
+            if (poReferenceId.contains("2W00")) {
                 page.locator("//li[contains(text(), '2W00')]").last().click();
             }
         }
@@ -84,20 +86,8 @@ public class POInvoiceCreate implements POInvoiceCreateInterface {
         return finalGSTPercentage;
     }
 
-    public double VendorTotalGST() {
-        double finalTotalGSTPercentage = 0;
-        try {
-            //TODO Used JavaScript to get the value of the input field => page.evaluate("document.getElementById('USDtotalGST').value");
-            String TotalGSTPercentage = String.valueOf(page.evaluate("document.getElementById('USDtotalGST').value"));
-            String getTotalGSTPercentage = TotalGSTPercentage.replaceAll("[^\\d.]", "");
-            finalTotalGSTPercentage = Double.parseDouble(getTotalGSTPercentage);
-        } catch (Exception error) {
-            System.out.println("What is the Error :" + error.getMessage());
-        }
-        return finalTotalGSTPercentage;
-    }
-
-    public void SGDEquivalentEnable(double finalTotalGSTPercentage, double finalGSTPercentage) {
+    public void SGDEquivalentEnable(double finalGSTPercentage) {
+        String poReferenceId = properties.getProperty("PoReferenceId");
         String currencyCode = properties.getProperty("InvoiceCurrencyCode");
         if (!currencyCode.equals("SGD") && finalGSTPercentage != 0 && (poReferenceId.startsWith("2400") || poReferenceId.startsWith("5K00") || poReferenceId.startsWith("2U00") || poReferenceId.startsWith("2W00"))) {
 //TODO Foreign Sub-Total
@@ -105,53 +95,61 @@ public class POInvoiceCreate implements POInvoiceCreateInterface {
             String foreignSubTotal = getForeignSubTotal.replaceAll("[^\\d.]", "");
             double finalforeignSubTotal = Double.parseDouble(foreignSubTotal);
 //TODO Input Sub-Total
-            double inputSubTotal = currencyExchangeRate.findCurrency();
-            Locator finalInputSubTotal = page.locator("#SGDsubtotalInput");
-            finalInputSubTotal.click();
-            finalInputSubTotal.fill(String.valueOf(inputSubTotal));
-//TODO Currency Exchange Rate
-            String totalCurrencyExchangeRate = String.valueOf(inputSubTotal / finalforeignSubTotal);
-            String replaceTotalCurrencyExchangeRate = totalCurrencyExchangeRate.replaceAll("[^\\d.]", "");
-//TODO Convert to double for rounding
-            double value = Double.parseDouble(replaceTotalCurrencyExchangeRate);
-//TODO Round off to 5 decimal places
-            BigDecimal roundedValue = new BigDecimal(value).setScale(5, RoundingMode.HALF_UP);
-            double totalRoundedValue = Double.parseDouble(String.valueOf(roundedValue));
-            double finalTotalRoundedValue = totalRoundedValue * finalTotalGSTPercentage;
+            double getCurrencyExchangeRate = currencyExchangeRate.findCurrency();
+            double sgdEquivalentSubTotal = finalforeignSubTotal * getCurrencyExchangeRate;
+            page.locator("#SGDsubtotalInput").fill(String.valueOf(sgdEquivalentSubTotal));
+//TODO Manually trigger the input and change events to ensure JavaScript logic executes
+            page.locator("#SGDsubtotalInput").evaluate("el => { el.dispatchEvent(new Event('keyup', { bubbles: true })); }");
+            //TODO Currency Exchange Rate
+            double totalCurrencyExchangeRate = sgdEquivalentSubTotal / finalforeignSubTotal;
+//TODO Currency Exchange Rate * Total GST
+            String getForeignTotalGst = page.locator("#USDtotalGST").getAttribute("value");
+            String foreignTotalGst = getForeignTotalGst.replaceAll("[^\\d.]", "");
+            double finalForeignTotalGst = Double.parseDouble(foreignTotalGst);
+            double inputTotalGst = totalCurrencyExchangeRate * finalForeignTotalGst;
 
             if (currencyCode.equals("EUR")) {
-                String sgdTotalGST = String.valueOf(finalTotalRoundedValue);
+                String sgdTotalGST = String.valueOf(inputTotalGst);
 //TODO Keep only digits and the decimal point
                 String replaceSGDTotalGST = sgdTotalGST.replaceAll("[^\\d.]", "");
 //TODO Convert to double for rounding
                 double getSGDValue = Double.parseDouble(replaceSGDTotalGST);
-//TODO Round off to 5 decimal places (adjust as needed)
-                BigDecimal CADValue = new BigDecimal(getSGDValue).setScale(EUR, RoundingMode.HALF_UP);
-                page.locator("#SGDtotalGSTInput").fill(String.valueOf(CADValue));
+//TODO Round off to 4 decimal places (adjust as needed)
+                BigDecimal EURValue = new BigDecimal(getSGDValue).setScale(EUR, RoundingMode.HALF_UP);
+                page.locator("#SGDtotalGSTInput").fill(String.valueOf(EURValue));
             }
+
             if (currencyCode.equals("USD")) {
-                String sgdTotalGST = String.valueOf(finalTotalRoundedValue);
+                String sgdTotalGST = String.valueOf(inputTotalGst);
 //TODO Keep only digits and the decimal point
                 String replaceSGDTotalGST = sgdTotalGST.replaceAll("[^\\d.]", "");
 //TODO Convert to double for rounding
                 double getSGDValue = Double.parseDouble(replaceSGDTotalGST);
-//TODO Round off to 5 decimal places (adjust as needed)
+//TODO Round off to 3 decimal places (adjust as needed)
                 BigDecimal USDValue = new BigDecimal(getSGDValue).setScale(USD, RoundingMode.HALF_UP);
                 page.locator("#SGDtotalGSTInput").fill(String.valueOf(USDValue));
             }
+
             if (currencyCode.equals("INR")) {
-                String sgdTotalGST = String.valueOf(finalTotalRoundedValue);
+                String sgdTotalGST = String.valueOf(inputTotalGst);
 //TODO Keep only digits and the decimal point
                 String replaceSGDTotalGST = sgdTotalGST.replaceAll("[^\\d.]", "");
 //TODO Convert to double for rounding
                 double getSGDValue = Double.parseDouble(replaceSGDTotalGST);
-//TODO Round off to 5 decimal places (adjust as needed)
+//TODO Round off to 2 decimal places (adjust as needed)
                 BigDecimal INRValue = new BigDecimal(getSGDValue).setScale(INR, RoundingMode.HALF_UP);
                 page.locator("#SGDtotalGSTInput").fill(String.valueOf(INRValue));
             }
+
+//TODO Invoice Document
+            Locator invoiceDocumentButton = page.locator("#doc1").first();
+            invoiceDocumentButton.setInputFiles(Paths.get("D://YokogawaAsiaPrivateLimited//Downloads//Invoice Document.xlsx"));
             page.locator("#btnCreate").click();
             page.locator(".bootbox-accept").click();
         } else {
+//TODO Invoice Document
+            Locator invoiceDocumentButton2 = page.locator("#doc1").first();
+            invoiceDocumentButton2.setInputFiles(Paths.get("D://YokogawaAsiaPrivateLimited//Downloads//Invoice Documents.xlsx"));
             page.locator("#btnCreate").click();
             page.locator(".bootbox-accept").click();
         }

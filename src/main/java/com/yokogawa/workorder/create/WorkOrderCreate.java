@@ -35,8 +35,9 @@ public class WorkOrderCreate implements WorkOrderCreateInterface {
 
     public void WOCreate() {
         loginPageInterface.LoginMethod(properties.getProperty("LogisticsManager"));
+        page.pause();
         page.locator("//*[contains(text(), 'Dispatch Notes')]").click();
-        String poReferenceId = properties.getProperty("poReferenceId");
+        String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
         for(String tr : containerList){
             if(tr.contains(poReferenceId)){

@@ -1,6 +1,6 @@
 package com.yokogawa.currencyexchangerate;
-import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Page;
+import com.microsoft.playwright.*;
+import com.playwrightfactory.PlayWrightFactory;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
 import java.util.List;
@@ -9,23 +9,26 @@ import java.util.Properties;
 public class CurrencyExchangeRate {
 
     Properties properties;
-    Page page;
+    PlayWrightFactory playWrightFactory;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
+    Page page;
 
 
     private CurrencyExchangeRate() {
     }
 
-    public CurrencyExchangeRate(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface) {
+    public CurrencyExchangeRate(PlayWrightFactory playWrightFactory, LoginPageInterface loginPageInterface, Properties properties, LogoutPageInterface logoutPageInterface) {
         this.loginPageInterface = loginPageInterface;
         this.properties = properties;
-        this.page = page;
+        this.playWrightFactory = playWrightFactory;
         this.logoutPageInterface = logoutPageInterface;
     }
 
     public double findCurrency() {
-        loginPageInterface.LoginMethod(properties.getProperty("AdminId"));
+        page = playWrightFactory.initializeBrowser(properties);
+        page.pause();
+        loginPageInterface.LoginMethod(properties.getProperty("AdminId"), page);
         page.locator("//*[contains(text(), 'Settings')]").click();
 //TODO CurrencyExchangeRate
         page.locator("//*[contains(text(), 'Currency Exchange Rate')]").click();
@@ -38,7 +41,8 @@ public class CurrencyExchangeRate {
         List<String> currencyExchangeTable = page.locator("#tableCurrencyExchangeRate tbody tr td").allTextContents();
 //TODO Removing 1st and last td element => td:nth-child(n+2):nth-child(-n+4)
             double getCurrencyExchangeRate = Double.parseDouble(currencyExchangeTable.get(3));
-            logoutPageInterface.LogoutMethod();
+            logoutPageInterface.LogoutMethod(page);
+            playWrightFactory.TearDown(page);
             return getCurrencyExchangeRate;
     }
 }
