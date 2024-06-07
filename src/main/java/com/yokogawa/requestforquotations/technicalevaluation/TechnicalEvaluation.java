@@ -2,13 +2,11 @@ package com.yokogawa.requestforquotations.technicalevaluation;
 import com.microsoft.playwright.Page;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
-import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.Properties;
 
 public class TechnicalEvaluation implements TechnicalEvaluationInterface{
 
     Properties properties;
-    VariablesForNonCatalog variablesForNonCatalog;
     Page page;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
@@ -16,18 +14,11 @@ public class TechnicalEvaluation implements TechnicalEvaluationInterface{
     private TechnicalEvaluation(){
     }
 
-//TODO Test Constructor
+//TODO Constructor
     public TechnicalEvaluation(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.loginPageInterface = loginPageInterface;
         this.properties = properties;
         this.page = page;
-        this.logoutPageInterface = logoutPageInterface;
-    }
-
-    public TechnicalEvaluation(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
-        this.variablesForNonCatalog = variablesForNonCatalog;
-        this.page = page;
-        this.loginPageInterface = loginPageInterface;
         this.logoutPageInterface = logoutPageInterface;
     }
 

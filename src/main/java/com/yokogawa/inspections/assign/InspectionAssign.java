@@ -2,14 +2,12 @@ package com.yokogawa.inspections.assign;
 import com.microsoft.playwright.Page;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
-import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.List;
 import java.util.Properties;
 
 public class InspectionAssign implements InspectionAssignInterface {
 
     Properties properties;
-    VariablesForNonCatalog variablesForNonCatalog;
     Page page;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
@@ -17,19 +15,12 @@ public class InspectionAssign implements InspectionAssignInterface {
     private InspectionAssign(){
     }
 
-//TODO Test Constructor
+//TODO Constructor
     public InspectionAssign(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.loginPageInterface = loginPageInterface;
         this.properties = properties;
         this.page = page;
         this.logoutPageInterface = logoutPageInterface;
-    }
-
-    public InspectionAssign(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
-        this.variablesForNonCatalog = variablesForNonCatalog;
-        this.page = page;
-        this.logoutPageInterface = logoutPageInterface;
-        this.loginPageInterface = loginPageInterface;
     }
 
     public void RequesterInspectionAssign(){

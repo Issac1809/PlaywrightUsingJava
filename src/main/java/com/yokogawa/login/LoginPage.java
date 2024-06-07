@@ -2,28 +2,19 @@ package com.yokogawa.login;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import com.yokogawa.variables.VariablesForNonCatalog;
-
 import java.util.Properties;
 
 public class LoginPage implements LoginPageInterface {
 
-    VariablesForNonCatalog variablesForNonCatalog;
     Page page;
     Properties properties;
 
     private LoginPage(){
     }
 
-//TODO Test Constructor
+//TODO Constructor
     public LoginPage(Properties properties, Page page){
         this.properties = properties;
-        this.page = page;
-    }
-
-//TODO Main Constructor
-    public LoginPage(VariablesForNonCatalog variablesForNonCatalog, Page page){
-        this.variablesForNonCatalog = variablesForNonCatalog;
         this.page = page;
     }
 

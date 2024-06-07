@@ -7,7 +7,8 @@ public class LogoutPage implements LogoutPageInterface {
 
     private LogoutPage(){
     }
-//TODO Test Constructor
+
+//TODO Constructor
     public LogoutPage(Page page){
         this.page = page;
     }
@@ -16,6 +17,7 @@ public class LogoutPage implements LogoutPageInterface {
         page.locator("//header/div[1]/div[2]/ul[1]/li[3]/div[1]/a[1]/div[1]/img[1]").click();
         page.locator("//a[@onclick='user_logout()']").click();
     }
+
     public void LogoutMethod(Page page){
         page.locator("//header/div[1]/div[2]/ul[1]/li[3]/div[1]/a[1]/div[1]/img[1]").click();
         page.locator("//a[@onclick='user_logout()']").click();

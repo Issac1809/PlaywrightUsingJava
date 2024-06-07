@@ -1,4 +1,4 @@
-package com.invoice;
+package com.invoice.create;
 import com.base.BaseTest;
 import org.testng.annotations.Test;
 

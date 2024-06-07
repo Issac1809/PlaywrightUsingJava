@@ -3,13 +3,11 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
-import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.Properties;
 
 public class PorInspectPO implements PorInspectPoInterface{
 
     Properties properties;
-    VariablesForNonCatalog variablesForNonCatalog;
     LoginPageInterface loginPageInterface;
     Page page;
     LogoutPageInterface logoutPageInterface;
@@ -17,18 +15,11 @@ public class PorInspectPO implements PorInspectPoInterface{
     private PorInspectPO(){
     }
 
-//TODO Test Constructor
+//TODO Constructor
     public PorInspectPO(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.loginPageInterface = loginPageInterface;
         this.properties = properties;
         this.page = page;
-        this.logoutPageInterface = logoutPageInterface;
-    }
-
-    public PorInspectPO(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
-        this.variablesForNonCatalog = variablesForNonCatalog;
-        this.page = page;
-        this.loginPageInterface = loginPageInterface;
         this.logoutPageInterface = logoutPageInterface;
     }
 

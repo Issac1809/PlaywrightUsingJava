@@ -1,4 +1,4 @@
-package com.yokogawa.invoice;
+package com.yokogawa.invoice.create;
 
 public interface POInvoiceCreateInterface {
 

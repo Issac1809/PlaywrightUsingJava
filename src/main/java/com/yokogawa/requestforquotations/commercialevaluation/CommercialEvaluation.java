@@ -3,13 +3,11 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
-import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.Properties;
 
 public class CommercialEvaluation implements CommercialEvaluationInterface {
 
     Properties properties;
-    VariablesForNonCatalog variablesForNonCatalog;
     Page page;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
@@ -17,18 +15,11 @@ public class CommercialEvaluation implements CommercialEvaluationInterface {
     private CommercialEvaluation(){
     }
 
-//TODO Test Constructor
+//TODO Constructor
     public CommercialEvaluation(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.loginPageInterface = loginPageInterface;
         this.properties = properties;
         this.page = page;
-        this.logoutPageInterface = logoutPageInterface;
-    }
-
-    public CommercialEvaluation(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
-        this.variablesForNonCatalog = variablesForNonCatalog;
-        this.page = page;
-        this.loginPageInterface = loginPageInterface;
         this.logoutPageInterface = logoutPageInterface;
     }
 

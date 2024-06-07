@@ -4,7 +4,9 @@ import com.dispatchnotes.create.DispatchNotesCreateTest;
 import com.dispatchnotes.assign.DispatchNotesAssignTest;
 import com.inspections.assign.InspectionAssignTest;
 import com.inspections.create.InspectionCreateTest;
-import com.invoice.InvoiceCreateTest;
+import com.invoice.approve.POInvoiceApprovalTest;
+import com.invoice.create.InvoiceCreateTest;
+import com.invoice.sendforapproval.POInvoiceSendForApprovalTest;
 import com.microsoft.playwright.Page;
 import com.msa.InspectPOTest;
 import com.orderschedule.approval.OSApproveTest;
@@ -32,8 +34,12 @@ import com.yokogawa.inspections.assign.InspectionAssign;
 import com.yokogawa.inspections.assign.InspectionAssignInterface;
 import com.yokogawa.inspections.create.InspectionCreate;
 import com.yokogawa.inspections.create.InspectionCreateInterface;
-import com.yokogawa.invoice.POInvoiceCreate;
-import com.yokogawa.invoice.POInvoiceCreateInterface;
+import com.yokogawa.invoice.approve.POInvoiceApproval;
+import com.yokogawa.invoice.approve.POInvoiceApprovalInterface;
+import com.yokogawa.invoice.create.POInvoiceCreate;
+import com.yokogawa.invoice.create.POInvoiceCreateInterface;
+import com.yokogawa.invoice.sendforapproval.POInvoiceSendForApproval;
+import com.yokogawa.invoice.sendforapproval.POSendForApprovalInterface;
 import com.yokogawa.login.LoginPage;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
@@ -125,13 +131,16 @@ public class BaseTest {
     protected WOTrackerStatusInterface woTrackerStatusInterface;
     protected InvoiceCreateTest invoiceCreateTest;
     protected POInvoiceCreateInterface poInvoiceCreateInterface;
+    protected POInvoiceSendForApprovalTest poInvoiceSendForApprovalTest;
+    protected POSendForApprovalInterface poSendForApprovalInterface;
+    protected POInvoiceApprovalTest poInvoiceApprovalTest;
+    protected POInvoiceApprovalInterface poInvoiceApprovalInterface;
 
     @BeforeTest
     public void Setup() {
         try {
             playWrightFactory = new PlayWrightFactory();
             properties = playWrightFactory.initializeProperties();
-
             page = playWrightFactory.initializeBrowser(properties);
 
             loginPageInterface = new LoginPage(properties, page);
@@ -180,6 +189,10 @@ public class BaseTest {
             currencyExchangeRateTest = new CurrencyExchangeRateTest();
             poInvoiceCreateInterface = new POInvoiceCreate(playWrightFactory, loginPageInterface, properties, page, logoutPageInterface, currencyExchangeRate);
             invoiceCreateTest = new InvoiceCreateTest();
+            poSendForApprovalInterface = new POInvoiceSendForApproval(loginPageInterface, properties, page, logoutPageInterface);
+            poInvoiceSendForApprovalTest = new POInvoiceSendForApprovalTest();
+            poInvoiceApprovalInterface = new POInvoiceApproval(loginPageInterface, properties, page, logoutPageInterface);
+            poInvoiceApprovalTest = new POInvoiceApprovalTest();
         } catch (Exception error) {
             System.out.println("Error :" + error);
         }

@@ -2,13 +2,11 @@ package com.yokogawa.purchaseorderrequest.create;
 import com.microsoft.playwright.Page;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
-import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.Properties;
 
 public class PocNonCatalogPorCreate implements PorCreateNonCatalog {
 
     Properties properties;
-    VariablesForNonCatalog variablesForNonCatalog;
     Page page;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
@@ -16,18 +14,11 @@ public class PocNonCatalogPorCreate implements PorCreateNonCatalog {
     private PocNonCatalogPorCreate(){
     }
 
-//TODO Test Constructor
+//TODO Constructor
     public PocNonCatalogPorCreate(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.loginPageInterface = loginPageInterface;
         this.properties = properties;
         this.page = page;
-        this.logoutPageInterface = logoutPageInterface;
-    }
-
-    public PocNonCatalogPorCreate(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
-        this.variablesForNonCatalog = variablesForNonCatalog;
-        this.page = page;
-        this.loginPageInterface = loginPageInterface;
         this.logoutPageInterface = logoutPageInterface;
     }
 

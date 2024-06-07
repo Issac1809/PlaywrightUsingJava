@@ -3,7 +3,6 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
-import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.List;
 import java.util.Properties;
 
@@ -13,24 +12,16 @@ public class WOTrackerStatus implements WOTrackerStatusInterface{
     Page page;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
-    VariablesForNonCatalog variablesForNonCatalog;
 
     private WOTrackerStatus(){
     }
 
-//TODO Test Constructor
+//TODO Constructor
     public WOTrackerStatus(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.properties = properties;
         this.page = page;
         this.loginPageInterface = loginPageInterface;
         this.logoutPageInterface = logoutPageInterface;
-    }
-
-    public WOTrackerStatus(Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface, VariablesForNonCatalog variablesForNonCatalog){
-        this.page = page;
-        this.loginPageInterface = loginPageInterface;
-        this.logoutPageInterface = logoutPageInterface;
-        this.variablesForNonCatalog = variablesForNonCatalog;
     }
 
     public void VendorTrackerStatus() {

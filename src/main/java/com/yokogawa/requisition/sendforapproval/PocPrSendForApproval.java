@@ -14,13 +14,7 @@ public class PocPrSendForApproval implements PrSendForApproval {
     private PocPrSendForApproval(){
     }
 
-    public PocPrSendForApproval(Page page, LogoutPageInterface logoutPageInterface, LoginPageInterface loginPageInterface){
-        this.page = page;
-        this.loginPageInterface = loginPageInterface;
-        this.logoutPageInterface = logoutPageInterface;
-    }
-
-//TODO Test Constructor
+//TODO Constructor
     public PocPrSendForApproval(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.properties = properties;
         this.page = page;

@@ -5,7 +5,7 @@ import com.yokogawa.dispatchnotes.assign.DispatchNotesAssignInterface;
 import com.yokogawa.dispatchnotes.create.DispatchNoteCreateInterface;
 import com.yokogawa.inspections.assign.InspectionAssignInterface;
 import com.yokogawa.inspections.create.InspectionCreateInterface;
-import com.yokogawa.invoice.POInvoiceCreateInterface;
+import com.yokogawa.invoice.create.POInvoiceCreateInterface;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
 import com.yokogawa.msa.PorInspectPoInterface;
@@ -98,7 +98,7 @@ public class FunctionsNonCatalog {
         this.poInvoiceCreateInterface = poInvoiceCreateInterface;
     }
 
-    public void FunctionsForNonCatalog() throws InterruptedException{
+    public void FunctionsForNonCatalog() throws InterruptedException {
 
 //TODO Requester PR Create Non-Catalog
         prCreateNonCatalog.RequesterLoginPRCreate();

@@ -1,4 +1,4 @@
-package com.yokogawa.invoice;
+package com.yokogawa.invoice.create;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.file.Paths;
@@ -27,6 +27,7 @@ public class POInvoiceCreate implements POInvoiceCreateInterface {
     private POInvoiceCreate() {
     }
 
+//TODO Constructor
     public POInvoiceCreate(PlayWrightFactory playWrightFactory, LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface, CurrencyExchangeRate currencyExchangeRate) {
         this.loginPageInterface = loginPageInterface;
         this.properties = properties;

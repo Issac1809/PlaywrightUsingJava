@@ -6,6 +6,6 @@ public class WOTrackerStatusTest extends BaseTest {
 
     @Test
     public void WOTrackerStatusTestMethod(){
-
+        workOrderCreateInterface.WOCreate();
     }
 }

@@ -2,14 +2,11 @@ package com.yokogawa.requestforquotations.readyforevaluation;
 import com.microsoft.playwright.Page;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
-import com.yokogawa.variables.VariablesForNonCatalog;
-
 import java.util.Properties;
 
 public class ReadyForEvaluation implements ReadyForEvalutationInterface{
 
     Properties properties;
-    VariablesForNonCatalog variablesForNonCatalog;
     Page page;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
@@ -17,20 +14,13 @@ public class ReadyForEvaluation implements ReadyForEvalutationInterface{
     private ReadyForEvaluation(){
     }
 
-//TODO Test Constructor
+//TODO Constructor
     public ReadyForEvaluation(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.loginPageInterface = loginPageInterface;
         this.properties = properties;
         this.page = page;
         this.logoutPageInterface = logoutPageInterface;
 
-    }
-
-    public ReadyForEvaluation(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
-        this.variablesForNonCatalog = variablesForNonCatalog;
-        this.page = page;
-        this.logoutPageInterface = logoutPageInterface;
-        this.loginPageInterface = loginPageInterface;
     }
 
     public void ReadyForEvaluationButton(){

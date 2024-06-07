@@ -4,14 +4,12 @@ import com.microsoft.playwright.Page;
 import com.playwrightfactory.PlayWrightFactory;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
-import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.Properties;
 
 public class OrderScheduleCreate implements OrderScheduleInterface {
 
     PlayWrightFactory playWrightFactory;
     Properties properties;
-    VariablesForNonCatalog variablesForNonCatalog;
     Page page;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
@@ -34,7 +32,6 @@ public class OrderScheduleCreate implements OrderScheduleInterface {
         String title = properties.getProperty("Title");
         page.locator("//*[contains(text(), '" + title + "')]").first().click();
         String poReferenceId = page.locator("#referenceId").textContent();
-        System.out.println(poReferenceId);
         playWrightFactory.savePropertiesToFile(poReferenceId);
         page.locator("#btnCreateOR").click();
         Locator orderScheduleDate = page.locator(".scheduleDate-1").last();

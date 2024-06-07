@@ -4,14 +4,11 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
-import com.yokogawa.logout.LogoutPage;
-import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.Properties;
 
 public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
 
     Page page;
-    VariablesForNonCatalog variablesForNonCatalog;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
     Properties properties;
@@ -19,24 +16,12 @@ public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
     private PocNonCatalogPrCreate(){
     }
 
-    public PocNonCatalogPrCreate(Properties properties, Page page){
-        this.page = page;
-        this.properties = properties;
-    }
-
-//TODO Test Constructor
+//TODO Constructor
     public PocNonCatalogPrCreate(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.page = page;
         this.properties = properties;
         this.loginPageInterface = loginPageInterface;
         this.logoutPageInterface = logoutPageInterface;
-    }
-//TODO Main Constructor
-    public PocNonCatalogPrCreate(Page page, VariablesForNonCatalog variablesForNonCatalog, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
-        this.page = page;
-        this.variablesForNonCatalog = variablesForNonCatalog;
-        this.loginPageInterface = loginPageInterface;
-        this.logoutPageInterface = new LogoutPage(page);
     }
 
     public void RequesterLoginPRCreate() throws InterruptedException {

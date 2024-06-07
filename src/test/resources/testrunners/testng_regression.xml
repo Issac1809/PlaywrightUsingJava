@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="YEA Playwright Suite" >
+<suite name="YEA Playwright Suite">
+
+    <listeners>
+        <listener class-name="org.testng.reporters.EmailableReporter2" />
+        <listener class-name="org.testng.reporters.FailedReporter" />
+    </listeners>
 
     <test name="YEA Login Page Test">
         <classes>
@@ -130,7 +135,19 @@
 
     <test name="YEA NonCatalog Invoice Create Page Test">
         <classes>
-            <class name="com.invoice.InvoiceCreateTest" />
+            <class name="com.invoice.create.InvoiceCreateTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Invoice Send For Approval Page Test">
+        <classes>
+            <class name="com.invoice.sendforapproval.POInvoiceSendForApprovalTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Invoice Approval Page Test">
+        <classes>
+            <class name="com.invoice.approve.POInvoiceApprovalTest" />
         </classes>
     </test>
 

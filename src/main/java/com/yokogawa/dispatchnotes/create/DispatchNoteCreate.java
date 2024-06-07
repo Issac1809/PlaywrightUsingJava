@@ -2,7 +2,6 @@ package com.yokogawa.dispatchnotes.create;
 import com.microsoft.playwright.Page;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
-import com.yokogawa.variables.VariablesForNonCatalog;
 
 import java.util.Properties;
 
@@ -10,7 +9,6 @@ import java.util.Properties;
 public class DispatchNoteCreate implements DispatchNoteCreateInterface {
 
     Properties properties;
-    VariablesForNonCatalog variablesForNonCatalog;
     Page page;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
@@ -18,16 +16,9 @@ public class DispatchNoteCreate implements DispatchNoteCreateInterface {
     private DispatchNoteCreate(){
     }
 
-//TODO Test Constructor
+//TODO Constructor
     public DispatchNoteCreate(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.properties = properties;
-        this.page = page;
-        this.logoutPageInterface = logoutPageInterface;
-        this.loginPageInterface = loginPageInterface;
-    }
-
-    public DispatchNoteCreate(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
-        this.variablesForNonCatalog = variablesForNonCatalog;
         this.page = page;
         this.logoutPageInterface = logoutPageInterface;
         this.loginPageInterface = loginPageInterface;

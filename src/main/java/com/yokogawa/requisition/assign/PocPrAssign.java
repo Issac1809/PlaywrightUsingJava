@@ -3,12 +3,10 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
-import com.yokogawa.variables.VariablesForNonCatalog;
 import java.util.Properties;
 
 public class PocPrAssign implements PrAssign {
 
-    VariablesForNonCatalog variablesForNonCatalog;
     Page page;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
@@ -17,16 +15,9 @@ public class PocPrAssign implements PrAssign {
     private PocPrAssign(){
     }
 
-//TODO Test Constructor
+//TODO Constructor
     public PocPrAssign(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.properties = properties;
-        this.page = page;
-        this.loginPageInterface = loginPageInterface;
-        this.logoutPageInterface = logoutPageInterface;
-    }
-
-    public PocPrAssign(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
-        this.variablesForNonCatalog = variablesForNonCatalog;
         this.page = page;
         this.loginPageInterface = loginPageInterface;
         this.logoutPageInterface = logoutPageInterface;

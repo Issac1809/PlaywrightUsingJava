@@ -18,6 +18,17 @@ public class PlayWrightFactory {
         this.playwright = Playwright.create();
     }
 
+    public Properties initializeProperties() {
+        try {
+            fileInputStream = new FileInputStream("./src/test/resources/config/Properties");
+            properties = new Properties();
+            properties.load(fileInputStream);
+        } catch (IOException error) {
+            throw new RuntimeException(error);
+        }
+        return properties;
+    }
+
     public Page initializeBrowser(Properties properties) {
         String browserName = properties.getProperty("browser").trim();
         switch (browserName.toLowerCase()) {
@@ -41,17 +52,6 @@ public class PlayWrightFactory {
         page = browser.newPage();
         page.navigate(properties.getProperty("url").trim());
         return page;
-    }
-
-    public Properties initializeProperties() {
-        try {
-            fileInputStream = new FileInputStream("./src/test/resources/config/Properties");
-            properties = new Properties();
-            properties.load(fileInputStream);
-        } catch (IOException error) {
-            throw new RuntimeException(error);
-        }
-        return properties;
     }
 
     public void savePropertiesToFile(String poReferenceId) {

@@ -11,8 +11,12 @@ import com.yokogawa.inspections.assign.InspectionAssign;
 import com.yokogawa.inspections.assign.InspectionAssignInterface;
 import com.yokogawa.inspections.create.InspectionCreate;
 import com.yokogawa.inspections.create.InspectionCreateInterface;
-import com.yokogawa.invoice.POInvoiceCreate;
-import com.yokogawa.invoice.POInvoiceCreateInterface;
+import com.yokogawa.invoice.approve.POInvoiceApproval;
+import com.yokogawa.invoice.approve.POInvoiceApprovalInterface;
+import com.yokogawa.invoice.create.POInvoiceCreate;
+import com.yokogawa.invoice.create.POInvoiceCreateInterface;
+import com.yokogawa.invoice.sendforapproval.POInvoiceSendForApproval;
+import com.yokogawa.invoice.sendforapproval.POSendForApprovalInterface;
 import com.yokogawa.login.LoginPage;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
@@ -81,6 +85,8 @@ public class BaseMain {
     protected WorkOrderCreateInterface workOrderCreateInterface;
     protected WOTrackerStatusInterface woTrackerStatusInterface;
     protected POInvoiceCreateInterface poInvoiceCreateInterface;
+    protected POSendForApprovalInterface poSendForApprovalInterface;
+    protected POInvoiceApprovalInterface poInvoiceApprovalInterface;
 
     public BaseMain() {
             playWrightFactory = new PlayWrightFactory();
@@ -110,6 +116,8 @@ public class BaseMain {
             workOrderCreateInterface = new WorkOrderCreate(loginPageInterface, properties, page, logoutPageInterface);
             woTrackerStatusInterface = new WOTrackerStatus(loginPageInterface, properties, page, logoutPageInterface);
             poInvoiceCreateInterface = new POInvoiceCreate(playWrightFactory, loginPageInterface, properties, page, logoutPageInterface, currencyExchangeRate);
+            poSendForApprovalInterface = new POInvoiceSendForApproval(loginPageInterface, properties, page, logoutPageInterface);
+            poInvoiceApprovalInterface = new POInvoiceApproval(loginPageInterface, properties, page, logoutPageInterface);
             functionsNonCatalog = new FunctionsNonCatalog(playWrightFactory, properties, page, loginPageInterface, logoutPageInterface,
                     prCreateNonCatalog, prSendForApproval, prAssign, rfqCreate, quotationSubmit, readyForEvalutationInterface,
                     technicalEvaluationInterface, commercialEvaluationInterface, porCreateNonCatalog, porApproval, porInspectPoInterface,

@@ -3,14 +3,12 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.yokogawa.login.LoginPageInterface;
 import com.yokogawa.logout.LogoutPageInterface;
-import com.yokogawa.variables.VariablesForNonCatalog;
 import java.nio.file.Paths;
 import java.util.Properties;
 
 public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
 
     Properties properties;
-    VariablesForNonCatalog variablesForNonCatalog;
     Page page;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
@@ -18,18 +16,11 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
     private RegisteredVendorQuotationSubmit(){
     }
 
-//TODO Test Constructor
+//TODO Constructor
     public RegisteredVendorQuotationSubmit(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.loginPageInterface = loginPageInterface;
         this.properties = properties;
         this.page = page;
-        this.logoutPageInterface = logoutPageInterface;
-    }
-
-    public RegisteredVendorQuotationSubmit(VariablesForNonCatalog variablesForNonCatalog, Page page, LoginPageInterface loginPageInterface, LogoutPageInterface logoutPageInterface){
-        this.variablesForNonCatalog = variablesForNonCatalog;
-        this.page = page;
-        this.loginPageInterface = loginPageInterface;
         this.logoutPageInterface = logoutPageInterface;
     }
 
@@ -116,14 +107,14 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
     }
 
     public void QuotationAttachments() {
-        //TODO Technical Attachment
+//TODO Technical Attachment
         page.locator("#attachFile").click();
         Locator TechnicalFile = page.locator("#formFilePreupload");
         TechnicalFile.setInputFiles(Paths.get("D://YokogawaAsiaPrivateLimited//Downloads//Technical Documents.xlsx"));
         page.locator("#select2-attachmentTypeId-container").click();
         page.locator("//li[contains(text(), 'Technical')]").click();
         page.locator("#attachmentSaveId").click();
-        //TODO Commercial Attachment
+//TODO Commercial Attachment
         page.locator("#attachFile").click();
         Locator CommercialFile = page.locator("#formFilePreupload");
         CommercialFile.setInputFiles(Paths.get("D://YokogawaAsiaPrivateLimited//Downloads//Commercial Documents.xlsx"));

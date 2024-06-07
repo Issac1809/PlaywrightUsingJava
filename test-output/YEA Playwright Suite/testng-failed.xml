@@ -1,70 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Failed suite [YEA Playwright Suite]" guice-stage="DEVELOPMENT">
-  <test thread-count="5" name="YEA NonCatalog Ready For Evaluation Page Test(failed)">
+  <listeners>
+    <listener class-name="org.testng.reporters.EmailableReporter2"/>
+    <listener class-name="org.testng.reporters.FailedReporter"/>
+  </listeners>
+  <test thread-count="5" name="YEA NonCatalog Order Schedule Approve Page Test(failed)">
     <classes>
-      <class name="com.requestforquotation.quotationsubmit.QuotationSubmitTest">
-        <methods>
-          <include name="Setup"/>
-          <include name="QuotationSubmitMethod"/>
-          <include name="TearDown"/>
-        </methods>
-      </class> <!-- com.requestforquotation.quotationsubmit.QuotationSubmitTest -->
-    </classes>
-  </test> <!-- YEA NonCatalog Ready For Evaluation Page Test(failed) -->
-  <test thread-count="5" name="YEA NonCatalog Technical Evaluation Page Test(failed)">
-    <classes>
-      <class name="com.requestforquotation.technicalevaluation.TechnicalEvaluationTest">
+      <class name="com.orderschedule.approval.OSApproveTest">
         <methods>
           <include name="Setup"/>
           <include name="TearDown"/>
-          <include name="TechnicalEvaluationTestMethod"/>
-        </methods>
-      </class> <!-- com.requestforquotation.technicalevaluation.TechnicalEvaluationTest -->
-    </classes>
-  </test> <!-- YEA NonCatalog Technical Evaluation Page Test(failed) -->
-  <test thread-count="5" name="YEA NonCatalog Commercial Evaluation Page Test(failed)">
-    <classes>
-      <class name="com.requestforquotation.commercialevaluation.CommercialEvaluationTest">
-        <methods>
-          <include name="CommercialEvaluationTestMethod"/>
-          <include name="Setup"/>
           <include name="TearDown"/>
+          <include name="OSApproveTestMethod"/>
         </methods>
-      </class> <!-- com.requestforquotation.commercialevaluation.CommercialEvaluationTest -->
+      </class> <!-- com.orderschedule.approval.OSApproveTest -->
     </classes>
-  </test> <!-- YEA NonCatalog Commercial Evaluation Page Test(failed) -->
-  <test thread-count="5" name="YEA NonCatalog Purchase Order Request Create Page Test(failed)">
+  </test> <!-- YEA NonCatalog Order Schedule Approve Page Test(failed) -->
+  <test thread-count="5" name="YEA NonCatalog Inspection Create Page Test(failed)">
     <classes>
-      <class name="com.purchaseorderrequest.create.PorCreateTest">
+      <class name="com.inspections.create.InspectionCreateTest">
         <methods>
           <include name="Setup"/>
-          <include name="PorCreateTestMethod"/>
+          <include name="InspectionCreateTestMethod"/>
+          <include name="TearDown"/>
           <include name="TearDown"/>
         </methods>
-      </class> <!-- com.purchaseorderrequest.create.PorCreateTest -->
+      </class> <!-- com.inspections.create.InspectionCreateTest -->
     </classes>
-  </test> <!-- YEA NonCatalog Purchase Order Request Create Page Test(failed) -->
-  <test thread-count="5" name="YEA NonCatalog Purchase Order Approval Page Test(failed)">
+  </test> <!-- YEA NonCatalog Inspection Create Page Test(failed) -->
+  <test thread-count="5" name="YEA NonCatalog Inspection Assign Page Test(failed)">
     <classes>
-      <class name="com.purchaseorderrequest.approval.PorApprovalTest">
+      <class name="com.inspections.assign.InspectionAssignTest">
         <methods>
           <include name="Setup"/>
-          <include name="PorApprovalTestMethod"/>
+          <include name="InspectionAssignTestMethod"/>
+          <include name="TearDown"/>
           <include name="TearDown"/>
         </methods>
-      </class> <!-- com.purchaseorderrequest.approval.PorApprovalTest -->
+      </class> <!-- com.inspections.assign.InspectionAssignTest -->
     </classes>
-  </test> <!-- YEA NonCatalog Purchase Order Approval Page Test(failed) -->
-  <test thread-count="5" name="YEA NonCatalog MSA Page Test(failed)">
+  </test> <!-- YEA NonCatalog Inspection Assign Page Test(failed) -->
+  <test thread-count="5" name="YEA NonCatalog Dispatch Notes Create Page Test(failed)">
     <classes>
-      <class name="com.msa.InspectPOTest">
+      <class name="com.dispatchnotes.create.DispatchNotesCreateTest">
         <methods>
           <include name="Setup"/>
-          <include name="InspectPOTestMethod"/>
+          <include name="DispatchNotesCreateTestMethod"/>
+          <include name="TearDown"/>
           <include name="TearDown"/>
         </methods>
-      </class> <!-- com.msa.InspectPOTest -->
+      </class> <!-- com.dispatchnotes.create.DispatchNotesCreateTest -->
     </classes>
-  </test> <!-- YEA NonCatalog MSA Page Test(failed) -->
+  </test> <!-- YEA NonCatalog Dispatch Notes Create Page Test(failed) -->
+  <test thread-count="5" name="YEA NonCatalog Dispatch Notes Assign Page Test(failed)">
+    <classes>
+      <class name="com.dispatchnotes.assign.DispatchNotesAssignTest">
+        <methods>
+          <include name="DispatchNotesAssignTestMethod"/>
+          <include name="Setup"/>
+          <include name="TearDown"/>
+          <include name="TearDown"/>
+        </methods>
+      </class> <!-- com.dispatchnotes.assign.DispatchNotesAssignTest -->
+    </classes>
+  </test> <!-- YEA NonCatalog Dispatch Notes Assign Page Test(failed) -->
+  <test thread-count="5" name="YEA NonCatalog Work Orders Create Page Test(failed)">
+    <classes>
+      <class name="com.workorders.create.WorkOrdersCreateTest">
+        <methods>
+          <include name="Setup"/>
+          <include name="WorkOrdersCreateTestMethod"/>
+          <include name="TearDown"/>
+          <include name="TearDown"/>
+        </methods>
+      </class> <!-- com.workorders.create.WorkOrdersCreateTest -->
+    </classes>
+  </test> <!-- YEA NonCatalog Work Orders Create Page Test(failed) -->
+  <test thread-count="5" name="YEA NonCatalog Work Orders Tracker Status Page Test(failed)">
+    <classes>
+      <class name="com.workorders.trackerstatus.WOTrackerStatusTest">
+        <methods>
+          <include name="Setup"/>
+          <include name="WOTrackerStatusTestMethod"/>
+          <include name="TearDown"/>
+          <include name="TearDown"/>
+        </methods>
+      </class> <!-- com.workorders.trackerstatus.WOTrackerStatusTest -->
+    </classes>
+  </test> <!-- YEA NonCatalog Work Orders Tracker Status Page Test(failed) -->
+  <test thread-count="5" name="YEA NonCatalog Invoice Create Page Test(failed)">
+    <classes>
+      <class name="com.invoice.create.InvoiceCreateTest">
+        <methods>
+          <include name="Setup"/>
+          <include name="InvoiceCreateTestMethod"/>
+          <include name="TearDown"/>
+          <include name="TearDown"/>
+        </methods>
+      </class> <!-- com.invoice.create.InvoiceCreateTest -->
+    </classes>
+  </test> <!-- YEA NonCatalog Invoice Create Page Test(failed) -->
 </suite> <!-- Failed suite [YEA Playwright Suite] -->
