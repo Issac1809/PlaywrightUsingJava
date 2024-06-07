@@ -55,7 +55,6 @@ import com.yokogawa.workorder.trackerstatus.WOTrackerStatus;
 import com.yokogawa.workorder.trackerstatus.WOTrackerStatusInterface;
 import java.util.Properties;
 
-
 public class BaseMain {
 
     protected PlayWrightFactory playWrightFactory;
