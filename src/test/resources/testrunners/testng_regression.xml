@@ -37,7 +37,6 @@
         </classes>
     </test>
 
-
     <test name="YEA NonCatalog Quotation Submit Page Test">
         <classes>
             <class name="com.requestforquotation.quotationsubmit.QuotationSubmitTest" />
