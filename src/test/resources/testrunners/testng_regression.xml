@@ -31,7 +31,6 @@
         </classes>
     </test>
 
-
     <test name="YEA NonCatalog Request For Quotation Create Page Test">
         <classes>
             <class name="com.requestforquotation.create.RFQCreateTest" />
