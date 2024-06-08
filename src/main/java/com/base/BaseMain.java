@@ -57,7 +57,6 @@ import java.util.Properties;
 
 
 public class BaseMain {
-
     protected PlayWrightFactory playWrightFactory;
     protected Page page;
     protected Properties properties;
