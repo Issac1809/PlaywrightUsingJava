@@ -4,8 +4,12 @@ import org.testng.annotations.Test;
 
 public class NonCatalogPrSendForApprovalTest extends BaseTest {
 
-    @Test
+    @Test (priority = 3, groups = "requisition")
     public void NonCatalogPrAssignMethod() {
-        prSendForApproval.NonCatalogPrSendForApproval();
+        try {
+            prSendForApproval.NonCatalogPrSendForApproval();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

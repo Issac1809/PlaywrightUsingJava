@@ -48,11 +48,12 @@ public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
         page.getByLabel("Ship To Yokogawa").check();
     }
 
-    public void Project() {
+    public void Project() throws InterruptedException {
         page.locator("#select2-projectId-container").click();
         page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("Project"));
         Locator getProject = page.locator("//li[contains(text(),'" + properties.getProperty("Project") + "')]");
         getProject.click();
+        Thread.sleep(2000);
     }
 
     public void WBS() {
@@ -147,13 +148,15 @@ public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
     public void AddLineRequisitionItems() {
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add line Requisition Items")).click();
 //TODO Category
-        page.getByLabel("-- Select Categories --").click();
-        page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("Category"));
-        Locator getCategory = page.locator("//li[contains(text(),'" + properties.getProperty("Category") + "')]").first();
-        getCategory.click();
+//        page.getByLabel("-- Select Categories --").click();
+//        page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("Category"));
+//        Locator getCategory = page.locator("//li[contains(text(),'" + properties.getProperty("Category") + "')]").first();
+//        getCategory.click();
 //TODO Items
-        page.getByLabel("-- Select Item --").click();
-        Locator getItem = page.locator("//li[contains(text(),'" + properties.getProperty("Item") + "')]").first();
+        page.locator("#select2-itemid-container").click();
+        String itemName = properties.getProperty("Item");
+        page.locator(".select2-search__field").fill(itemName);
+        Locator getItem = page.locator("//li[contains(text(),'" + itemName + "')]").first();
         getItem.click();
 //TODO Quantity
         page.getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("* Quantity :")).click();

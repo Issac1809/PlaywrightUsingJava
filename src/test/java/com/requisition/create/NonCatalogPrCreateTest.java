@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 public class NonCatalogPrCreateTest extends BaseTest {
 
-    @Test
+    @Test (priority = 1, groups = "requisition")
     public void NonCatalogPrCreateMethod(){
         try{
             prCreateNonCatalog.RequesterLoginPRCreate();
@@ -31,7 +31,7 @@ public class NonCatalogPrCreateTest extends BaseTest {
             prCreateNonCatalog.Notes();
             prCreateNonCatalog.PRCreate();
         } catch (Exception error) {
-            error.printStackTrace();
+            System.out.println(error);
         }
     }
 }

@@ -4,13 +4,13 @@ import org.testng.annotations.Test;
 
 public class RequisitionAssignTest extends BaseTest {
 
-    @Test
+    @Test (priority = 7, groups = "requisition")
     public void RequisitionAssignTestMethod() {
         try {
             prAssign.BuyerManagerLogin();
             prAssign.BuyerManagerAssign();
         } catch (Exception error) {
-            error.printStackTrace();
+            System.out.println(error);
         }
     }
 }

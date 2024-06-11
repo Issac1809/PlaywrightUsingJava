@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="YEA Playwright Suite">
+<suite name="YEA Playwright Suite" parallel="false">
 
     <listeners>
         <listener class-name="org.testng.reporters.EmailableReporter2" />
@@ -19,15 +19,45 @@
         </classes>
     </test>
 
+    <test name="YEA NonCatalog Requisition Edit Page Test">
+        <classes>
+            <class name="com.requisition.edit.NonCatalogPrEditTest" />
+        </classes>
+    </test>
+
     <test name="YEA NonCatalog Requisition Send For Approval Page Test">
         <classes>
             <class name="com.requisition.sendforapproval.NonCatalogPrSendForApprovalTest" />
         </classes>
     </test>
 
+    <test name="YEA NonCatalog Requisition Reject Page Test">
+        <classes>
+            <class name="com.requisition.reject.NonCatalogPrRejectTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Requisition Approve Page Test">
+        <classes>
+            <class name="com.requisition.approve.NonCatalogPrApproveTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Requisition Buyer Manager Suspend Page Test">
+        <classes>
+            <class name="com.requisition.suspend.BuyerManagerNonCatalogPrSuspendTest" />
+        </classes>
+    </test>
+
     <test name="YEA NonCatalog Requisition Assign Page Test">
         <classes>
             <class name="com.requisition.assign.RequisitionAssignTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Requisition Buyer Suspend Page Test">
+        <classes>
+            <class name="com.requisition.suspend.BuyerNonCatalogPrSuspendTest" />
         </classes>
     </test>
 

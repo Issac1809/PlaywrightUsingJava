@@ -6,7 +6,7 @@ public interface PrCreateNonCatalog {
     void NonCatalog();
     void Title();
     void ShipToYokogawa();
-    void Project();
+    void Project() throws InterruptedException;
     void WBS();
     void Incoterm();
     void ShippingAddress();

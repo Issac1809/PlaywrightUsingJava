@@ -5,8 +5,7 @@ public class YokogawaAsiaPrivateLimited {
 
     static BaseMain baseMain;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         baseMain = new BaseMain();
-        baseMain.functions();
     }
 }
