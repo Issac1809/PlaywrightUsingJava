@@ -1,5 +1,5 @@
 #PoReferenceId
-#Fri Jun 07 13:32:22 IST 2024
+#Tue Jun 11 14:58:28 IST 2024
 //TODO=Non-Catalog (PR to Invoice)
 AdminId=admin@cormsquare.com
 Buyer=buyer@cormsquare.com
@@ -10,6 +10,7 @@ CountryOfOrigin=India
 DestinationCountry=India
 Discount=20
 EmailID=requester@cormsquare.com
+FinanceChecker=financechecker@cormsquare.com
 GST=8
 GrossWeight=25
 HSCode=1234
@@ -31,7 +32,7 @@ PRApproverGroupD=businessunitmanager@cormsquare.com
 PackageType=Drum
 PartNumber=PN - 1
 Password=Admin@123
-PoReferenceId=240024PO00164
+PoReferenceId=
 PorNotes=Purchase Order Request Notes
 PresidentDirectorCorporate=hazel@sharklasers.com
 PriceValidity=3 Months
@@ -57,4 +58,3 @@ browser=chrome
 custom=inspectiontrue
 headless=false
 url=https\://yea-test.cormsquare.com/Identity/Account/Login
-FinanceChecker = financechecker@cormsquare.com
