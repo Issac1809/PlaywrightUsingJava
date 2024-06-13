@@ -19,4 +19,5 @@
             <class name="com.procurement.requisition.suspend.BuyerNonCatalogPrSuspendTest" />
         </classes>
     </test>
+
 </suite>
