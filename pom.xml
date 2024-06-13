@@ -13,20 +13,29 @@
   <properties>
     <maven.compiler.source>18</maven.compiler.source>
     <maven.compiler.target>18</maven.compiler.target>
+    <testNG-version> 7.10.2 </testNG-version>
+    <extend-reports-version> 5.0.9 </extend-reports-version>
+    <playwright-version>1.44.0</playwright-version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>7.10.2</version>
+      <version>${testNG-version}</version>
       <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.aventstack</groupId>
+      <artifactId>extentreports</artifactId>
+      <version>${extend-reports-version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.microsoft.playwright</groupId>
       <artifactId>playwright</artifactId>
-      <version>1.44.0</version>
+      <version>${playwright-version}</version>
     </dependency>
   </dependencies>
 

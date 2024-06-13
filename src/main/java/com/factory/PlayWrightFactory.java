@@ -3,6 +3,7 @@ import com.microsoft.playwright.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class PlayWrightFactory {
@@ -82,5 +83,11 @@ public class PlayWrightFactory {
         } catch (Exception error) {
             System.out.println("Error :" + error);
         }
+    }
+
+    public String takeScreenshot(){
+        String path = System.getProperty("user.dir") + "/screenshot/" + System.currentTimeMillis() + ".png";
+        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
+        return path;
     }
 }

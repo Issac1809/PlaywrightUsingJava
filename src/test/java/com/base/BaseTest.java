@@ -97,6 +97,8 @@ import com.procurement.workorder.create.WorkOrderCreate;
 import com.interfaces.WorkOrderCreateInterface;
 import com.procurement.workorder.trackerstatus.WOTrackerStatus;
 import com.interfaces.WOTrackerStatusInterface;
+import com.reports.ExtendReportListener;
+import org.testng.ITestListener;
 import org.testng.annotations.*;
 import java.util.Properties;
 
@@ -170,6 +172,7 @@ public class BaseTest {
     protected POSendForApprovalInterface poSendForApprovalInterface;
     protected POInvoiceApprovalTest poInvoiceApprovalTest;
     protected POInvoiceApprovalInterface poInvoiceApprovalInterface;
+    protected ITestListener iTestListener;
 
     @BeforeTest
     public void Setup() {
@@ -249,6 +252,7 @@ public class BaseTest {
             poInvoiceSendForApprovalTest = new POInvoiceSendForApprovalTest();
             poInvoiceApprovalInterface = new POInvoiceApproval(loginPageInterface, properties, page, logoutPageInterface);
             poInvoiceApprovalTest = new POInvoiceApprovalTest();
+            iTestListener = new ExtendReportListener(playWrightFactory);
         } catch (Exception error) {
             System.out.println("Error :" + error);
         }

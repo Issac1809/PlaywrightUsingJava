@@ -3,6 +3,7 @@
 <suite name="YEA Playwright Suite" parallel="false">
 
     <listeners>
+        <listener class-name="com.reports.ExtendReportListener" />
         <listener class-name="org.testng.reporters.EmailableReporter2" />
         <listener class-name="org.testng.reporters.FailedReporter" />
     </listeners>
