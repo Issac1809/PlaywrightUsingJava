@@ -14,6 +14,9 @@ public class PocPrBuyerManagerSuspend implements PrSuspend {
     Page page;
     PrEdit prEdit;
 
+    private PocPrBuyerManagerSuspend(){
+    }
+
 //TODO Constructor
     public PocPrBuyerManagerSuspend(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface, PrEdit prEdit){
         this.loginPageInterface = loginPageInterface;

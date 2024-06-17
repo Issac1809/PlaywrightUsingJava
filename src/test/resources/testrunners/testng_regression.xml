@@ -3,9 +3,9 @@
 <suite name="YEA Playwright Suite" parallel="false">
 
     <listeners>
-        <listener class-name="com.reports.ExtendReportListener" />
         <listener class-name="org.testng.reporters.EmailableReporter2" />
         <listener class-name="org.testng.reporters.FailedReporter" />
+        <listener class-name="com.reports.ExtendReportListener" />
     </listeners>
 
     <test name="YEA Login Page Test">
@@ -86,9 +86,21 @@
         </classes>
     </test>
 
+    <test name="YEA NonCatalog Request For Quotation Regret Test">
+        <classes>
+            <class name="com.procurement.requestforquotation.quotationregret.RegretBeforeRequoteTest" />
+        </classes>
+    </test>
+
     <test name="YEA NonCatalog Quotation Submit Page Test">
         <classes>
             <class name="com.procurement.requestforquotation.quotationsubmit.QuotationSubmitTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Quotation Requote Page Test">
+        <classes>
+            <class name="com.procurement.requestforquotation.quotationrequote.QuotationRequoteTest" />
         </classes>
     </test>
 
@@ -98,7 +110,13 @@
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Technical Evaluation Page Test">
+    <test name="YEA NonCatalog Technical Evaluation Reject Page Test">
+        <classes>
+            <class name="com.procurement.requestforquotation.technicalevaluation.TechnicalEvaluationRejectTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Technical Evaluation Approve Page Test">
         <classes>
             <class name="com.procurement.requestforquotation.technicalevaluation.TechnicalEvaluationTest" />
         </classes>
@@ -116,11 +134,30 @@
         </classes>
     </test>
 
+    <test name="YEA NonCatalog Purchase Order Request Create Page Test">
+        <classes>
+            <class name="com.procurement.purchaseorderrequest.edit.PorEditTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Purchase Order Request Suspend Edit Page Test">
+        <classes>
+            <class name="com.procurement.purchaseorderrequest.suspend.PorSuspendPorEditTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Purchase Order Request Suspend RFQ Edit Page Test">
+        <classes>
+            <class name="com.procurement.purchaseorderrequest.suspend.PorSuspendRfqEditTest" />
+        </classes>
+    </test>
+
     <test name="YEA NonCatalog Purchase Order Approval Page Test">
         <classes>
             <class name="com.procurement.purchaseorderrequest.approval.PorApprovalTest" />
         </classes>
     </test>
+
 
     <test name="YEA NonCatalog MSA Page Test">
         <classes>

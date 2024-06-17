@@ -14,10 +14,12 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import static com.factory.PlayWrightFactory.takeScreenshot;
+
 public class ExtendReportListener implements ITestListener {
 
     PlayWrightFactory playWrightFactory;
-    public String OUTPUT_FOLDER = "./test-output/build/";
+    public String OUTPUT_FOLDER = "./src/test/resources/build/";
     public String FILE_NAME = "TestExecutionReport.html";
     public ExtentReports extent = init();
     public ThreadLocal<ExtentTest> test = new ThreadLocal<>();
@@ -25,11 +27,6 @@ public class ExtendReportListener implements ITestListener {
 
 //TODO Constructor
     public ExtendReportListener(){
-    }
-
-//TODO Constructor
-    public ExtendReportListener(PlayWrightFactory playWrightFactory){
-        this.playWrightFactory = playWrightFactory;
     }
 
     public ExtentReports init() {
@@ -44,6 +41,7 @@ public class ExtendReportListener implements ITestListener {
             }
         }
 
+        playWrightFactory = new PlayWrightFactory();
         extentReports = new ExtentReports();
         ExtentSparkReporter reporter = new ExtentSparkReporter(OUTPUT_FOLDER + FILE_NAME);
         reporter.config().setReportName("Yokogawa Engineering Asia Private Limited Test Results");
@@ -88,19 +86,19 @@ public class ExtendReportListener implements ITestListener {
     public synchronized void onTestSuccess(ITestResult result) {
         System.out.println((result.getMethod().getMethodName() + " passed!"));
         test.get().pass("Test passed");
-        test.get().pass(result.getThrowable(), MediaEntityBuilder.createScreenCaptureFromBase64String(playWrightFactory.takeScreenshot(),result.getMethod().getMethodName()).build());
+        test.get().pass(result.getThrowable(), MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenshot(),result.getMethod().getMethodName()).build());
         test.get().getModel().setEndTime(getTime(result.getEndMillis()));
     }
 
     public synchronized void onTestFailure(ITestResult result) {
         System.out.println((result.getMethod().getMethodName() + " failed!"));
-        test.get().fail(result.getThrowable(), MediaEntityBuilder.createScreenCaptureFromBase64String(playWrightFactory.takeScreenshot(),result.getMethod().getMethodName()).build());
+        test.get().fail(result.getThrowable(), MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenshot(),result.getMethod().getMethodName()).build());
         test.get().getModel().setEndTime(getTime(result.getEndMillis()));
     }
 
     public synchronized void onTestSkipped(ITestResult result) {
         System.out.println((result.getMethod().getMethodName() + " skipped!"));
-        test.get().skip(result.getThrowable(), MediaEntityBuilder.createScreenCaptureFromBase64String(playWrightFactory.takeScreenshot(), result.getMethod().getMethodName()).build());
+        test.get().skip(result.getThrowable(), MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenshot(), result.getMethod().getMethodName()).build());
         test.get().getModel().setEndTime(getTime(result.getEndMillis()));
     }
 

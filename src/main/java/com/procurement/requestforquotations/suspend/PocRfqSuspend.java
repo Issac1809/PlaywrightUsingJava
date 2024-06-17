@@ -5,7 +5,6 @@ import com.interfaces.PrApprove;
 import com.interfaces.PrAssign;
 import com.interfaces.PrEdit;
 import com.interfaces.PrSendForApproval;
-
 import java.util.Properties;
 
 public class PocRfqSuspend implements RfqSuspend {
@@ -20,6 +19,9 @@ public class PocRfqSuspend implements RfqSuspend {
     PrApprove prApprove;
     PrAssign prAssign;
     RfqCreate rfqCreate;
+
+    private PocRfqSuspend(){
+    }
 
 //TODO Constructor
     public PocRfqSuspend(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface, RfqEdit rfqEdit, PrEdit prEdit,
@@ -43,7 +45,7 @@ public class PocRfqSuspend implements RfqSuspend {
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
         page.locator("#btnToSuspendRfq").click();
         page.locator(".bootbox-input").fill("Suspended");
-        page.locator("bootbox-accept").click();
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         rfqEdit.RfqEditMethod();
     }
@@ -55,7 +57,7 @@ public class PocRfqSuspend implements RfqSuspend {
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
         page.locator("#btnToSuspendRfq").click();
         page.locator(".bootbox-input").fill("Suspended");
-        page.locator("bootbox-accept").click();
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         prEdit.PrEditMethod();
         prSendForApproval.NonCatalogPrSendForApproval();

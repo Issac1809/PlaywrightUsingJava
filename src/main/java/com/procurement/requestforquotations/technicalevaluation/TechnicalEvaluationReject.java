@@ -1,29 +1,29 @@
 package com.procurement.requestforquotations.technicalevaluation;
-import com.interfaces.TechnicalEvaluationInterface;
-import com.microsoft.playwright.Page;
 import com.interfaces.LoginPageInterface;
 import com.interfaces.LogoutPageInterface;
+import com.interfaces.TEReject;
+import com.microsoft.playwright.Page;
 import java.util.Properties;
 
-public class TechnicalEvaluation implements TechnicalEvaluationInterface {
+public class TechnicalEvaluationReject implements TEReject {
 
+    LoginPageInterface loginPageInterface;
     Properties properties;
     Page page;
-    LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
 
-    private TechnicalEvaluation(){
+    private TechnicalEvaluationReject(){
     }
 
 //TODO Constructor
-    public TechnicalEvaluation(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
+    public TechnicalEvaluationReject(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.loginPageInterface = loginPageInterface;
-        this.properties = properties;
         this.page = page;
+        this.properties = properties;
         this.logoutPageInterface = logoutPageInterface;
     }
 
-    public void TechnicalEvaluationButton() {
+    public void TechnicalEvaluationRejectMethod(){
         loginPageInterface.LoginMethod();
         page.locator("//*[contains(text(), 'Request For Quotations')]").click();
         String title = properties.getProperty("Title");
@@ -39,7 +39,8 @@ public class TechnicalEvaluation implements TechnicalEvaluationInterface {
         page.locator("//li[contains(text(), '"+ teApprover +"')]").click();
         page.locator("#saveApproverAssign").click();
         page.locator(".bootbox-accept").click();
-        page.locator("#btnApprove").click();
+        page.locator("#btnReject").click();
+        page.locator(".bootbox-input").fill("TE Rejected");
         page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
     }

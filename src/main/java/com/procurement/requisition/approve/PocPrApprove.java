@@ -12,6 +12,9 @@ public class PocPrApprove implements PrApprove {
     Properties properties;
     Page page;
 
+    private PocPrApprove(){
+    }
+
 //TODO Constructor
     public PocPrApprove(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.loginPageInterface = loginPageInterface;

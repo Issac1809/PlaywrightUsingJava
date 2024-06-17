@@ -36,5 +36,6 @@ public class POInvoiceApproval implements POInvoiceApprovalInterface {
         }
         page.locator("#btnApprove").click();
         page.locator(".bootbox-accept").click();
+        logoutPageInterface.LogoutMethod();
     }
 }

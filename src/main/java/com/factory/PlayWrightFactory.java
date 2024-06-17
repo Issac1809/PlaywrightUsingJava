@@ -7,17 +7,42 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 public class PlayWrightFactory {
+
     Playwright playwright;
-    Browser browser;
-    BrowserContext browserContext;
-    Page page;
     FileInputStream fileInputStream;
     FileOutputStream fileOutputStream;
     Properties properties;
 
 //TODO Constructor
     public PlayWrightFactory() {
-        this.playwright = Playwright.create();
+    }
+
+//TODO Thread Local
+    private static final ThreadLocal<Browser> localBrowser = new ThreadLocal<>();
+    private static final ThreadLocal<BrowserContext> localBrowserContext = new ThreadLocal<>();
+    private static final ThreadLocal<Page> localPage = new ThreadLocal<>();
+    private static final ThreadLocal<Playwright> localPlaywright = new ThreadLocal<>();
+
+    public void setPlaywright() {
+        playwright = Playwright.create();
+        localPlaywright.set(playwright);
+    }
+
+    public Playwright getPlaywright() {
+        setPlaywright();
+        return localPlaywright.get();
+    }
+
+    public Browser getBrowser() {
+        return localBrowser.get();
+    }
+
+    public BrowserContext getBrowserContext() {
+        return localBrowserContext.get();
+    }
+
+    public static Page getPage() {
+        return localPage.get();
     }
 
     public Properties initializeProperties() {
@@ -35,25 +60,25 @@ public class PlayWrightFactory {
         String browserName = properties.getProperty("browser").trim();
         switch (browserName.toLowerCase()) {
             case "chromium":
-                browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+                localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
                 break;
             case "chrome":
-                browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false));
+                localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false)));
                 break;
             case "safari":
-                browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(false));
+                localBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(false)));
                 break;
             case "firefox":
-                browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(false));
+                localBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(false)));
                 break;
             default:
                 System.out.println("--Enter Proper Browser Name--");
                 break;
         }
-        browserContext = browser.newContext();
-        page = browser.newPage();
-        page.navigate(properties.getProperty("url").trim());
-        return page;
+        localBrowserContext.set(getBrowser().newContext());
+        localPage.set(getBrowser().newPage());
+        getPage().navigate(properties.getProperty("url").trim());
+        return getPage();
     }
 
     public void savePropertiesToFile(String poReferenceId) {
@@ -79,15 +104,15 @@ public class PlayWrightFactory {
 
     public void TearDown(Page page) {
         try {
-            page.context().browser().close();
+            getPage().context().browser().close();
         } catch (Exception error) {
             System.out.println("Error :" + error);
         }
     }
 
-    public String takeScreenshot(){
+    public static String takeScreenshot(){
         String path = System.getProperty("user.dir") + "/screenshot/" + System.currentTimeMillis() + ".png";
-        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
+        getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
         return path;
     }
 }

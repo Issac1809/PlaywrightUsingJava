@@ -14,6 +14,9 @@ public class PocPrReject implements PrReject {
     Page page;
     PrEdit prEdit;
 
+    private PocPrReject(){
+    }
+
 //TODO Constructor
     public PocPrReject(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface, PrEdit prEdit){
         this.loginPageInterface = loginPageInterface;

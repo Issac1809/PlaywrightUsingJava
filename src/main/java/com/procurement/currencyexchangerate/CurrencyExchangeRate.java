@@ -14,7 +14,7 @@ public class CurrencyExchangeRate {
     LogoutPageInterface logoutPageInterface;
     Page page;
 
-
+//TODO Constructor
     private CurrencyExchangeRate() {
     }
 
@@ -27,7 +27,6 @@ public class CurrencyExchangeRate {
 
     public double findCurrency() {
         page = playWrightFactory.initializeBrowser(properties);
-        page.pause();
         loginPageInterface.LoginMethod(properties.getProperty("AdminId"), page);
         page.locator("//*[contains(text(), 'Settings')]").click();
 //TODO CurrencyExchangeRate
