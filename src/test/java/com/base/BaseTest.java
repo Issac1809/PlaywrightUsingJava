@@ -59,7 +59,7 @@ import com.procurement.msa.PorInspectPO;
 import com.procurement.orderschedule.approve.OrderScheduleApprove;
 import com.procurement.orderschedule.create.OrderScheduleCreate;
 import com.procurement.purchaseorder.BuyerPurchaseOrder;
-import com.procurement.purchaseorderrequest.approval.PocPorApproval;
+import com.procurement.purchaseorderrequest.approval.PocPorSendForApproval;
 import com.procurement.purchaseorderrequest.create.PocNonCatalogPorCreate;
 import com.procurement.requestforquotations.commercialevaluation.CommercialEvaluation;
 import com.procurement.requestforquotations.create.PocRfqCreate;
@@ -225,7 +225,7 @@ public class BaseTest {
             porSuspend = new PocPorSuspend(loginPageInterface, properties, page, logoutPageInterface, porEdit, commercialEvaluationInterface, porCreateNonCatalog);
             porSuspendPorEditTest = new PorSuspendPorEditTest();
             porSuspendRfqEditTest = new PorSuspendRfqEditTest();
-            porApproval = new PocPorApproval(loginPageInterface, properties, page, logoutPageInterface);
+            porApproval = new PocPorSendForApproval(loginPageInterface, properties, page, logoutPageInterface);
             porApprovalTest = new PorApprovalTest();
             porInspectPoInterface = new PorInspectPO(loginPageInterface, properties, page, logoutPageInterface);
             inspectPOTest = new InspectPOTest();

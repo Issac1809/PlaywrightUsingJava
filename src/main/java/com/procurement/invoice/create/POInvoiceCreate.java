@@ -41,7 +41,6 @@ public class POInvoiceCreate implements POInvoiceCreateInterface {
 
     public void VendorCreatePOInvoice() {
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
-        page.pause();
         page.locator("//*[contains(text(), 'Invoices')]").click();
         page.locator(".btn.btn-primary").first().click();
         page.locator("#select2-companyId-container").click();
@@ -71,7 +70,6 @@ public class POInvoiceCreate implements POInvoiceCreateInterface {
         page.locator("#select2-poId-container").click();
         page.locator(".select2-search__field").fill(poReferenceId);
         page.locator("//li[contains(text(), '" + poReferenceId + "')]").first().click();
-        page.pause();
         String getCurrencyCode = page.locator("#currencyCode").textContent();
         playWrightFactory.savePropertiesToFile2(getCurrencyCode);
     }

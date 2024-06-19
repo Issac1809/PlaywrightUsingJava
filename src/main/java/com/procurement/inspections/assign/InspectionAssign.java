@@ -27,7 +27,6 @@ public class InspectionAssign implements InspectionAssignInterface {
     public void RequesterInspectionAssign(){
         String mailId = properties.getProperty("EmailID");
         loginPageInterface.LoginMethod(mailId);
-        page.pause();
         page.locator("//*[contains(text(), 'Order Schedules')]").click();
         String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();

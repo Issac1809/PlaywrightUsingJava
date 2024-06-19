@@ -27,7 +27,6 @@ public class RegisteredVendorQuotationRegret implements QuotationRegret {
     }
 
     public void Regret(){
-        page.pause();
         quotationSubmit.InviteRegisteredVendor();
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
         String title = properties.getProperty("Title");
@@ -36,6 +35,5 @@ public class RegisteredVendorQuotationRegret implements QuotationRegret {
         page.locator(".bootbox-input").fill("Regret");
         page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
-        quotationSubmit.InviteRegisteredVendor();
     }
 }

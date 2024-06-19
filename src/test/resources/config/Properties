@@ -1,5 +1,5 @@
-#PoReferenceId
-#Tue Jun 11 14:58:28 IST 2024
+#InvoiceCurrencyCode
+#Wed Jun 19 15:31:20 IST 2024
 //TODO=Non-Catalog (PR to Invoice)
 AdminId=admin@cormsquare.com
 Buyer=buyer@cormsquare.com
@@ -16,7 +16,7 @@ GrossWeight=25
 HSCode=1234
 Incoterm=EXW - Ex Works
 IncotermLocation=Bengaluru
-InvoiceCurrencyCode=INR
+InvoiceCurrencyCode=
 InvoiceNumber=INV-001
 Item=Power Cable 3C x 2.5 Sqmm
 LeadTime=10

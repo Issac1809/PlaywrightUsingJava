@@ -27,7 +27,6 @@ public class DispatchNoteCreate implements DispatchNoteCreateInterface {
 
     public void DNCreate(){
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
-        page.pause();
         page.locator("//*[contains(text(), 'Purchase Orders')]").click();
         String title = properties.getProperty("Title");
         page.locator("//*[contains(text(), '"+ title +"')]").first().click();

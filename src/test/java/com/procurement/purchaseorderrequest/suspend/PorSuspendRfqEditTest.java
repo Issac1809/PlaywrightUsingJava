@@ -6,7 +6,6 @@ public class PorSuspendRfqEditTest extends BaseTest {
 
     @Test
     public void PorSuspendRfqEditTestMethod(){
-        page.pause();
         porSuspend.SuspendRfqEdit();
     }
 }

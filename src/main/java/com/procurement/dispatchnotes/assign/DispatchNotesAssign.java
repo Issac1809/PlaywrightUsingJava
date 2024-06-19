@@ -27,7 +27,6 @@ public class DispatchNotesAssign implements DispatchNotesAssignInterface {
     public void DNAssign() {
         String logisticsManager = properties.getProperty("LogisticsManager");
         loginPageInterface.LoginMethod(logisticsManager);
-        page.pause();
         page.locator("//*[contains(text(), 'Dispatch Notes')]").click();
         String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();

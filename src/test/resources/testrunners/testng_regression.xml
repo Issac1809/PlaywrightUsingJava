@@ -134,7 +134,7 @@
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Purchase Order Request Create Page Test">
+    <test name="YEA NonCatalog Purchase Order Request Edit Page Test">
         <classes>
             <class name="com.procurement.purchaseorderrequest.edit.PorEditTest" />
         </classes>

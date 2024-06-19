@@ -19,7 +19,7 @@ import static com.factory.PlayWrightFactory.takeScreenshot;
 public class ExtendReportListener implements ITestListener {
 
     PlayWrightFactory playWrightFactory;
-    public String OUTPUT_FOLDER = "./src/test/resources/build/";
+    public String OUTPUT_FOLDER = "./test-output/YEA Playwright Suite/build";
     public String FILE_NAME = "TestExecutionReport.html";
     public ExtentReports extent = init();
     public ThreadLocal<ExtentTest> test = new ThreadLocal<>();
