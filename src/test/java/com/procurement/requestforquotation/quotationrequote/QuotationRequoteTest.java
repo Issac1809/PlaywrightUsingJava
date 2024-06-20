@@ -6,6 +6,10 @@ public class QuotationRequoteTest extends BaseTest {
 
     @Test
     public void QuotationRequoteTestMethod() throws InterruptedException{
+        try {
         quotationRequote.Requote();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

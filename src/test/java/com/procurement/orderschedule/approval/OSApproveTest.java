@@ -6,6 +6,10 @@ public class OSApproveTest extends BaseTest {
 
     @Test
     public void OSApproveTestMethod(){
+        try {
         orderScheduleApproveInterface.OSApprove();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

@@ -152,12 +152,17 @@
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Purchase Order Approval Page Test">
+    <test name="YEA NonCatalog Purchase Order Reject Page Test">
         <classes>
-            <class name="com.procurement.purchaseorderrequest.approval.PorApprovalTest" />
+            <class name="com.procurement.purchaseorderrequest.reject.PocPorRejectTest" />
         </classes>
     </test>
 
+    <test name="YEA NonCatalog Purchase Order Approve Page Test">
+        <classes>
+            <class name="com.procurement.purchaseorderrequest.approvalandapprove.PorApprovalAndApproveTest" />
+        </classes>
+    </test>
 
     <test name="YEA NonCatalog MSA Page Test">
         <classes>
@@ -177,6 +182,18 @@
         </classes>
     </test>
 
+    <test name="YEA NonCatalog Order Schedule Edit Page Test">
+        <classes>
+            <class name="com.procurement.orderschedule.edit.OSEditTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Order Schedule Reject Page Test">
+        <classes>
+            <class name="com.procurement.orderschedule.reject.OSRejectTest" />
+        </classes>
+    </test>
+
     <test name="YEA NonCatalog Order Schedule Approve Page Test">
         <classes>
             <class name="com.procurement.orderschedule.approval.OSApproveTest" />
@@ -186,6 +203,12 @@
     <test name="YEA NonCatalog Inspection Create Page Test">
         <classes>
             <class name="com.procurement.inspections.create.InspectionCreateTest" />
+        </classes>
+    </test>
+
+    <test name="YEA NonCatalog Inspection Fail Page Test">
+        <classes>
+            <class name="com.procurement.inspections.fail.InspectionFailTest" />
         </classes>
     </test>
 

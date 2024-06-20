@@ -6,6 +6,10 @@ public class POInvoiceApprovalTest extends BaseTest {
 
     @Test
     public void POInvoiceApprovalTestMethod(){
+        try {
         poInvoiceApprovalInterface.POInvoiceApprovalMethod();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

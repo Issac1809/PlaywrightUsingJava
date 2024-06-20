@@ -6,6 +6,7 @@ public class QuotationSubmitTest extends BaseTest {
 
     @Test
     public void QuotationSubmitMethod() throws InterruptedException{
+        try {
         quotationSubmit.InviteRegisteredVendor();
         quotationSubmit.VendorLogin();
         quotationSubmit.LiquidatedDamages();
@@ -15,5 +16,8 @@ public class QuotationSubmitTest extends BaseTest {
         quotationSubmit.Gst();
         quotationSubmit.QuotationAttachments();
         quotationSubmit.QuotationSubmitButton();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.procurement.purchaseorderrequest.approval;
 import com.interfaces.LoginPageInterface;
 import com.interfaces.LogoutPageInterface;
-import com.interfaces.PorApproval;
+import com.interfaces.PorApprove;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class Approve implements PorApproval {
+public class Approve implements PorApprove {
 
     Properties properties;
     Page page;

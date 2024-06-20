@@ -1,30 +1,35 @@
-package com.procurement.inspections.assign;
-import com.interfaces.InspectionAssignInterface;
-import com.microsoft.playwright.Page;
+package com.procurement.inspections.fail;
+import com.interfaces.InsFail;
+import com.interfaces.InspectionCreateInterface;
 import com.interfaces.LoginPageInterface;
 import com.interfaces.LogoutPageInterface;
+import com.microsoft.playwright.Page;
+import com.procurement.inspections.create.InspectionCreate;
+
 import java.util.List;
 import java.util.Properties;
 
-public class InspectionAssign implements InspectionAssignInterface {
+public class InspectionFail implements InsFail {
 
     Properties properties;
     Page page;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
+    InspectionCreateInterface inspectionCreateInterface;
 
-    private InspectionAssign() {
+    private InspectionFail() {
     }
 
     //TODO Constructor
-    public InspectionAssign(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface) {
+    public InspectionFail(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface, InspectionCreateInterface inspectionCreateInterface) {
         this.loginPageInterface = loginPageInterface;
         this.properties = properties;
         this.page = page;
         this.logoutPageInterface = logoutPageInterface;
+        this.inspectionCreateInterface = inspectionCreateInterface;
     }
 
-    public void RequesterInspectionAssign() {
+    public void RequesterInspectionFail() {
         String mailId = properties.getProperty("EmailID");
         loginPageInterface.LoginMethod(mailId);
         page.locator("//*[contains(text(), 'Order Schedules')]").click();
@@ -42,8 +47,11 @@ public class InspectionAssign implements InspectionAssignInterface {
         page.locator("#saveInspector").click();
         page.locator("#btnForCreateInspection").click();
         page.locator("#physicalInspectionNotReq").click();
+        page.locator("#inspectFail").click();
         page.locator("#btnCreateInspection").click();
+        page.locator(".bootbox-input").fill("Failed");
         page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
+        inspectionCreateInterface.VendorInspectionCreate();
     }
 }

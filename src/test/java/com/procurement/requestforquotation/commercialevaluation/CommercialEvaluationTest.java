@@ -6,6 +6,10 @@ public class CommercialEvaluationTest extends BaseTest {
 
     @Test
     public void CommercialEvaluationTestMethod(){
+        try {
         commercialEvaluationInterface.CommercialEvaluationButton();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

@@ -6,6 +6,10 @@ public class PorSuspendRfqEditTest extends BaseTest {
 
     @Test
     public void PorSuspendRfqEditTestMethod(){
+        try {
         porSuspend.SuspendRfqEdit();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

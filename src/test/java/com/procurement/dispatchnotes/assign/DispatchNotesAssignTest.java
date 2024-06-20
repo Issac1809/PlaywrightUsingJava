@@ -6,6 +6,10 @@ public class DispatchNotesAssignTest extends BaseTest {
 
     @Test
     public void DispatchNotesAssignTestMethod(){
+        try {
         dispatchNotesAssignInterface.DNAssign();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

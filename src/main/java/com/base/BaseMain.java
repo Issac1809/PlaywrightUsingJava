@@ -7,6 +7,7 @@ import com.procurement.dispatchnotes.assign.DispatchNotesAssign;
 import com.procurement.dispatchnotes.create.DispatchNoteCreate;
 import com.procurement.inspections.assign.InspectionAssign;
 import com.procurement.inspections.create.InspectionCreate;
+import com.procurement.inspections.fail.InspectionFail;
 import com.procurement.invoice.approve.POInvoiceApproval;
 import com.procurement.invoice.create.POInvoiceCreate;
 import com.procurement.invoice.sendforapproval.POInvoiceSendForApproval;
@@ -15,10 +16,14 @@ import com.procurement.logout.LogoutPage;
 import com.procurement.msa.PorInspectPO;
 import com.procurement.orderschedule.approve.OrderScheduleApprove;
 import com.procurement.orderschedule.create.OrderScheduleCreate;
+import com.procurement.orderschedule.edit.OrderScheduleEdit;
+import com.procurement.orderschedule.reject.OrderScheduleReject;
 import com.procurement.purchaseorder.BuyerPurchaseOrder;
+import com.procurement.purchaseorderrequest.approval.Approve;
 import com.procurement.purchaseorderrequest.approval.PocPorSendForApproval;
 import com.procurement.purchaseorderrequest.create.PocNonCatalogPorCreate;
 import com.procurement.purchaseorderrequest.edit.PocPorEdit;
+import com.procurement.purchaseorderrequest.approvalandapprove.PorApprovalAndApprove;
 import com.procurement.purchaseorderrequest.reject.PocPorReject;
 import com.procurement.purchaseorderrequest.suspend.PocPorSuspend;
 import com.procurement.requestforquotations.commercialevaluation.CommercialEvaluation;
@@ -74,11 +79,16 @@ public class BaseMain {
     protected PorSuspend porSuspend;
     protected PorApproval porApproval;
     protected PorReject porReject;
+    protected PorApprove porApprove;
+    protected ApprovalAndApprove approvalAndApprove;
     protected PorInspectPoInterface porInspectPoInterface;
     protected PurchaseOrderInterface purchaseOrderInterface;
     protected OrderScheduleInterface orderScheduleInterface;
+    protected OSEdit osEdit;
+    protected OSReject osReject;
     protected OrderScheduleApproveInterface orderScheduleApproveInterface;
     protected InspectionCreateInterface inspectionCreateInterface;
+    protected InsFail insFail;
     protected InspectionAssignInterface inspectionAssignInterface;
     protected DispatchNoteCreateInterface dispatchNoteCreateInterface;
     protected DispatchNotesAssignInterface dispatchNotesAssignInterface;
@@ -124,14 +134,23 @@ public class BaseMain {
             porEdit = new PocPorEdit(loginPageInterface, properties, page, logoutPageInterface);
             porSuspend = new PocPorSuspend(loginPageInterface, properties, page, logoutPageInterface, porEdit, commercialEvaluationInterface, porCreateNonCatalog);
             porApproval = new PocPorSendForApproval(loginPageInterface, properties, page, logoutPageInterface);
-            porReject = new PocPorReject(loginPageInterface, properties, page, logoutPageInterface, porEdit);
+            porApprove = new Approve(loginPageInterface, properties, page, logoutPageInterface);
+            porReject = new PocPorReject(loginPageInterface, properties, page, logoutPageInterface, porEdit, porApproval);
+            approvalAndApprove = new PorApprovalAndApprove(porApprove, porApproval);
             porInspectPoInterface = new PorInspectPO(loginPageInterface, properties, page, logoutPageInterface);
 
 //TODO Purchase Orders
             purchaseOrderInterface = new BuyerPurchaseOrder(loginPageInterface, properties, page, logoutPageInterface);
+
+//TODO Order Schedule
             orderScheduleInterface = new OrderScheduleCreate(loginPageInterface, properties, page, logoutPageInterface, playWrightFactory);
+            osEdit = new OrderScheduleEdit(loginPageInterface, properties, page, logoutPageInterface);
+            osReject = new OrderScheduleReject(loginPageInterface, properties, page, logoutPageInterface);
             orderScheduleApproveInterface = new OrderScheduleApprove(loginPageInterface, properties, page, logoutPageInterface);
+
+//TODO Inspection
             inspectionCreateInterface = new InspectionCreate(loginPageInterface, properties, page, logoutPageInterface);
+            insFail = new InspectionFail(loginPageInterface, properties, page, logoutPageInterface, inspectionCreateInterface);
             inspectionAssignInterface = new InspectionAssign(loginPageInterface, properties, page, logoutPageInterface);
             dispatchNoteCreateInterface = new DispatchNoteCreate(loginPageInterface, properties, page, logoutPageInterface);
             dispatchNotesAssignInterface = new DispatchNotesAssign(loginPageInterface, properties, page, logoutPageInterface);

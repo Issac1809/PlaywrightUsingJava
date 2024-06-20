@@ -1,13 +1,13 @@
-package com.procurement.orderschedule.create;
+package com.procurement.orderschedule.edit;
 import com.base.BaseTest;
 import org.testng.annotations.Test;
 
-public class OSCreateTest extends BaseTest {
+public class OSEditTest extends BaseTest {
 
     @Test
-    public void OSCreateTestMethod(){
+    public void OSEditTestMethod(){
         try {
-        orderScheduleInterface.OSCreate();
+        osEdit.OSEditMethod();
         } catch (Exception error) {
             System.out.println(error);
         }

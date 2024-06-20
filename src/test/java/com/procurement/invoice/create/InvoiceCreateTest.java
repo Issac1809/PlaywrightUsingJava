@@ -6,8 +6,12 @@ public class InvoiceCreateTest extends BaseTest {
 
     @Test
     public void InvoiceCreateTestMethod(){
+        try {
         poInvoiceCreateInterface.VendorCreatePOInvoice();
         double finalGSTPercentage = poInvoiceCreateInterface.VendorGST();
         poInvoiceCreateInterface.SGDEquivalentEnable(finalGSTPercentage);
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

@@ -1,13 +1,13 @@
-package com.procurement.orderschedule.create;
+package com.procurement.orderschedule.reject;
 import com.base.BaseTest;
 import org.testng.annotations.Test;
 
-public class OSCreateTest extends BaseTest {
+public class OSRejectTest extends BaseTest {
 
     @Test
-    public void OSCreateTestMethod(){
+    public void OSRejectTestMethod(){
         try {
-        orderScheduleInterface.OSCreate();
+            osReject.OSRejectMethod();
         } catch (Exception error) {
             System.out.println(error);
         }

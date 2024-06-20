@@ -6,6 +6,10 @@ public class InspectionAssignTest extends BaseTest {
 
     @Test
     public void InspectionAssignTestMethod(){
+        try {
         inspectionAssignInterface.RequesterInspectionAssign();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

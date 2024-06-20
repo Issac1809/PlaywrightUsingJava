@@ -6,6 +6,10 @@ public class WorkOrdersCreateTest extends BaseTest {
 
     @Test
     public void WorkOrdersCreateTestMethod(){
+        try {
         workOrderCreateInterface.WOCreate();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

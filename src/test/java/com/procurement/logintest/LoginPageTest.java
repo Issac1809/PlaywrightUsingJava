@@ -29,7 +29,7 @@ public class LoginPageTest extends BaseTest{
         try {
             loginPageInterface.LoginMethod();
         } catch (Exception error) {
-            System.out.println("Error :" + error);
+            System.out.println(error);
         }
     }
 

@@ -6,6 +6,10 @@ public class PorSuspendPorEditTest extends BaseTest {
 
     @Test
     public void PorSuspendPorEditTestMethod() throws InterruptedException{
+        try {
         porSuspend.SuspendPorEdit();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

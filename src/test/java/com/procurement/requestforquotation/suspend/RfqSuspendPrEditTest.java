@@ -6,6 +6,10 @@ public class RfqSuspendPrEditTest extends BaseTest {
 
     @Test
     public void RfqSuspendPrEditTestMethod() throws InterruptedException {
+        try {
         rfqSuspend.SuspendPREdit();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

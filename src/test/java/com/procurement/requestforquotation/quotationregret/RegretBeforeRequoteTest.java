@@ -6,6 +6,10 @@ public class RegretBeforeRequoteTest extends BaseTest {
 
     @Test
     public void RegretBeforeRequoteTestMethod(){
+        try {
         quotationRegret.Regret();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

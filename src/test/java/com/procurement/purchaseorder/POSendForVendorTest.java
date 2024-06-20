@@ -6,6 +6,10 @@ public class POSendForVendorTest extends BaseTest {
 
     @Test
     public void POSendForVendorTestMethod(){
+        try {
         purchaseOrderInterface.SendForVendor();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

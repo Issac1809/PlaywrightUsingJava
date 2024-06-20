@@ -1,6 +1,7 @@
 package com.procurement.purchaseorderrequest.reject;
 import com.interfaces.*;
 import com.microsoft.playwright.Page;
+import java.util.List;
 import java.util.Properties;
 
 public class PocPorReject implements PorReject{
@@ -26,7 +27,12 @@ public class PocPorReject implements PorReject{
     }
 
     public void PorReject() throws InterruptedException {
-        loginPageInterface.LoginMethod(properties.getProperty("ProjectManager"));
+        List<String> matchingApprovers = porApproval.SendForApproval();
+        for(int i = 0; i <= matchingApprovers.size(); i++){
+            String approver = matchingApprovers.get(i);
+            loginPageInterface.LoginMethod(approver);
+            break;
+        }
         page.waitForSelector("//*[contains(text(), 'Purchase Order Requests')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
@@ -35,6 +41,5 @@ public class PocPorReject implements PorReject{
         page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         porEdit.PorEditMethod();
-        porApproval.SendForApproval();
     }
 }

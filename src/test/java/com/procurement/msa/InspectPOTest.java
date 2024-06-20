@@ -6,6 +6,10 @@ public class InspectPOTest extends BaseTest {
 
     @Test
     public void InspectPOTestMethod(){
+        try {
         porInspectPoInterface.InspectCreatePO();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

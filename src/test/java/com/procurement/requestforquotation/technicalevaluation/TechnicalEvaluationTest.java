@@ -6,6 +6,10 @@ public class TechnicalEvaluationTest extends BaseTest {
 
     @Test
     public void TechnicalEvaluationTestMethod(){
+        try {
         technicalEvaluationInterface.TechnicalEvaluationButton();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

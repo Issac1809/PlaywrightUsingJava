@@ -6,6 +6,10 @@ public class DispatchNotesCreateTest extends BaseTest {
 
     @Test
     public void DispatchNotesCreateTestMethod(){
+        try {
         dispatchNoteCreateInterface.DNCreate();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }

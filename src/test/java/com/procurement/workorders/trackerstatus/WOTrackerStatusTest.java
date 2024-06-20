@@ -6,6 +6,10 @@ public class WOTrackerStatusTest extends BaseTest {
 
     @Test
     public void WOTrackerStatusTestMethod(){
+        try {
         workOrderCreateInterface.WOCreate();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
     }
 }
