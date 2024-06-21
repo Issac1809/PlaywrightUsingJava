@@ -93,10 +93,29 @@ public class PlayWrightFactory {
 
     public void savePropertiesToFile2(String getCurrencyCode) {
         try {
-
             fileOutputStream = new FileOutputStream("./src/test/resources/config/Properties");
             properties.setProperty("InvoiceCurrencyCode", getCurrencyCode);
             properties.store(fileOutputStream, "InvoiceCurrencyCode");
+        } catch (IOException error) {
+            throw new RuntimeException(error);
+        }
+    }
+
+    public void savePropertiesToFile3(String getDnReferenceId) {
+        try {
+            fileOutputStream = new FileOutputStream("./src/test/resources/config/Properties");
+            properties.setProperty("DispatchNoteReferenceId", getDnReferenceId);
+            properties.store(fileOutputStream, "DispatchNoteReferenceId");
+        } catch (IOException error) {
+            throw new RuntimeException(error);
+        }
+    }
+
+    public void savePropertiesToFile4(String getWoReferenceId) {
+        try {
+            fileOutputStream = new FileOutputStream("./src/test/resources/config/Properties");
+            properties.setProperty("WorkOrderReferenceId", getWoReferenceId);
+            properties.store(fileOutputStream, "WorkOrderReferenceId");
         } catch (IOException error) {
             throw new RuntimeException(error);
         }

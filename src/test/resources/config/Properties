@@ -58,3 +58,5 @@ browser=chrome
 custom=inspectiontrue
 headless=false
 url=https\://yea-test.cormsquare.com/Identity/Account/Login
+Total Chargeable Weight = 200
+Unit Rate = 200

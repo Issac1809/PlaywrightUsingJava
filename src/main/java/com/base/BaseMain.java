@@ -4,13 +4,40 @@ import com.microsoft.playwright.Page;
 import com.factory.PlayWrightFactory;
 import com.procurement.currencyexchangerate.CurrencyExchangeRate;
 import com.procurement.dispatchnotes.assign.DispatchNotesAssign;
+import com.procurement.dispatchnotes.cancel.PocDnCancel;
 import com.procurement.dispatchnotes.create.DispatchNoteCreate;
+import com.procurement.dispatchnotes.dnreturn.PocDnReturn;
+import com.procurement.dispatchnotes.edit.PocDnEdit;
+import com.procurement.freightforwarder.invite.FreightForwarderInvite;
+import com.procurement.freightforwarder.quote.FreightQuotation;
+import com.procurement.freightforwarder.requote.FreightForwarderRequote;
 import com.procurement.inspections.assign.InspectionAssign;
 import com.procurement.inspections.create.InspectionCreate;
 import com.procurement.inspections.fail.InspectionFail;
-import com.procurement.invoice.approve.POInvoiceApproval;
-import com.procurement.invoice.create.POInvoiceCreate;
-import com.procurement.invoice.sendforapproval.POInvoiceSendForApproval;
+import com.procurement.invoice.poinvoice.approve.POInvoiceApproval;
+import com.procurement.invoice.poinvoice.cancel.PoInvoiceCancel;
+import com.procurement.invoice.poinvoice.checklist.ChecklistAccept;
+import com.procurement.invoice.poinvoice.checklist.ChecklistReject;
+import com.procurement.invoice.poinvoice.create.POInvoiceCreate;
+import com.procurement.invoice.poinvoice.edit.POInvoiceEdit;
+import com.procurement.invoice.poinvoice.hold.POInvoiceHold;
+import com.procurement.invoice.poinvoice.invreturn.POInvoiceReturn;
+import com.procurement.invoice.poinvoice.reject.POInvoiceReject;
+import com.procurement.invoice.poinvoice.revert.POInvoiceRevert;
+import com.procurement.invoice.poinvoice.sendforapproval.POInvoiceSendForApproval;
+import com.procurement.invoice.poinvoice.verify.POInvoiceVerify;
+import com.procurement.invoice.woinvoice.approve.WOInvoiceApproval;
+import com.procurement.invoice.woinvoice.cancel.WoInvoiceCancel;
+import com.procurement.invoice.woinvoice.checklist.WOChecklistAccept;
+import com.procurement.invoice.woinvoice.checklist.WOChecklistReject;
+import com.procurement.invoice.woinvoice.create.WOInvoiceCreate;
+import com.procurement.invoice.woinvoice.edit.WOInvoiceEdit;
+import com.procurement.invoice.woinvoice.hold.WOInvoiceHold;
+import com.procurement.invoice.woinvoice.invreturn.WOInvoiceReturn;
+import com.procurement.invoice.woinvoice.reject.WOInvoiceReject;
+import com.procurement.invoice.woinvoice.revert.WOInvoiceRevert;
+import com.procurement.invoice.woinvoice.sendforapproval.WOInvoiceSendForApproval;
+import com.procurement.invoice.woinvoice.verify.WOInvoiceVerify;
 import com.procurement.login.LoginPage;
 import com.procurement.logout.LogoutPage;
 import com.procurement.msa.PorInspectPO;
@@ -91,12 +118,39 @@ public class BaseMain {
     protected InsFail insFail;
     protected InspectionAssignInterface inspectionAssignInterface;
     protected DispatchNoteCreateInterface dispatchNoteCreateInterface;
+    protected DnReturn dnReturn;
+    protected DnEdit dnEdit;
     protected DispatchNotesAssignInterface dispatchNotesAssignInterface;
+    protected DnCancel dnCancel;
+    protected FFRInvite ffrInvite;
+    protected FFRQuotation ffrQuotation;
+    protected FFRRequote ffrRequote;
     protected WorkOrderCreateInterface workOrderCreateInterface;
     protected WOTrackerStatusInterface woTrackerStatusInterface;
     protected POInvoiceCreateInterface poInvoiceCreateInterface;
+    protected PoInvHold poInvHold;
+    protected PoInvRevert poInvRevert;
+    protected PoInvCancel poInvCancel;
     protected POSendForApprovalInterface poSendForApprovalInterface;
+    protected PoInvAccept poInvAccept;
+    protected PoInvChecklistReject poInvChecklistReject;
+    protected PoInvEdit poInvEdit;
+    protected PoInvReturn poInvReturn;
+    protected PoInvVerify poInvVerify;
+    protected PoInvReject poInvReject;
     protected POInvoiceApprovalInterface poInvoiceApprovalInterface;
+    protected WOInvoiceCreateInterface woInvoiceCreateInterface;
+    protected WoInvHold woInvHold;
+    protected WoInvRevert woInvRevert;
+    protected WoInvCancel woInvCancel;
+    protected WOSendForApprovalInterface woSendForApprovalInterface;
+    protected WoInvAccept woInvAccept;
+    protected WoInvChecklistReject woInvChecklistReject;
+    protected WoInvEdit woInvEdit;
+    protected WoInvReturn woInvReturn;
+    protected WoInvVerify woInvVerify;
+    protected WoInvReject woInvReject;
+    protected WOInvoiceApprovalInterface woInvoiceApprovalInterface;
 
 //TODO Constructor
     public BaseMain() {
@@ -152,13 +206,52 @@ public class BaseMain {
             inspectionCreateInterface = new InspectionCreate(loginPageInterface, properties, page, logoutPageInterface);
             insFail = new InspectionFail(loginPageInterface, properties, page, logoutPageInterface, inspectionCreateInterface);
             inspectionAssignInterface = new InspectionAssign(loginPageInterface, properties, page, logoutPageInterface);
+
+//TODO Dispatch Notes
             dispatchNoteCreateInterface = new DispatchNoteCreate(loginPageInterface, properties, page, logoutPageInterface);
+            dnEdit = new PocDnEdit(loginPageInterface, properties, page, logoutPageInterface);
+            dnReturn = new PocDnReturn(loginPageInterface, properties, page, logoutPageInterface, dnEdit);
+            dnCancel = new PocDnCancel(loginPageInterface, properties, page, logoutPageInterface, dispatchNoteCreateInterface);
             dispatchNotesAssignInterface = new DispatchNotesAssign(loginPageInterface, properties, page, logoutPageInterface);
+
+//TODO Freight Forwarder Requests
+            ffrInvite = new FreightForwarderInvite(loginPageInterface, properties, page, logoutPageInterface);
+            ffrQuotation = new FreightQuotation(loginPageInterface, properties, page, logoutPageInterface);
+            ffrRequote = new FreightForwarderRequote(ffrQuotation);
+
+//TODO Work Orders
             workOrderCreateInterface = new WorkOrderCreate(loginPageInterface, properties, page, logoutPageInterface);
-            woTrackerStatusInterface = new WOTrackerStatus(loginPageInterface, properties, page, logoutPageInterface);
+            woTrackerStatusInterface = new WOTrackerStatus(loginPageInterface, properties, page, logoutPageInterface, playWrightFactory);
+
+//TODO POInvoice
             poInvoiceCreateInterface = new POInvoiceCreate(playWrightFactory, loginPageInterface, properties, page, logoutPageInterface, currencyExchangeRate);
+            poInvCancel = new PoInvoiceCancel(loginPageInterface, properties, page, logoutPageInterface, poInvoiceCreateInterface);
+            poInvHold = new POInvoiceHold(loginPageInterface, properties, page, logoutPageInterface);
+            poInvRevert = new POInvoiceRevert(loginPageInterface, properties, page, logoutPageInterface);
+            poInvAccept = new ChecklistAccept(loginPageInterface, properties, page, logoutPageInterface);
+            poInvChecklistReject = new ChecklistReject(loginPageInterface, properties, page, logoutPageInterface);
             poSendForApprovalInterface = new POInvoiceSendForApproval(loginPageInterface, properties, page, logoutPageInterface);
+            poInvReturn = new POInvoiceReturn(loginPageInterface, properties, page, logoutPageInterface, poSendForApprovalInterface);
+            poInvVerify = new POInvoiceVerify(loginPageInterface, properties, page, logoutPageInterface);
+            poInvEdit = new POInvoiceEdit(loginPageInterface, properties, page, logoutPageInterface, poSendForApprovalInterface);
+            poInvReject = new POInvoiceReject(loginPageInterface, properties, page, logoutPageInterface, poSendForApprovalInterface);
             poInvoiceApprovalInterface = new POInvoiceApproval(loginPageInterface, properties, page, logoutPageInterface);
+
+//TODO WOInvoice
+            woInvoiceCreateInterface = new WOInvoiceCreate(playWrightFactory, loginPageInterface, properties, page, logoutPageInterface, currencyExchangeRate);
+            woInvCancel = new WoInvoiceCancel(loginPageInterface, properties, page, logoutPageInterface, woInvoiceCreateInterface);
+            woInvHold = new WOInvoiceHold(loginPageInterface, properties, page, logoutPageInterface);
+            woInvRevert = new WOInvoiceRevert(loginPageInterface, properties, page, logoutPageInterface);
+            woInvAccept = new WOChecklistAccept(loginPageInterface, properties, page, logoutPageInterface);
+            woInvChecklistReject = new WOChecklistReject(loginPageInterface, properties, page, logoutPageInterface);
+            woSendForApprovalInterface = new WOInvoiceSendForApproval(loginPageInterface, properties, page, logoutPageInterface);
+            woInvReturn = new WOInvoiceReturn(loginPageInterface, properties, page, logoutPageInterface, woSendForApprovalInterface);
+            woInvVerify = new WOInvoiceVerify(loginPageInterface, properties, page, logoutPageInterface);
+            woInvEdit = new WOInvoiceEdit(loginPageInterface, properties, page, logoutPageInterface, woSendForApprovalInterface);
+            woInvReject = new WOInvoiceReject(loginPageInterface, properties, page, logoutPageInterface, woSendForApprovalInterface);
+            woInvoiceApprovalInterface = new WOInvoiceApproval(loginPageInterface, properties, page, logoutPageInterface);
+
+//TODO Others
             currencyExchangeRate = new CurrencyExchangeRate(playWrightFactory, loginPageInterface, properties, logoutPageInterface);
     }
 }

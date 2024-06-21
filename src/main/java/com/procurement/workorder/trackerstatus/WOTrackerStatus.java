@@ -1,4 +1,5 @@
 package com.procurement.workorder.trackerstatus;
+import com.factory.PlayWrightFactory;
 import com.interfaces.WOTrackerStatusInterface;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -13,16 +14,18 @@ public class WOTrackerStatus implements WOTrackerStatusInterface {
     Page page;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
+    PlayWrightFactory playWrightFactory;
 
     private WOTrackerStatus(){
     }
 
 //TODO Constructor
-    public WOTrackerStatus(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
+    public WOTrackerStatus(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface, PlayWrightFactory playWrightFactory){
         this.properties = properties;
         this.page = page;
         this.loginPageInterface = loginPageInterface;
         this.logoutPageInterface = logoutPageInterface;
+        this.playWrightFactory = playWrightFactory;
     }
 
     public void VendorTrackerStatus() {
@@ -35,6 +38,8 @@ public class WOTrackerStatus implements WOTrackerStatusInterface {
                 page.locator(".btn-link").first().click();
             }
         }
+        String woReferenceId = page.locator("#referenceId").innerText();
+        playWrightFactory.savePropertiesToFile4(woReferenceId);
         String[] status = {"Material_Pick_Up", "ETD", "Arrival_Notification", "Import_Clearance", "Out_for_Delivery", "Delivery_Completed"};
         for(int i = 0; i < status.length; i++) {
             page.waitForSelector(".form-control.form-control-sm.flatpickr-custom.form-control.input").click();
