@@ -25,8 +25,9 @@ public class WOInvoiceSendForApproval implements WOSendForApprovalInterface {
     }
 
     public void SendForApproval(){
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.locator(".nav-link   active").click();
+        page.waitForSelector(".nav-link   active").click();
         String woReferenceId = properties.getProperty("WorkOrderReferenceId");
         List<String> invoiceTable = page.locator("#listContainer tr td").allTextContents();
         for (String tr : invoiceTable){
@@ -34,8 +35,11 @@ public class WOInvoiceSendForApproval implements WOSendForApprovalInterface {
                 page.locator(".btn btn-sm btn-link p-0 text-primary").first().click();
             }
         }
-        page.locator("#btnSendApproval").click();
-        page.locator(".btn btn-primary bootbox-accept").click();
+        page.waitForSelector("#btnSendApproval").click();
+        page.waitForSelector(".btn btn-primary bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

@@ -9,7 +9,7 @@ public class RfqSuspendRfqEditTest extends BaseTest {
         try {
         rfqSuspend.SuspendRfqEdit();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

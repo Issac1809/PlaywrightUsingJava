@@ -9,7 +9,7 @@ public class OSCreateTest extends BaseTest {
         try {
         orderScheduleInterface.OSCreate();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

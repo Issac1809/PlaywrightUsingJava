@@ -9,7 +9,7 @@ public class WOInvoiceEditTest extends BaseTest {
         try {
             woInvEdit.WOInvoiceEditMethod();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

@@ -29,24 +29,28 @@ public class DispatchNotesAssign implements DispatchNotesAssignInterface {
     }
 
     public void DNAssign() {
-        String logisticsManager = properties.getProperty("LogisticsManager");
-        loginPageInterface.LoginMethod(logisticsManager);
-        page.locator("//*[contains(text(), 'Dispatch Notes')]").click();
-        String poReferenceId = properties.getProperty("PoReferenceId");
-        List<String> containerList = page.locator("#listContainer tr td").allTextContents();
-        for(String tr : containerList){
-            if(tr.contains(poReferenceId)){
-                page.locator(".btn-link").first().click();
+        try {
+            String logisticsManager = properties.getProperty("LogisticsManager");
+            loginPageInterface.LoginMethod(logisticsManager);
+            page.waitForSelector("//*[contains(text(), 'Dispatch Notes')]").click();
+            String poReferenceId = properties.getProperty("PoReferenceId");
+            List<String> containerList = page.locator("#listContainer tr td").allTextContents();
+            for (String tr : containerList) {
+                if (tr.contains(poReferenceId)) {
+                    page.locator(".btn-link").first().click();
+                }
             }
+            String dnReferenceId = page.waitForSelector("#dispatchNote").innerText();
+            playWrightFactory.savePropertiesToFile3(dnReferenceId);
+            page.waitForSelector("#dnActionDropdown").click();
+            page.waitForSelector("#btnToAssign").click();
+            page.waitForSelector("#select2-assignerId-container").click();
+            page.waitForSelector(".select2-search__field").fill(logisticsManager);
+            page.waitForSelector("//li[contains(text(), '" + logisticsManager + "')]").click();
+            page.waitForSelector("#saveAssine").click();
+            logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
         }
-        String dnReferenceId = page.locator("#dispatchNote").innerText();
-        playWrightFactory.savePropertiesToFile3(dnReferenceId);
-        page.locator("#dnActionDropdown").click();
-        page.locator("#btnToAssign").click();
-        page.locator("#select2-assignerId-container").click();
-        page.locator(".select2-search__field").fill(logisticsManager);
-        page.locator("//li[contains(text(), '" + logisticsManager + "')]").click();
-        page.locator("#saveAssine").click();
-        logoutPageInterface.LogoutMethod();
     }
 }

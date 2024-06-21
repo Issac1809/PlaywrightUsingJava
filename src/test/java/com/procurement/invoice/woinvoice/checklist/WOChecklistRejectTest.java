@@ -9,7 +9,7 @@ public class WOChecklistRejectTest extends BaseTest {
         try {
             woInvChecklistReject.ChecklistRejectMethod();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

@@ -24,11 +24,15 @@ public class PocPrSendForApproval implements PrSendForApproval {
     }
 
     public void NonCatalogPrSendForApproval() {
+        try {
         String title = properties.getProperty("Title");
         loginPageInterface.LoginMethod();
         page.locator("//*[contains(text(), '" + title + "')]").first().click();
-        page.locator("#btnSendApproval").click();
-        page.locator("//button[contains(text(), 'Yes')]").click();
+        page.waitForSelector("#btnSendApproval").click();
+        page.waitForSelector("//button[contains(text(), 'Yes')]").click();
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

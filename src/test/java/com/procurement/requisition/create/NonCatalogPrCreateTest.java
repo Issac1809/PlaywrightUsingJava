@@ -31,7 +31,7 @@ public class NonCatalogPrCreateTest extends BaseTest {
             prCreateNonCatalog.Notes();
             prCreateNonCatalog.PRCreate();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

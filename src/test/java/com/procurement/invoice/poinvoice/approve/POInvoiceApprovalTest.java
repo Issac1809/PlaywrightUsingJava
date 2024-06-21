@@ -9,7 +9,7 @@ public class POInvoiceApprovalTest extends BaseTest {
         try {
         poInvoiceApprovalInterface.POInvoiceApprovalMethod();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

@@ -26,22 +26,27 @@ public class CurrencyExchangeRate {
     }
 
     public double findCurrency() {
-        page = playWrightFactory.initializeBrowser(properties);
-        loginPageInterface.LoginMethod(properties.getProperty("AdminId"), page);
-        page.locator("//*[contains(text(), 'Settings')]").click();
+        double getCurrencyExchangeRate = 0;
+        try {
+            page = playWrightFactory.initializeBrowser(properties);
+            loginPageInterface.LoginMethod(properties.getProperty("AdminId"), page);
+            page.waitForSelector("//*[contains(text(), 'Settings')]").click();
 //TODO CurrencyExchangeRate
-        page.locator("//*[contains(text(), 'Currency Exchange Rate')]").click();
+            page.waitForSelector("//*[contains(text(), 'Currency Exchange Rate')]").click();
 //TODO SearchBoxCurrencyCode
-        String fromCode = properties.getProperty("InvoiceCurrencyCode");
-        String invoiceCurrencyCode = fromCode + " " + "SGD";
-        Locator searchBox = page.locator("//input[contains(@type,'search')]");
-        searchBox.click();
-        searchBox.fill(invoiceCurrencyCode);
-        List<String> currencyExchangeTable = page.locator("#tableCurrencyExchangeRate tbody tr td").allTextContents();
+            String fromCode = properties.getProperty("InvoiceCurrencyCode");
+            String invoiceCurrencyCode = fromCode + " " + "SGD";
+            Locator searchBox = page.locator("//input[contains(@type,'search')]");
+            searchBox.click();
+            searchBox.fill(invoiceCurrencyCode);
+            List<String> currencyExchangeTable = page.locator("#tableCurrencyExchangeRate tbody tr td").allTextContents();
 //TODO Removing 1st and last td element => td:nth-child(n+2):nth-child(-n+4)
-            double getCurrencyExchangeRate = Double.parseDouble(currencyExchangeTable.get(3));
+            getCurrencyExchangeRate = Double.parseDouble(currencyExchangeTable.get(3));
             logoutPageInterface.LogoutMethod(page);
             playWrightFactory.TearDown(page);
-            return getCurrencyExchangeRate;
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
+        return getCurrencyExchangeRate;
     }
 }

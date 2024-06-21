@@ -9,7 +9,7 @@ public class POSendForVendorTest extends BaseTest {
         try {
         purchaseOrderInterface.SendForVendor();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

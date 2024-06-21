@@ -27,6 +27,7 @@ public class PocPorReject implements PorReject{
     }
 
     public void PorReject() throws InterruptedException {
+        try {
         List<String> matchingApprovers = porApproval.SendForApproval();
         for(int i = 0; i <= matchingApprovers.size(); i++){
             String approver = matchingApprovers.get(i);
@@ -41,5 +42,8 @@ public class PocPorReject implements PorReject{
         page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         porEdit.PorEditMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

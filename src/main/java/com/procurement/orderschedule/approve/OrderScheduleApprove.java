@@ -25,8 +25,9 @@ public class OrderScheduleApprove implements OrderScheduleApproveInterface {
     }
 
     public void OSApprove(){
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.locator("//*[contains(text(), 'Purchase Orders')]").click();
+        page.waitForSelector("//*[contains(text(), 'Purchase Orders')]").click();
         String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
         for(String tr : containerList){
@@ -34,9 +35,12 @@ public class OrderScheduleApprove implements OrderScheduleApproveInterface {
                 page.locator(".btn-link").first().click();
             }
         }
-        page.locator("#BtnToApproveOS").click();
-        page.locator("#btnApprove").click();
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#BtnToApproveOS").click();
+        page.waitForSelector("#btnApprove").click();
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

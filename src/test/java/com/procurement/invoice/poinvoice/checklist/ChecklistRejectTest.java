@@ -9,7 +9,7 @@ public class ChecklistRejectTest extends BaseTest {
         try {
             poInvChecklistReject.ChecklistRejectMethod();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

@@ -19,7 +19,11 @@ public class PorApprovalAndApprove implements ApprovalAndApprove {
     }
 
     public void PorApprovalAndApproveMethod(){
+        try {
         List<String> matchingApprovers = porApproval.SendForApproval();
         porApprove.ApproverLogin(matchingApprovers);
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

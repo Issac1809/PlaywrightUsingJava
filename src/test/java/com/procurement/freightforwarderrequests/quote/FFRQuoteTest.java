@@ -9,7 +9,7 @@ public class FFRQuoteTest extends BaseTest {
         try {
             ffrQuotation.QuoteMethod();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

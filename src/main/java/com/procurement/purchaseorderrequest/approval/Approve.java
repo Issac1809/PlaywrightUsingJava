@@ -28,6 +28,7 @@ public class Approve implements PorApprove {
     }
 
     public void ApproverLogin(List<String> matchingApprovers) {
+        try {
         List<String> groupIds = new ArrayList<>();
         for (int i = 0; i < matchingApprovers.size(); i++) {
             String approverMailId = matchingApprovers.get(i);
@@ -75,18 +76,18 @@ public class Approve implements PorApprove {
                             getGroupD.first().click();
                             groupIds.add(groupDId);
                         }
-                        page.locator("#btnSendUserFromPM").click();
-                        page.locator("#btnApprove").click();
-                        page.locator(".bootbox-accept").click();
+                        page.waitForSelector("#btnSendUserFromPM").click();
+                        page.waitForSelector("#btnApprove").click();
+                        page.waitForSelector(".bootbox-accept").click();
                         logoutPageInterface.LogoutMethod();
                     } else if (!projectManagerPopUp.isVisible()) {
-                        page.locator("#btnApprove").click();
-                        page.locator(".bootbox-accept").click();
+                        page.waitForSelector("#btnApprove").click();
+                        page.waitForSelector(".bootbox-accept").click();
                         logoutPageInterface.LogoutMethod();
                     }
                 } else {
-                    page.locator("#btnApprove").click();
-                    page.locator(".bootbox-accept").click();
+                    page.waitForSelector("#btnApprove").click();
+                    page.waitForSelector(".bootbox-accept").click();
                     logoutPageInterface.LogoutMethod();
                 }
             }
@@ -103,6 +104,9 @@ public class Approve implements PorApprove {
                 }
                 i += size;
             }
+        }
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

@@ -9,7 +9,7 @@ public class TechnicalEvaluationRejectTest extends BaseTest {
         try {
         teReject.TechnicalEvaluationRejectMethod();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

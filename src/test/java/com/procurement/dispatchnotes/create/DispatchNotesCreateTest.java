@@ -9,7 +9,7 @@ public class DispatchNotesCreateTest extends BaseTest {
         try {
         dispatchNoteCreateInterface.DNCreate();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

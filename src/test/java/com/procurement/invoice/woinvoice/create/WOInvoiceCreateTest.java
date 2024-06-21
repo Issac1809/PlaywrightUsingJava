@@ -11,7 +11,7 @@ public class WOInvoiceCreateTest extends BaseTest {
         double finalGSTPercentage = woInvoiceCreateInterface.VendorGST();
         woInvoiceCreateInterface.SGDEquivalentEnable(finalGSTPercentage);
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

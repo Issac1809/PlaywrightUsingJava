@@ -10,7 +10,7 @@ public class RequisitionAssignTest extends BaseTest {
             prAssign.BuyerManagerLogin();
             prAssign.BuyerManagerAssign();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

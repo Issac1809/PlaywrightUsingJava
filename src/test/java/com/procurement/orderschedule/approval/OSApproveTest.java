@@ -9,7 +9,7 @@ public class OSApproveTest extends BaseTest {
         try {
         orderScheduleApproveInterface.OSApprove();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

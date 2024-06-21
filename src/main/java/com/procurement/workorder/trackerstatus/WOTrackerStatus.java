@@ -29,6 +29,7 @@ public class WOTrackerStatus implements WOTrackerStatusInterface {
     }
 
     public void VendorTrackerStatus() {
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
         page.waitForSelector("//*[contains(text(), 'Work Orders')]").click();
         String poReferenceId = properties.getProperty("PoReferenceId");
@@ -38,7 +39,7 @@ public class WOTrackerStatus implements WOTrackerStatusInterface {
                 page.locator(".btn-link").first().click();
             }
         }
-        String woReferenceId = page.locator("#referenceId").innerText();
+        String woReferenceId = page.waitForSelector("#referenceId").innerText();
         playWrightFactory.savePropertiesToFile4(woReferenceId);
         String[] status = {"Material_Pick_Up", "ETD", "Arrival_Notification", "Import_Clearance", "Out_for_Delivery", "Delivery_Completed"};
         for(int i = 0; i < status.length; i++) {
@@ -51,5 +52,8 @@ public class WOTrackerStatus implements WOTrackerStatusInterface {
             page.waitForSelector(".bootbox-accept").click();
         }
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

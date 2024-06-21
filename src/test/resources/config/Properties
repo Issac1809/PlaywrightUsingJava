@@ -1,5 +1,5 @@
-#InvoiceCurrencyCode
-#Wed Jun 19 15:31:20 IST 2024
+#PoReferenceId
+#Fri Jun 21 17:40:06 IST 2024
 //TODO=Non-Catalog (PR to Invoice)
 AdminId=admin@cormsquare.com
 Buyer=buyer@cormsquare.com
@@ -49,6 +49,8 @@ TEApprover=requester@cormsquare.com
 TargetPrice=4500
 TaxCode=PZ-Zero Rated Purchase
 Title=POC-NonCatalog
+Total=Chargeable Weight \= 200
+Unit=Rate \= 200
 Vendor=IND Vendor
 VendorMailId=ind2@cormsquare.com
 Volume=50
@@ -58,5 +60,3 @@ browser=chrome
 custom=inspectiontrue
 headless=false
 url=https\://yea-test.cormsquare.com/Identity/Account/Login
-Total Chargeable Weight = 200
-Unit Rate = 200

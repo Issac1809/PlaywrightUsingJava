@@ -9,7 +9,7 @@ public class OSEditTest extends BaseTest {
         try {
         osEdit.OSEditMethod();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

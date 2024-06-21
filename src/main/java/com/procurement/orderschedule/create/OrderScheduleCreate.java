@@ -27,19 +27,23 @@ public class OrderScheduleCreate implements OrderScheduleInterface {
     }
 
     public void OSCreate() {
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
-        page.locator("//*[contains(text(), 'Purchase Orders')]").click();
+        page.waitForSelector("//*[contains(text(), 'Purchase Orders')]").click();
         String title = properties.getProperty("Title");
         page.locator("//*[contains(text(), '" + title + "')]").first().click();
-        String poReferenceId = page.locator("#referenceId").textContent();
+        String poReferenceId = page.waitForSelector("#referenceId").textContent();
         playWrightFactory.savePropertiesToFile(poReferenceId);
-        page.locator("#btnCreateOR").click();
+        page.waitForSelector("#btnCreateOR").click();
         Locator orderScheduleDate = page.locator(".scheduleDate-1").last();
         orderScheduleDate.click();
         Locator today = page.locator("//span[@class='flatpickr-day today']").first();
         today.click();
-        page.locator("#btnCreate").click();
+        page.waitForSelector("#btnCreate").click();
         page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

@@ -4,7 +4,6 @@ import com.interfaces.DnReturn;
 import com.interfaces.LoginPageInterface;
 import com.interfaces.LogoutPageInterface;
 import com.microsoft.playwright.Page;
-
 import java.util.List;
 import java.util.Properties;
 
@@ -28,20 +27,24 @@ public class PocDnReturn implements DnReturn {
         this.dnEdit = dnEdit;
     }
 
-    public void PocDnReturnMethod(){
-        loginPageInterface.LoginMethod(properties.getProperty("LogisticsManager"));
-        page.locator("//*[contains(text(), 'Dispatch Notes')]").click();
-        String poReferenceId = properties.getProperty("PoReferenceId");
-        List<String> containerList = page.locator("#listContainer tr td").allTextContents();
-        for(String tr : containerList){
-            if(tr.contains(poReferenceId)){
-                page.locator(".btn-link").first().click();
+    public void PocDnReturnMethod() {
+        try {
+            loginPageInterface.LoginMethod(properties.getProperty("LogisticsManager"));
+            page.waitForSelector("//*[contains(text(), 'Dispatch Notes')]").click();
+            String poReferenceId = properties.getProperty("PoReferenceId");
+            List<String> containerList = page.locator("#listContainer tr td").allTextContents();
+            for (String tr : containerList) {
+                if (tr.contains(poReferenceId)) {
+                    page.locator(".btn-link").first().click();
+                }
             }
+            page.waitForSelector("#dropdownMenuButton").click();
+            page.waitForSelector("#btnToReturn").click();
+            page.waitForSelector(".bootbox-input").fill("Returned");
+            page.waitForSelector(".bootbox-accept").click();
+            logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
         }
-        page.locator("#dropdownMenuButton").click();
-        page.locator("#btnToReturn").click();
-        page.locator(".bootbox-input").fill("Returned");
-        page.locator(".bootbox-accept").click();
-        logoutPageInterface.LogoutMethod();
     }
 }

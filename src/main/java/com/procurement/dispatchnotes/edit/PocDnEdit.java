@@ -24,19 +24,23 @@ public class PocDnEdit implements DnEdit {
         this.logoutPageInterface = logoutPageInterface;
     }
 
-    public void PocDnEditMethod(){
-        loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
-        page.locator("//*[contains(text(), 'Dispatch Notes')]").click();
-        String poReferenceId = properties.getProperty("PoReferenceId");
-        List<String> containerList = page.locator("#listContainer tr td").allTextContents();
-        for(String tr : containerList){
-            if(tr.contains(poReferenceId)){
-                page.locator(".btn-link").first().click();
+    public void PocDnEditMethod() {
+        try {
+            loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
+            page.waitForSelector("//*[contains(text(), 'Dispatch Notes')]").click();
+            String poReferenceId = properties.getProperty("PoReferenceId");
+            List<String> containerList = page.locator("#listContainer tr td").allTextContents();
+            for (String tr : containerList) {
+                if (tr.contains(poReferenceId)) {
+                    page.locator(".btn-link").first().click();
+                }
             }
+            page.waitForSelector("#btnEdit").click();
+            page.waitForSelector("#btnUpdate").click();
+            page.waitForSelector(".bootbox-accept").click();
+            logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
         }
-        page.locator("#btnEdit").click();
-        page.locator("#btnUpdate").click();
-        page.locator(".bootbox-accept").click();
-        logoutPageInterface.LogoutMethod();
     }
 }

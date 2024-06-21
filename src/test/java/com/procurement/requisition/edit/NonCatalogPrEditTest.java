@@ -9,7 +9,7 @@ public class NonCatalogPrEditTest extends BaseTest {
         try {
             prEdit.PrEditMethod();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

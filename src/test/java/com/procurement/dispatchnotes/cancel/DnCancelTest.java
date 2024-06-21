@@ -9,7 +9,7 @@ public class DnCancelTest extends BaseTest{
         try {
             dnCancel.PocDnCancelMethod();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

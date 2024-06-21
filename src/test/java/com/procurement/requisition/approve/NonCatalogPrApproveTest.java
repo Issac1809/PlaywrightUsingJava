@@ -9,7 +9,7 @@ public class NonCatalogPrApproveTest extends BaseTest {
         try {
             prApprove.Approve();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

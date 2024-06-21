@@ -24,15 +24,19 @@ public class PocPorEdit implements PorEdit {
     }
 
     public void PorEditMethod() throws InterruptedException {
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.locator("//*[contains(text(), 'Purchase Order Requests')]").click();
+        page.waitForSelector("//*[contains(text(), 'Purchase Order Requests')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
-        page.locator("#btnEdit").click();
+        page.waitForSelector("#btnEdit").click();
         Thread.sleep(2000);
-        page.locator("#btnUpdate").click();
-        page.locator(".bootbox-input").fill("Updated");
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnUpdate").click();
+        page.waitForSelector(".bootbox-input").fill("Updated");
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

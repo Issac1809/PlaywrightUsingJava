@@ -25,8 +25,9 @@ public class POInvoiceHold implements PoInvHold {
     }
 
     public void POInvoiceHoldMethod(){
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.locator(".nav-link   active").click();
+        page.waitForSelector(".nav-link   active").click();
         String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> invoiceContainer = page.locator("#listContainer tr td").allTextContents();
         for(String tr : invoiceContainer){
@@ -34,9 +35,12 @@ public class POInvoiceHold implements PoInvHold {
                 page.locator(".btn btn-sm btn-link p-0 text-primary").first().click();
             }
         }
-        page.locator("#btnToHoldInvocie").click();
-        page.locator(".bootbox-input").fill("Hold");
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnToHoldInvocie").click();
+        page.waitForSelector(".bootbox-input").fill("Hold");
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

@@ -9,7 +9,7 @@ public class WOInvoiceRevertTest extends BaseTest {
         try {
             woInvRevert.WOInvoiceRevertMethod();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

@@ -9,7 +9,7 @@ public class InspectionAssignTest extends BaseTest {
         try {
         inspectionAssignInterface.RequesterInspectionAssign();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

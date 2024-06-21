@@ -9,7 +9,7 @@ public class WorkOrdersCreateTest extends BaseTest {
         try {
         workOrderCreateInterface.WOCreate();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

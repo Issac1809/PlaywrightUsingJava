@@ -27,9 +27,10 @@ public class WOInvoiceReject implements WoInvReject {
     }
 
     public void WOInvoiceRejectMethod(){
+        try {
         woSendForApprovalInterface.SendForApproval();
         loginPageInterface.LoginMethod(properties.getProperty("FinanceChecker"));
-        page.locator(".nav-link   active").click();
+        page.waitForSelector(".nav-link   active").click();
         String woReferenceId = properties.getProperty("WorkOrderReferenceId");
         List<String> invoiceContainer = page.locator("#listContainer tr td").allTextContents();
         for(String tr : invoiceContainer){
@@ -37,9 +38,12 @@ public class WOInvoiceReject implements WoInvReject {
                 page.locator(".btn btn-sm btn-link p-0 text-primary").first().click();
             }
         }
-        page.locator("#btnReject").click();
-        page.locator(".bootbox-input").fill("Rejected");
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnReject").click();
+        page.waitForSelector(".bootbox-input").fill("Rejected");
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

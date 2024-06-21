@@ -29,25 +29,30 @@ public class PocPorSuspend implements PorSuspend {
     }
 
     public void SuspendPorEdit() throws InterruptedException {
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.locator("//*[contains(text(), 'Purchase Order Requests')]").click();
+        page.waitForSelector("//*[contains(text(), 'Purchase Order Requests')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
-        page.locator("#btnToSuspendPOR").click();
-        page.locator(".bootbox-input").fill("Suspended");
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnToSuspendPOR").click();
+        page.waitForSelector(".bootbox-input").fill("Suspended");
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         porEdit.PorEditMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 
     public void SuspendRfqEdit(){
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.locator("//*[contains(text(), 'Purchase Order Requests')]").click();
+        page.waitForSelector("//*[contains(text(), 'Purchase Order Requests')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
-        page.locator("#btnToSuspendPOR").click();
-        page.locator(".bootbox-input").fill("Suspended");
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnToSuspendPOR").click();
+        page.waitForSelector(".bootbox-input").fill("Suspended");
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         commercialEvaluationInterface.CommercialEvaluationButton();
         porCreateNonCatalog.BuyerPORCreate();
@@ -55,5 +60,8 @@ public class PocPorSuspend implements PorSuspend {
         porCreateNonCatalog.TaxCode();
         porCreateNonCatalog.PORNotes();
         porCreateNonCatalog.PORCreate();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

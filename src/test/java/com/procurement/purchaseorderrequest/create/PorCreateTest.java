@@ -13,7 +13,7 @@ public class PorCreateTest extends BaseTest {
         porCreateNonCatalog.PORNotes();
         porCreateNonCatalog.PORCreate();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

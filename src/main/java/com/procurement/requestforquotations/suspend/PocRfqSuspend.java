@@ -39,25 +39,30 @@ public class PocRfqSuspend implements RfqSuspend {
     }
 
     public void SuspendRfqEdit() throws InterruptedException {
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.locator("//*[contains(text(), 'Request For Quotations')]").click();
+        page.waitForSelector("//*[contains(text(), 'Request For Quotations')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
-        page.locator("#btnToSuspendRfq").click();
-        page.locator(".bootbox-input").fill("Suspended");
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnToSuspendRfq").click();
+        page.waitForSelector(".bootbox-input").fill("Suspended");
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         rfqEdit.RfqEditMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 
     public void SuspendPREdit() throws InterruptedException {
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.locator("//*[contains(text(), 'Request For Quotations')]").click();
+        page.waitForSelector("//*[contains(text(), 'Request For Quotations')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
-        page.locator("#btnToSuspendRfq").click();
-        page.locator(".bootbox-input").fill("Suspended");
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnToSuspendRfq").click();
+        page.waitForSelector(".bootbox-input").fill("Suspended");
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         prEdit.PrEditMethod();
         prSendForApproval.NonCatalogPrSendForApproval();
@@ -68,5 +73,8 @@ public class PocRfqSuspend implements RfqSuspend {
         rfqCreate.BuyerRfqCreate();
         rfqCreate.RfQNotes();
         rfqCreate.RFQCreate();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

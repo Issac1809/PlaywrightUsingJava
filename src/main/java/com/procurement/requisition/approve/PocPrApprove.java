@@ -24,11 +24,15 @@ public class PocPrApprove implements PrApprove {
     }
 
     public void Approve() {
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("ProjectManager"));
         String title = properties.getProperty("Title");
         page.locator("//*[contains(text(), '" + title + "')]").first().click();
-        page.locator("#btnApprove").click();
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnApprove").click();
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

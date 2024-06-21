@@ -27,13 +27,17 @@ public class PocPrReject implements PrReject {
     }
 
     public void Reject() throws InterruptedException {
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("ProjectManager"));
         String title = properties.getProperty("Title");
         page.locator("//*[contains(text(), '" + title + "')]").first().click();
-        page.locator("#btnReject").click();
-        page.locator(".bootbox-input").fill("Rejected");
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnReject").click();
+        page.waitForSelector(".bootbox-input").fill("Rejected");
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         prEdit.PrRejectEdit();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

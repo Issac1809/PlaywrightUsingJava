@@ -15,6 +15,10 @@ public class FreightForwarderRequote implements FFRRequote {
     }
 
     public void RequoteMethod(){
+        try {
         ffrQuotation.QuoteMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

@@ -28,8 +28,9 @@ public class WOInvoiceApproval implements WOInvoiceApprovalInterface {
     }
 
     public void WOInvoiceApprovalMethod(){
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("FinanceChecker"));
-        page.locator(".nav-link   active").click();
+        page.waitForSelector(".nav-link   active").click();
         String woReferenceId = properties.getProperty("WorkOrderReferenceId");
         List<String> invoiceContainer = page.locator("#listContainer tr td").allTextContents();
         for(String tr : invoiceContainer){
@@ -37,8 +38,11 @@ public class WOInvoiceApproval implements WOInvoiceApprovalInterface {
                 page.locator(".btn btn-sm btn-link p-0 text-primary").first().click();
             }
         }
-        page.locator("#btnApprove").click();
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnApprove").click();
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

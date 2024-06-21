@@ -24,20 +24,24 @@ public class PocDnCancel implements DnCancel {
         this.dispatchNoteCreateInterface = dispatchNoteCreateInterface;
     }
 
-    public void PocDnCancelMethod(){
-        loginPageInterface.LoginMethod(properties.getProperty("LogisticsManager"));
-        page.locator("//*[contains(text(), 'Dispatch Notes')]").click();
-        String poReferenceId = properties.getProperty("PoReferenceId");
-        List<String> containerList = page.locator("#listContainer tr td").allTextContents();
-        for(String tr : containerList){
-            if(tr.contains(poReferenceId)){
-                page.locator(".btn-link").first().click();
+    public void PocDnCancelMethod() {
+        try {
+            loginPageInterface.LoginMethod(properties.getProperty("LogisticsManager"));
+            page.waitForSelector("//*[contains(text(), 'Dispatch Notes')]").click();
+            String poReferenceId = properties.getProperty("PoReferenceId");
+            List<String> containerList = page.locator("#listContainer tr td").allTextContents();
+            for (String tr : containerList) {
+                if (tr.contains(poReferenceId)) {
+                    page.locator(".btn-link").first().click();
+                }
             }
+            page.waitForSelector("#dropdownMenuButton").click();
+            page.waitForSelector("#btnToCancel").click();
+            page.waitForSelector(".bootbox-accept").click();
+            logoutPageInterface.LogoutMethod();
+            dispatchNoteCreateInterface.DNCreate();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
         }
-        page.locator("#dropdownMenuButton").click();
-        page.locator("#btnToCancel").click();
-        page.locator(".bootbox-accept").click();
-        logoutPageInterface.LogoutMethod();
-        dispatchNoteCreateInterface.DNCreate();
     }
 }

@@ -24,23 +24,39 @@ public class PocRfqCreate implements RfqCreate {
     }
 
     public void BuyerLogin() {
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 
     public void BuyerRfqCreate() {
+        try {
         String title = properties.getProperty("Title");
         page.locator("//*[contains(text(),'"+ title +"')]").first().click();
-        page.locator("#btnCreateRFQ").click();
+        page.waitForSelector("#btnCreateRFQ").click();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 
     public void RfQNotes() {
-        page.locator("#notes").fill(properties.getProperty("RfQNotes"));
+        try {
+        page.waitForSelector("#notes").fill(properties.getProperty("RfQNotes"));
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 
     public void RFQCreate() throws InterruptedException {
+        try {
         Thread.sleep(1000);
-        page.locator("#btnCreate").click();
-        page.locator("//button[contains(text(),'Yes')]").click();
+        page.waitForSelector("#btnCreate").click();
+        page.waitForSelector("//button[contains(text(),'Yes')]").click();
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

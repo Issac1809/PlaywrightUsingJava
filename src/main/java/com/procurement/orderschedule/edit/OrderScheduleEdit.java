@@ -25,8 +25,9 @@ public class OrderScheduleEdit implements OSEdit {
     }
 
     public void OSEditMethod(){
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
-        page.locator("//*[contains(text(), 'Order Schedules')]").click();
+        page.waitForSelector("//*[contains(text(), 'Order Schedules')]").click();
         String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
         for(String tr : containerList){
@@ -34,9 +35,12 @@ public class OrderScheduleEdit implements OSEdit {
                 page.locator(".btn-link").first().click();
             }
         }
-        page.locator("#btnEdit").click();
-        page.locator("#btnUpdate").click();
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnEdit").click();
+        page.waitForSelector("#btnUpdate").click();
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

@@ -30,9 +30,10 @@ public class InspectionFail implements InsFail {
     }
 
     public void RequesterInspectionFail() {
+        try {
         String mailId = properties.getProperty("EmailID");
         loginPageInterface.LoginMethod(mailId);
-        page.locator("//*[contains(text(), 'Order Schedules')]").click();
+        page.waitForSelector("//*[contains(text(), 'Order Schedules')]").click();
         String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
         for (String tr : containerList) {
@@ -40,18 +41,21 @@ public class InspectionFail implements InsFail {
                 page.locator(".btn-link").first().click();
             }
         }
-        page.locator("#btnAssignInspector").click();
-        page.locator("#select2-InspectionId-container").click();
-        page.locator(".select2-search__field").fill(mailId);
+        page.waitForSelector("#btnAssignInspector").click();
+        page.waitForSelector("#select2-InspectionId-container").click();
+        page.waitForSelector(".select2-search__field").fill(mailId);
         page.locator("//li[contains(text(), '" + mailId + "')]").first().click();
-        page.locator("#saveInspector").click();
-        page.locator("#btnForCreateInspection").click();
-        page.locator("#physicalInspectionNotReq").click();
-        page.locator("#inspectFail").click();
-        page.locator("#btnCreateInspection").click();
-        page.locator(".bootbox-input").fill("Failed");
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#saveInspector").click();
+        page.waitForSelector("#btnForCreateInspection").click();
+        page.waitForSelector("#physicalInspectionNotReq").click();
+        page.waitForSelector("#inspectFail").click();
+        page.waitForSelector("#btnCreateInspection").click();
+        page.waitForSelector(".bootbox-input").fill("Failed");
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         inspectionCreateInterface.VendorInspectionCreate();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

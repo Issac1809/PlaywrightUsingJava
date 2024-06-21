@@ -9,7 +9,7 @@ public class FFRInviteTest extends BaseTest {
         try {
             ffrInvite.InviteMethod();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

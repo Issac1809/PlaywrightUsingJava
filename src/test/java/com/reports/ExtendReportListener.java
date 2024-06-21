@@ -10,10 +10,8 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.factory.PlayWrightFactory;
-import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-
 import static com.factory.PlayWrightFactory.takeScreenshot;
 
 public class ExtendReportListener implements ITestListener {
@@ -31,13 +29,11 @@ public class ExtendReportListener implements ITestListener {
 
     public ExtentReports init() {
         Path path = Paths.get(OUTPUT_FOLDER);
-        // if directory exists?
         if (!Files.exists(path)) {
             try {
                 Files.createDirectories(path);
             } catch (IOException error) {
-                // fail to create directory
-                error.printStackTrace();
+                System.out.println("What is the error: " + error.getMessage());
             }
         }
 
@@ -52,18 +48,6 @@ public class ExtendReportListener implements ITestListener {
         extentReports.setSystemInfo("Team", "Testing");
         extentReports.setSystemInfo("Customer Name", "YEA");
         return extentReports;
-    }
-
-    @Override
-    public synchronized void onStart(ITestContext context) {
-        System.out.println("Test Suite started!");
-    }
-
-    @Override
-    public synchronized void onFinish(ITestContext context) {
-        System.out.println(("Test Suite is ending!"));
-        extent.flush();
-        test.remove();
     }
 
     @Override

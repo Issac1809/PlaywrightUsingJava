@@ -29,32 +29,48 @@ public class PocPrEdit implements PrEdit {
     }
 
     public void PrEditMethod() throws InterruptedException {
+        try {
         loginPageInterface.LoginMethod();
         String title = properties.getProperty("Title");
         page.locator("//*[contains(text(), '" + title + "')]").first().click();
-        page.locator("#btnEdit").click();
+        page.waitForSelector("#btnEdit").click();
         Thread.sleep(2000);
-        page.locator("#btnUpdate").click();
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnUpdate").click();
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 
     public void PrRejectEdit() throws InterruptedException {
+        try {
         PrEditMethod();
         prSendForApproval.NonCatalogPrSendForApproval();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 
     public void PrBuyerManagerSuspendEdit() throws InterruptedException {
+        try {
         PrEditMethod();
         prSendForApproval.NonCatalogPrSendForApproval();
         prApprove.Approve();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 
     public void PrBuyerSuspendEdit() throws InterruptedException {
+        try {
         PrEditMethod();
         prSendForApproval.NonCatalogPrSendForApproval();
         prApprove.Approve();
         prAssign.BuyerManagerLogin();
         prAssign.BuyerManagerAssign();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

@@ -9,7 +9,7 @@ public class TechnicalEvaluationTest extends BaseTest {
         try {
         technicalEvaluationInterface.TechnicalEvaluationButton();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

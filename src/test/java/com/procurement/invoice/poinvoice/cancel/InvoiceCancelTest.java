@@ -9,7 +9,7 @@ public class InvoiceCancelTest extends BaseTest {
         try {
             poInvCancel.PoInvoiceCancelMethod();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

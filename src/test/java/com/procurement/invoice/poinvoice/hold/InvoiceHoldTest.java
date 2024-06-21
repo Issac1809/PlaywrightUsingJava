@@ -9,7 +9,7 @@ public class InvoiceHoldTest extends BaseTest {
         try {
             poInvHold.POInvoiceHoldMethod();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

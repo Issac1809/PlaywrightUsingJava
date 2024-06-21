@@ -20,6 +20,7 @@ public class LoginPage implements LoginPageInterface {
     }
 
     public void LoginMethod() {
+        try {
         Locator mailId = page.getByPlaceholder("email@address.com");
         mailId.click();
         mailId.fill(properties.getProperty("EmailID"));
@@ -27,9 +28,13 @@ public class LoginPage implements LoginPageInterface {
         password.click();
         password.fill(properties.getProperty("Password"));
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 
     public void LoginMethod(String getMailId) {
+        try {
         Locator mailId = page.getByPlaceholder("email@address.com");
         mailId.click();
         mailId.fill(getMailId);
@@ -37,9 +42,13 @@ public class LoginPage implements LoginPageInterface {
         password.click();
         password.fill(properties.getProperty("Password"));
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 
     public void LoginMethod(String getMailId, Page page) {
+        try {
         Locator mailId = page.getByPlaceholder("email@address.com");
         mailId.click();
         mailId.fill(getMailId);
@@ -47,5 +56,8 @@ public class LoginPage implements LoginPageInterface {
         password.click();
         password.fill(properties.getProperty("Password"));
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

@@ -9,7 +9,7 @@ public class WOInvoiceHoldTest extends BaseTest {
         try {
             woInvHold.WOInvoiceHoldMethod();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

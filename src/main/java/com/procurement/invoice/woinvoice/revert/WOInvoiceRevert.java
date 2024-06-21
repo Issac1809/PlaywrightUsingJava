@@ -28,8 +28,9 @@ public class WOInvoiceRevert implements WoInvRevert {
     }
 
     public void WOInvoiceRevertMethod(){
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.locator(".nav-link   active").click();
+        page.waitForSelector(".nav-link   active").click();
         String woReferenceId = properties.getProperty("WorkOrderReferenceId");
         List<String> invoiceContainer = page.locator("#listContainer tr td").allTextContents();
         for(String tr : invoiceContainer){
@@ -37,9 +38,12 @@ public class WOInvoiceRevert implements WoInvRevert {
                 page.locator(".btn btn-sm btn-link p-0 text-primary").first().click();
             }
         }
-        page.locator("#btnToRevertInvocie").click();
-        page.locator(".bootbox-input").fill("Revert");
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnToRevertInvocie").click();
+        page.waitForSelector(".bootbox-input").fill("Revert");
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

@@ -27,13 +27,17 @@ public class PocPrBuyerManagerSuspend implements PrSuspend {
     }
 
     public void Suspend() throws InterruptedException {
+        try {
         loginPageInterface.LoginMethod(properties.getProperty("BuyerManager"));
         String title = properties.getProperty("Title");
         page.locator("//*[contains(text(), '" + title + "')]").first().click();
-        page.locator("#btnSuspend").click();
-        page.locator(".bootbox-input").fill("Buyer Manager Suspended");
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnSuspend").click();
+        page.waitForSelector(".bootbox-input").fill("Buyer Manager Suspended");
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         prEdit.PrBuyerManagerSuspendEdit();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

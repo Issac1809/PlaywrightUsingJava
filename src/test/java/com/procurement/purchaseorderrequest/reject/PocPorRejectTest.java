@@ -9,7 +9,7 @@ public class PocPorRejectTest extends BaseTest {
         try {
         porReject.PorReject();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

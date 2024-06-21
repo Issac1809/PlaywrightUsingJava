@@ -9,7 +9,7 @@ public class DnReturnTest extends BaseTest {
         try {
          dnReturn.PocDnReturnMethod();
         }  catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

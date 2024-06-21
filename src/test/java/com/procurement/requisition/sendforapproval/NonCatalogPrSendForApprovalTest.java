@@ -9,7 +9,7 @@ public class NonCatalogPrSendForApprovalTest extends BaseTest {
         try {
             prSendForApproval.NonCatalogPrSendForApproval();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

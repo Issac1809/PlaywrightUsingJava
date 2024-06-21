@@ -9,7 +9,7 @@ public class InspectionFailTest extends BaseTest {
         try {
             insFail.RequesterInspectionFail();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

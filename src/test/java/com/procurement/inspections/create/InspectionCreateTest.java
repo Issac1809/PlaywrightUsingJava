@@ -9,7 +9,7 @@ public class InspectionCreateTest extends BaseTest {
         try {
         inspectionCreateInterface.VendorInspectionCreate();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }

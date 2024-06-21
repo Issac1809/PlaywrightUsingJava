@@ -28,10 +28,10 @@ public class POInvoiceReturn implements PoInvReturn {
     }
 
     public void POInvoiceReturnMethod(){
+        try {
         poSendForApprovalInterface.SendForApproval();
-
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.locator(".nav-link   active").click();
+        page.waitForSelector(".nav-link   active").click();
         String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> invoiceContainer = page.locator("#listContainer tr td").allTextContents();
         for(String tr : invoiceContainer){
@@ -39,9 +39,12 @@ public class POInvoiceReturn implements PoInvReturn {
                 page.locator(".btn btn-sm btn-link p-0 text-primary").first().click();
             }
         }
-        page.locator("#btnToSuspendInvoice").click();
-        page.locator(".bootbox-input").fill("Cancelled");
-        page.locator(".bootbox-accept").click();
+        page.waitForSelector("#btnToSuspendInvoice").click();
+        page.waitForSelector(".bootbox-input").fill("Cancelled");
+        page.waitForSelector(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
     }
 }

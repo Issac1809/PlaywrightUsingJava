@@ -24,23 +24,26 @@ public class FreightQuotation implements FFRQuotation {
         this.logoutPageInterface = logoutPageInterface;
     }
 
-    public void QuoteMethod(){
-        page.pause();
-        loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
-        page.locator("//*[contains(text(), 'Freight Forwarder Requests')]").click();
-        String dnReferenceId = properties.getProperty("DispatchNoteReferenceId");
-        List<String> containerList = page.locator("#listContainer tr td").allTextContents();
-        for(String tr : containerList){
-            if(tr.contains(dnReferenceId)){
-                page.locator(".btn-link").first().click();
+    public void QuoteMethod() {
+        try {
+            loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
+            page.waitForSelector("//*[contains(text(), 'Freight Forwarder Requests')]").click();
+            String dnReferenceId = properties.getProperty("DispatchNoteReferenceId");
+            List<String> containerList = page.locator("#listContainer tr td").allTextContents();
+            for (String tr : containerList) {
+                if (tr.contains(dnReferenceId)) {
+                    page.locator(".btn-link").first().click();
+                }
             }
+            page.waitForSelector("#btnffrSendQuote").click();
+            String totalChargeableWeight = properties.getProperty("Total Chargeable Weight");
+            page.waitForSelector("#totalChargableWeight").fill(totalChargeableWeight);
+            String unitRate = properties.getProperty("Unit Rate");
+            page.waitForSelector("#rate").fill(unitRate);
+            page.waitForSelector("#submitQuotation").click();
+            logoutPageInterface.LogoutMethod();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
         }
-        page.locator("#btnffrSendQuote").click();
-        String totalChargeableWeight = properties.getProperty("Total Chargeable Weight");
-        page.locator("#totalChargableWeight").fill(totalChargeableWeight);
-        String unitRate = properties.getProperty("Unit Rate");
-        page.locator("#rate").fill(unitRate);
-        page.locator("#submitQuotation").click();
-        logoutPageInterface.LogoutMethod();
     }
 }

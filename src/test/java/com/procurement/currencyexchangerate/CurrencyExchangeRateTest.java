@@ -9,7 +9,7 @@ public class CurrencyExchangeRateTest extends BaseTest {
         try {
             currencyExchangeRate.findCurrency();
         } catch (Exception error) {
-            System.out.println(error);
+            System.out.println("What is the error: " + error.getMessage());
         }
     }
 }
