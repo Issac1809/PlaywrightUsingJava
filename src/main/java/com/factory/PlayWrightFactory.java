@@ -71,6 +71,9 @@ public class PlayWrightFactory {
             case "firefox":
                 localBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(false)));
                 break;
+            case "edge":
+                localBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setChannel("msedge").setHeadless(false)));
+                break;
             default:
                 System.out.println("--Enter Proper Browser Name--");
                 break;
