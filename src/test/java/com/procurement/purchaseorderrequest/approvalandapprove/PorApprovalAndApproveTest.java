@@ -7,6 +7,7 @@ public class PorApprovalAndApproveTest extends BaseTest {
     @Test
     public void PorApprovalAndApproveTestMethod(){
         try {
+            page.pause();
         approvalAndApprove.PorApprovalAndApproveMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
