@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 public class QuotationSubmitTest extends BaseTest {
 
-    @Test
+    @Test (groups = "requestforquotations")
     public void QuotationSubmitMethod() throws InterruptedException{
         try {
         quotationSubmit.InviteRegisteredVendor();

@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 public class TechnicalEvaluationRejectTest extends BaseTest {
 
-    @Test
+    @Test (groups = "requestforquotations")
     public void TechnicalEvaluationRejectTestMethod(){
         try {
         teReject.TechnicalEvaluationRejectMethod();

@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 public class RFQCreateTest extends BaseTest {
 
-    @Test
+    @Test (groups = "requestforquotations")
     public void RFQCreateTestMethod() throws InterruptedException {
         try {
         rfqCreate.BuyerLogin();

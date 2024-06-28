@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 public class RfqSuspendRfqEditTest extends BaseTest {
 
-    @Test
+    @Test (groups = "requestforquotations")
     public void RfqSuspendRfqEditTestMethod() throws InterruptedException {
         try {
         rfqSuspend.SuspendRfqEdit();

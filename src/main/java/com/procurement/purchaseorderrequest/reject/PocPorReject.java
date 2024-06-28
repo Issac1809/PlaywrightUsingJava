@@ -29,6 +29,7 @@ public class PocPorReject implements PorReject{
     public void PorReject() throws InterruptedException {
         try {
         List<String> matchingApprovers = porApproval.SendForApproval();
+        Thread.sleep(2000);
         for(int i = 0; i <= matchingApprovers.size(); i++){
             String approver = matchingApprovers.get(i);
             loginPageInterface.LoginMethod(approver);

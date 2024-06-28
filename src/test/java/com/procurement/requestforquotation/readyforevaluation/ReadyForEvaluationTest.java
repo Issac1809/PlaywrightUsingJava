@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 public class ReadyForEvaluationTest extends BaseTest {
 
-    @Test
+    @Test (groups = "requestforquotations")
     public void ReadyForEvaluationTestMethod(){
         try {
         readyForEvalutationInterface.ReadyForEvaluationButton();

@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 public class QuotationRequoteTest extends BaseTest {
 
-    @Test
+    @Test (groups = "requestforquotations")
     public void QuotationRequoteTestMethod() throws InterruptedException{
         try {
         quotationRequote.Requote();

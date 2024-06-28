@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 public class RegretBeforeRequoteTest extends BaseTest {
 
-    @Test
+    @Test (groups = "requestforquotations")
     public void RegretBeforeRequoteTestMethod(){
         try {
         quotationRegret.Regret();

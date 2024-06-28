@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 public class CommercialEvaluationTest extends BaseTest {
 
-    @Test
+    @Test (groups = "requestforquotations")
     public void CommercialEvaluationTestMethod(){
         try {
         commercialEvaluationInterface.CommercialEvaluationButton();
