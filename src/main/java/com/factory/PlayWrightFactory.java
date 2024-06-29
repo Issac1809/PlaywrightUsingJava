@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Properties;
 
 public class PlayWrightFactory {
@@ -134,7 +135,8 @@ public class PlayWrightFactory {
 
     public static String takeScreenshot(){
         String path = System.getProperty("user.dir") + "/screenshot/" + System.currentTimeMillis() + ".png";
-        getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
-        return path;
+        byte[] buffer = getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
+        String base64Path = Base64.getEncoder().encodeToString(buffer);
+        return base64Path;
     }
 }

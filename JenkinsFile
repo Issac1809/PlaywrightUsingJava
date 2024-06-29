@@ -1,0 +1,71 @@
+pipeline
+{
+    agent any
+
+    tools{
+    	maven 'maven' //Tool for testing --> Java
+    	msbuild 'MSBuild' //Tool for testing --> C#
+        }
+
+    stages
+    {
+        stage('Build')
+        {
+            steps
+            {
+                 git 'https://github.com/CormSquare/GePS' // Clones the specified Git repository
+                 script
+                 {
+                    bat 'msbuild /p:Configuration=Release' // Builds the C# project using MSBuild
+                 }
+            }
+            post
+            {
+                success
+                {
+                    archiveArtifacts artifacts: '**/bin/Release/*.exe', allowEmptyArchive: true // Archives the build artifacts
+                }
+            }
+        }
+
+        stage("Deploy to Test Environment"){
+            steps{
+                echo("deploy to qa") // Prints a message to the console
+                bat './deploy_to_qa.sh' // Runs a shell script to deploy to the test environment --> sh for Unix/Linux, bat for windows
+            }
+        }
+
+        stage('Build Java Automation Project') {
+                    steps {
+                        git 'https://github.com/Issac1809/PlayWright' // Clones the specified Git repository
+                        sh 'mvn clean package' // Builds the Java project using Maven
+                    }
+                    post {
+                        success {
+                            archiveArtifacts 'target/*.jar' // Archives the built JAR files
+                        }
+                    }
+                }
+
+        stage('Regression Automation Test') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_functional.xml"
+
+                }
+            }
+        }
+
+        stage('Publish Extent Report'){
+            steps{
+                     publishHTML([allowMissing: false,
+                                  alwaysLinkToLastBuild: false,
+                                  keepAll: true,
+                                  reportDir: 'build',
+                                  reportFiles: 'buildTestExecutionReport.html',
+                                  reportName: 'HTML Extent Report',
+                                  reportTitles: ''])
+            }
+        }
+    }
+}
