@@ -2,6 +2,10 @@ pipeline
 {
     agent any
 
+    properties {
+            githubProjectUrl("https://github.com/CormSquare/GePS/tree/master/GePS%20-%20YEA") // Add the GitHub project URL here
+        }
+
     tools {
     	maven 'maven' //Tool for testing --> Java
     	msbuild 'MSBuild' //Tool for testing --> C#
