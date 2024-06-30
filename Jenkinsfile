@@ -12,7 +12,7 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts artifacts: '**/bin/Release/*.exe', allowEmptyArchive: true
+                    archiveArtifacts 'target/*.jar'
                 }
             }
         }
