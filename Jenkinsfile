@@ -7,17 +7,10 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repository') {
+        stage('Build') {
             steps {
-                git url: 'https://github.com/CormSquare/GePS', branch: 'master'
-            }
-        }
-
-        stage('Build C# Project') {
-            steps {
-                script {
-                    bat 'msbuild /p:Configuration=Release'
-                }
+                git url: 'https://github.com/CormSquare/GePS.git', branch: 'master'
+                bat 'msbuild /p:Configuration=Release'
             }
             post {
                 success {
@@ -29,14 +22,14 @@ pipeline {
         stage('Deploy to Test Environment') {
             steps {
                 echo "Deploy to QA"
-                bat './deploy_to_qa.sh'
+                bat './deploy_to_qa.bat'
             }
         }
 
         stage('Regression Automation Test') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    git url: 'https://github.com/Issac1809/PlayWright', branch: 'master'
+                    git url: 'https://github.com/Issac1809/PlayWright.git', branch: 'master'
                     sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_functional.xml"
                 }
             }
