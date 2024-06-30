@@ -9,7 +9,6 @@ pipeline {
         stage('Build') {
             steps {
                 git url: 'https://github.com/CormSquare/GePS.git', branch: 'master'
-                bat 'msbuild /p:Configuration=Release'
             }
             post {
                 success {
@@ -21,7 +20,6 @@ pipeline {
         stage('Deploy to Test Environment') {
             steps {
                 echo "Deploy to QA"
-                bat './deploy_to_qa.bat'
             }
         }
 
