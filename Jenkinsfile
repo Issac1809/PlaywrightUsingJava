@@ -1,69 +1,48 @@
-pipeline
-{
+pipeline {
     agent any
 
-    properties {
-            githubProjectUrl("https://github.com/CormSquare/GePS/tree/master/GePS%20-%20YEA") // Add the GitHub project URL here
-        }
-
     tools {
-    	maven 'maven' //Tool for testing --> Java
-    	msbuild 'MSBuild' //Tool for testing --> C#
-        }
+        maven 'maven'
+        msbuild 'MSBuild'
+    }
 
-        stages {
-                stage('Clone Main Repository') {
-                    steps {
-                        git url: 'https://github.com/CormSquare/GePS', branch: 'master' // Clone the main repository
-                    }
-                }
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git url: 'https://github.com/CormSquare/GePS', branch: 'master'
+            }
+        }
 
         stage('Build C# Project') {
-                    steps {
-                        script {
-                             bat 'msbuild /p:Configuration=Release' // Build the C# project using MSBuild
-                                }
-                             }
-                            post {
-                                success {
-                                    archiveArtifacts artifacts: '**/bin/Release/*.exe', allowEmptyArchive: true // Archive the build artifacts
-                                }
-                            }
-                        }
+            steps {
+                script {
+                    bat 'msbuild /p:Configuration=Release'
+                }
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: '**/bin/Release/*.exe', allowEmptyArchive: true
+                }
+            }
+        }
 
         stage('Deploy to Test Environment') {
-                   steps {
-                       echo "Deploy to QA" // Print a message to the console
-                       bat './deploy_to_qa.sh' // Run a shell script to deploy to the test environment -> Use 'sh' for Unix/Linux
-                          }
-                       }
-
-        stage('Clone Playwright Automation Project') {
-                     steps {
-                         git url: 'https://github.com/Issac1809/PlayWright', branch: 'master' // Clone the Java automation project
-                           }
-                        }
-
-        stage('Build Playwright Automation Project') {
-              steps {
-                  sh 'mvn clean package' // Build the Java project using Maven
-                     }
-                     post {
-                           success {
-                            archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true // Archive the built JAR files
-                            }
-                         }
-                      }
+            steps {
+                echo "Deploy to QA"
+                bat './deploy_to_qa.sh'
+            }
+        }
 
         stage('Regression Automation Test') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    git url: 'https://github.com/Issac1809/PlayWright', branch: 'master'
                     sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_functional.xml"
                 }
             }
         }
 
-        stage('Publish Extent Report'){
+        stage('Publish Extent Report') {
             steps {
                 publishHTML([allowMissing: false,
                              alwaysLinkToLastBuild: false,
