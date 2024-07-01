@@ -142,7 +142,7 @@ import com.procurement.requisition.suspend.PocPrBuyerManagerSuspend;
 import com.procurement.requisition.suspend.PocPrBuyerSuspend;
 import com.procurement.workorder.create.WorkOrderCreate;
 import com.procurement.workorder.trackerstatus.WOTrackerStatus;
-import com.reports.ExtendReportListener;
+import com.reports.ExtentReportListener;
 import org.testng.ITestListener;
 import org.testng.annotations.*;
 import java.util.Properties;
@@ -465,7 +465,7 @@ public class BaseTest {
 //TODO Others
             currencyExchangeRate = new CurrencyExchangeRate(playWrightFactory, loginPageInterface, properties, logoutPageInterface);
             currencyExchangeRateTest = new CurrencyExchangeRateTest();
-            iTestListener = new ExtendReportListener();
+            iTestListener = new ExtentReportListener();
 
         } catch (Exception error) {
             System.out.println("Error :" + error);

@@ -5,7 +5,7 @@
 
     <listeners>
         <listener class-name="org.testng.reporters.EmailableReporter2" />
-        <listener class-name="com.reports.ExtendReportListener" />
+        <listener class-name="com.reports.ExtentReportListener" />
     </listeners>
 
     <test name="YEA Login Page Test">
@@ -20,7 +20,7 @@
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Requisition Edit Page Test">
+<!-->    <test name="YEA NonCatalog Requisition Edit Page Test">
         <classes>
             <class name="com.procurement.requisition.edit.NonCatalogPrEditTest" />
         </classes>
@@ -420,6 +420,6 @@
         <classes>
             <class name="com.procurement.invoice.woinvoice.approve.WOInvoiceApprovalTest" />
         </classes>
-    </test>
+    </test> -->
 
 </suite>

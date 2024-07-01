@@ -10,21 +10,22 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.factory.PlayWrightFactory;
+import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import static com.factory.PlayWrightFactory.takeScreenshot;
 
-public class ExtendReportListener implements ITestListener {
+public class ExtentReportListener implements ITestListener {
 
     PlayWrightFactory playWrightFactory;
-    public String OUTPUT_FOLDER = "./build";
+    public String OUTPUT_FOLDER = "./build/";
     public String FILE_NAME = "TestExecutionReport.html";
     public ExtentReports extent = init();
     public ThreadLocal<ExtentTest> test = new ThreadLocal<>();
     public ExtentReports extentReports;
 
 //TODO Constructor
-    public ExtendReportListener(){
+    public ExtentReportListener(){
     }
 
     public ExtentReports init() {
@@ -48,6 +49,18 @@ public class ExtendReportListener implements ITestListener {
         extentReports.setSystemInfo("Team", "QA");
         extentReports.setSystemInfo("Customer Name", "YEA");
         return extentReports;
+    }
+
+    @Override
+    public synchronized void onStart(ITestContext context) {
+        System.out.println("Test Suite started!");
+    }
+
+    @Override
+    public synchronized void onFinish(ITestContext context) {
+        System.out.println(("Test Suite is ending!"));
+        extent.flush();
+        test.remove();
     }
 
     @Override
