@@ -38,7 +38,7 @@ pipeline {
                              alwaysLinkToLastBuild: false,
                              keepAll: true,
                              reportDir: 'build',
-                             reportFiles: 'buildTestExecutionReport.html',
+                             reportFiles: 'TestExecutionReport.html',
                              reportName: 'HTML Extent Report',
                              reportTitles: ''])
             }

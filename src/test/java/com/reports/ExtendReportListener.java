@@ -17,7 +17,7 @@ import static com.factory.PlayWrightFactory.takeScreenshot;
 public class ExtendReportListener implements ITestListener {
 
     PlayWrightFactory playWrightFactory;
-    public String OUTPUT_FOLDER = "./test-output/YEA Playwright Suite/build";
+    public String OUTPUT_FOLDER = "./test-output/build";
     public String FILE_NAME = "TestExecutionReport.html";
     public ExtentReports extent = init();
     public ThreadLocal<ExtentTest> test = new ThreadLocal<>();
@@ -45,7 +45,7 @@ public class ExtendReportListener implements ITestListener {
         extentReports.setSystemInfo("System", "Windows");
         extentReports.setSystemInfo("Author", "Issac");
         extentReports.setSystemInfo("Build#", "0.1");
-        extentReports.setSystemInfo("Team", "Testing");
+        extentReports.setSystemInfo("Team", "QA");
         extentReports.setSystemInfo("Customer Name", "YEA");
         return extentReports;
     }
