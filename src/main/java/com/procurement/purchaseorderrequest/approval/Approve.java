@@ -35,7 +35,7 @@ public class Approve implements PorApprove {
             if (approverMailId.endsWith("@cormsquare.com") || approverMailId.endsWith("@sharklasers.com") || approverMailId.endsWith("@yokogawa.com")) {
                 loginPageInterface.LoginMethod(approverMailId, page);
 //TODO Approver Approves POR
-                page.waitForSelector("//span[contains(text(), 'My Approvals')]").click();
+                page.locator("//span[contains(text(), 'My Approvals')]").click();
                 String title = properties.getProperty("Title");
                 page.locator("//span[contains(text(), '" + title + "')]").first().click();
                 Locator addApprovers = page.locator("#btnAddApprovers");
@@ -76,18 +76,18 @@ public class Approve implements PorApprove {
                             getGroupD.first().click();
                             groupIds.add(groupDId);
                         }
-                        page.waitForSelector("#btnSendUserFromPM").click();
-                        page.waitForSelector("#btnApprove").click();
-                        page.waitForSelector(".bootbox-accept").click();
+                        page.locator("#btnSendUserFromPM").click();
+                        page.locator("#btnApprove").click();
+                        page.locator(".bootbox-accept").click();
                         logoutPageInterface.LogoutMethod();
                     } else if (!projectManagerPopUp.isVisible()) {
-                        page.waitForSelector("#btnApprove").click();
-                        page.waitForSelector(".bootbox-accept").click();
+                        page.locator("#btnApprove").click();
+                        page.locator(".bootbox-accept").click();
                         logoutPageInterface.LogoutMethod();
                     }
                 } else {
-                    page.waitForSelector("#btnApprove").click();
-                    page.waitForSelector(".bootbox-accept").click();
+                    page.locator("#btnApprove").click();
+                    page.locator(".bootbox-accept").click();
                     logoutPageInterface.LogoutMethod();
                 }
             }
@@ -95,11 +95,11 @@ public class Approve implements PorApprove {
             if (approverMailId.startsWith("PR Approver Group")) {
                 for (int j = 0; j <= size; j++) {
                     loginPageInterface.LoginMethod(groupIds.get(j), page);
-                    page.waitForSelector("//span[contains(text(), 'My Approvals')]").click();
+                    page.locator("//span[contains(text(), 'My Approvals')]").click();
                     String title = properties.getProperty("Title");
                     page.locator("//span[contains(text(), '" + title + "')]").first().click();
-                    page.waitForSelector("#btnApprove").click();
-                    page.waitForSelector(".bootbox-accept").click();
+                    page.locator("#btnApprove").click();
+                    page.locator(".bootbox-accept").click();
                     logoutPageInterface.LogoutMethod();
                 }
                 i += size;

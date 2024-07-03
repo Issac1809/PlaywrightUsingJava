@@ -26,19 +26,19 @@ public class RegisteredVendorQuotationRequote implements QuotationRequote {
     public void Requote() throws InterruptedException {
         try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.waitForSelector("//*[contains(text(), 'Request For Quotations')]").click();
+        page.locator("//*[contains(text(), 'Request For Quotations')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
-        page.waitForSelector("//a[contains(text(), ' Requote')]").click();
-        page.waitForSelector(".bootbox-accept").click();
-        page.waitForSelector("#vendorSendMailBtnId").click();
+        page.locator("//a[contains(text(), ' Requote')]").click();
+        page.locator(".bootbox-accept").click();
+        page.locator("#vendorSendMailBtnId").click();
         logoutPageInterface.LogoutMethod();
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
         page.locator("//span[contains(text(), '" + title + "')]").first().click();
-        page.waitForSelector("#btnEditQuote").click();
+        page.locator("#btnEditQuote").click();
         Thread.sleep(2000);
-        page.waitForSelector("#btnUpdate").click();
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#btnUpdate").click();
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

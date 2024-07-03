@@ -31,9 +31,9 @@ public class PocPrBuyerSuspend implements PrSuspend {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
         String title = properties.getProperty("Title");
         page.locator("//*[contains(text(), '" + title + "')]").first().click();
-        page.waitForSelector("#btnSuspend").click();
-        page.waitForSelector(".bootbox-input").fill("Buyer Suspended");
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#btnSuspend").click();
+        page.locator(".bootbox-input").fill("Buyer Suspended");
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         prEdit.PrBuyerSuspendEdit();
         } catch (Exception error) {

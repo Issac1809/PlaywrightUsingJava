@@ -27,13 +27,13 @@ public class PorInspectPO implements PorInspectPoInterface {
     public void InspectCreatePO(){
         try {
         loginPageInterface.LoginMethod(properties.getProperty("AdminId"));
-        page.waitForSelector("//*[contains(text(), 'Purchase Order Requests')]").click();
+        page.locator("//*[contains(text(), 'Purchase Order Requests')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(),'" + title + "')]").first().click();
         Locator createPOButton = page.locator("#createPOContainer");
         createPOButton.evaluate("(element) => { element.style.display = 'block'; }");
         createPOButton.click();
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

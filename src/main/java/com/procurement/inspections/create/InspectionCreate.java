@@ -27,7 +27,7 @@ public class InspectionCreate implements InspectionCreateInterface {
     public void VendorInspectionCreate(){
         try {
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
-        page.waitForSelector("//*[contains(text(), 'Order Schedules')]").click();
+        page.locator("//*[contains(text(), 'Order Schedules')]").click();
         String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
         for(String tr : containerList){
@@ -35,8 +35,8 @@ public class InspectionCreate implements InspectionCreateInterface {
                 page.locator(".btn-link").first().click();
             }
         }
-        page.waitForSelector("#btnSendForInspection").click();
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#btnSendForInspection").click();
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

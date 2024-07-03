@@ -35,7 +35,7 @@ public class PocRfqCreate implements RfqCreate {
         try {
         String title = properties.getProperty("Title");
         page.locator("//*[contains(text(),'"+ title +"')]").first().click();
-        page.waitForSelector("#btnCreateRFQ").click();
+        page.locator("#btnCreateRFQ").click();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -43,7 +43,7 @@ public class PocRfqCreate implements RfqCreate {
 
     public void RfQNotes() {
         try {
-        page.waitForSelector("#notes").fill(properties.getProperty("RfQNotes"));
+        page.locator("#notes").fill(properties.getProperty("RfQNotes"));
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -52,8 +52,8 @@ public class PocRfqCreate implements RfqCreate {
     public void RFQCreate() throws InterruptedException {
         try {
         Thread.sleep(1000);
-        page.waitForSelector("#btnCreate").click();
-        page.waitForSelector("//button[contains(text(),'Yes')]").click();
+        page.locator("#btnCreate").click();
+        page.locator("//button[contains(text(),'Yes')]").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

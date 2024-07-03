@@ -27,7 +27,7 @@ public class FreightForwarderInvite implements FFRInvite {
     public void InviteMethod() {
         try {
             loginPageInterface.LoginMethod(properties.getProperty("LogisticsManager"));
-            page.waitForSelector("//*[contains(text(), 'Dispatch Notes')]").click();
+            page.locator("//*[contains(text(), 'Dispatch Notes')]").click();
             String poReferenceId = properties.getProperty("PoReferenceId");
             List<String> containerList = page.locator("#listContainer tr td").allTextContents();
             for (String tr : containerList) {
@@ -35,13 +35,13 @@ public class FreightForwarderInvite implements FFRInvite {
                     page.locator(".btn-link").first().click();
                 }
             }
-            page.waitForSelector("#addFrightForwordVendors").click();
-            page.waitForSelector("#select2-ffvendorId-container").click();
+            page.locator("#addFrightForwordVendors").click();
+            page.locator("#select2-ffvendorId-container").click();
             String freightVendor = properties.getProperty("Vendor");
-            page.waitForSelector(".select2-search__field").fill(freightVendor);
-            page.waitForSelector("//li[contains(text(), 'IND Vendor')]").click();
-            page.waitForSelector("#saveFrightForworderVendor").click();
-            page.waitForSelector("#vendorSendMailBtnId").click();
+            page.locator(".select2-search__field").fill(freightVendor);
+            page.locator("//li[contains(text(), 'IND Vendor')]").click();
+            page.locator("#saveFrightForworderVendor").click();
+            page.locator("#vendorSendMailBtnId").click();
             logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

@@ -27,7 +27,7 @@ public class PocDnEdit implements DnEdit {
     public void PocDnEditMethod() {
         try {
             loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
-            page.waitForSelector("//*[contains(text(), 'Dispatch Notes')]").click();
+            page.locator("//*[contains(text(), 'Dispatch Notes')]").click();
             String poReferenceId = properties.getProperty("PoReferenceId");
             List<String> containerList = page.locator("#listContainer tr td").allTextContents();
             for (String tr : containerList) {
@@ -35,9 +35,9 @@ public class PocDnEdit implements DnEdit {
                     page.locator(".btn-link").first().click();
                 }
             }
-            page.waitForSelector("#btnEdit").click();
-            page.waitForSelector("#btnUpdate").click();
-            page.waitForSelector(".bootbox-accept").click();
+            page.locator("#btnEdit").click();
+            page.locator("#btnUpdate").click();
+            page.locator(".bootbox-accept").click();
             logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

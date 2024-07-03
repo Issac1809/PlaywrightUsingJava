@@ -26,13 +26,13 @@ public class OrderScheduleReject implements OSReject {
     public void OSRejectMethod(){
         try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.waitForSelector("//*[contains(text(), 'Purchase Orders')]").click();
+        page.locator("//*[contains(text(), 'Purchase Orders')]").click();
         String title = properties.getProperty("Title");
         page.locator("//*[contains(text(), '" + title + "')]").first().click();
-        page.waitForSelector("#BtnToApproveOS").click();
-        page.waitForSelector("#btnReject").click();
-        page.waitForSelector(".bootbox-input").fill("Rejected");
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#BtnToApproveOS").click();
+        page.locator("#btnReject").click();
+        page.locator(".bootbox-input").fill("Rejected");
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

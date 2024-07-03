@@ -27,7 +27,7 @@ public class POInvoiceRevert implements PoInvRevert {
     public void POInvoiceRevertMethod(){
         try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.waitForSelector(".nav-link   active").click();
+        page.locator(".nav-link   active").click();
         String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> invoiceContainer = page.locator("#listContainer tr td").allTextContents();
         for(String tr : invoiceContainer){
@@ -35,9 +35,9 @@ public class POInvoiceRevert implements PoInvRevert {
                 page.locator(".btn btn-sm btn-link p-0 text-primary").first().click();
             }
         }
-        page.waitForSelector("#btnToRevertInvocie").click();
-        page.waitForSelector(".bootbox-input").fill("Revert");
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#btnToRevertInvocie").click();
+        page.locator(".bootbox-input").fill("Revert");
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

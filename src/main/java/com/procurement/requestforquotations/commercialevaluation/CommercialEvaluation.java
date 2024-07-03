@@ -27,16 +27,16 @@ public class CommercialEvaluation implements CommercialEvaluationInterface {
     public void CommercialEvaluationButton(){
         try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.waitForSelector("//*[contains(text(), 'Request For Quotations')]").click();
+        page.locator("//*[contains(text(), 'Request For Quotations')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
-        page.waitForSelector("#btnCreateCE").click();
+        page.locator("#btnCreateCE").click();
         Locator selectionStatus = page.locator("select[onchange='isSelect(event)']");
         selectionStatus.click();
         selectionStatus.waitFor();
         selectionStatus.selectOption("Yes");
-        page.waitForSelector("#btnSubmitCE").click();
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#btnSubmitCE").click();
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

@@ -30,9 +30,9 @@ public class CurrencyExchangeRate {
         try {
             page = playWrightFactory.initializeBrowser(properties);
             loginPageInterface.LoginMethod(properties.getProperty("AdminId"), page);
-            page.waitForSelector("//*[contains(text(), 'Settings')]").click();
+            page.locator("//*[contains(text(), 'Settings')]").click();
 //TODO CurrencyExchangeRate
-            page.waitForSelector("//*[contains(text(), 'Currency Exchange Rate')]").click();
+            page.locator("//*[contains(text(), 'Currency Exchange Rate')]").click();
 //TODO SearchBoxCurrencyCode
             String fromCode = properties.getProperty("InvoiceCurrencyCode");
             String invoiceCurrencyCode = fromCode + " " + "SGD";

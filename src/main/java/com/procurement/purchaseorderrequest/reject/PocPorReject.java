@@ -35,12 +35,12 @@ public class PocPorReject implements PorReject{
             loginPageInterface.LoginMethod(approver);
             break;
         }
-        page.waitForSelector("//*[contains(text(), 'Purchase Order Requests')]").click();
+        page.locator("//*[contains(text(), 'Purchase Order Requests')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
-        page.waitForSelector("#btnReject").click();
-        page.waitForSelector(".bootbox-input").fill("Updated");
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#btnReject").click();
+        page.locator(".bootbox-input").fill("Updated");
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         porEdit.PorEditMethod();
         } catch (Exception error) {

@@ -28,16 +28,16 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
     public void InviteRegisteredVendor(){
         try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.waitForSelector("//*[contains(text(), 'Request For Quotations')]").click();
+        page.locator("//*[contains(text(), 'Request For Quotations')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
-        page.waitForSelector("#addRequestForQuotationVendors").click();
-        page.waitForSelector("#select2-vendorId-container").click();
+        page.locator("#addRequestForQuotationVendors").click();
+        page.locator("#select2-vendorId-container").click();
         String vendorId = properties.getProperty("Vendor");
-        page.waitForSelector(".select2-search__field").fill(vendorId);
+        page.locator(".select2-search__field").fill(vendorId);
         page.locator("//li[contains(text(), '"+ vendorId +"')]").first().click();
-        page.waitForSelector("#saveRequestForQuotationVendor").click();
-        page.waitForSelector("#vendorSendMailBtnId").click();
+        page.locator("#saveRequestForQuotationVendor").click();
+        page.locator("#vendorSendMailBtnId").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
@@ -49,9 +49,9 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '" + title + "')]").first().click();
-        page.waitForSelector("#btnSendQuote").click();
-        page.waitForSelector("#incotermLocation").fill(properties.getProperty("Incoterm"));
-        page.waitForSelector("#quotationReferenceNumber").fill(properties.getProperty("QuotationReferenceNumber"));
+        page.locator("#btnSendQuote").click();
+        page.locator("#incotermLocation").fill(properties.getProperty("Incoterm"));
+        page.locator("#quotationReferenceNumber").fill(properties.getProperty("QuotationReferenceNumber"));
         Thread.sleep(2000);
         Locator validityDate = page.locator("#dates");
         validityDate.click();
@@ -80,7 +80,7 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
 
     public void LiquidatedDamages(){
         try {
-        page.waitForSelector("#liquidatedComplyId").click();
+        page.locator("#liquidatedComplyId").click();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -88,7 +88,7 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
 
     public void RoHSCompliance(){
         try {
-        page.waitForSelector("#rohsComplyId").click();
+        page.locator("#rohsComplyId").click();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -96,7 +96,7 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
 
     public void WarrantyRequirements(){
         try {
-        page.waitForSelector("#warrantyRequirementsComplyId").click();
+        page.locator("#warrantyRequirementsComplyId").click();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -105,11 +105,11 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
     public void QuotationItems(){
         try {
         String hsCode = Integer.toString(Integer.parseInt(properties.getProperty("HSCode")));
-        page.waitForSelector("#hsCode-1").fill(hsCode);
-        page.waitForSelector("#make-1").fill(properties.getProperty("Make"));
-        page.waitForSelector("#model-1").fill(properties.getProperty("Model"));
-        page.waitForSelector("#partNumber-1").fill(properties.getProperty("PartNumber"));
-        page.waitForSelector("#countryOfOrigin-1").fill(properties.getProperty("CountryOfOrigin"));
+        page.locator("#hsCode-1").fill(hsCode);
+        page.locator("#make-1").fill(properties.getProperty("Make"));
+        page.locator("#model-1").fill(properties.getProperty("Model"));
+        page.locator("#partNumber-1").fill(properties.getProperty("PartNumber"));
+        page.locator("#countryOfOrigin-1").fill(properties.getProperty("CountryOfOrigin"));
         String rate = Integer.toString(Integer.parseInt(properties.getProperty("Rate")));
         Locator getRateValue = page.locator("#rate-1");
         getRateValue.clear();
@@ -119,8 +119,8 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
         getDiscount.clear();
         getDiscount.fill(discount);
         String leadTime = Integer.toString(Integer.parseInt(properties.getProperty("LeadTime")));
-        page.waitForSelector("#leadTime-1").fill(leadTime);
-        page.waitForSelector("#notes-1").fill(properties.getProperty("QuotationNotes"));
+        page.locator("#leadTime-1").fill(leadTime);
+        page.locator("#notes-1").fill(properties.getProperty("QuotationNotes"));
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -129,7 +129,7 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
     public void Gst(){
         try {
         String gst = Integer.toString(Integer.parseInt(properties.getProperty("Discount")));
-        page.waitForSelector("#gstId").fill(gst);
+        page.locator("#gstId").fill(gst);
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -138,19 +138,19 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
     public void QuotationAttachments() {
         try {
 //TODO Technical Attachment
-        page.waitForSelector("#attachFile").click();
+        page.locator("#attachFile").click();
         Locator TechnicalFile = page.locator("#formFilePreupload");
         TechnicalFile.setInputFiles(Paths.get("D://YokogawaAsiaPrivateLimited//Downloads//Technical Documents.xlsx"));
-        page.waitForSelector("#select2-attachmentTypeId-container").click();
-        page.waitForSelector("//li[contains(text(), 'Technical')]").click();
-        page.waitForSelector("#attachmentSaveId").click();
+        page.locator("#select2-attachmentTypeId-container").click();
+        page.locator("//li[contains(text(), 'Technical')]").click();
+        page.locator("#attachmentSaveId").click();
 //TODO Commercial Attachment
-        page.waitForSelector("#attachFile").click();
+        page.locator("#attachFile").click();
         Locator CommercialFile = page.locator("#formFilePreupload");
         CommercialFile.setInputFiles(Paths.get("D://YokogawaAsiaPrivateLimited//Downloads//Commercial Documents.xlsx"));
-        page.waitForSelector("#select2-attachmentTypeId-container").click();
-        page.waitForSelector("//li[contains(text(), 'Commercial')]").click();
-        page.waitForSelector("#attachmentSaveId").click();
+        page.locator("#select2-attachmentTypeId-container").click();
+        page.locator("//li[contains(text(), 'Commercial')]").click();
+        page.locator("#attachmentSaveId").click();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -158,8 +158,8 @@ public class RegisteredVendorQuotationSubmit implements QuotationSubmit {
 
     public void QuotationSubmitButton(){
         try {
-        page.waitForSelector("#btnCreate").click();
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#btnCreate").click();
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

@@ -67,7 +67,7 @@ public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
 
     public void Project() throws InterruptedException {
         try {
-        page.waitForSelector("#select2-projectId-container").click();
+        page.locator("#select2-projectId-container").click();
         page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("Project"));
         Locator getProject = page.locator("//li[contains(text(),'" + properties.getProperty("Project") + "')]");
         getProject.click();
@@ -79,7 +79,7 @@ public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
 
     public void WBS() {
         try {
-        page.waitForSelector("#select2-wbsId-container").click();
+        page.locator("#select2-wbsId-container").click();
         page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("Wbs"));
         Locator getWbs = page.locator("//li[contains(text(),'" + properties.getProperty("Wbs") + "')]");
         getWbs.click();
@@ -90,7 +90,7 @@ public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
 
     public void Incoterm() {
         try {
-        page.waitForSelector("#select2-incoterm-container").click();
+        page.locator("#select2-incoterm-container").click();
         page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("Incoterm"));
         Locator getIncoterm = page.locator("//li[contains(text(),'" + properties.getProperty("Incoterm") + "')]");
         getIncoterm.click();
@@ -101,7 +101,7 @@ public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
 
     public void ShippingAddress() {
         try {
-        page.waitForSelector("#select2-shippingaddressId-container").click();
+        page.locator("#select2-shippingaddressId-container").click();
         page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("C2400000 - Yokogawa")).click();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
@@ -154,7 +154,7 @@ public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
 
     public void BuyerManager(){
         try {
-        page.waitForSelector("#select2-buyerManagerId-container").click();
+        page.locator("#select2-buyerManagerId-container").click();
         page.getByRole(AriaRole.SEARCHBOX).fill(properties.getProperty("BuyerManager"));
         Locator getBuyerManager = page.locator("//li[contains(text(),'" + properties.getProperty("BuyerManager") + "')]");
         getBuyerManager.click();
@@ -216,7 +216,7 @@ public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
 
     public void InspectionRequired() {
         try {
-        page.waitForSelector("#inspectrequired").check();
+        page.locator("#inspectrequired").check();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -226,9 +226,9 @@ public class PocNonCatalogPrCreate implements PrCreateNonCatalog {
         try {
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add line Requisition Items")).click();
 //TODO Items
-        page.waitForSelector("#select2-itemid-container").click();
+        page.locator("#select2-itemid-container").click();
         String itemName = properties.getProperty("Item");
-        page.waitForSelector(".select2-search__field").fill(itemName);
+        page.locator(".select2-search__field").fill(itemName);
         Locator getItem = page.locator("//li[contains(text(),'" + itemName + "')]").first();
         getItem.click();
 //TODO Quantity

@@ -30,7 +30,7 @@ public class POInvoiceEdit implements PoInvEdit {
     public void POInvoiceEditMethod(){
         try {
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
-        page.waitForSelector("//*[contains(text(),  'Invoices')]").click();
+        page.locator("//*[contains(text(),  'Invoices')]").click();
         String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> invoiceContainer = page.locator("#listContainer tr td").allTextContents();
         for(String tr : invoiceContainer){
@@ -38,9 +38,9 @@ public class POInvoiceEdit implements PoInvEdit {
                 page.locator(".btn btn-sm btn-link p-0 text-primary").first().click();
             }
         }
-        page.waitForSelector("#btnEdit").click();
-        page.waitForSelector("#btnCreate").click();
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#btnEdit").click();
+        page.locator("#btnCreate").click();
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

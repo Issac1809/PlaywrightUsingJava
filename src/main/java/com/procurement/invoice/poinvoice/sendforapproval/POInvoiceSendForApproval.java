@@ -27,7 +27,7 @@ public class POInvoiceSendForApproval implements POSendForApprovalInterface {
     public void SendForApproval(){
         try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.waitForSelector(".nav-link   active").click();
+        page.locator(".nav-link   active").click();
         String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> invoiceTable = page.locator("#listContainer tr td").allTextContents();
         for (String tr : invoiceTable){
@@ -35,8 +35,8 @@ public class POInvoiceSendForApproval implements POSendForApprovalInterface {
                 page.locator(".btn btn-sm btn-link p-0 text-primary").first().click();
             }
         }
-        page.waitForSelector("#btnSendApproval").click();
-        page.waitForSelector(".btn btn-primary bootbox-accept").click();
+        page.locator("#btnSendApproval").click();
+        page.locator(".btn btn-primary bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

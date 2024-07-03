@@ -27,11 +27,11 @@ public class ReadyForEvaluation implements ReadyForEvalutationInterface {
     public void ReadyForEvaluationButton(){
         try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.waitForSelector("//*[contains(text(), 'Request For Quotations')]").click();
+        page.locator("//*[contains(text(), 'Request For Quotations')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
-        page.waitForSelector("#btnReadyForEvalution").click();
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#btnReadyForEvalution").click();
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

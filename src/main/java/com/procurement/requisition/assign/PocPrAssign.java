@@ -38,11 +38,11 @@ public class PocPrAssign implements PrAssign {
         String buyerMailId = properties.getProperty("Buyer");
         page.locator("//*[contains(text(), '"+ title +"')]").first().click();
 //TODO Assign Buyer
-        page.waitForSelector("#btnAssignUser").click();
-        page.waitForSelector("#select2-bgUser-container").click();
+        page.locator("#btnAssignUser").click();
+        page.locator("#select2-bgUser-container").click();
         page.getByRole(AriaRole.SEARCHBOX).fill(buyerMailId);
         page.locator("//li[contains(text(),'"+ buyerMailId +"')]").first().click();
-        page.waitForSelector("#saveBuyerUser").click();
+        page.locator("#saveBuyerUser").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

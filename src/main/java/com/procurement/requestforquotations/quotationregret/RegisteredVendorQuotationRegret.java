@@ -32,9 +32,9 @@ public class RegisteredVendorQuotationRegret implements QuotationRegret {
         loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '" + title + "')]").first().click();
-        page.waitForSelector("#btnRegret").click();
-        page.waitForSelector(".bootbox-input").fill("Regret");
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#btnRegret").click();
+        page.locator(".bootbox-input").fill("Regret");
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

@@ -392,7 +392,7 @@ public class BaseTest {
             dnReturnTest = new DnReturnTest();
             dnCancel = new PocDnCancel(loginPageInterface, properties, page, logoutPageInterface, dispatchNoteCreateInterface);
             dnCanceltest = new DnCancelTest();
-            dispatchNotesAssignInterface = new DispatchNotesAssign(loginPageInterface, properties, page, logoutPageInterface);
+            dispatchNotesAssignInterface = new DispatchNotesAssign(loginPageInterface, properties, page, logoutPageInterface, playWrightFactory);
             dispatchNotesAssignTest = new DispatchNotesAssignTest();
 
 //TODO Freight Forwarder Requests

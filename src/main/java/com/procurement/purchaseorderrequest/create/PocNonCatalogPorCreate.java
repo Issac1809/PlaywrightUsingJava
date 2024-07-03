@@ -26,7 +26,7 @@ public class PocNonCatalogPorCreate implements PorCreateNonCatalog {
     public void BuyerPORCreate() {
         try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.waitForSelector("//*[contains(text(), 'Request For Quotations')]").click();
+        page.locator("//*[contains(text(), 'Request For Quotations')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
         page.locator("//a[contains(text(),' Create POR ')]").first().click();
@@ -37,7 +37,7 @@ public class PocNonCatalogPorCreate implements PorCreateNonCatalog {
 
     public void Justification(){
         try {
-        page.waitForSelector("#below5L").click();
+        page.locator("#below5L").click();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -47,7 +47,7 @@ public class PocNonCatalogPorCreate implements PorCreateNonCatalog {
         try {
         page.getByText("-- Select Tax Codes --").last().click();
         String taxCode = properties.getProperty("TaxCode");
-        page.waitForSelector("//li[contains(text(),'"+ taxCode +"')]").click();
+        page.locator("//li[contains(text(),'"+ taxCode +"')]").click();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -55,7 +55,7 @@ public class PocNonCatalogPorCreate implements PorCreateNonCatalog {
 
     public void PORNotes() {
         try {
-        page.waitForSelector("#notes").fill(properties.getProperty("PorNotes"));
+        page.locator("#notes").fill(properties.getProperty("PorNotes"));
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -63,8 +63,8 @@ public class PocNonCatalogPorCreate implements PorCreateNonCatalog {
 
     public void PORCreate(){
         try {
-        page.waitForSelector("#btnCreate").click();
-        page.waitForSelector("//button[contains(text(),'Yes')]").click();
+        page.locator("#btnCreate").click();
+        page.locator("//button[contains(text(),'Yes')]").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

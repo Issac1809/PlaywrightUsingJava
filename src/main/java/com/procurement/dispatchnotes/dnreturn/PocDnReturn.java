@@ -30,7 +30,7 @@ public class PocDnReturn implements DnReturn {
     public void PocDnReturnMethod() {
         try {
             loginPageInterface.LoginMethod(properties.getProperty("LogisticsManager"));
-            page.waitForSelector("//*[contains(text(), 'Dispatch Notes')]").click();
+            page.locator("//*[contains(text(), 'Dispatch Notes')]").click();
             String poReferenceId = properties.getProperty("PoReferenceId");
             List<String> containerList = page.locator("#listContainer tr td").allTextContents();
             for (String tr : containerList) {
@@ -38,10 +38,10 @@ public class PocDnReturn implements DnReturn {
                     page.locator(".btn-link").first().click();
                 }
             }
-            page.waitForSelector("#dropdownMenuButton").click();
-            page.waitForSelector("#btnToReturn").click();
-            page.waitForSelector(".bootbox-input").fill("Returned");
-            page.waitForSelector(".bootbox-accept").click();
+            page.locator("#dropdownMenuButton").click();
+            page.locator("#btnToReturn").click();
+            page.locator(".bootbox-input").fill("Returned");
+            page.locator(".bootbox-accept").click();
             logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

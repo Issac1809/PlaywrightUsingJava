@@ -26,11 +26,11 @@ public class BuyerPurchaseOrder implements PurchaseOrderInterface {
     public void SendForVendor(){
         try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.waitForSelector("//*[contains(text(), 'Purchase Orders')]").click();
+        page.locator("//*[contains(text(), 'Purchase Orders')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
-        page.waitForSelector("#btnSendPO").click();
-        page.waitForSelector("#vendorSendMailBtnId").click();
+        page.locator("#btnSendPO").click();
+        page.locator("#vendorSendMailBtnId").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

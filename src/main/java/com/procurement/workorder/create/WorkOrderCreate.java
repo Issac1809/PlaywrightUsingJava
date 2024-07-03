@@ -28,7 +28,7 @@ public class WorkOrderCreate implements WorkOrderCreateInterface {
     public void WOCreate() {
         try {
         loginPageInterface.LoginMethod(properties.getProperty("LogisticsManager"));
-        page.waitForSelector("//*[contains(text(), 'Dispatch Notes')]").click();
+        page.locator("//*[contains(text(), 'Dispatch Notes')]").click();
         String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
         for(String tr : containerList){
@@ -36,21 +36,21 @@ public class WorkOrderCreate implements WorkOrderCreateInterface {
                 page.locator(".btn-link").first().click();
             }
         }
-        page.waitForSelector("#dnActionDropdown").click();
-        page.waitForSelector("#btnToCreateWorkOrder").click();
+        page.locator("#dnActionDropdown").click();
+        page.locator("#btnToCreateWorkOrder").click();
         page.locator("#select2-freightForwarderId-container").first().click();
         String vendorId = properties.getProperty("Vendor");
-        page.waitForSelector(".select2-search__field").fill(vendorId);
+        page.locator(".select2-search__field").fill(vendorId);
         page.locator("//li[contains(text(), '" + vendorId + "')]").first().click();
-        page.waitForSelector("#select2-priority-container").click();
-        page.waitForSelector("//li[contains(text(), 'High')]").click();
+        page.locator("#select2-priority-container").click();
+        page.locator("//li[contains(text(), 'High')]").click();
         page.getByPlaceholder("Select Date").last().click();
         Locator today = page.locator("//span[@class='flatpickr-day today']").first();
         today.click();
-        page.waitForSelector("#destinationTermLocationId").fill("India");
-        page.waitForSelector("//*[contains(text(), 'Proceed')]").click();
-        page.waitForSelector("#vendorSendMailBtnId").click();
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#destinationTermLocationId").fill("India");
+        page.locator("//*[contains(text(), 'Proceed')]").click();
+        page.locator("#vendorSendMailBtnId").click();
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

@@ -33,10 +33,10 @@ public class PocPrEdit implements PrEdit {
         loginPageInterface.LoginMethod();
         String title = properties.getProperty("Title");
         page.locator("//*[contains(text(), '" + title + "')]").first().click();
-        page.waitForSelector("#btnEdit").click();
+        page.locator("#btnEdit").click();
         Thread.sleep(2000);
-        page.waitForSelector("#btnUpdate").click();
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#btnUpdate").click();
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

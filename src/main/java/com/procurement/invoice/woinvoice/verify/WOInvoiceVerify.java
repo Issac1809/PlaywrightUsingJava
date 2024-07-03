@@ -30,7 +30,7 @@ public class WOInvoiceVerify implements WoInvVerify {
     public void WOInvoiceVerifyMethod(){
         try {
         loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.waitForSelector(".nav-link   active").click();
+        page.locator(".nav-link   active").click();
         String woReferenceId = properties.getProperty("WorkOrderReferenceId");
         List<String> invoiceTable = page.locator("#listContainer tr td").allTextContents();
         for (String tr : invoiceTable){
@@ -38,9 +38,9 @@ public class WOInvoiceVerify implements WoInvVerify {
                 page.locator(".btn btn-sm btn-link p-0 text-primary").first().click();
             }
         }
-        page.waitForSelector("#btnAccept").click();
-        page.waitForSelector(".bootbox-input").fill("Verified");
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#btnAccept").click();
+        page.locator(".bootbox-input").fill("Verified");
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

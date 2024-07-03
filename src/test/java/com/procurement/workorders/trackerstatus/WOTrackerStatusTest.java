@@ -7,7 +7,7 @@ public class WOTrackerStatusTest extends BaseTest {
     @Test
     public void WOTrackerStatusTestMethod(){
         try {
-        workOrderCreateInterface.WOCreate();
+        woTrackerStatusInterface.VendorTrackerStatus();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }

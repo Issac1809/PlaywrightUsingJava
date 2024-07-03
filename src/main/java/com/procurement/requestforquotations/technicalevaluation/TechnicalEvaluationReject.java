@@ -26,23 +26,23 @@ public class TechnicalEvaluationReject implements TEReject {
     public void TechnicalEvaluationRejectMethod(){
         try {
         loginPageInterface.LoginMethod();
-        page.waitForSelector("//*[contains(text(), 'Request For Quotations')]").click();
+        page.locator("//*[contains(text(), 'Request For Quotations')]").click();
         String title = properties.getProperty("Title");
         page.locator("//span[contains(text(), '"+ title +"')]").first().click();
-        page.waitForSelector("#btnCreateTE").click();
-        page.waitForSelector(".border-primary").click();
-        page.waitForSelector("#btnCreate").click();
-        page.waitForSelector(".bootbox-accept").click();
-        page.waitForSelector("#btnSendApproval").click();
+        page.locator("#btnCreateTE").click();
+        page.locator(".border-primary").click();
+        page.locator("#btnCreate").click();
+        page.locator(".bootbox-accept").click();
+        page.locator("#btnSendApproval").click();
         page.locator(".select2-selection--single").first().click();
         String teApprover = properties.getProperty("TEApprover");
-        page.waitForSelector(".select2-search__field").fill(teApprover);
-        page.waitForSelector("//li[contains(text(), '"+ teApprover +"')]").click();
-        page.waitForSelector("#saveApproverAssign").click();
-        page.waitForSelector(".bootbox-accept").click();
-        page.waitForSelector("#btnReject").click();
-        page.waitForSelector(".bootbox-input").fill("TE Rejected");
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator(".select2-search__field").fill(teApprover);
+        page.locator("//li[contains(text(), '"+ teApprover +"')]").click();
+        page.locator("#saveApproverAssign").click();
+        page.locator(".bootbox-accept").click();
+        page.locator("#btnReject").click();
+        page.locator(".bootbox-input").fill("TE Rejected");
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

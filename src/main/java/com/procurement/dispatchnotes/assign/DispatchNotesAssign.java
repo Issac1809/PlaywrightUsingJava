@@ -21,18 +21,19 @@ public class DispatchNotesAssign implements DispatchNotesAssignInterface {
     }
 
 //TODO Constructor
-    public DispatchNotesAssign(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
+    public DispatchNotesAssign(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface, PlayWrightFactory playWrightFactory){
         this.properties = properties;
         this.page = page;
         this.loginPageInterface = loginPageInterface;
         this.logoutPageInterface = logoutPageInterface;
+        this.playWrightFactory = playWrightFactory;
     }
 
     public void DNAssign() {
         try {
             String logisticsManager = properties.getProperty("LogisticsManager");
             loginPageInterface.LoginMethod(logisticsManager);
-            page.waitForSelector("//*[contains(text(), 'Dispatch Notes')]").click();
+            page.locator("//*[contains(text(), 'Dispatch Notes')]").click();
             String poReferenceId = properties.getProperty("PoReferenceId");
             List<String> containerList = page.locator("#listContainer tr td").allTextContents();
             for (String tr : containerList) {
@@ -40,14 +41,14 @@ public class DispatchNotesAssign implements DispatchNotesAssignInterface {
                     page.locator(".btn-link").first().click();
                 }
             }
-            String dnReferenceId = page.waitForSelector("#dispatchNote").innerText();
+            String dnReferenceId = page.locator("#dispatchNote").innerText();
             playWrightFactory.savePropertiesToFile3(dnReferenceId);
-            page.waitForSelector("#dnActionDropdown").click();
-            page.waitForSelector("#btnToAssign").click();
-            page.waitForSelector("#select2-assignerId-container").click();
-            page.waitForSelector(".select2-search__field").fill(logisticsManager);
-            page.waitForSelector("//li[contains(text(), '" + logisticsManager + "')]").click();
-            page.waitForSelector("#saveAssine").click();
+            page.locator("#dnActionDropdown").click();
+            page.locator("#btnToAssign").click();
+            page.locator("#select2-assignerId-container").click();
+            page.locator(".select2-search__field").fill(logisticsManager);
+            page.locator("//li[contains(text(), '" + logisticsManager + "')]").click();
+            page.locator("#saveAssine").click();
             logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

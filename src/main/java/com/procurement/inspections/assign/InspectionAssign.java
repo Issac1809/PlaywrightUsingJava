@@ -28,7 +28,7 @@ public class InspectionAssign implements InspectionAssignInterface {
         try {
         String mailId = properties.getProperty("EmailID");
         loginPageInterface.LoginMethod(mailId);
-        page.waitForSelector("//*[contains(text(), 'Order Schedules')]").click();
+        page.locator("//*[contains(text(), 'Order Schedules')]").click();
         String poReferenceId = properties.getProperty("PoReferenceId");
         List<String> containerList = page.locator("#listContainer tr td").allTextContents();
         for (String tr : containerList) {
@@ -36,15 +36,15 @@ public class InspectionAssign implements InspectionAssignInterface {
                 page.locator(".btn-link").first().click();
             }
         }
-        page.waitForSelector("#btnAssignInspector").click();
-        page.waitForSelector("#select2-InspectionId-container").click();
-        page.waitForSelector(".select2-search__field").fill(mailId);
+        page.locator("#btnAssignInspector").click();
+        page.locator("#select2-InspectionId-container").click();
+        page.locator(".select2-search__field").fill(mailId);
         page.locator("//li[contains(text(), '" + mailId + "')]").first().click();
-        page.waitForSelector("#saveInspector").click();
-        page.waitForSelector("#btnForCreateInspection").click();
-        page.waitForSelector("#physicalInspectionNotReq").click();
-        page.waitForSelector("#btnCreateInspection").click();
-        page.waitForSelector(".bootbox-accept").click();
+        page.locator("#saveInspector").click();
+        page.locator("#btnForCreateInspection").click();
+        page.locator("#physicalInspectionNotReq").click();
+        page.locator("#btnCreateInspection").click();
+        page.locator(".bootbox-accept").click();
         logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

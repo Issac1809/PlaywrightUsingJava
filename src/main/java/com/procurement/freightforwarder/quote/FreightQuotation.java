@@ -27,7 +27,7 @@ public class FreightQuotation implements FFRQuotation {
     public void QuoteMethod() {
         try {
             loginPageInterface.LoginMethod(properties.getProperty("VendorMailId"));
-            page.waitForSelector("//*[contains(text(), 'Freight Forwarder Requests')]").click();
+            page.locator("//*[contains(text(), 'Freight Forwarder Requests')]").click();
             String dnReferenceId = properties.getProperty("DispatchNoteReferenceId");
             List<String> containerList = page.locator("#listContainer tr td").allTextContents();
             for (String tr : containerList) {
@@ -35,12 +35,12 @@ public class FreightQuotation implements FFRQuotation {
                     page.locator(".btn-link").first().click();
                 }
             }
-            page.waitForSelector("#btnffrSendQuote").click();
+            page.locator("#btnffrSendQuote").click();
             String totalChargeableWeight = properties.getProperty("Total Chargeable Weight");
-            page.waitForSelector("#totalChargableWeight").fill(totalChargeableWeight);
+            page.locator("#totalChargableWeight").fill(totalChargeableWeight);
             String unitRate = properties.getProperty("Unit Rate");
-            page.waitForSelector("#rate").fill(unitRate);
-            page.waitForSelector("#submitQuotation").click();
+            page.locator("#rate").fill(unitRate);
+            page.locator("#submitQuotation").click();
             logoutPageInterface.LogoutMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

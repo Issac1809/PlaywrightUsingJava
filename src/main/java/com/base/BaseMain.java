@@ -212,7 +212,7 @@ public class BaseMain {
             dnEdit = new PocDnEdit(loginPageInterface, properties, page, logoutPageInterface);
             dnReturn = new PocDnReturn(loginPageInterface, properties, page, logoutPageInterface, dnEdit);
             dnCancel = new PocDnCancel(loginPageInterface, properties, page, logoutPageInterface, dispatchNoteCreateInterface);
-            dispatchNotesAssignInterface = new DispatchNotesAssign(loginPageInterface, properties, page, logoutPageInterface);
+            dispatchNotesAssignInterface = new DispatchNotesAssign(loginPageInterface, properties, page, logoutPageInterface, playWrightFactory);
 
 //TODO Freight Forwarder Requests
             ffrInvite = new FreightForwarderInvite(loginPageInterface, properties, page, logoutPageInterface);
