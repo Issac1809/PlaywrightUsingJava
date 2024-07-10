@@ -26,8 +26,6 @@ public class BaseApiTest {
         objectMapper = new ObjectMapper();
     }
 
-
-
     @AfterClass
     public void teardown(){
         playwright.close();

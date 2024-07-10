@@ -6,7 +6,10 @@ import com.microsoft.playwright.options.RequestOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GetApiTest extends BaseApiTest {
 
@@ -14,12 +17,14 @@ public class GetApiTest extends BaseApiTest {
     public void getAPITestMethod() throws IOException {
 
 //TODO API Response
-        APIResponse apiResponse1 = apiRequestContext.get("https://yef-test.cormsquare.com/api/PurchaseOrders/d0c263fa-f55d-4193-be61-1d1187bc0d92");
+        APIResponse apiResponse1 = apiRequestContext.get("https://dprocure-test.cormsquare.com/api/Requisitions/Listing");
 
 //TODO API Response With Filter
-        APIResponse apiResponse2 = apiRequestContext.get("https://yef-test.cormsquare.com/api/PurchaseOrders/d0c263fa-f55d-4193-be61-1d1187bc0d92", RequestOptions.create()
-                .setQueryParam("name", "POC Catalog Requisition")
-                .setQueryParam("companyId", "0"));
+//        APIResponse apiResponse2 = apiRequestContext.get("https://yea-test.cormsquare.com/api/Requisitions/Listing", RequestOptions.create()
+//                .setQueryParam("name", "POC Catalog Requisition")
+//                .setQueryParam("companyId", "0"));
+
+        String ask = apiResponse1.url();
 
 //TODO API Status Code
         int statusCode = apiResponse1.status();
@@ -40,6 +45,8 @@ public class GetApiTest extends BaseApiTest {
         System.out.println("Status Response Plain Text : " + statusResponsePlainText);
 
 //TODO API JSON Response
+//        String responseBody = Arrays.toString(apiResponse1.body());
+//        String jsonString = extractJson(responseBody);
         JsonNode jsonResponse = objectMapper.readTree(apiResponse1.body());
         String jsonPrettyResponse = jsonResponse.toPrettyString();
         System.out.println("JSON Response Pretty : " + jsonPrettyResponse);
@@ -54,4 +61,15 @@ public class GetApiTest extends BaseApiTest {
         Assert.assertEquals(headersMap.get("content-type"), "application/json; charset=utf-8");
         Assert.assertEquals(headersMap.get("x-download-options"), "noopen");
     }
+
+//    public String extractJson(String responseBody) {
+//        String jsonPattern = "\\\\{[^\\\\{\\\\}]*\\\\}";
+//        Pattern pattern = Pattern.compile(jsonPattern);
+//        Matcher matcher = pattern.matcher(responseBody);
+//        if (matcher.find()) {
+//            return matcher.group();
+//        } else {
+//        return null;
+//        }
+//    }
 }
