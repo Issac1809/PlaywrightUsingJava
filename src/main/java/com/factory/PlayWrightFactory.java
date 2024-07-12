@@ -19,10 +19,10 @@ public class PlayWrightFactory {
     }
 
 //TODO Thread Local
+    private static final ThreadLocal<Playwright> localPlaywright = new ThreadLocal<>();
     private static final ThreadLocal<Browser> localBrowser = new ThreadLocal<>();
     private static final ThreadLocal<BrowserContext> localBrowserContext = new ThreadLocal<>();
     private static final ThreadLocal<Page> localPage = new ThreadLocal<>();
-    private static final ThreadLocal<Playwright> localPlaywright = new ThreadLocal<>();
 
     public void setPlaywright() {
         playwright = Playwright.create();
