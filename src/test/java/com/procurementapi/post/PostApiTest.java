@@ -33,19 +33,19 @@ public class PostApiTest extends BaseApiTest {
         Map<String, String> listData = new HashMap<>();
         listData.put("title" , "POC Catalog");
         listData.put("currencyId", "49");
-//        listData.put("projectId", "1882");
-//        listData.put("wbsId", "4171");
-//        listData.put("companyId", "1");
-//        listData.put("projectManagerId", "3");
-//        listData.put("buyerMangerId", "331");
-//        listData.put("paymentTerm", "L045");
-//        listData.put("paymentTermId", "20");
-//        listData.put("billingType", "Timesheet");
-//        listData.put("vendorId", "213");
-//        listData.put("fromDate", "2024-07-15");
-//        listData.put("toDate", "2024-07-20");
-//        listData.put("expectedMobilization", "2024-07-12");
-//        listData.put("notes", "tgrsd");
+        listData.put("projectId", "1882");
+        listData.put("wbsId", "4171");
+        listData.put("companyId", "1");
+        listData.put("projectManagerId", "3");
+        listData.put("buyerMangerId", "331");
+        listData.put("paymentTerm", "L045");
+        listData.put("paymentTermId", "20");
+        listData.put("billingType", "Timesheet");
+        listData.put("vendorId", "213");
+        listData.put("fromDate", "2024-07-15");
+        listData.put("toDate", "2024-07-20");
+        listData.put("expectedMobilization", "2024-07-12");
+        listData.put("notes", "tgrsd");
 
         // Create requisition items
         Map<String, Object> requisitionItem = new HashMap<>();
