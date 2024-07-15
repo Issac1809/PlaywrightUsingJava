@@ -16,7 +16,6 @@ public class PostApiTest extends BaseApiTest {
 
         Map<String, String> listData = getStringStringMap();
 
-
         String jsonPayload = objectMapper.writeValueAsString(listData);
 
         APIResponse apiResponse = apiRequestContext.post("https://yea-test.cormsquare.com/api/requisitions", RequestOptions.create()
@@ -70,14 +69,14 @@ public class PostApiTest extends BaseApiTest {
         listData.put("incoTerm", "Y03 - Non-Charged Freight");
         listData.put("shippingAddress", "Yokogawa Engineering Asia Pte Ltd \n5, Bedok South Road, Singapore 469270\t");
         listData.put("shipLocationId", "157");
-        listData.put("endUserCode", "");
-        listData.put("locationCode", "C2400000");
-        listData.put("shipToYokogawa", String.valueOf(true));
-        listData.put("tcasCompliance", "false");
-        listData.put("tcasComplianceNumber", "E256232Q00");
-        listData.put("tcasComplianceAttachment", "");
-        listData.put("tcasChecklist", Arrays.toString(new Map[]{}));
-        listData.put("itemType", "NA");
+//        listData.put("endUserCode", "");
+//        listData.put("locationCode", "C2400000");
+//        listData.put("shipToYokogawa", String.valueOf(true));
+//        listData.put("tcasCompliance", "false");
+//        listData.put("tcasComplianceNumber", "E256232Q00");
+//        listData.put("tcasComplianceAttachment", "");
+//        listData.put("tcasChecklist", Arrays.toString(new Map[]{}));
+//        listData.put("itemType", "NA");
         return listData;
     }
 }
