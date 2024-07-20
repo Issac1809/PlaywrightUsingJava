@@ -1,8 +1,8 @@
 package com.procurement.requestforquotations.quotationregret;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
-import com.interfaces.QuotationRegret;
-import com.interfaces.QuotationSubmit;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.rfq.QuotationRegret;
+import com.interfaces.rfq.QuotationSubmit;
 import com.microsoft.playwright.Page;
 import java.util.Properties;
 

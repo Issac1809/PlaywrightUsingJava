@@ -1,6 +1,6 @@
 #InvoiceCurrencyCode
 #Tue Jul 02 16:01:51 IST 2024
-//TODO=Non-Catalog (PR to Invoice)
+//TODO Non-Catalog (PR to Invoice)
 AdminId=admin@cormsquare.com
 Buyer=buyer@cormsquare.com
 BuyerManager=buyermanager@cormsquare.com
@@ -19,7 +19,9 @@ Incoterm=EXW - Ex Works
 IncotermLocation=Bengaluru
 InvoiceCurrencyCode=INR
 InvoiceNumber=INV-001
-Item=Power Cable 3C x 2.5 Sqmm
+Items=Power Cable 3C x 2.5 Sqmm,TERMINAL MARKER 8/5,LED Type Indication Lamps 24V AMBER
+MHItem=Engineering Services
+POValue=9000
 LeadTime=10
 LogisticsManager=logisticsmanager@cormsquare.com
 Make=Make - 1
@@ -39,7 +41,7 @@ PresidentDirectorCorporate=hazel@sharklasers.com
 PriceValidity=3 Months
 Project=E17145100
 ProjectManager=projectmanager@cormsquare.com
-Quantity=150
+Quantity=150,200,20,80,90,35,40,20,10,5
 QuotationNotes=Quotation Notes
 QuotationReferenceNumber=QUO-47329
 Rate=690
@@ -49,7 +51,7 @@ SourceCountry=India
 TEApprover=requester@cormsquare.com
 TargetPrice=4500
 TaxCode=PZ-Zero Rated Purchase
-Title=POC-NonCatalog
+Title=POC-Automation-
 Total=Chargeable Weight \= 200
 Unit=Rate \= 200
 Vendor=IND Vendor
@@ -59,6 +61,15 @@ WarrantyRequirement=2 Years
 Wbs=J11BOPH
 WorkOrderReferenceId=
 browser=chrome
-custom=inspectiontrue
+InspectionRequired=true
 headless=false
 url=https\://yea-test.cormsquare.com/Identity/Account/Login
+ShippingAddress=2400 - Yokogawa Engineering Asia Pte Ltd - 9001
+PurchaseType=catalog
+ShipToYokogawa=yes
+RateContract=RC-00155 - IND Rate Contract
+RoHSCompliance=No
+OiAndTpCurrency=SGD
+#Standard or Special
+LiquidatedDamages=Special
+BillingType=TimeSheet

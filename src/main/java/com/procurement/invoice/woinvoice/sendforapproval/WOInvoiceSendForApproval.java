@@ -1,6 +1,8 @@
 package com.procurement.invoice.woinvoice.sendforapproval;
 
-import com.interfaces.*;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.wo.WOSendForApprovalInterface;
 import com.microsoft.playwright.Page;
 
 import java.util.List;

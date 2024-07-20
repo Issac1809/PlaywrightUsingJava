@@ -1,9 +1,9 @@
 package com.procurement.invoice.woinvoice.create;
 
 import com.factory.PlayWrightFactory;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
-import com.interfaces.WOInvoiceCreateInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.inv.woinv.WOInvoiceCreateInterface;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.procurement.currencyexchangerate.CurrencyExchangeRate;

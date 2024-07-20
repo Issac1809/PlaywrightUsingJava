@@ -5,13 +5,13 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Properties;
 
-import com.interfaces.POInvoiceCreateInterface;
+import com.interfaces.inv.poinv.POInvoiceCreateInterface;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.factory.PlayWrightFactory;
 import com.procurement.currencyexchangerate.CurrencyExchangeRate;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 
 public class POInvoiceCreate implements POInvoiceCreateInterface {
 

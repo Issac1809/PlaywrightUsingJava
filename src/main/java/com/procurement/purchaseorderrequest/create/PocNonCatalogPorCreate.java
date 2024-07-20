@@ -1,8 +1,8 @@
 package com.procurement.purchaseorderrequest.create;
-import com.interfaces.PorCreateNonCatalog;
+import com.interfaces.por.PorCreateNonCatalog;
 import com.microsoft.playwright.Page;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import java.util.Properties;
 
 public class PocNonCatalogPorCreate implements PorCreateNonCatalog {

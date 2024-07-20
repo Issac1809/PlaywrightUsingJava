@@ -1,7 +1,7 @@
 package com.procurement.invoice.poinvoice.revert;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
-import com.interfaces.PoInvRevert;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.inv.poinv.PoInvRevert;
 import com.microsoft.playwright.Page;
 import java.util.List;
 import java.util.Properties;

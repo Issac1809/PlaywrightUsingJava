@@ -1,9 +1,9 @@
 package com.procurement.requestforquotations.commercialevaluation;
-import com.interfaces.CommercialEvaluationInterface;
+import com.interfaces.rfq.CommercialEvaluationInterface;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import java.util.Properties;
 
 public class CommercialEvaluation implements CommercialEvaluationInterface {

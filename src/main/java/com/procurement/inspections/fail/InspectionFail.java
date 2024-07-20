@@ -1,10 +1,9 @@
 package com.procurement.inspections.fail;
-import com.interfaces.InsFail;
-import com.interfaces.InspectionCreateInterface;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.ins.InsFail;
+import com.interfaces.ins.InspectionCreateInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import com.microsoft.playwright.Page;
-import com.procurement.inspections.create.InspectionCreate;
 
 import java.util.List;
 import java.util.Properties;

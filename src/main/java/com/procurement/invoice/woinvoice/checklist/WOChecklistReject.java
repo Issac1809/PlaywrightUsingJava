@@ -1,8 +1,8 @@
 package com.procurement.invoice.woinvoice.checklist;
 
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
-import com.interfaces.WoInvChecklistReject;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.inv.woinv.WoInvChecklistReject;
 import com.microsoft.playwright.Page;
 
 import java.util.List;

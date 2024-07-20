@@ -1,8 +1,8 @@
 package com.procurement.currencyexchangerate;
 import com.microsoft.playwright.*;
 import com.factory.PlayWrightFactory;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import java.util.List;
 import java.util.Properties;
 

@@ -1,7 +1,7 @@
 package com.procurement.orderschedule.edit;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
-import com.interfaces.OSEdit;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.os.OSEdit;
 import com.microsoft.playwright.Page;
 import java.util.List;
 import java.util.Properties;

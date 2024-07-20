@@ -1,8 +1,8 @@
 package com.procurement.invoice.poinvoice.approve;
-import com.interfaces.POInvoiceApprovalInterface;
+import com.interfaces.inv.poinv.POInvoiceApprovalInterface;
 import com.microsoft.playwright.Page;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import java.util.List;
 import java.util.Properties;
 

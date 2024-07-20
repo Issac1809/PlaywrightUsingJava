@@ -1,7 +1,7 @@
 package com.procurement.purchaseorderrequest.approval;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
-import com.interfaces.PorApprove;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.por.PorApprove;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -19,7 +19,7 @@ public class Approve implements PorApprove {
     private Approve() {
     }
 
-    //TODO Constructor
+//TODO Constructor
     public Approve(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface) {
         this.loginPageInterface = loginPageInterface;
         this.properties = properties;
@@ -91,9 +91,9 @@ public class Approve implements PorApprove {
                     logoutPageInterface.LogoutMethod();
                 }
             }
-            int size = groupIds.size() - 1;
+            int groupSize = groupIds.size() - 1;
             if (approverMailId.startsWith("PR Approver Group")) {
-                for (int j = 0; j <= size; j++) {
+                for (int j = 0; j <= groupSize; j++) {
                     loginPageInterface.LoginMethod(groupIds.get(j), page);
                     page.locator("//span[contains(text(), 'My Approvals')]").click();
                     String title = properties.getProperty("Title");
@@ -102,7 +102,7 @@ public class Approve implements PorApprove {
                     page.locator(".bootbox-accept").click();
                     logoutPageInterface.LogoutMethod();
                 }
-                i += size;
+                i += groupSize;
             }
         }
         } catch (Exception error) {

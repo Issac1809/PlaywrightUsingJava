@@ -1,9 +1,9 @@
 package com.procurement.requisition.assign;
-import com.interfaces.PrAssign;
+import com.interfaces.pr.PrAssign;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import java.util.Properties;
 
 public class PocPrAssign implements PrAssign {

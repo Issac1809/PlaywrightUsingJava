@@ -1,9 +1,8 @@
 package com.procurement.invoice.woinvoice.verify;
 
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
-import com.interfaces.PoInvVerify;
-import com.interfaces.WoInvVerify;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.inv.woinv.WoInvVerify;
 import com.microsoft.playwright.Page;
 
 import java.util.List;

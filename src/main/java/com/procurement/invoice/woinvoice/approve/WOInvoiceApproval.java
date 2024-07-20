@@ -1,9 +1,8 @@
 package com.procurement.invoice.woinvoice.approve;
 
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
-import com.interfaces.POInvoiceApprovalInterface;
-import com.interfaces.WOInvoiceApprovalInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.inv.woinv.WOInvoiceApprovalInterface;
 import com.microsoft.playwright.Page;
 
 import java.util.List;

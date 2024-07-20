@@ -1,7 +1,11 @@
 package com.procurement.requisition.edit;
-import com.interfaces.*;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.pr.PrApprove;
+import com.interfaces.pr.PrAssign;
+import com.interfaces.pr.PrEdit;
 import com.microsoft.playwright.Page;
-import com.interfaces.PrSendForApproval;
+import com.interfaces.pr.PrSendForApproval;
 import java.util.Properties;
 
 public class PocPrEdit implements PrEdit {
@@ -28,7 +32,7 @@ public class PocPrEdit implements PrEdit {
         this.prAssign = prAssign;
     }
 
-    public void PrEditMethod() throws InterruptedException {
+    public void PrEditMethod() {
         try {
         loginPageInterface.LoginMethod();
         String title = properties.getProperty("Title");
@@ -43,7 +47,7 @@ public class PocPrEdit implements PrEdit {
         }
     }
 
-    public void PrRejectEdit() throws InterruptedException {
+    public void PrRejectEdit()  {
         try {
         PrEditMethod();
         prSendForApproval.NonCatalogPrSendForApproval();
@@ -52,7 +56,7 @@ public class PocPrEdit implements PrEdit {
         }
     }
 
-    public void PrBuyerManagerSuspendEdit() throws InterruptedException {
+    public void PrBuyerManagerSuspendEdit()  {
         try {
         PrEditMethod();
         prSendForApproval.NonCatalogPrSendForApproval();
@@ -62,7 +66,7 @@ public class PocPrEdit implements PrEdit {
         }
     }
 
-    public void PrBuyerSuspendEdit() throws InterruptedException {
+    public void PrBuyerSuspendEdit()  {
         try {
         PrEditMethod();
         prSendForApproval.NonCatalogPrSendForApproval();

@@ -1,8 +1,8 @@
 package com.procurement.requestforquotations.create;
-import com.interfaces.RfqCreate;
+import com.interfaces.rfq.RfqCreate;
 import com.microsoft.playwright.Page;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import java.util.Properties;
 
 public class PocRfqCreate implements RfqCreate {

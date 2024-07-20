@@ -1,8 +1,8 @@
 package com.procurement.purchaseorder;
-import com.interfaces.PurchaseOrderInterface;
+import com.interfaces.po.PurchaseOrderInterface;
 import com.microsoft.playwright.Page;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import java.util.Properties;
 
 public class BuyerPurchaseOrder implements PurchaseOrderInterface {

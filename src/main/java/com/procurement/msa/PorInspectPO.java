@@ -1,9 +1,9 @@
 package com.procurement.msa;
-import com.interfaces.PorInspectPoInterface;
+import com.interfaces.por.PorInspectPoInterface;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import java.util.Properties;
 
 public class PorInspectPO implements PorInspectPoInterface {

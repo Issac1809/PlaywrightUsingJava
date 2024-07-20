@@ -1,8 +1,8 @@
 package com.procurement.requestforquotations.edit;
-import com.interfaces.RfqEdit;
+import com.interfaces.rfq.RfqEdit;
 import com.microsoft.playwright.Page;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import java.util.Properties;
 
 public class PocRfqEdit implements RfqEdit {

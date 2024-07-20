@@ -1,7 +1,7 @@
 package com.procurement.freightforwarder.quote;
-import com.interfaces.FFRQuotation;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.ffr.FFRQuotation;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import com.microsoft.playwright.Page;
 import java.util.List;
 import java.util.Properties;

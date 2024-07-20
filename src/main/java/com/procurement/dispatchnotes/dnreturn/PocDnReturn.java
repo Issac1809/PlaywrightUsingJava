@@ -1,8 +1,8 @@
 package com.procurement.dispatchnotes.dnreturn;
-import com.interfaces.DnEdit;
-import com.interfaces.DnReturn;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.dn.DnEdit;
+import com.interfaces.dn.DnReturn;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import com.microsoft.playwright.Page;
 import java.util.List;
 import java.util.Properties;

@@ -1,7 +1,7 @@
 package com.procurement.purchaseorderrequest.edit;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
-import com.interfaces.PorEdit;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.por.PorEdit;
 import com.microsoft.playwright.Page;
 import java.util.Properties;
 

@@ -1,8 +1,8 @@
 package com.procurement.invoice.poinvoice.cancel;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
-import com.interfaces.POInvoiceCreateInterface;
-import com.interfaces.PoInvCancel;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.inv.poinv.POInvoiceCreateInterface;
+import com.interfaces.inv.poinv.PoInvCancel;
 import com.microsoft.playwright.Page;
 import java.util.List;
 import java.util.Properties;

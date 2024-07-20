@@ -1,6 +1,9 @@
 package com.procurement.invoice.woinvoice.cancel;
 
-import com.interfaces.*;
+import com.interfaces.inv.woinv.WOInvoiceCreateInterface;
+import com.interfaces.inv.woinv.WoInvCancel;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import com.microsoft.playwright.Page;
 
 import java.util.List;

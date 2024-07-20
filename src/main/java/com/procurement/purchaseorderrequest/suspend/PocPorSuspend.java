@@ -1,5 +1,10 @@
 package com.procurement.purchaseorderrequest.suspend;
-import com.interfaces.*;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.por.PorCreateNonCatalog;
+import com.interfaces.por.PorEdit;
+import com.interfaces.por.PorSuspend;
+import com.interfaces.rfq.CommercialEvaluationInterface;
 import com.microsoft.playwright.Page;
 import java.util.Properties;
 

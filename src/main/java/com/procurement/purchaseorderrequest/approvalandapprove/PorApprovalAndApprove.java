@@ -1,7 +1,7 @@
 package com.procurement.purchaseorderrequest.approvalandapprove;
-import com.interfaces.PorApproval;
-import com.interfaces.PorApprove;
-import com.interfaces.ApprovalAndApprove;
+import com.interfaces.por.PorApproval;
+import com.interfaces.por.PorApprove;
+import com.interfaces.por.ApprovalAndApprove;
 import java.util.List;
 
 public class PorApprovalAndApprove implements ApprovalAndApprove {

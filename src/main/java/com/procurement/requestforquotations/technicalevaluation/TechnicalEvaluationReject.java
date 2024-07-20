@@ -1,7 +1,7 @@
 package com.procurement.requestforquotations.technicalevaluation;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
-import com.interfaces.TEReject;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.rfq.TEReject;
 import com.microsoft.playwright.Page;
 import java.util.Properties;
 

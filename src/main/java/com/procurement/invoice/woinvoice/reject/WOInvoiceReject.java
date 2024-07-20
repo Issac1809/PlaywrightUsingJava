@@ -1,6 +1,9 @@
 package com.procurement.invoice.woinvoice.reject;
 
-import com.interfaces.*;
+import com.interfaces.inv.woinv.WoInvReject;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.wo.WOSendForApprovalInterface;
 import com.microsoft.playwright.Page;
 
 import java.util.List;

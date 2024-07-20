@@ -1,5 +1,8 @@
 package com.procurement.dispatchnotes.cancel;
-import com.interfaces.*;
+import com.interfaces.dn.DispatchNoteCreateInterface;
+import com.interfaces.dn.DnCancel;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import com.microsoft.playwright.Page;
 import java.util.List;
 import java.util.Properties;

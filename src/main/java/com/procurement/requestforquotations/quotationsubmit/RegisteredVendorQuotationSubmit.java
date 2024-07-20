@@ -1,9 +1,9 @@
 package com.procurement.requestforquotations.quotationsubmit;
-import com.interfaces.QuotationSubmit;
+import com.interfaces.rfq.QuotationSubmit;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import java.nio.file.Paths;
 import java.util.Properties;
 

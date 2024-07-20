@@ -1,5 +1,27 @@
 package com.base;
-import com.interfaces.*;
+import com.interfaces.dn.*;
+import com.interfaces.ffr.FFRInvite;
+import com.interfaces.ffr.FFRQuotation;
+import com.interfaces.ffr.FFRRequote;
+import com.interfaces.ins.InsFail;
+import com.interfaces.ins.InspectionAssignInterface;
+import com.interfaces.ins.InspectionCreateInterface;
+import com.interfaces.inv.poinv.*;
+import com.interfaces.inv.woinv.*;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.os.OSEdit;
+import com.interfaces.os.OSReject;
+import com.interfaces.os.OrderScheduleApproveInterface;
+import com.interfaces.os.OrderScheduleInterface;
+import com.interfaces.po.POSendForApprovalInterface;
+import com.interfaces.po.PurchaseOrderInterface;
+import com.interfaces.por.*;
+import com.interfaces.pr.*;
+import com.interfaces.rfq.*;
+import com.interfaces.wo.WOSendForApprovalInterface;
+import com.interfaces.wo.WOTrackerStatusInterface;
+import com.interfaces.wo.WorkOrderCreateInterface;
 import com.microsoft.playwright.Page;
 import com.factory.PlayWrightFactory;
 import com.procurement.currencyexchangerate.CurrencyExchangeRate;
@@ -64,10 +86,11 @@ import com.procurement.requestforquotations.suspend.PocRfqSuspend;
 import com.procurement.requestforquotations.technicalevaluation.TechnicalEvaluation;
 import com.procurement.requestforquotations.technicalevaluation.TechnicalEvaluationReject;
 import com.procurement.requisition.approve.PocPrApprove;
+import com.procurement.requisition.create.PRType;
 import com.procurement.requisition.edit.PocPrEdit;
 import com.procurement.requisition.reject.PocPrReject;
 import com.procurement.requisition.assign.PocPrAssign;
-import com.procurement.requisition.create.PocNonCatalogPrCreate;
+import com.procurement.requisition.create.POCPrBase;
 import com.procurement.requisition.sendforapproval.PocPrSendForApproval;
 import com.procurement.requisition.suspend.PocPrBuyerManagerSuspend;
 import com.procurement.requisition.suspend.PocPrBuyerSuspend;
@@ -83,7 +106,8 @@ public class BaseMain {
     protected CurrencyExchangeRate currencyExchangeRate;
     protected LoginPageInterface loginPageInterface;
     protected LogoutPageInterface logoutPageInterface;
-    protected PrCreateNonCatalog prCreateNonCatalog;
+    protected IPrType iPrType;
+    protected IPocPrBase iPocPrBase;
     protected PrEdit prEdit;
     protected PrSendForApproval prSendForApproval;
     protected PrApprove prApprove;
@@ -158,11 +182,13 @@ public class BaseMain {
             properties = playWrightFactory.initializeProperties();
             page = playWrightFactory.initializeBrowser(properties);
 
+//TODO Login && Logout
             loginPageInterface = new LoginPage(properties, page);
             logoutPageInterface = new LogoutPage(page);
 
 //TODO Requisition
-            prCreateNonCatalog = new PocNonCatalogPrCreate(loginPageInterface, properties, page, logoutPageInterface);
+            iPocPrBase = new POCPrBase(loginPageInterface, properties, page, logoutPageInterface);
+            iPrType = new PRType(loginPageInterface, properties, page, logoutPageInterface, iPocPrBase);
             prApprove = new PocPrApprove(loginPageInterface, properties, page, logoutPageInterface);
             prSendForApproval = new PocPrSendForApproval(loginPageInterface, properties, page, logoutPageInterface);
             prAssign = new PocPrAssign(loginPageInterface, properties, page, logoutPageInterface);

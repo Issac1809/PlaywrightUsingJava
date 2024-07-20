@@ -1,10 +1,10 @@
 package com.procurement.orderschedule.create;
-import com.interfaces.OrderScheduleInterface;
+import com.interfaces.os.OrderScheduleInterface;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.factory.PlayWrightFactory;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import java.util.Properties;
 
 public class OrderScheduleCreate implements OrderScheduleInterface {

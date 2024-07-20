@@ -1,10 +1,10 @@
 package com.procurement.workorder.trackerstatus;
 import com.factory.PlayWrightFactory;
-import com.interfaces.WOTrackerStatusInterface;
+import com.interfaces.wo.WOTrackerStatusInterface;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import java.util.List;
 import java.util.Properties;
 

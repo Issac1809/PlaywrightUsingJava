@@ -1,5 +1,5 @@
 package com.procurement.logout;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import com.microsoft.playwright.Page;
 
 public class LogoutPage implements LogoutPageInterface {

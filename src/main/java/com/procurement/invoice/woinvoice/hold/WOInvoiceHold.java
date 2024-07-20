@@ -1,9 +1,8 @@
 package com.procurement.invoice.woinvoice.hold;
 
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
-import com.interfaces.PoInvHold;
-import com.interfaces.WoInvHold;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.inv.woinv.WoInvHold;
 import com.microsoft.playwright.Page;
 
 import java.util.List;

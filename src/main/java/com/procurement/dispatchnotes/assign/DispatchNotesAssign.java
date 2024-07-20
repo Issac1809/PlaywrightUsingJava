@@ -1,10 +1,9 @@
 package com.procurement.dispatchnotes.assign;
 import com.factory.PlayWrightFactory;
-import com.interfaces.DispatchNotesAssignInterface;
+import com.interfaces.dn.DispatchNotesAssignInterface;
 import com.microsoft.playwright.Page;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
-import com.microsoft.playwright.Playwright;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 
 import java.util.List;
 import java.util.Properties;

@@ -1,7 +1,7 @@
 package com.procurement.freightforwarder.invite;
-import com.interfaces.FFRInvite;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.ffr.FFRInvite;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import com.microsoft.playwright.Page;
 import java.util.List;
 import java.util.Properties;

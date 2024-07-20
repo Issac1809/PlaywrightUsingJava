@@ -1,6 +1,6 @@
 package com.procurement.freightforwarder.requote;
-import com.interfaces.FFRQuotation;
-import com.interfaces.FFRRequote;
+import com.interfaces.ffr.FFRQuotation;
+import com.interfaces.ffr.FFRRequote;
 
 public class FreightForwarderRequote implements FFRRequote {
 

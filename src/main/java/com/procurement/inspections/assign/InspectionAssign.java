@@ -1,8 +1,8 @@
 package com.procurement.inspections.assign;
-import com.interfaces.InspectionAssignInterface;
+import com.interfaces.ins.InspectionAssignInterface;
 import com.microsoft.playwright.Page;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
 import java.util.List;
 import java.util.Properties;
 

@@ -1,9 +1,9 @@
 package com.procurement.requisition.reject;
-import com.interfaces.PrReject;
+import com.interfaces.pr.PrReject;
 import com.microsoft.playwright.Page;
-import com.interfaces.LoginPageInterface;
-import com.interfaces.LogoutPageInterface;
-import com.interfaces.PrEdit;
+import com.interfaces.login.LoginPageInterface;
+import com.interfaces.logout.LogoutPageInterface;
+import com.interfaces.pr.PrEdit;
 import java.util.Properties;
 
 public class PocPrReject implements PrReject {
@@ -26,7 +26,7 @@ public class PocPrReject implements PrReject {
         this.prEdit = prEdit;
     }
 
-    public void Reject() throws InterruptedException {
+    public void Reject()  {
         try {
         loginPageInterface.LoginMethod(properties.getProperty("ProjectManager"));
         String title = properties.getProperty("Title");
