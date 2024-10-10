@@ -86,11 +86,10 @@ import com.procurement.requestforquotations.suspend.PocRfqSuspend;
 import com.procurement.requestforquotations.technicalevaluation.TechnicalEvaluation;
 import com.procurement.requestforquotations.technicalevaluation.TechnicalEvaluationReject;
 import com.procurement.requisition.approve.PocPrApprove;
-import com.procurement.requisition.create.PRType;
 import com.procurement.requisition.edit.PocPrEdit;
 import com.procurement.requisition.reject.PocPrReject;
 import com.procurement.requisition.assign.PocPrAssign;
-import com.procurement.requisition.create.POCPrBase;
+import com.procurement.requisition.create.POCNonCatalogPrCreate;
 import com.procurement.requisition.sendforapproval.PocPrSendForApproval;
 import com.procurement.requisition.suspend.PocPrBuyerManagerSuspend;
 import com.procurement.requisition.suspend.PocPrBuyerSuspend;
@@ -106,8 +105,7 @@ public class BaseMain {
     protected CurrencyExchangeRate currencyExchangeRate;
     protected LoginPageInterface loginPageInterface;
     protected LogoutPageInterface logoutPageInterface;
-    protected IPrType iPrType;
-    protected IPocPrBase iPocPrBase;
+    protected PrCreate prCreate;
     protected PrEdit prEdit;
     protected PrSendForApproval prSendForApproval;
     protected PrApprove prApprove;
@@ -187,8 +185,7 @@ public class BaseMain {
             logoutPageInterface = new LogoutPage(page);
 
 //TODO Requisition
-            iPocPrBase = new POCPrBase(loginPageInterface, properties, page, logoutPageInterface);
-            iPrType = new PRType(loginPageInterface, properties, page, logoutPageInterface, iPocPrBase);
+            prCreate = new POCNonCatalogPrCreate(loginPageInterface, properties, page, logoutPageInterface);
             prApprove = new PocPrApprove(loginPageInterface, properties, page, logoutPageInterface);
             prSendForApproval = new PocPrSendForApproval(loginPageInterface, properties, page, logoutPageInterface);
             prAssign = new PocPrAssign(loginPageInterface, properties, page, logoutPageInterface);

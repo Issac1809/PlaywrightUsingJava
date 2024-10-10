@@ -23,6 +23,7 @@ public class PlayWrightFactory {
     private static final ThreadLocal<Browser> localBrowser = new ThreadLocal<>();
     private static final ThreadLocal<BrowserContext> localBrowserContext = new ThreadLocal<>();
     private static final ThreadLocal<Page> localPage = new ThreadLocal<>();
+    
 
     public void setPlaywright() {
         playwright = Playwright.create();
@@ -64,7 +65,7 @@ public class PlayWrightFactory {
                 localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
                 break;
             case "chrome":
-                localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false)));
+                localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false).setSlowMo(700)));
                 break;
             case "safari":
                 localBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(false)));
