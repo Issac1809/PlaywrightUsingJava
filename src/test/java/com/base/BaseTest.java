@@ -118,9 +118,7 @@ import com.procurement.requestforquotations.quotationrequote.RegisteredVendorQuo
 import com.procurement.requestforquotations.technicalevaluation.TechnicalEvaluationReject;
 import com.procurement.requisition.approve.NonCatalogPrApproveTest;
 import com.procurement.requisition.assign.RequisitionAssignTest;
-import com.procurement.requisition.create.PRType;
 import com.procurement.requisition.edit.NonCatalogPrEditTest;
-import com.procurement.requisition.prtype.PRTypeTest;
 import com.procurement.requisition.reject.NonCatalogPrRejectTest;
 import com.procurement.requisition.sendforapproval.NonCatalogPrSendForApprovalTest;
 import com.procurement.requisition.create.NonCatalogPrCreateTest;
@@ -158,7 +156,7 @@ import com.procurement.requestforquotations.suspend.PocRfqSuspend;
 import com.procurement.requestforquotations.technicalevaluation.TechnicalEvaluation;
 import com.procurement.requisition.approve.PocPrApprove;
 import com.procurement.requisition.assign.PocPrAssign;
-import com.procurement.requisition.create.POCPrBase;
+import com.procurement.requisition.create.POCNonCatalogPrCreate;
 import com.procurement.requisition.edit.PocPrEdit;
 import com.procurement.requisition.reject.PocPrReject;
 import com.procurement.requisition.sendforapproval.PocPrSendForApproval;
@@ -180,10 +178,8 @@ public class BaseTest {
     protected CurrencyExchangeRateTest currencyExchangeRateTest;
     protected LoginPageInterface loginPageInterface;
     protected LogoutPageInterface logoutPageInterface;
-    protected IPrType iPrType;
-    protected PRTypeTest prTypeTest;
     protected NonCatalogPrCreateTest nonCatalogPrCreateTest;
-    protected IPocPrBase iPocPrBase;
+    protected PrCreate prCreate;
     protected NonCatalogPrEditTest nonCatalogPrEditTest;
     protected PrEdit prEdit;
     protected NonCatalogPrSendForApprovalTest nonCatalogPrSendForApprovalTest;
@@ -332,11 +328,8 @@ public class BaseTest {
             logoutPageInterface = new LogoutPage(page);
 
 //TODO Requisition
-            iPocPrBase = new POCPrBase(loginPageInterface, properties, page, logoutPageInterface);
+            prCreate = new POCNonCatalogPrCreate(loginPageInterface, properties, page, logoutPageInterface);
             nonCatalogPrCreateTest = new NonCatalogPrCreateTest();
-            iPocPrBase = new POCPrBase(loginPageInterface, properties, page, logoutPageInterface);
-            iPrType = new PRType(loginPageInterface, properties, page, logoutPageInterface, iPocPrBase);
-            prTypeTest = new PRTypeTest();
             prSendForApproval = new PocPrSendForApproval(loginPageInterface, properties, page, logoutPageInterface);
             nonCatalogPrSendForApprovalTest = new NonCatalogPrSendForApprovalTest();
             prApprove = new PocPrApprove(loginPageInterface, properties, page, logoutPageInterface);

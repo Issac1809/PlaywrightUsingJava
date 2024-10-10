@@ -1,5 +1,6 @@
 package com.procurement.requisition.create;
 import com.base.BaseTest;
+import com.microsoft.playwright.Locator;
 import org.testng.annotations.Test;
 
 public class NonCatalogPrCreateTest extends BaseTest {
@@ -7,30 +8,30 @@ public class NonCatalogPrCreateTest extends BaseTest {
     @Test (groups = "requisition")
     public void NonCatalogPrCreateMethod(){
         try{
-            iPocPrBase.RequesterLoginPRCreate();
-            iPocPrBase.CreateButton();
-            iPocPrBase.PurchaseType();
-            iPocPrBase.Title();
-            iPocPrBase.ShipToYokogawa();
-            iPocPrBase.Project();
-            iPocPrBase.WBS();
-            iPocPrBase.Incoterm();
-            iPocPrBase.ShippingAddress();
-            iPocPrBase.ShippingMode();
-            iPocPrBase.QuotationRequiredBy();
-            iPocPrBase.ExpectedPOIssue();
-            iPocPrBase.ExpectedDelivery();
-            iPocPrBase.BuyerManager();
-            iPocPrBase.ProjectManager();
-            iPocPrBase.RoHSCompliance();
-            iPocPrBase.OrderIntake();
-            iPocPrBase.TargetPrice();
-            iPocPrBase.WarrantyRequirements();
-            iPocPrBase.PriceValidity();
-            iPocPrBase.InspectionRequired();
-            iPocPrBase.AddLineRequisitionItemsNonCatalogType();
-            iPocPrBase.Notes();
-            iPocPrBase.PRCreate();
+            prCreate.RequesterLoginPRCreate();
+            prCreate.CreateButton();
+            prCreate.PurchaseType();
+            prCreate.Title();
+            prCreate.ShipToYokogawa();
+            prCreate.Project();
+            prCreate.WBS();
+            prCreate.Incoterm();
+            prCreate.ShippingAddress();
+            prCreate.ShippingMode();
+            prCreate.QuotationRequiredBy();
+            prCreate.ExpectedPOIssue();
+            prCreate.ExpectedDelivery();
+            prCreate.BuyerManager();
+            prCreate.ProjectManager();
+            prCreate.RoHSCompliance();
+            prCreate.OrderIntake();
+            prCreate.TargetPrice();
+            prCreate.WarrantyRequirements();
+            prCreate.PriceValidity();
+            prCreate.InspectionRequired();
+            prCreate.AddLineRequisitionItemsNonCatalogType();
+            prCreate.Notes();
+            prCreate.PRCreate();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }

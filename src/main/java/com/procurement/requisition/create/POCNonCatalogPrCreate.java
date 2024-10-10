@@ -1,26 +1,27 @@
 package com.procurement.requisition.create;
-import com.interfaces.pr.IPocPrBase;
+import com.interfaces.pr.PrCreate;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.interfaces.login.LoginPageInterface;
 import com.interfaces.logout.LogoutPageInterface;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-public class POCPrBase implements IPocPrBase {
+public class POCNonCatalogPrCreate implements PrCreate {
 
     Page page;
     LoginPageInterface loginPageInterface;
     LogoutPageInterface logoutPageInterface;
     Properties properties;
-    String purchaseType;
+    String type;
 
-    private POCPrBase(){
+    private POCNonCatalogPrCreate(){
     }
 
 //TODO Constructor
-    public POCPrBase(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
+    public POCNonCatalogPrCreate(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
         this.page = page;
         this.properties = properties;
         this.loginPageInterface = loginPageInterface;
@@ -46,42 +47,37 @@ public class POCPrBase implements IPocPrBase {
         }
     }
 
-    public String PurchaseType() {
+    public void PurchaseType() {
         try {
-            page.pause();
-            String type = properties.getProperty("PurchaseType").toLowerCase().trim();
-            if (type.equals("catalog")) {
-                Locator prType = page.locator("//a[@href='/Procurement/Requisitions/POC_Catalog_Create']");
-                purchaseType = prType.textContent();
-                purchaseType = purchaseType.replaceAll("\\s", "");
-                prType.click();
-            } else if (type.equals("noncatalog")) {
-                Locator prType = page.locator("//a[@href='/Procurement/Requisitions/POC_NonCatalog_Create']");
-                purchaseType = prType.textContent();
-                purchaseType = purchaseType.replaceAll("\\s", "");
-                prType.click();
-            } else if (type.equals("mh")) {
-                Locator prType = page.locator("//a[@href='/Procurement/Requisitions/POC_MH_Create']");
-                purchaseType = prType.textContent();
-                purchaseType = purchaseType.replaceAll("\\s", "");
-                prType.click();
-            }
+        type = properties.getProperty("PurchaseType");
+        Locator prType = page.locator("//a[@href='/Procurement/Requisitions/POC_"+ type +"_Create']");
+        prType.click();
         } catch(Exception error) {
             System.out.println("What is the Error: " + error);
         }
-        return purchaseType;
     }
 
     public void Title() {
         try {
-        Locator title = page.locator("#title");
-        String getTitle = properties.getProperty("Title");
-        if (purchaseType.equals("Catalog")) {
-            title.fill(getTitle + purchaseType);
-        } else if (purchaseType.equals("Non-Catalog")) {
-                title.fill(getTitle + purchaseType);
-        } else if (purchaseType.equals("MH")) {
-            title.fill(getTitle + purchaseType);
+        switch (type){
+            case "Catalog" :
+                Locator catalogTitle = page.locator("#title");
+                String catalogGetTitle = properties.getProperty("Title");
+                catalogTitle.fill(catalogGetTitle + "-" +type);
+                break;
+            case "NonCatalog" :
+                Locator nonCatalogTitle = page.locator("#title");
+                String nonCatalogGetTitle = properties.getProperty("Title");
+                nonCatalogTitle.fill(nonCatalogGetTitle + "-" +type);
+                break;
+            case "MH" :
+                Locator mhTitle = page.locator("#title");
+                String mhGetTitle = properties.getProperty("Title");
+                mhTitle.fill(mhGetTitle + "-" +type);
+                break;
+            default:
+                System.out.println("--Enter Proper Type--");
+                break;
         }
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
@@ -110,11 +106,23 @@ public class POCPrBase implements IPocPrBase {
 
     public void WBS() {
         try {
-        page.locator("#select2-wbsId-container").click();
-        String wbsCode = properties.getProperty("Wbs");
-        page.locator(".select2-search__field").fill(wbsCode);
-        Locator wbsSelect = page.locator("//li[contains(text(),'" + wbsCode + "')]");
-        wbsSelect.click();
+            if (type.equals("MH")) {
+                page.locator("#select2-wbsId-container").click();
+                List<String> wbsResults = page.locator("##select2-wbsId-results").allTextContents();
+                for (int i = 0; i < wbsResults.size(); i++) {
+                    String wbs = wbsResults.get(i);
+                    if (wbs.endsWith("E")) {
+                        page.locator("//li[contains(text(), " + wbs + ")]").first().click();
+                        break;
+                    }
+                } if (type.equals("Catalog") || type.equals("NonCatalog")) {
+                    page.locator("#select2-wbsId-container").click();
+                    String wbsCode = properties.getProperty("Wbs");
+                    page.locator(".select2-search__field").fill(wbsCode);
+                    Locator wbsSelect = page.locator("//li[contains(text(),'" + wbsCode + "')]");
+                    wbsSelect.click();
+                }
+            }
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -168,11 +176,12 @@ public class POCPrBase implements IPocPrBase {
 
     public void ShippingMode() {
         try {
-        page.locator("#select2-shippingModeId-container").click();
-        String shippingMode = properties.getProperty("ShippingMode");
-        page.locator(".select2-search__field").fill(shippingMode);
-        Locator shippingModeSelect = page.locator("//li[contains(text(),'" + shippingMode + "')]");
-        shippingModeSelect.click();
+            String containerId = type.equals("Catalog") ? "#select2-shippingModeId-container" : "#select2-shippingmodeid-container";
+            page.locator(containerId).click();
+            String shippingMode = properties.getProperty("ShippingMode");
+            page.locator(".select2-search__field").fill(shippingMode);
+            Locator shippingModeSelect = page.locator("//li[contains(text(),'" + shippingMode + "')]");
+            shippingModeSelect.click();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -192,7 +201,7 @@ public class POCPrBase implements IPocPrBase {
     public void ExpectedPOIssue() {
         try {
         Locator expectedPOIssue = page.locator("//*[@id=\"dates\"]/div[2]/input[2]");
-        expectedPOIssue.click();
+        expectedPOIssue.first().click();
         Locator today = page.locator("//span[@class='flatpickr-day today']").first();
         today.click();
         } catch (Exception error) {
@@ -256,8 +265,8 @@ public class POCPrBase implements IPocPrBase {
 
     public void OrderIntake(){
         try {
-        String orderIntake = properties.getProperty("OrderIntake");
-        page.locator("#orderintakeid").fill(orderIntake);
+            String orderIntake = properties.getProperty("OrderIntake");
+            page.locator("#orderintakeid").fill(orderIntake);
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -300,7 +309,7 @@ public class POCPrBase implements IPocPrBase {
         try {
         boolean inspectionRequired = Boolean.parseBoolean(properties.getProperty("InspectionRequired"));
         if (inspectionRequired) {
-            page.locator("#inspectrequired").click();
+        page.locator("#inspectrequired").click();
         }
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
@@ -312,39 +321,6 @@ public class POCPrBase implements IPocPrBase {
         if (liquidatedDamages.equals("special")) {
             page.locator("#isLDStandardNoId").click();
             page.locator("#liquidatedamageTextId").fill("Special Liquidated Damages");
-        }
-    }
-
-    public void BillingType(){
-        try {
-            page.locator("#select2-billingTypeId-container").click();
-            String billingType = properties.getProperty("WarrantyRequirement");
-            page.locator(".select2-search__field").fill(billingType);
-            Locator billingTypeSelect = page.locator("//li[contains(text(),'" + billingType + "')]");
-            billingTypeSelect.click();
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
-        }
-    }
-
-
-    public void AddLineRequisitionItemsCatalogType() {
-        try {
-            String quantity = properties.getProperty("Quantity");
-            String[] quantityArray = quantity.split(",");
-//TODO Items
-            page.locator("#select2-itemId-container").click();
-            List<String> itemContainer = page.locator("#select2-itemId-results").allTextContents();
-            for (int i = 0; i < itemContainer.size(); i++) {
-                String itemName = itemContainer.get(i);
-                page.locator("//*[contains(text(), '"+ itemName +"')]").click();
-//TODO Quantities
-                page.locator("#quantity").fill(quantityArray[i]);
-//TODO Add Button
-                page.locator("#saveRequisitionItem").click();
-            }
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
         }
     }
 
@@ -368,25 +344,6 @@ public class POCPrBase implements IPocPrBase {
             page.locator("#saveRequisitionItem").click();
             }
         } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
-        }
-    }
-
-    public void AddLineRequisitionItemsMahHoursType() {
-        try {
-            String itemName = properties.getProperty("MHItem");
-            String poValue = properties.getProperty("POValue");
-            page.locator("#addLineRequisitionItems").click();
-//TODO Item
-            page.locator("#select2-itemid-container").click();
-            page.locator(".select2-search__field").fill(itemName);
-            Locator itemSelection = page.locator("//li[contains(text(),'" + itemName + "')]").first();
-            itemSelection.click();
-//TODO Quantities
-            page.locator("#poValue").fill(poValue);
-//TODO Add Button
-            page.locator("#saveRequisitionItem").click();
-            } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
     }

@@ -6,7 +6,7 @@ import com.interfaces.logout.LogoutPageInterface;
 import java.util.List;
 import java.util.Properties;
 
-public class CurrencyExchangeRate {
+public class CurrencyExchangeRate extends PlayWrightFactory{
 
     Properties properties;
     PlayWrightFactory playWrightFactory;

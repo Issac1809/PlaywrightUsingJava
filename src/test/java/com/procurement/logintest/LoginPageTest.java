@@ -32,6 +32,4 @@ public class LoginPageTest extends BaseTest{
             System.out.println("What is the error: " + error.getMessage());
         }
     }
-
-
 }
