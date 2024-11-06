@@ -1,6 +1,6 @@
 package com.procurement.nonPoc.classes.login;
 import java.util.Properties;
-import com.procurement.poc.interfaces.login.ILogin;
+import com.procurement.nonPoc.interfaces.login.ILogin;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import static com.factory.PlaywrightFactory.waitForLocator;

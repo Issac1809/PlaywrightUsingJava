@@ -1,10 +1,10 @@
 package com.procurement.nonPoc.classes.requisition.suspend;
-import com.procurement.poc.interfaces.logout.ILogout;
-import com.procurement.poc.interfaces.requisitions.IPrEdit;
-import com.procurement.poc.interfaces.requisitions.IPrSuspend;
+import com.procurement.nonPoc.interfaces.logout.ILogout;
+import com.procurement.nonPoc.interfaces.requisitions.IPrEdit;
+import com.procurement.nonPoc.interfaces.requisitions.IPrSuspend;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.procurement.poc.interfaces.login.ILogin;
+import com.procurement.nonPoc.interfaces.login.ILogin;
 
 import java.util.Properties;
 import static com.factory.PlaywrightFactory.waitForLocator;
@@ -56,4 +56,5 @@ public class BuyerSuspend implements IPrSuspend {
             System.out.println("What is the error: " + error.getMessage());
         }
     }
+
 }

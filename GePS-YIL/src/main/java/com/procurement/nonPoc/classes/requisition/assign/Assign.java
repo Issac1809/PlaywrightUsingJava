@@ -1,9 +1,9 @@
 package com.procurement.nonPoc.classes.requisition.assign;
 import java.util.Properties;
 
-import com.procurement.poc.interfaces.login.ILogin;
-import com.procurement.poc.interfaces.logout.ILogout;
-import com.procurement.poc.interfaces.requisitions.IPrAssign;
+import com.procurement.nonPoc.interfaces.login.ILogin;
+import com.procurement.nonPoc.interfaces.logout.ILogout;
+import com.procurement.nonPoc.interfaces.requisitions.IPrAssign;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 

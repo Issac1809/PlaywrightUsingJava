@@ -1,5 +1,5 @@
 package com.procurement.poc.requisition.assign;
-import com.base.BaseTest;
+import com.procurement.poc.base.BaseTest;
 import org.testng.annotations.Test;
 
 public class AssignTest extends BaseTest {

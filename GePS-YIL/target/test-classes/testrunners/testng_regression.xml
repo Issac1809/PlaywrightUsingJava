@@ -10,13 +10,13 @@
         </groups>
         <classes>
             <class name="com.classes.requisition.create.CreateTest" />
-            <class name="com.classes.requisition.edit.EditTest" />
-            <class name="com.classes.requisition.sendforapproval.SendForApprovalTest" />
-            <class name="com.classes.requisition.reject.RejectTest" />
-            <class name="com.classes.requisition.approve.ApproveTest" />
-            <class name="com.classes.requisition.suspend.SuspendTest" />
-            <class name="com.classes.requisition.assign.AssignTest" />
-            <class name="com.classes.requisition.suspend.SuspendTest" />
+            <class name="com.procurement.poc.requisition.edit.EditTest" />
+            <class name="com.procurement.poc.requisition.sendforapproval.SendForApprovalTest" />
+            <class name="com.procurement.poc.requisition.reject.RejectTest" />
+            <class name="com.procurement.poc.requisition.approve.ApproveTest" />
+            <class name="com.procurement.poc.requisition.suspend.SuspendTest" />
+            <class name="com.procurement.poc.requisition.assign.AssignTest" />
+            <class name="com.procurement.poc.requisition.suspend.SuspendTest" />
         </classes>
     </test>
 </suite>

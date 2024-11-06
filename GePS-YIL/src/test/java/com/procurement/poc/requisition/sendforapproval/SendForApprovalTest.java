@@ -1,5 +1,5 @@
 package com.procurement.poc.requisition.sendforapproval;
-import com.base.BaseTest;
+import com.procurement.poc.base.BaseTest;
 import org.testng.annotations.Test;
 
 public class SendForApprovalTest extends BaseTest {

@@ -1,9 +1,9 @@
 package com.procurement.nonPoc.classes.requisition.sendforapproval;
-import com.procurement.poc.interfaces.logout.ILogout;
-import com.procurement.poc.interfaces.requisitions.IPrSendForApproval;
+import com.procurement.nonPoc.interfaces.logout.ILogout;
+import com.procurement.nonPoc.interfaces.requisitions.IPrSendForApproval;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.procurement.poc.interfaces.login.ILogin;
+import com.procurement.nonPoc.interfaces.login.ILogin;
 
 import java.util.Properties;
 import static com.factory.PlaywrightFactory.waitForLocator;
