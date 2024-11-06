@@ -8,10 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="GePS-YIL" />
         <module name="YEA" />
-        <module name="procurement (2)" />
         <module name="GePS-YCA" />
         <module name="GePS-YEA" />
-        <module name="procurement (1)" />
         <module name="GePS-YEF" />
       </profile>
     </annotationProcessing>
