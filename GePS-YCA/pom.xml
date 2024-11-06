@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com</groupId>
-  <artifactId>procurement</artifactId>
+  <artifactId>YCA</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>procurement</name>
+  <name>YCA</name>
   <url>https://github.com/Issac1809</url>
 
   <properties>
