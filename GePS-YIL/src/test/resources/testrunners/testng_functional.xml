@@ -23,7 +23,7 @@
 
     <test name="Requisition Edit Page Test">
         <classes>
-            <class name="com.procurement.poc.requisition.requisition.reject.edit.EditTest" />
+            <class name="com.procurement.poc.requisition.edit.EditTest" />
         </classes>
     </test>
 
@@ -35,7 +35,7 @@
 
     <test name="Requisition Reject Page Test">
         <classes>
-            <class name="com.procurement.poc.requisition.requisition.reject.RejectTest" />
+            <class name="com.procurement.poc.requisition.reject.RejectTest" />
         </classes>
     </test>
 

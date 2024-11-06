@@ -1,17 +1,17 @@
 # User and Role Details
-adminEmail=admin@cormsquare.com
-buyerEmail=buyer@cormsquare.com
-buyerManagerEmail=buyermanager@cormsquare.com
+adminEmail=manoj.yavagal@yokogawa.com
+buyerEmail=aditi.agarwal@yokogawa.com
+buyerManagerEmail=chandrashekar.hegde@yokogawa.com
 cfoEmail=cfo@cormsquare.com
-requesterEmail=requester@cormsquare.com
-financeCheckerEmail=financechecker@cormsquare.com
-logisticsManagerEmail=logisticsmanager@cormsquare.com
-prApproverGroupBEmail=admin@cormsquare.com
-prApproverGroupCEmail=departmentmanager@cormsquare.com
-prApproverGroupDEmail=businessunitmanager@cormsquare.com
-projectManagerEmail=projectmanager@cormsquare.com
+requesterEmail=p.aldo@yokogawa.com
+financeCheckerEmail=sajimon.bp@yokogawa.com
+logisticsManagerEmail=sajimon.bp@yokogawa.com
+prApproverGroupBEmail=admin@yokogawa.com
+prApproverGroupCEmail=departmentmanager@yokogawa.com
+prApproverGroupDEmail=businessunitmanager@yokogawa.com
+projectManagerEmail=projectmanager@yokogawa.com
 presidentDirectorCorporateEmail=hazel@sharklasers.com
-vendorEmail=ind2@cormsquare.com
+vendorEmail=sales@nandipowertronics.com
 
 # Order and Item Details
 orderTitle=POC-Automation
@@ -76,7 +76,7 @@ rohsCompliance=No
 # Browser and Execution Settings
 browserType=chrome
 runHeadless=false
-appUrl=https://yca-test.cormsquare.com/Identity/Account/Login
+appUrl=https://dprocure-uat.cormsquare.com/Identity/Account/Login
 loginPassword=Admin@123
 internalFilePath=C:\My_Personal_Folder\Downloads\Internal.xlsx
 externalFilePath=C:\My_Personal_Folder\Downloads\External.xlsx

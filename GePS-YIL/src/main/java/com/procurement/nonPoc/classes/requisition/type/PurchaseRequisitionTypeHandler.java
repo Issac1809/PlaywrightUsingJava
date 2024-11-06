@@ -1,6 +1,6 @@
 package com.procurement.nonPoc.classes.requisition.type;
-import com.procurement.poc.interfaces.requisitions.IPrCreate;
-import com.procurement.poc.interfaces.requisitions.IPrType;
+import com.procurement.nonPoc.interfaces.requisitions.IPrCreate;
+import com.procurement.nonPoc.interfaces.requisitions.IPrType;
 
 import java.util.Properties;
 
