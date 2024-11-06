@@ -8,8 +8,11 @@ public class LPrCreate {
     public static final String CREATE_BUTTON = "//button[@data-bs-toggle='modal']";
     public static final String TITLE = "#title";
     public static final String SHIP_TO_YOKOGAWA = "#shipToYokogawa";
+    public static final String SALES_ORDER = "#select2-salesOrderId-container";
     public static final String PROJECT = "#select2-projectId-container";
     public static final String PROJECT_SEARCH = ".select2-search__field";
+    public static final String SALESORDER_SEARCH = ".select2-search__field";
+
     public static final String WBS = "#select2-wbsId-container";
     public static final String WBS_SEARCH = ".select2-search__field";
     public static final String WBS_LIST = "#select2-wbsId-results";
@@ -69,11 +72,15 @@ public class LPrCreate {
 
 //TODO Methods to get dynamic locators
     public static String getPrType(String type) {
-        return "//a[@href='/Procurement/Requisitions/POC_" + type + "_Create']";
+        return "//a[@href='/Procurement/Requisitions/NonPOC_" + type + "_Create']";
     }
 
     public static String getProject(String project) {
         return "//li[contains(text(),'" + project + "')]";
+    }
+
+    public static String getSalesOrder(String salesOrder){
+        return "//li[contains(text(),'" + salesOrder + "')]";
     }
 
     public static String getWBSForMh(String wbs) {

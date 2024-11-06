@@ -6,7 +6,8 @@ public interface IPrCreate {
     void purchaseType();
     void title();
     void shipToYokogawa();
-    void project();
+    void salesOrder();
+//    void project();
     void wbs();
     void vendor();
     void rateContract();

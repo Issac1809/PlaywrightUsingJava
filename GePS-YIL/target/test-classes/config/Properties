@@ -14,13 +14,14 @@ presidentDirectorCorporateEmail=hazel@sharklasers.com
 vendorEmail=sales@nandipowertronics.com
 
 # Order and Item Details
-orderTitle=POC-Automation
 purchaseType=Catalog
+orderTitle=POC-Automation
 vendorName=11 X 17 INC
 items=Power Cable 3C x 2.5 Sqmm, TERMINAL MARKER 8/5, LED Type Indication Lamps 24V AMBER
 mhItem=Engineering Services
 poReferenceId=240024PO00289
 projectCode=E216671W00
+salesOrder=2009300877
 quantityList=150,200,20,80,90,35,40,20,10,5
 partNumber=PN - 1
 leadTimeDays=10

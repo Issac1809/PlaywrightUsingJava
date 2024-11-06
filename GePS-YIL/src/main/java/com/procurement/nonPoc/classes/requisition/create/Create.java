@@ -62,6 +62,7 @@ public class Create implements IPrCreate {
 
     public void title() {
         try {
+            prType=properties.getProperty("purchaseType");
             switch (prType) {
                 case "Catalog":
                     Locator catalogTitleLocator = page.locator(TITLE);
@@ -101,25 +102,41 @@ public class Create implements IPrCreate {
         }
     }
 
-    public void project() {
-        try {
-            Locator projectLocator = page.locator(PROJECT);
-            waitForLocator(projectLocator);
-            projectLocator.click();
+    public void salesOrder(){
+        Locator salesOrderLocator = page.locator(SALES_ORDER);
+        waitForLocator(salesOrderLocator);
+        salesOrderLocator.click();
 
-            String projectCodeValue = properties.getProperty("projectCode");
-            Locator projectSearchLocator = page.locator(PROJECT_SEARCH);
-            waitForLocator(projectSearchLocator);
-            projectSearchLocator.fill(projectCodeValue);
+        String salesOrderValue = properties.getProperty("salesOrder");
+        Locator salesOrderSearchLocator = page.locator(SALESORDER_SEARCH);
+        waitForLocator(salesOrderSearchLocator);
+        salesOrderSearchLocator.fill(salesOrderValue);
 
-            String projectSelectLocator = getProject(projectCodeValue);
-            Locator projectSelectElement = page.locator(projectSelectLocator);
-            waitForLocator(projectSelectElement);
-            projectSelectElement.click();
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
-        }
+        String salesOrderSelectLocator = getSalesOrder(salesOrderValue);
+        Locator salesOrderSelectElement = page.locator(salesOrderSelectLocator);
+        waitForLocator(salesOrderSelectElement);
+        salesOrderSelectElement.click();
     }
+
+//    public void project() {
+//        try {
+//            Locator projectLocator = page.locator(PROJECT);
+//            waitForLocator(projectLocator);
+//            projectLocator.click();
+//
+//            String projectCodeValue = properties.getProperty("projectCode");
+//            Locator projectSearchLocator = page.locator(PROJECT_SEARCH);
+//            waitForLocator(projectSearchLocator);
+//            projectSearchLocator.fill(projectCodeValue);
+//
+//            String projectSelectLocator = getProject(projectCodeValue);
+//            Locator projectSelectElement = page.locator(projectSelectLocator);
+//            waitForLocator(projectSelectElement);
+//            projectSelectElement.click();
+//        } catch (Exception error) {
+//            System.out.println("What is the error: " + error.getMessage());
+//        }
+//    }
 
     public void wbs() {
         try {
