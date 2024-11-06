@@ -1,0 +1,19 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="AutoCloseableResource" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="METHOD_MATCHER_CONFIG" value="java.util.Formatter,format,java.io.Writer,append,com.google.common.base.Preconditions,checkNotNull,org.hibernate.Session,close,java.io.PrintWriter,printf,java.io.PrintStream,printf,com.microsoft.playwright.Playwright,create,com.microsoft.playwright.BrowserType,launch,com.playwrightfactory.PlayWrightFactoryInterface,initialization,com.playwrightfactory.PlayWrightFactory,initialization|initializeBrowser,com.microsoft.playwright.Page,context" />
+    </inspection_tool>
+    <inspection_tool class="groupsTestNG" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="groups">
+        <value>
+          <list size="3">
+            <item index="0" class="java.lang.String" itemvalue="1" />
+            <item index="1" class="java.lang.String" itemvalue="requisition" />
+            <item index="2" class="java.lang.String" itemvalue="requestforquotations" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
