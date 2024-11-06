@@ -1,6 +1,7 @@
 package com.procurement.nonPoc.classes.requisition.create;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 import com.procurement.nonPoc.interfaces.login.ILogin;
@@ -117,6 +118,21 @@ public class Create implements IPrCreate {
         waitForLocator(salesOrderSelectElement);
         salesOrderSelectElement.click();
     }
+    public void departmentPIC(){
+        Locator depPIC = page.locator(DEPARTMENT_PIC);
+        waitForLocator(depPIC);
+        depPIC.click();
+
+        String departmentPIC = properties.getProperty("departmentPIC");
+        Locator depPICSearch = page.locator(DEPARTMENT_PIC_SEARCH);
+        waitForLocator(depPICSearch);
+        depPICSearch.fill(departmentPIC);
+
+        String depPICSelectLocator = getDepartmentPic(departmentPIC);
+        Locator depPICSelectElement = page.locator(depPICSelectLocator);
+        waitForLocator(depPICSelectElement);
+        depPICSelectElement.click();
+    }
 
 //    public void project() {
 //        try {
@@ -182,7 +198,7 @@ public class Create implements IPrCreate {
             waitForLocator(vendorLocator);
             vendorLocator.click();
 
-            String vendorNameValue = properties.getProperty("vendorEmail");
+            String vendorNameValue = properties.getProperty("vendorName");
             Locator vendorSearchLocator = page.locator(VENDOR_SEARCH);
             waitForLocator(vendorSearchLocator);
             vendorSearchLocator.fill(vendorNameValue);

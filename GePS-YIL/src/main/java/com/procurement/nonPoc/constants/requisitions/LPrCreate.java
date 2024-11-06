@@ -12,11 +12,12 @@ public class LPrCreate {
     public static final String PROJECT = "#select2-projectId-container";
     public static final String PROJECT_SEARCH = ".select2-search__field";
     public static final String SALESORDER_SEARCH = ".select2-search__field";
-
+    public static final String DEPARTMENT_PIC = "#select2-searchDepartmentPic-container";
+    public static final String DEPARTMENT_PIC_SEARCH = ".select2-search__field";
     public static final String WBS = "#select2-wbsId-container";
     public static final String WBS_SEARCH = ".select2-search__field";
     public static final String WBS_LIST = "#select2-wbsId-results";
-    public static final String VENDOR = "#select2-vendorId-container";
+    public static final String VENDOR = "#select2-vendor-container";
     public static final String VENDOR_SEARCH = ".select2-search__field";
     public static final String RATE_CONTRACT = "#select2-rateContractId-container";
     public static final String RATE_CONTRACT_SEARCH = ".select2-search__field";
@@ -81,6 +82,9 @@ public class LPrCreate {
 
     public static String getSalesOrder(String salesOrder){
         return "//li[contains(text(),'" + salesOrder + "')]";
+    }
+    public static String getDepartmentPic(String departmentPIC){
+        return "//li[contains(text(),'" + departmentPIC + "')]";
     }
 
     public static String getWBSForMh(String wbs) {

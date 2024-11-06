@@ -30,7 +30,8 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                     iPrCreate.shipToYokogawa();
 //                    iPrCreate.project();
                     iPrCreate.salesOrder();
-                    iPrCreate.wbs();
+                    iPrCreate.departmentPIC();
+//                    iPrCreate.wbs();
                     iPrCreate.vendor();
                     iPrCreate.rateContract();
                     iPrCreate.shippingAddress();
@@ -52,7 +53,8 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                     iPrCreate.shipToYokogawa();
 //                    iPrCreate.project();
                     iPrCreate.salesOrder();
-                    iPrCreate.wbs();
+                    iPrCreate.departmentPIC();
+//                    iPrCreate.wbs();
                     iPrCreate.incoterm();
                     iPrCreate.shippingAddress();
                     iPrCreate.shippingMode();
@@ -80,7 +82,8 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                     iPrCreate.shipToYokogawa();
 //                    iPrCreate.project();
                     iPrCreate.salesOrder();
-                    iPrCreate.wbs();
+                    iPrCreate.departmentPIC();
+//                    iPrCreate.wbs();
                     iPrCreate.incoterm();
                     iPrCreate.shippingAddress();
                     iPrCreate.billingType();

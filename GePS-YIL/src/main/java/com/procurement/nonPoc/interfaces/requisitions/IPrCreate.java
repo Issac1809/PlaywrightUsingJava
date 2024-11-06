@@ -7,8 +7,9 @@ public interface IPrCreate {
     void title();
     void shipToYokogawa();
     void salesOrder();
+    void departmentPIC();
 //    void project();
-    void wbs();
+//    void wbs();
     void vendor();
     void rateContract();
     void incoterm();
