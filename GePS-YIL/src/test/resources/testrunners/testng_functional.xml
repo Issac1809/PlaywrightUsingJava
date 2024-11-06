@@ -23,37 +23,37 @@
 
     <test name="Requisition Edit Page Test">
         <classes>
-            <class name="com.classes.requisition.edit.EditTest" />
+            <class name="com.procurement.poc.requisition.requisition.reject.edit.EditTest" />
         </classes>
     </test>
 
     <test name="Requisition Send For Approval Page Test">
         <classes>
-            <class name="com.classes.requisition.sendforapproval.SendForApprovalTest" />
+            <class name="com.procurement.poc.requisition.sendforapproval.SendForApprovalTest" />
         </classes>
     </test>
 
     <test name="Requisition Reject Page Test">
         <classes>
-            <class name="com.classes.requisition.reject.RejectTest" />
+            <class name="com.procurement.poc.requisition.requisition.reject.RejectTest" />
         </classes>
     </test>
 
     <test name="Requisition Approve Page Test">
         <classes>
-            <class name="com.classes.requisition.approve.ApproveTest" />
+            <class name="com.procurement.poc.requisition.approve.ApproveTest" />
         </classes>
     </test>
 
     <test name="Requisition Assign Page Test">
         <classes>
-            <class name="com.classes.requisition.assign.AssignTest" />
+            <class name="com.procurement.poc.requisition.assign.AssignTest" />
         </classes>
     </test>
 
     <test name="Requisition Buyer Suspend Page Test">
         <classes>
-            <class name="com.classes.requisition.suspend.SuspendTest" />
+            <class name="com.procurement.poc.requisition.suspend.SuspendTest" />
         </classes>
     </test>
 

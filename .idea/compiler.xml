@@ -7,8 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="GePS-YCA" />
-        <module name="GePS-YEF" />
         <module name="GePS-YEA" />
+        <module name="GePS-YIL" />
+        <module name="GePS-YEF" />
       </profile>
     </annotationProcessing>
   </component>

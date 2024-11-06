@@ -179,14 +179,3 @@ This branch is dedicated to preparing the code for production or pipeline releas
 * git merge release/v1.0.
 
 * git push origin develop.
-
--- 
-Thanks & RegardsC. Issacraja
-
-On Tue, Nov 5, 2024 at 3:26 PM GePSProcurement <noreply@github.com> wrote:
- @GePSProcurement has invited you to collaborate on the
-GePSProcurement/Cormsquare repository You can accept or decline this invitation. You can also head over to https://github.com/GePSProcurement/Cormsquare to check out the repository or visit @GePSProcurement to learn a bit more about them. This invitation will expire in 7 days. View invitation Note: This invitation was intended for issac.raja@cormsquare.com. If you were not expecting this invitation, you can ignore this email. If @GePSProcurement is sending you too many emails, you can block them or report abuse. Getting a 404 error? Make sure you’re signed in as Issacraja. Button not working? Copy and paste this link into your browser: 
-https://github.com/GePSProcurement/Cormsquare/invitations Manage your GitHub email preferences Terms • Privacy • Sign in to GitHub GitHub, Inc. 88 Colin P Kelly Jr Street San Francisco, CA 94107 
-
--- 
-Thanks & RegardsC. Issacraja
