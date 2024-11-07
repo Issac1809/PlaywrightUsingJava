@@ -638,7 +638,7 @@ public class Create implements IPrCreate {
             itemsDropdown.click();
 
             page.locator("(//ul[@id='select2-item-results']/li)[1]").click();
-            page.locator("#soItemNumber").fill("SOItemNo 1");
+            page.locator("#soItemNumber").fill("1");
             page.locator("#quantity").fill("10");
             page.locator("#remarks").fill("Remarks 1");
             page.locator("#description").fill("Desc 1");
@@ -741,10 +741,10 @@ public class Create implements IPrCreate {
             newTab.click("//a[(@class='export-link') and (contains(text(),'" + properties.getProperty("rateContract") + "'))]");
         });
         // Wait for the download to complete and save it to a specific location
-        download.saveAs(Paths.get("Attachments_And_Import_Files/" + download.suggestedFilename()));
+        download.saveAs(Paths.get("Downloads/" + download.suggestedFilename()));
         newTab.close();
 
-        String filePath = "Attachments_And_Import_Files/ExportItems.xlsx"; // Path to your Excel file
+        String filePath = "Downloads/ExportItems.xlsx"; // Path to your Excel file
 
         try {
             // Step 1: Load the Excel file
@@ -809,7 +809,7 @@ public class Create implements IPrCreate {
     public void importItems(){
         page.locator("#itemImport").click();
         Locator itemFile = page.locator("#formFile");
-        itemFile.setInputFiles(Paths.get("Attachments_And_Import_Files/ExportItems.xlsx"));
+        itemFile.setInputFiles(Paths.get("Downloads/ExportItems.xlsx"));
         page.locator("#btnUpload").click();
     }
 
