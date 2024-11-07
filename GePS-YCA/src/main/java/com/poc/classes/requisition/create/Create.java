@@ -60,6 +60,7 @@ public class Create implements IPrCreate {
 
     public void title() {
         try {
+            prType = properties.getProperty("purchaseType");
             switch (prType) {
                 case "Catalog":
                     Locator catalogTitleLocator = page.locator(TITLE);

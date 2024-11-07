@@ -10,6 +10,7 @@
         <module name="GePS-YEA" />
         <module name="GePS-YIL" />
         <module name="GePS-YEF" />
+        <module name="YIL" />
       </profile>
     </annotationProcessing>
   </component>
