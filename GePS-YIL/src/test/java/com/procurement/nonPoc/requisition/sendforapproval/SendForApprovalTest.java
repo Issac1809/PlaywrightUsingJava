@@ -7,7 +7,7 @@ public class SendForApprovalTest extends BaseTest {
     @Test
     public void assign() {
         try {
-            iPrSendForApproval.sendForApproval();
+            iPrSendForApproval.SendForApproval();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }

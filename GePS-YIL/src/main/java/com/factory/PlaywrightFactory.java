@@ -12,8 +12,8 @@ public class PlaywrightFactory {
 
     Playwright playwright;
     FileInputStream fileInputStream;
-    FileOutputStream fileOutputStream;
-    Properties properties;
+    static FileOutputStream fileOutputStream;
+    static Properties properties;
 
 //TODO Constructor
     public PlaywrightFactory() {
@@ -96,7 +96,7 @@ public class PlaywrightFactory {
         }
     }
 
-    public void saveToPropertiesFile(String attributeKey, String attributeValue) {
+    public static void saveToPropertiesFile(String attributeKey, String attributeValue) {
         try {
             fileOutputStream = new FileOutputStream("./src/test/resources/config/Properties");
             properties.setProperty(attributeKey, attributeValue);
