@@ -16,11 +16,16 @@ public interface IPrCreate {
     void shippingAddress();
     void billingType();
     void shippingMode();
+    void billableToCustomer();
     void quotationRequiredBy();
     void expectedPOIssue();
     void expectedDelivery();
 //    void buyerManager();
 //    void projectManager();
+    void buyerGroup();
+    void checker();
+    void caseMarking();
+    void messageToSourcing();
     void rohsCompliance();
     void inspectionRequired();
     void oiAndTpCurrency();

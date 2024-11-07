@@ -36,10 +36,17 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                     iPrCreate.rateContract();
                     iPrCreate.shippingAddress();
                     iPrCreate.shippingMode();
+                    iPrCreate.billableToCustomer();
                     iPrCreate.expectedPOIssue();
                     iPrCreate.expectedDelivery();
-                    iPrCreate.orderIntake();
+                    iPrCreate.buyerGroup();
+//                    iPrCreate.orderIntake();
                     iPrCreate.inspectionRequired();
+                    iPrCreate.checker();
+                    iPrCreate.orderIntake();
+                    iPrCreate.targetPrice();
+                    iPrCreate.caseMarking();
+                    iPrCreate.messageToSourcing();
                     iPrCreate.addLineRequisitionItems();
                     iPrCreate.notes();
                     iPrCreate.attachments();
@@ -58,11 +65,15 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                     iPrCreate.incoterm();
                     iPrCreate.shippingAddress();
                     iPrCreate.shippingMode();
+                    iPrCreate.billableToCustomer();
                     iPrCreate.quotationRequiredBy();
                     iPrCreate.expectedPOIssue();
                     iPrCreate.expectedDelivery();
+                    iPrCreate.buyerGroup();
+
                     iPrCreate.rohsCompliance();
                     iPrCreate.inspectionRequired();
+                    iPrCreate.checker();
                     iPrCreate.oiAndTpCurrency();
                     iPrCreate.orderIntake();
                     iPrCreate.targetPrice();
@@ -87,10 +98,12 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                     iPrCreate.incoterm();
                     iPrCreate.shippingAddress();
                     iPrCreate.billingType();
+                    iPrCreate.buyerGroup();
                     iPrCreate.vendor();
                     iPrCreate.quotationRequiredBy();
                     iPrCreate.expectedPOIssue();
                     iPrCreate.expectedDelivery();
+                    iPrCreate.checker();
                     iPrCreate.addLineRequisitionItems();
                     iPrCreate.notes();
                     iPrCreate.attachments();

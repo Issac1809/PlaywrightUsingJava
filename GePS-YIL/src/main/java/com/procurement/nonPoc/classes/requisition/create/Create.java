@@ -118,6 +118,7 @@ public class Create implements IPrCreate {
         waitForLocator(salesOrderSelectElement);
         salesOrderSelectElement.click();
     }
+
     public void departmentPIC(){
         Locator depPIC = page.locator(DEPARTMENT_PIC);
         waitForLocator(depPIC);
@@ -154,43 +155,43 @@ public class Create implements IPrCreate {
 //        }
 //    }
 
-    public void wbs() {
-        try {
-            if (prType.toUpperCase().equals("MH")) {
-                Locator wbsLocator = page.locator(WBS);
-                waitForLocator(wbsLocator);
-                wbsLocator.click();
-
-                List<String> wbsResultsList = page.locator(WBS_LIST).allTextContents();
-                for (int i = 0; i < wbsResultsList.size(); i++) {
-                    String wbsResult = wbsResultsList.get(i);
-                    if (wbsResult.endsWith("E")) {
-                        String wbsForMh = getWBSForMh(wbsResult);
-                        Locator finalWbsLocator = page.locator(wbsForMh);
-                        waitForLocator(finalWbsLocator);
-                        finalWbsLocator.first().click();
-                        break;
-                    }
-                }
-            } else {
-                Locator wbsLocator = page.locator(WBS);
-                waitForLocator(wbsLocator);
-                wbsLocator.click();
-
-                String wbsCodeValue = properties.getProperty("wbsCode");
-                Locator wbsSearchLocator = page.locator(WBS_SEARCH);
-                waitForLocator(wbsSearchLocator);
-                wbsSearchLocator.fill(wbsCodeValue);
-
-                String wbsSelectLocator = getWBSForCandNC(wbsCodeValue);
-                Locator finalWbsLocator = page.locator(wbsSelectLocator);
-                waitForLocator(finalWbsLocator);
-                finalWbsLocator.click();
-            }
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
-        }
-    }
+//    public void wbs() {
+//        try {
+//            if (prType.toUpperCase().equals("MH")) {
+//                Locator wbsLocator = page.locator(WBS);
+//                waitForLocator(wbsLocator);
+//                wbsLocator.click();
+//
+//                List<String> wbsResultsList = page.locator(WBS_LIST).allTextContents();
+//                for (int i = 0; i < wbsResultsList.size(); i++) {
+//                    String wbsResult = wbsResultsList.get(i);
+//                    if (wbsResult.endsWith("E")) {
+//                        String wbsForMh = getWBSForMh(wbsResult);
+//                        Locator finalWbsLocator = page.locator(wbsForMh);
+//                        waitForLocator(finalWbsLocator);
+//                        finalWbsLocator.first().click();
+//                        break;
+//                    }
+//                }
+//            } else {
+//                Locator wbsLocator = page.locator(WBS);
+//                waitForLocator(wbsLocator);
+//                wbsLocator.click();
+//
+//                String wbsCodeValue = properties.getProperty("wbsCode");
+//                Locator wbsSearchLocator = page.locator(WBS_SEARCH);
+//                waitForLocator(wbsSearchLocator);
+//                wbsSearchLocator.fill(wbsCodeValue);
+//
+//                String wbsSelectLocator = getWBSForCandNC(wbsCodeValue);
+//                Locator finalWbsLocator = page.locator(wbsSelectLocator);
+//                waitForLocator(finalWbsLocator);
+//                finalWbsLocator.click();
+//            }
+//        } catch (Exception error) {
+//            System.out.println("What is the error: " + error.getMessage());
+//        }
+//    }
 
     public void vendor() {
         try {
@@ -309,6 +310,19 @@ public class Create implements IPrCreate {
         }
     }
 
+    public void billableToCustomer(){
+        Locator billableLocator = page.locator(BILLABLE_TO_CUSTOMER);
+        waitForLocator(billableLocator);
+        billableLocator.click();
+
+        String billableValue = properties.getProperty("billableToCustomer");
+        String billableOptionsLocator = getBillableToCustomer(billableValue);
+
+        Locator billableOptionElement = page.locator(billableOptionsLocator);
+        waitForLocator(billableOptionElement);
+        billableOptionElement.click();
+    }
+
     public void quotationRequiredBy() {
         try {
             Locator quotationRequiredByField = page.locator(QUOTATION_REQUIRED_BY);
@@ -330,8 +344,16 @@ public class Create implements IPrCreate {
             expectedPoIssueField.click();
 
             Locator todayOption = page.locator(TODAY);
-            waitForLocator(todayOption);
-            todayOption.first().click();
+            for (int i = 0; i < todayOption.count(); i++) {
+                if (todayOption.nth(i).isVisible()) {
+                    todayOption.nth(i).click(); // Click the visible element
+                    break; // Stop the loop once the visible element is found and clicked
+                }
+            }
+            page.locator("//label[@for='expectedDelivery']").click();
+
+//            waitForLocator(todayOption);
+//            todayOption.last().click();
         } catch (Exception error) {
             System.out.println("Error encountered: " + error.getMessage());
         }
@@ -344,8 +366,14 @@ public class Create implements IPrCreate {
             expectedDeliveryField.click();
 
             Locator todayOption = page.locator(TODAY);
-            waitForLocator(todayOption);
-            todayOption.first().click();
+            for (int i = 0; i < todayOption.count(); i++) {
+                if (todayOption.nth(i).isVisible()) {
+                    todayOption.nth(i).click(); // Click the visible element
+                    break; // Stop the loop once the visible element is found and clicked
+                }
+            }
+//            waitForLocator(todayOption);
+//            todayOption.last().click();
         } catch (Exception error) {
             System.out.println("Error encountered: " + error.getMessage());
         }
@@ -394,6 +422,41 @@ public class Create implements IPrCreate {
 //            System.out.println("Error encountered: " + error.getMessage());
 //        }
 //    }
+
+    public void buyerGroup(){
+        Locator buyerGroupDropdown = page.locator(BUYER_GROUP);
+        waitForLocator(buyerGroupDropdown);
+        buyerGroupDropdown.click();
+
+        String buyerGroupName = properties.getProperty("buyerGroupName");
+
+        Locator buyerGroupSearch = page.locator(BUYER_GROUP_SEARCH);
+        waitForLocator(buyerGroupSearch);
+        buyerGroupSearch.fill(buyerGroupName);
+
+        String buyerGroupElement = getProjectManager(buyerGroupName);
+        Locator buyerGroupSelect = page.locator(buyerGroupElement);
+        waitForLocator(buyerGroupSelect);
+        buyerGroupSelect.click();
+    }
+
+    public void checker(){
+        Locator checkerDropdown = page.locator(CHECKER);
+        waitForLocator(checkerDropdown);
+        checkerDropdown.click();
+
+        String checkerName = properties.getProperty("checker");
+
+        Locator checkerSearch = page.locator(CHECKER_SEARCH);
+        waitForLocator(checkerSearch);
+        checkerSearch.fill(checkerName);
+
+        String checkerElement = getChecker(checkerName);
+        Locator checkerElementLocator = page.locator(checkerElement);
+        waitForLocator(checkerElementLocator);
+        checkerElementLocator.click();
+    }
+
 
     public void rohsCompliance(){
         try {
@@ -446,16 +509,39 @@ public class Create implements IPrCreate {
 
     public void targetPrice(){
         try {
-            if (prType.equals("NonCatalog")) {
+//            if (prType.equals("NonCatalog")) {
                 String targetPrice = properties.getProperty("targetPrice");
                 Locator targetPriceLocator = page.locator(TARGET_PRICE);
                 waitForLocator(targetPriceLocator);
                 targetPriceLocator.fill(targetPrice);
-            }
+//            }
         } catch (Exception error) {
             System.out.println("Error encountered: " + error.getMessage());
         }
     }
+
+    public void caseMarking(){
+        try {
+            String caseMarkingDetails = properties.getProperty("caseMarking");
+            Locator caseMarking = page.locator(CASE_MARKING);
+            waitForLocator(caseMarking);
+            caseMarking.fill(caseMarkingDetails);
+        } catch (Exception error) {
+            System.out.println("Error encountered: " + error.getMessage());
+        }
+    }
+
+    public void messageToSourcing(){
+        try {
+            String messageDetails = properties.getProperty("messageToSourcing");
+            Locator messageToSourcing = page.locator(MESSAGE_TO_SOURCING);
+            waitForLocator(messageToSourcing);
+            messageToSourcing.fill(messageDetails);
+        } catch (Exception error) {
+            System.out.println("Error encountered: " + error.getMessage());
+        }
+    }
+
 
     public void warrantyRequirements(){
         try {
