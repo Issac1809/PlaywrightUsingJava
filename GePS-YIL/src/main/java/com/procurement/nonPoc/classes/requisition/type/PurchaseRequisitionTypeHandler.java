@@ -48,6 +48,8 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                     iPrCreate.caseMarking();
                     iPrCreate.messageToSourcing();
                     iPrCreate.addLineRequisitionItems();
+                    iPrCreate.createItemsFile();
+                    iPrCreate.importItems();
                     iPrCreate.notes();
                     iPrCreate.attachments();
                     iPrCreate.prCreate();

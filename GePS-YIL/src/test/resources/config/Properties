@@ -46,7 +46,7 @@ priceValidity=3 Months
 targetPrice=4500
 caseMarking=Case Marking Details
 messageToSourcing= Message To Sourcing Details
-rateContract=RC-00027 - RC For YIL Vendor
+rateContract=RC-00027
 billingType=TimeSheet
 liquidatedDamages=Special
 
@@ -85,5 +85,5 @@ browserType=chrome
 runHeadless=false
 appUrl=https://dprocure-uat.cormsquare.com/Identity/Account/Login
 loginPassword=Admin@123
-internalFilePath=C:\My_Personal_Folder\Downloads\Internal.xlsx
-externalFilePath=C:\My_Personal_Folder\Downloads\External.xlsx
+internalFilePath=Attachments_And_Import_Files/Internal Attachment.xlsx
+externalFilePath=Attachments_And_Import_Files/External Attachment.xlsx

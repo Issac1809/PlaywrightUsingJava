@@ -35,6 +35,8 @@ public interface IPrCreate {
     void priceValidity();
     void liquidatedDamages();
     void addLineRequisitionItems();
+    void createItemsFile();
+    void importItems();
     void notes();
     void attachments();
     void prCreate();

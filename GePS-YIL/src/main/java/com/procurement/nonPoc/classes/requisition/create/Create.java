@@ -1,14 +1,23 @@
 package com.procurement.nonPoc.classes.requisition.create;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 
+import com.microsoft.playwright.Download;
 import com.procurement.nonPoc.interfaces.login.ILogin;
 import com.procurement.nonPoc.interfaces.logout.ILogout;
 import com.procurement.nonPoc.interfaces.requisitions.IPrCreate;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import static com.factory.PlaywrightFactory.waitForLocator;
 import static com.procurement.nonPoc.constants.requisitions.LPrCreate.*;
@@ -542,7 +551,6 @@ public class Create implements IPrCreate {
         }
     }
 
-
     public void warrantyRequirements(){
         try {
             if (prType.equals("NonCatalog")) {
@@ -621,7 +629,6 @@ public class Create implements IPrCreate {
 
     public void addLineRequisitionItems() {
         try {
-            Locator addItemButton = null;
             Locator addLineItemButton = page.locator(ADD_LINE_ITEM_BUTTON);
             waitForLocator(addLineItemButton);
             addLineItemButton.click();
@@ -630,83 +637,180 @@ public class Create implements IPrCreate {
             waitForLocator(itemsDropdown);
             itemsDropdown.click();
 
-            if (prType.equals("Catalog")) {
-                List<String> itemList = page.locator(ITEMS_LIST).allTextContents();
-                for (int i = 1; i <= itemList.size(); i++) {
-                    String itemName = itemList.get(i);
-                    itemName.split(" - ");
+            page.locator("(//ul[@id='select2-item-results']/li)[1]").click();
+            page.locator("#soItemNumber").fill("SOItemNo 1");
+            page.locator("#quantity").fill("10");
+            page.locator("#remarks").fill("Remarks 1");
+            page.locator("#description").fill("Desc 1");
+            Locator addItemButton = page.locator(ADD_ITEM_BUTTON);
+            waitForLocator(addItemButton);
+            addItemButton.click();
 
-                    if (i > 1) {
-                        waitForLocator(addItemButton);
-                        addLineItemButton.click();
-                        waitForLocator(itemsDropdown);
-                        itemsDropdown.click();
-                    }
-
-                    Locator itemSearchBox = page.locator(ITEM_SEARCH);
-                    waitForLocator(itemSearchBox);
-                    itemSearchBox.fill(itemName);
-
-                    Locator itemOption = page.locator(getItem(itemName));
-                    waitForLocator(itemOption);
-                    itemOption.first().click();
-
-                    Locator quantityField = page.locator(QUANTITY);
-                    waitForLocator(quantityField);
-                    quantityField.fill(String.valueOf(i));
-
-                    addItemButton = page.locator(ADD_ITEM_BUTTON);
-                    waitForLocator(addItemButton);
-                    addItemButton.click();
-                }
-            } else if (prType.equals("NonCatalog")) {
-                String[] itemNames = properties.getProperty("items").split(",");
-                String[] quantities = properties.getProperty("quantityList").split(",");
-
-                for (int i = 0; i < itemNames.length; i++) {
-                    waitForLocator(addItemButton);
-                    addLineItemButton.click();
-
-                    waitForLocator(itemsDropdown);
-                    itemsDropdown.click();
-
-                    Locator itemSearchBox = page.locator(ITEM_SEARCH);
-                    waitForLocator(itemSearchBox);
-                    itemSearchBox.fill(itemNames[i]);
-
-                    Locator itemOption = page.locator(getItem(itemNames[i]));
-                    waitForLocator(itemOption);
-                    itemOption.first().click();
-
-                    Locator quantityField = page.locator(QUANTITY);
-                    waitForLocator(quantityField);
-                    quantityField.fill(quantities[i]);
-
-                    waitForLocator(addItemButton);
-                    addItemButton.click();
-                }
-            } else if (prType.equalsIgnoreCase("MH")) {
-                String mhItemName = properties.getProperty("mhItem");
-
-                Locator itemSearchBox = page.locator(ITEM_SEARCH);
-                waitForLocator(itemSearchBox);
-                itemSearchBox.fill(mhItemName);
-
-                Locator itemOption = page.locator(getItem(mhItemName));
-                waitForLocator(itemOption);
-                itemOption.first().click();
-
-                Locator quantityField = page.locator(QUANTITY);
-                waitForLocator(quantityField);
-                quantityField.fill("20");
-
-                waitForLocator(addItemButton);
-                addItemButton.click();
-            }
+//            if (prType.equals("Catalog")) {
+//                List<String> itemList = page.locator(ITEMS_LIST).allTextContents();
+//                for (int i = 1; i <= itemList.size(); i++) {
+//                    String itemName = itemList.get(i);
+//                    itemName.split(" - ");
+//
+//                    if (i > 1) {
+//                        waitForLocator(addItemButton);
+//                        addLineItemButton.click();
+//                        waitForLocator(itemsDropdown);
+//                        itemsDropdown.click();
+//                    }
+//
+//                    Locator itemSearchBox = page.locator(ITEM_SEARCH);
+//                    waitForLocator(itemSearchBox);
+//                    itemSearchBox.fill(itemName);
+//
+//                    Locator itemOption = page.locator(getItem(itemName));
+//                    waitForLocator(itemOption);
+//                    itemOption.first().click();
+//
+//                    Locator quantityField = page.locator(QUANTITY);
+//                    waitForLocator(quantityField);
+//                    quantityField.fill(String.valueOf(i));
+//
+//                    addItemButton = page.locator(ADD_ITEM_BUTTON);
+//                    waitForLocator(addItemButton);
+//                    addItemButton.click();
+//                }
+//            } else if (prType.equals("NonCatalog")) {
+//                String[] itemNames = properties.getProperty("items").split(",");
+//                String[] quantities = properties.getProperty("quantityList").split(",");
+//
+//                for (int i = 0; i < itemNames.length; i++) {
+//                    waitForLocator(addItemButton);
+//                    addLineItemButton.click();
+//
+//                    waitForLocator(itemsDropdown);
+//                    itemsDropdown.click();
+//
+//                    Locator itemSearchBox = page.locator(ITEM_SEARCH);
+//                    waitForLocator(itemSearchBox);
+//                    itemSearchBox.fill(itemNames[i]);
+//
+//                    Locator itemOption = page.locator(getItem(itemNames[i]));
+//                    waitForLocator(itemOption);
+//                    itemOption.first().click();
+//
+//                    Locator quantityField = page.locator(QUANTITY);
+//                    waitForLocator(quantityField);
+//                    quantityField.fill(quantities[i]);
+//
+//                    waitForLocator(addItemButton);
+//                    addItemButton.click();
+//                }
+//            } else if (prType.equalsIgnoreCase("MH")) {
+//                String mhItemName = properties.getProperty("mhItem");
+//
+//                Locator itemSearchBox = page.locator(ITEM_SEARCH);
+//                waitForLocator(itemSearchBox);
+//                itemSearchBox.fill(mhItemName);
+//
+//                Locator itemOption = page.locator(getItem(mhItemName));
+//                waitForLocator(itemOption);
+//                itemOption.first().click();
+//
+//                Locator quantityField = page.locator(QUANTITY);
+//                waitForLocator(quantityField);
+//                quantityField.fill("20");
+//
+//                waitForLocator(addItemButton);
+//                addItemButton.click();
+//            }
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
 
+    }
+
+    public void createItemsFile() {
+        page.locator("#itemImport").click();
+
+        // Wait for the new tab (or page) to be created
+        Page newTab = page.waitForPopup(() -> {
+            page.click("#importLink");  // Clicking on a link that opens a new tab
+        });
+        page.click("//button[(@aria-label='Close') and (contains(text(),'Cancel'))]");
+
+        // Now you can interact with the new tab
+        newTab.waitForLoadState();
+        newTab.locator(".form-control-sm").fill(properties.getProperty("rateContract"));
+        Download download = newTab.waitForDownload(() -> {
+            newTab.click("//a[(@class='export-link') and (contains(text(),'" + properties.getProperty("rateContract") + "'))]");
+        });
+        // Wait for the download to complete and save it to a specific location
+        download.saveAs(Paths.get("Attachments_And_Import_Files/" + download.suggestedFilename()));
+        newTab.close();
+
+        String filePath = "Attachments_And_Import_Files/ExportItems.xlsx"; // Path to your Excel file
+
+        try {
+            // Step 1: Load the Excel file
+            FileInputStream fileInputStream = new FileInputStream(filePath);
+            Workbook workbook = new XSSFWorkbook(fileInputStream);
+            Sheet sheet = workbook.getSheetAt(0); // Get the first sheet (index 0)
+
+
+            // Step 2: Delete the second row (row index 1)
+            if (sheet.getLastRowNum() > 2) {
+                Row rowToDelete = sheet.getRow(1); // Get the second row (index 1)
+
+                if (rowToDelete != null) {
+                    sheet.removeRow(rowToDelete);  // Delete the row
+
+                    // Step 3: Shift the rows up (if necessary) to fill the gap left by the deleted row
+                    if (1 < sheet.getLastRowNum()) {
+                        sheet.shiftRows(2, sheet.getLastRowNum(), -1);  // Shift rows starting from the third row up
+                    }
+                }
+            }
+
+            // Step 2: Start the loop from the second row (index 1)
+            for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) { // rowIndex 1 for second row
+                Row row = sheet.getRow(rowIndex);
+
+                Cell Quantity = row.getCell(11);
+                if(Quantity == null)
+                    Quantity = row.createCell(14);
+                Quantity.setCellValue(rowIndex * 2 + 1);
+
+                Cell Description = row.getCell(12);
+                if(Description == null)
+                    Description = row.createCell(14);
+                Description.setCellValue("Desc " + (rowIndex+1));
+
+                Cell Remarks = row.getCell(13);
+                if(Remarks == null)
+                    Remarks = row.createCell(14);
+                Remarks.setCellValue("Remarks " + (rowIndex+1));
+
+                Cell SOItemNumber = row.getCell(14);
+                if(SOItemNumber == null)
+                    SOItemNumber = row.createCell(14);
+                SOItemNumber.setCellValue(rowIndex + 1);
+            }
+
+            // Step 4: Write the updated data back to the file
+            FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+            workbook.write(fileOutputStream);
+
+            // Step 5: Close the streams
+            fileInputStream.close();
+            fileOutputStream.close();
+            workbook.close();
+            System.out.println("Excel file updated successfully!");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void importItems(){
+        page.locator("#itemImport").click();
+        Locator itemFile = page.locator("#formFile");
+        itemFile.setInputFiles(Paths.get("Attachments_And_Import_Files/ExportItems.xlsx"));
+        page.locator("#btnUpload").click();
     }
 
     public void notes() {
@@ -735,6 +839,10 @@ public class Create implements IPrCreate {
             waitForLocator(attachInternalFileButton);
             attachInternalFileButton.click();
 
+            Locator continueButton = page.locator(CONTINUE_BUTTON);
+            waitForLocator(continueButton);
+            continueButton.click();
+
 //TODO External Attachment
             Locator externalAttachmentsButton = page.locator(ATTACHMENTS);
             waitForLocator(externalAttachmentsButton);
@@ -752,7 +860,7 @@ public class Create implements IPrCreate {
             waitForLocator(attachExternalFileButton);
             attachExternalFileButton.click();
 
-            Locator continueButton = page.locator(CONTINUE_BUTTON);
+//            Locator continueButton = page.locator(CONTINUE_BUTTON);
             waitForLocator(continueButton);
             continueButton.click();
 

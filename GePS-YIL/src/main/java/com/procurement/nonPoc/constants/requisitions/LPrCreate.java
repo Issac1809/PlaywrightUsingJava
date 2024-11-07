@@ -55,7 +55,7 @@ public class LPrCreate {
     public static final String LIQUIDATED_DAMAGES = "#liquidatedamageTextId";
     public static final String ADD_LINE_ITEM_BUTTON = "#addLineRequisitionItems";
     public static final String ITEMS_LIST = "#select2-itemId-results";
-    public static final String ITEMS = "#select2-itemid-container";
+    public static final String ITEMS = "#select2-item-container";
     public static final String ITEM_SEARCH = ".select2-search__field";
     public static final String QUANTITY = "#quantity";
     public static final String ADD_ITEM_BUTTON = "#saveRequisitionItem";
@@ -64,8 +64,8 @@ public class LPrCreate {
     public static final String FILE_UPLOAD = "#formFilePreupload";
     public static final String EXTERNAL_RADIO_BUTTON = "#radioInActive";
     public static final String ATTACH_FILE_BUTTON = "#saveAttachments1";
-    public static final String CONTINUE_BUTTON = "#attachmentSaveId";
-    public static final String CREATE_DRAFT_BUTTON = "//*[contains(text(), 'Create Draft')]";
+    public static final String CONTINUE_BUTTON = "#submitAttachmentsId";
+    public static final String CREATE_DRAFT_BUTTON = "#btnCreate";
     public static final String YES = ".bootbox-accept";
     public static final String BILLING_TYPE = "#select2-billingTypeId-container";
     public static final String BILLABLE_TO_CUSTOMER = "#select2-billableToCustomer-container";
