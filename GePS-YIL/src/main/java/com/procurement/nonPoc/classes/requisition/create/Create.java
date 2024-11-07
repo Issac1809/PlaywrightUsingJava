@@ -1,13 +1,23 @@
 package com.procurement.nonPoc.classes.requisition.create;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
+import com.microsoft.playwright.Download;
 import com.procurement.nonPoc.interfaces.login.ILogin;
 import com.procurement.nonPoc.interfaces.logout.ILogout;
 import com.procurement.nonPoc.interfaces.requisitions.IPrCreate;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import static com.factory.PlaywrightFactory.waitForLocator;
 import static com.procurement.nonPoc.constants.requisitions.LPrCreate.*;
@@ -62,6 +72,7 @@ public class Create implements IPrCreate {
 
     public void title() {
         try {
+            prType=properties.getProperty("purchaseType");
             switch (prType) {
                 case "Catalog":
                     Locator catalogTitleLocator = page.locator(TITLE);
@@ -101,63 +112,95 @@ public class Create implements IPrCreate {
         }
     }
 
-    public void project() {
-        try {
-            Locator projectLocator = page.locator(PROJECT);
-            waitForLocator(projectLocator);
-            projectLocator.click();
+    public void salesOrder(){
+        Locator salesOrderLocator = page.locator(SALES_ORDER);
+        waitForLocator(salesOrderLocator);
+        salesOrderLocator.click();
 
-            String projectCodeValue = properties.getProperty("projectCode");
-            Locator projectSearchLocator = page.locator(PROJECT_SEARCH);
-            waitForLocator(projectSearchLocator);
-            projectSearchLocator.fill(projectCodeValue);
+        String salesOrderValue = properties.getProperty("salesOrder");
+        Locator salesOrderSearchLocator = page.locator(SALESORDER_SEARCH);
+        waitForLocator(salesOrderSearchLocator);
+        salesOrderSearchLocator.fill(salesOrderValue);
 
-            String projectSelectLocator = getProject(projectCodeValue);
-            Locator projectSelectElement = page.locator(projectSelectLocator);
-            waitForLocator(projectSelectElement);
-            projectSelectElement.click();
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
-        }
+        String salesOrderSelectLocator = getSalesOrder(salesOrderValue);
+        Locator salesOrderSelectElement = page.locator(salesOrderSelectLocator);
+        waitForLocator(salesOrderSelectElement);
+        salesOrderSelectElement.click();
     }
 
-    public void wbs() {
-        try {
-            if (prType.toUpperCase().equals("MH")) {
-                Locator wbsLocator = page.locator(WBS);
-                waitForLocator(wbsLocator);
-                wbsLocator.click();
+    public void departmentPIC(){
+        Locator depPIC = page.locator(DEPARTMENT_PIC);
+        waitForLocator(depPIC);
+        depPIC.click();
 
-                List<String> wbsResultsList = page.locator(WBS_LIST).allTextContents();
-                for (int i = 0; i < wbsResultsList.size(); i++) {
-                    String wbsResult = wbsResultsList.get(i);
-                    if (wbsResult.endsWith("E")) {
-                        String wbsForMh = getWBSForMh(wbsResult);
-                        Locator finalWbsLocator = page.locator(wbsForMh);
-                        waitForLocator(finalWbsLocator);
-                        finalWbsLocator.first().click();
-                        break;
-                    }
-                }
-            } else {
-                Locator wbsLocator = page.locator(WBS);
-                waitForLocator(wbsLocator);
-                wbsLocator.click();
+        String departmentPIC = properties.getProperty("departmentPIC");
+        Locator depPICSearch = page.locator(DEPARTMENT_PIC_SEARCH);
+        waitForLocator(depPICSearch);
+        depPICSearch.fill(departmentPIC);
 
-                String wbsCodeValue = properties.getProperty("wbsCode");
-                Locator wbsSearchLocator = page.locator(WBS_SEARCH);
-                waitForLocator(wbsSearchLocator);
-                wbsSearchLocator.fill(wbsCodeValue);
-
-                String wbsSelectLocator = getWBSForCandNC(wbsCodeValue);
-                Locator finalWbsLocator = page.locator(wbsSelectLocator);
-                waitForLocator(finalWbsLocator);
-                finalWbsLocator.click();
-            }
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
-        }
+        String depPICSelectLocator = getDepartmentPic(departmentPIC);
+        Locator depPICSelectElement = page.locator(depPICSelectLocator);
+        waitForLocator(depPICSelectElement);
+        depPICSelectElement.click();
     }
+
+//    public void project() {
+//        try {
+//            Locator projectLocator = page.locator(PROJECT);
+//            waitForLocator(projectLocator);
+//            projectLocator.click();
+//
+//            String projectCodeValue = properties.getProperty("projectCode");
+//            Locator projectSearchLocator = page.locator(PROJECT_SEARCH);
+//            waitForLocator(projectSearchLocator);
+//            projectSearchLocator.fill(projectCodeValue);
+//
+//            String projectSelectLocator = getProject(projectCodeValue);
+//            Locator projectSelectElement = page.locator(projectSelectLocator);
+//            waitForLocator(projectSelectElement);
+//            projectSelectElement.click();
+//        } catch (Exception error) {
+//            System.out.println("What is the error: " + error.getMessage());
+//        }
+//    }
+
+//    public void wbs() {
+//        try {
+//            if (prType.toUpperCase().equals("MH")) {
+//                Locator wbsLocator = page.locator(WBS);
+//                waitForLocator(wbsLocator);
+//                wbsLocator.click();
+//
+//                List<String> wbsResultsList = page.locator(WBS_LIST).allTextContents();
+//                for (int i = 0; i < wbsResultsList.size(); i++) {
+//                    String wbsResult = wbsResultsList.get(i);
+//                    if (wbsResult.endsWith("E")) {
+//                        String wbsForMh = getWBSForMh(wbsResult);
+//                        Locator finalWbsLocator = page.locator(wbsForMh);
+//                        waitForLocator(finalWbsLocator);
+//                        finalWbsLocator.first().click();
+//                        break;
+//                    }
+//                }
+//            } else {
+//                Locator wbsLocator = page.locator(WBS);
+//                waitForLocator(wbsLocator);
+//                wbsLocator.click();
+//
+//                String wbsCodeValue = properties.getProperty("wbsCode");
+//                Locator wbsSearchLocator = page.locator(WBS_SEARCH);
+//                waitForLocator(wbsSearchLocator);
+//                wbsSearchLocator.fill(wbsCodeValue);
+//
+//                String wbsSelectLocator = getWBSForCandNC(wbsCodeValue);
+//                Locator finalWbsLocator = page.locator(wbsSelectLocator);
+//                waitForLocator(finalWbsLocator);
+//                finalWbsLocator.click();
+//            }
+//        } catch (Exception error) {
+//            System.out.println("What is the error: " + error.getMessage());
+//        }
+//    }
 
     public void vendor() {
         try {
@@ -165,7 +208,7 @@ public class Create implements IPrCreate {
             waitForLocator(vendorLocator);
             vendorLocator.click();
 
-            String vendorNameValue = properties.getProperty("vendorEmail");
+            String vendorNameValue = properties.getProperty("vendorName");
             Locator vendorSearchLocator = page.locator(VENDOR_SEARCH);
             waitForLocator(vendorSearchLocator);
             vendorSearchLocator.fill(vendorNameValue);
@@ -276,6 +319,19 @@ public class Create implements IPrCreate {
         }
     }
 
+    public void billableToCustomer(){
+        Locator billableLocator = page.locator(BILLABLE_TO_CUSTOMER);
+        waitForLocator(billableLocator);
+        billableLocator.click();
+
+        String billableValue = properties.getProperty("billableToCustomer");
+        String billableOptionsLocator = getBillableToCustomer(billableValue);
+
+        Locator billableOptionElement = page.locator(billableOptionsLocator);
+        waitForLocator(billableOptionElement);
+        billableOptionElement.click();
+    }
+
     public void quotationRequiredBy() {
         try {
             Locator quotationRequiredByField = page.locator(QUOTATION_REQUIRED_BY);
@@ -297,8 +353,16 @@ public class Create implements IPrCreate {
             expectedPoIssueField.click();
 
             Locator todayOption = page.locator(TODAY);
-            waitForLocator(todayOption);
-            todayOption.first().click();
+            for (int i = 0; i < todayOption.count(); i++) {
+                if (todayOption.nth(i).isVisible()) {
+                    todayOption.nth(i).click(); // Click the visible element
+                    break; // Stop the loop once the visible element is found and clicked
+                }
+            }
+            page.locator("//label[@for='expectedDelivery']").click();
+
+//            waitForLocator(todayOption);
+//            todayOption.last().click();
         } catch (Exception error) {
             System.out.println("Error encountered: " + error.getMessage());
         }
@@ -311,8 +375,14 @@ public class Create implements IPrCreate {
             expectedDeliveryField.click();
 
             Locator todayOption = page.locator(TODAY);
-            waitForLocator(todayOption);
-            todayOption.first().click();
+            for (int i = 0; i < todayOption.count(); i++) {
+                if (todayOption.nth(i).isVisible()) {
+                    todayOption.nth(i).click(); // Click the visible element
+                    break; // Stop the loop once the visible element is found and clicked
+                }
+            }
+//            waitForLocator(todayOption);
+//            todayOption.last().click();
         } catch (Exception error) {
             System.out.println("Error encountered: " + error.getMessage());
         }
@@ -361,6 +431,41 @@ public class Create implements IPrCreate {
 //            System.out.println("Error encountered: " + error.getMessage());
 //        }
 //    }
+
+    public void buyerGroup(){
+        Locator buyerGroupDropdown = page.locator(BUYER_GROUP);
+        waitForLocator(buyerGroupDropdown);
+        buyerGroupDropdown.click();
+
+        String buyerGroupName = properties.getProperty("buyerGroupName");
+
+        Locator buyerGroupSearch = page.locator(BUYER_GROUP_SEARCH);
+        waitForLocator(buyerGroupSearch);
+        buyerGroupSearch.fill(buyerGroupName);
+
+        String buyerGroupElement = getProjectManager(buyerGroupName);
+        Locator buyerGroupSelect = page.locator(buyerGroupElement);
+        waitForLocator(buyerGroupSelect);
+        buyerGroupSelect.click();
+    }
+
+    public void checker(){
+        Locator checkerDropdown = page.locator(CHECKER);
+        waitForLocator(checkerDropdown);
+        checkerDropdown.click();
+
+        String checkerName = properties.getProperty("checker");
+
+        Locator checkerSearch = page.locator(CHECKER_SEARCH);
+        waitForLocator(checkerSearch);
+        checkerSearch.fill(checkerName);
+
+        String checkerElement = getChecker(checkerName);
+        Locator checkerElementLocator = page.locator(checkerElement);
+        waitForLocator(checkerElementLocator);
+        checkerElementLocator.click();
+    }
+
 
     public void rohsCompliance(){
         try {
@@ -413,12 +518,34 @@ public class Create implements IPrCreate {
 
     public void targetPrice(){
         try {
-            if (prType.equals("NonCatalog")) {
+//            if (prType.equals("NonCatalog")) {
                 String targetPrice = properties.getProperty("targetPrice");
                 Locator targetPriceLocator = page.locator(TARGET_PRICE);
                 waitForLocator(targetPriceLocator);
                 targetPriceLocator.fill(targetPrice);
-            }
+//            }
+        } catch (Exception error) {
+            System.out.println("Error encountered: " + error.getMessage());
+        }
+    }
+
+    public void caseMarking(){
+        try {
+            String caseMarkingDetails = properties.getProperty("caseMarking");
+            Locator caseMarking = page.locator(CASE_MARKING);
+            waitForLocator(caseMarking);
+            caseMarking.fill(caseMarkingDetails);
+        } catch (Exception error) {
+            System.out.println("Error encountered: " + error.getMessage());
+        }
+    }
+
+    public void messageToSourcing(){
+        try {
+            String messageDetails = properties.getProperty("messageToSourcing");
+            Locator messageToSourcing = page.locator(MESSAGE_TO_SOURCING);
+            waitForLocator(messageToSourcing);
+            messageToSourcing.fill(messageDetails);
         } catch (Exception error) {
             System.out.println("Error encountered: " + error.getMessage());
         }
@@ -502,7 +629,6 @@ public class Create implements IPrCreate {
 
     public void addLineRequisitionItems() {
         try {
-            Locator addItemButton = null;
             Locator addLineItemButton = page.locator(ADD_LINE_ITEM_BUTTON);
             waitForLocator(addLineItemButton);
             addLineItemButton.click();
@@ -511,83 +637,180 @@ public class Create implements IPrCreate {
             waitForLocator(itemsDropdown);
             itemsDropdown.click();
 
-            if (prType.equals("Catalog")) {
-                List<String> itemList = page.locator(ITEMS_LIST).allTextContents();
-                for (int i = 1; i <= itemList.size(); i++) {
-                    String itemName = itemList.get(i);
-                    itemName.split(" - ");
+            page.locator("(//ul[@id='select2-item-results']/li)[1]").click();
+            page.locator("#soItemNumber").fill("1");
+            page.locator("#quantity").fill("10");
+            page.locator("#remarks").fill("Remarks 1");
+            page.locator("#description").fill("Desc 1");
+            Locator addItemButton = page.locator(ADD_ITEM_BUTTON);
+            waitForLocator(addItemButton);
+            addItemButton.click();
 
-                    if (i > 1) {
-                        waitForLocator(addItemButton);
-                        addLineItemButton.click();
-                        waitForLocator(itemsDropdown);
-                        itemsDropdown.click();
-                    }
-
-                    Locator itemSearchBox = page.locator(ITEM_SEARCH);
-                    waitForLocator(itemSearchBox);
-                    itemSearchBox.fill(itemName);
-
-                    Locator itemOption = page.locator(getItem(itemName));
-                    waitForLocator(itemOption);
-                    itemOption.first().click();
-
-                    Locator quantityField = page.locator(QUANTITY);
-                    waitForLocator(quantityField);
-                    quantityField.fill(String.valueOf(i));
-
-                    addItemButton = page.locator(ADD_ITEM_BUTTON);
-                    waitForLocator(addItemButton);
-                    addItemButton.click();
-                }
-            } else if (prType.equals("NonCatalog")) {
-                String[] itemNames = properties.getProperty("items").split(",");
-                String[] quantities = properties.getProperty("quantityList").split(",");
-
-                for (int i = 0; i < itemNames.length; i++) {
-                    waitForLocator(addItemButton);
-                    addLineItemButton.click();
-
-                    waitForLocator(itemsDropdown);
-                    itemsDropdown.click();
-
-                    Locator itemSearchBox = page.locator(ITEM_SEARCH);
-                    waitForLocator(itemSearchBox);
-                    itemSearchBox.fill(itemNames[i]);
-
-                    Locator itemOption = page.locator(getItem(itemNames[i]));
-                    waitForLocator(itemOption);
-                    itemOption.first().click();
-
-                    Locator quantityField = page.locator(QUANTITY);
-                    waitForLocator(quantityField);
-                    quantityField.fill(quantities[i]);
-
-                    waitForLocator(addItemButton);
-                    addItemButton.click();
-                }
-            } else if (prType.equalsIgnoreCase("MH")) {
-                String mhItemName = properties.getProperty("mhItem");
-
-                Locator itemSearchBox = page.locator(ITEM_SEARCH);
-                waitForLocator(itemSearchBox);
-                itemSearchBox.fill(mhItemName);
-
-                Locator itemOption = page.locator(getItem(mhItemName));
-                waitForLocator(itemOption);
-                itemOption.first().click();
-
-                Locator quantityField = page.locator(QUANTITY);
-                waitForLocator(quantityField);
-                quantityField.fill("20");
-
-                waitForLocator(addItemButton);
-                addItemButton.click();
-            }
+//            if (prType.equals("Catalog")) {
+//                List<String> itemList = page.locator(ITEMS_LIST).allTextContents();
+//                for (int i = 1; i <= itemList.size(); i++) {
+//                    String itemName = itemList.get(i);
+//                    itemName.split(" - ");
+//
+//                    if (i > 1) {
+//                        waitForLocator(addItemButton);
+//                        addLineItemButton.click();
+//                        waitForLocator(itemsDropdown);
+//                        itemsDropdown.click();
+//                    }
+//
+//                    Locator itemSearchBox = page.locator(ITEM_SEARCH);
+//                    waitForLocator(itemSearchBox);
+//                    itemSearchBox.fill(itemName);
+//
+//                    Locator itemOption = page.locator(getItem(itemName));
+//                    waitForLocator(itemOption);
+//                    itemOption.first().click();
+//
+//                    Locator quantityField = page.locator(QUANTITY);
+//                    waitForLocator(quantityField);
+//                    quantityField.fill(String.valueOf(i));
+//
+//                    addItemButton = page.locator(ADD_ITEM_BUTTON);
+//                    waitForLocator(addItemButton);
+//                    addItemButton.click();
+//                }
+//            } else if (prType.equals("NonCatalog")) {
+//                String[] itemNames = properties.getProperty("items").split(",");
+//                String[] quantities = properties.getProperty("quantityList").split(",");
+//
+//                for (int i = 0; i < itemNames.length; i++) {
+//                    waitForLocator(addItemButton);
+//                    addLineItemButton.click();
+//
+//                    waitForLocator(itemsDropdown);
+//                    itemsDropdown.click();
+//
+//                    Locator itemSearchBox = page.locator(ITEM_SEARCH);
+//                    waitForLocator(itemSearchBox);
+//                    itemSearchBox.fill(itemNames[i]);
+//
+//                    Locator itemOption = page.locator(getItem(itemNames[i]));
+//                    waitForLocator(itemOption);
+//                    itemOption.first().click();
+//
+//                    Locator quantityField = page.locator(QUANTITY);
+//                    waitForLocator(quantityField);
+//                    quantityField.fill(quantities[i]);
+//
+//                    waitForLocator(addItemButton);
+//                    addItemButton.click();
+//                }
+//            } else if (prType.equalsIgnoreCase("MH")) {
+//                String mhItemName = properties.getProperty("mhItem");
+//
+//                Locator itemSearchBox = page.locator(ITEM_SEARCH);
+//                waitForLocator(itemSearchBox);
+//                itemSearchBox.fill(mhItemName);
+//
+//                Locator itemOption = page.locator(getItem(mhItemName));
+//                waitForLocator(itemOption);
+//                itemOption.first().click();
+//
+//                Locator quantityField = page.locator(QUANTITY);
+//                waitForLocator(quantityField);
+//                quantityField.fill("20");
+//
+//                waitForLocator(addItemButton);
+//                addItemButton.click();
+//            }
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
 
+    }
+
+    public void createItemsFile() {
+        page.locator("#itemImport").click();
+
+        // Wait for the new tab (or page) to be created
+        Page newTab = page.waitForPopup(() -> {
+            page.click("#importLink");  // Clicking on a link that opens a new tab
+        });
+        page.click("//button[(@aria-label='Close') and (contains(text(),'Cancel'))]");
+
+        // Now you can interact with the new tab
+        newTab.waitForLoadState();
+        newTab.locator(".form-control-sm").fill(properties.getProperty("rateContract"));
+        Download download = newTab.waitForDownload(() -> {
+            newTab.click("//a[(@class='export-link') and (contains(text(),'" + properties.getProperty("rateContract") + "'))]");
+        });
+        // Wait for the download to complete and save it to a specific location
+        download.saveAs(Paths.get("Downloads/" + download.suggestedFilename()));
+        newTab.close();
+
+        String filePath = "Downloads/ExportItems.xlsx"; // Path to your Excel file
+
+        try {
+            // Step 1: Load the Excel file
+            FileInputStream fileInputStream = new FileInputStream(filePath);
+            Workbook workbook = new XSSFWorkbook(fileInputStream);
+            Sheet sheet = workbook.getSheetAt(0); // Get the first sheet (index 0)
+
+
+            // Step 2: Delete the second row (row index 1)
+            if (sheet.getLastRowNum() > 2) {
+                Row rowToDelete = sheet.getRow(1); // Get the second row (index 1)
+
+                if (rowToDelete != null) {
+                    sheet.removeRow(rowToDelete);  // Delete the row
+
+                    // Step 3: Shift the rows up (if necessary) to fill the gap left by the deleted row
+                    if (1 < sheet.getLastRowNum()) {
+                        sheet.shiftRows(2, sheet.getLastRowNum(), -1);  // Shift rows starting from the third row up
+                    }
+                }
+            }
+
+            // Step 2: Start the loop from the second row (index 1)
+            for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) { // rowIndex 1 for second row
+                Row row = sheet.getRow(rowIndex);
+
+                Cell Quantity = row.getCell(11);
+                if(Quantity == null)
+                    Quantity = row.createCell(14);
+                Quantity.setCellValue(rowIndex * 2 + 1);
+
+                Cell Description = row.getCell(12);
+                if(Description == null)
+                    Description = row.createCell(14);
+                Description.setCellValue("Desc " + (rowIndex+1));
+
+                Cell Remarks = row.getCell(13);
+                if(Remarks == null)
+                    Remarks = row.createCell(14);
+                Remarks.setCellValue("Remarks " + (rowIndex+1));
+
+                Cell SOItemNumber = row.getCell(14);
+                if(SOItemNumber == null)
+                    SOItemNumber = row.createCell(14);
+                SOItemNumber.setCellValue(rowIndex + 1);
+            }
+
+            // Step 4: Write the updated data back to the file
+            FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+            workbook.write(fileOutputStream);
+
+            // Step 5: Close the streams
+            fileInputStream.close();
+            fileOutputStream.close();
+            workbook.close();
+            System.out.println("Excel file updated successfully!");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void importItems(){
+        page.locator("#itemImport").click();
+        Locator itemFile = page.locator("#formFile");
+        itemFile.setInputFiles(Paths.get("Downloads/ExportItems.xlsx"));
+        page.locator("#btnUpload").click();
     }
 
     public void notes() {
@@ -616,6 +839,10 @@ public class Create implements IPrCreate {
             waitForLocator(attachInternalFileButton);
             attachInternalFileButton.click();
 
+            Locator continueButton = page.locator(CONTINUE_BUTTON);
+            waitForLocator(continueButton);
+            continueButton.click();
+
 //TODO External Attachment
             Locator externalAttachmentsButton = page.locator(ATTACHMENTS);
             waitForLocator(externalAttachmentsButton);
@@ -633,7 +860,7 @@ public class Create implements IPrCreate {
             waitForLocator(attachExternalFileButton);
             attachExternalFileButton.click();
 
-            Locator continueButton = page.locator(CONTINUE_BUTTON);
+//            Locator continueButton = page.locator(CONTINUE_BUTTON);
             waitForLocator(continueButton);
             continueButton.click();
 

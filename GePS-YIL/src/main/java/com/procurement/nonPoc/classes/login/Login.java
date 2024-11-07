@@ -55,6 +55,11 @@ public class Login implements ILogin {
             Locator loginButtonLocator = page.locator(LOGIN_BUTTON);
             waitForLocator(loginButtonLocator);
             loginButtonLocator.click();
+
+            Locator requisitionsNavLocator = page.locator(RequisitionsNav_Button);
+            waitForLocator(requisitionsNavLocator);
+            requisitionsNavLocator.click();
+
         } catch (Exception error) {
             System.out.println("Login error: " + error.getMessage());
         }

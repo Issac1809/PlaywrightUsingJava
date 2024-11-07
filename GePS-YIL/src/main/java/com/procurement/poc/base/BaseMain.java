@@ -15,14 +15,14 @@ import com.procurement.poc.classes.requisition.type.PurchaseRequisitionTypeHandl
 import com.procurement.poc.interfaces.login.ILogin;
 import com.procurement.poc.interfaces.logout.ILogout;
 import com.procurement.poc.interfaces.requisitions.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
 public class BaseMain {
 
-    protected Logger logger;
+//    protected Logger logger;
     protected PlaywrightFactory playwrightFactory;
     protected Properties properties;
     protected Page page;
@@ -40,7 +40,7 @@ public class BaseMain {
 //TODO Constructor
     public BaseMain(){
         try {
-            logger = LoggerFactory.getLogger(BaseMain.class);
+//            logger = LoggerFactory.getLogger(BaseMain.class);
             playwrightFactory = new PlaywrightFactory();
             properties = playwrightFactory.initializeProperties();
             page = playwrightFactory.initializePage(properties);
@@ -58,7 +58,7 @@ public class BaseMain {
             iPrSuspend = new BuyerSuspend(iLogin, properties, page, iLogout, iPrEdit);
 
         } catch (Exception exception) {
-            logger.error("Error initializing BaseMain", exception);
+//            logger.error("Error initializing BaseMain", exception);
         }
     }
 }
