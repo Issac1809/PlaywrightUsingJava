@@ -1,14 +1,20 @@
 package com.procurement.poc.constants.login;
 
-public class LLogin{
+public enum LLogin {
+      EMAIL("#Input_Email"),
+      PASSWORD("#Input_Password"),
+      LOGIN_BUTTON("#login-submit"),
+      RequisitionsNav_Button("#ni-requisitions");
 
-    public static final String EMAIL = "#Input_Email";
-    public static final String PASSWORD = "#Input_Password";
-    public static final String LOGIN_BUTTON = "#login-submit";
-    public static final String RequisitionsNav_Button = "#ni-requisitions";
+    private final String locatorsName;
 
+    // Constructor
+    LLogin(String locatorName) {
+        this.locatorsName = locatorName;
+    }
 
-//TODO Constructor
-    private LLogin(){
+    // Getter method
+    public String getLocatorsName() {
+        return locatorsName;
     }
 }

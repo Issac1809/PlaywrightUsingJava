@@ -1,10 +1,17 @@
 package com.procurement.nonPoc.constants.logout;
 
-public class LLogout {
-    
-    public static final String LOGIN_AVATAR = ".avatar-img";
-    public static final String SIGN_OUT = "//a[@onclick='user_logout()']";
+public enum LLogout {
+    EMAIL("#Input_Email"),
+    LOGIN_AVATAR(".avatar-img"),
+    SIGN_OUT( "//a[@onclick='user_logout()']");
 
-    private LLogout(){
+    private final String locatorsName;
+
+    LLogout(String locatorName) {
+        this.locatorsName = locatorName;
+    }
+    // Getter method
+    public String getLocatorsName() {
+        return locatorsName;
     }
 }

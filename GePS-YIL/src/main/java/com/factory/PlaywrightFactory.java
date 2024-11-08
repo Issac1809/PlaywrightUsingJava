@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Properties;
+
+import com.enums.BrowserEnum;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
@@ -61,26 +63,15 @@ public class PlaywrightFactory {
     }
 
     public Page initializePage(Properties properties) {
-        String browserName = properties.getProperty("browserType").trim().toUpperCase();
-        switch (browserName.toUpperCase()) {
-            case "CHROMIUM":
-                localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
-                break;
-            case "CHROME":
-                localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false)));
-                break;
-            case "EDGE":
-                localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("msedge").setHeadless(false)));
-                break;
-            case "SAFARI":
-                localBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(false)));
-                break;
-            case "FIREFOX":
-                localBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(false)));
-                break;
-            default:
-                System.out.println("--Enter Proper Browser Name--");
-                break;
+//      String browserName = properties.getProperty("browserType").trim().toUpperCase();
+        BrowserEnum browser = BrowserEnum.EDGE;
+        switch (browser) {
+            case CHROMIUM -> localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+            case CHROME -> localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel(browser.getBrowserName()).setHeadless(false)));
+            case EDGE -> localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel(browser.getBrowserName()).setHeadless(false)));
+            case SAFARI -> localBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+            case FIREFOX -> localBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+            default -> System.out.println("--Enter Proper Browser Name--");
         }
         localBrowserContext.set(getBrowser().newContext());
         localPage.set(getBrowser().newPage());

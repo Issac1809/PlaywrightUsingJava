@@ -46,7 +46,7 @@ public class BaseMain {
             page = playwrightFactory.initializePage(properties);
 
 //TODO Requisition
-            iLogin = new Login(properties, page);
+            iLogin = (com.procurement.poc.interfaces.login.ILogin) new Login(properties, page);
             iLogout = new Logout(page);
             iPrCreate = new Create(iLogin, properties, page, iLogout);
             iPrType = new PurchaseRequisitionTypeHandler(iPrCreate, properties);

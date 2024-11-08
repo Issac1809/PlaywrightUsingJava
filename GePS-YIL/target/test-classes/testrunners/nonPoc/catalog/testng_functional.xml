@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="YCA Playwright Suite">
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="YCN Playwright Suite" >
     <!-->parallel="tests" thread-count="1" verbose="1"-->
 
     <listeners>
         <listener class-name="org.testng.reporters.EmailableReporter2" />
         <listener class-name="com.reports.ExtentReportListener" />
-<!--        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>-->
     </listeners>
 
     <test name="YIL Login Page Test">
@@ -48,7 +47,7 @@
 <!--    <test name="Requisition Assign Page Test">-->
 <!--        <classes>-->
 <!--            <class name="com.procurement.poc.requisition.assign.AssignTest" />-->
-<!--        </classes>-->
+<!--        </classes>-->`
 <!--    </test>-->
 
 <!--    <test name="Requisition Buyer Suspend Page Test">-->

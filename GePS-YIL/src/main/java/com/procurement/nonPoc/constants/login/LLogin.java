@@ -1,13 +1,22 @@
 package com.procurement.nonPoc.constants.login;
 
-public class LLogin{
+import java.util.Properties;
 
-    public static final String EMAIL = "#Input_Email";
-    public static final String PASSWORD = "#Input_Password";
-    public static final String LOGIN_BUTTON = "#login-submit";
-    public static final String RequisitionsNav_Button = "#ni-requisitions";
+public enum LLogin {
+      EMAIL("#Input_Email"),
+      PASSWORD("#Input_Password"),
+      LOGIN_BUTTON("#login-submit"),
+      RequisitionsNav_Button("#ni-requisitions");
 
-//TODO Constructor
-    private LLogin(){
+    private final String locatorsName;
+
+    // Constructor
+    LLogin(String locatorName) {
+        this.locatorsName = locatorName;
+    }
+
+    // Getter method
+    public String getLocatorsName() {
+        return locatorsName;
     }
 }

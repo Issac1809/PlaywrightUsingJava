@@ -19,10 +19,10 @@ public class Logout implements ILogout {
 
     public void performLogout() {
         try {
-            Locator avatarLocator = page.locator(LOGIN_AVATAR);
+            Locator avatarLocator = page.locator(LOGIN_AVATAR.getLocatorsName());
             waitForLocator(avatarLocator);
             avatarLocator.click();
-            Locator signOutLocator = page.locator(SIGN_OUT);
+            Locator signOutLocator = page.locator(SIGN_OUT.getLocatorsName());
             waitForLocator(signOutLocator);
             signOutLocator.click();
         } catch (Exception error) {

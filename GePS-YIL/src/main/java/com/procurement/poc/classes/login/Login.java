@@ -22,17 +22,17 @@ public class Login implements ILogin {
 
     public void performLogin() {
         try {
-            Locator emailLocator = page.locator(EMAIL);
+            Locator emailLocator = page.locator(EMAIL.getLocatorsName());
             waitForLocator(emailLocator);
             emailLocator.click();
             emailLocator.fill(properties.getProperty("requesterEmail"));
 
-            Locator passwordLocator = page.locator(PASSWORD);
+            Locator passwordLocator = page.locator(PASSWORD.getLocatorsName());
             waitForLocator(passwordLocator);
             passwordLocator.click();
             passwordLocator.fill(properties.getProperty("loginPassword"));
 
-            Locator loginButtonLocator = page.locator(LOGIN_BUTTON);
+            Locator loginButtonLocator = page.locator(LOGIN_BUTTON.getLocatorsName());
             waitForLocator(loginButtonLocator);
             loginButtonLocator.click();
         } catch (Exception error) {
@@ -42,21 +42,21 @@ public class Login implements ILogin {
 
     public void performLogin(String emailId) {
         try {
-            Locator emailLocator = page.locator(EMAIL);
+            Locator emailLocator = page.locator(EMAIL.getLocatorsName());
             waitForLocator(emailLocator);
             emailLocator.click();
             emailLocator.fill(emailId);
 
-            Locator passwordLocator = page.locator(PASSWORD);
+            Locator passwordLocator = page.locator(PASSWORD.getLocatorsName());
             waitForLocator(passwordLocator);
             passwordLocator.click();
             passwordLocator.fill(properties.getProperty("loginPassword"));
 
-            Locator loginButtonLocator = page.locator(LOGIN_BUTTON);
+            Locator loginButtonLocator = page.locator(LOGIN_BUTTON.getLocatorsName());
             waitForLocator(loginButtonLocator);
             loginButtonLocator.click();
 
-            Locator requisitionsNavLocator = page.locator(RequisitionsNav_Button);
+            Locator requisitionsNavLocator = page.locator(RequisitionsNav_Button.getLocatorsName());
             waitForLocator(requisitionsNavLocator);
             requisitionsNavLocator.click();
         } catch (Exception error) {

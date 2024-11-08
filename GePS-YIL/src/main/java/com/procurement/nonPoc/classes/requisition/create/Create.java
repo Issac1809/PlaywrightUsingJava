@@ -52,7 +52,7 @@ public class Create implements IPrCreate {
 
     public void createButton() {
         try {
-            Locator createButton = page.locator(CREATE_BUTTON);
+            Locator createButton = page.locator(CREATE_BUTTON.getLocator());
             waitForLocator(createButton);
             createButton.click();
         } catch (Exception error) {
@@ -75,19 +75,19 @@ public class Create implements IPrCreate {
             prType=properties.getProperty("purchaseType");
             switch (prType) {
                 case "Catalog":
-                    Locator catalogTitleLocator = page.locator(TITLE);
+                    Locator catalogTitleLocator = page.locator(TITLE.getLocator());
                     waitForLocator(catalogTitleLocator);
                     String catalogTitle = properties.getProperty("orderTitle");
                     catalogTitleLocator.fill(catalogTitle + "-" + prType);
                     break;
                 case "NonCatalog":
-                    Locator nonCatalogTitleLocator = page.locator(TITLE);
+                    Locator nonCatalogTitleLocator = page.locator(TITLE.getLocator());
                     waitForLocator(nonCatalogTitleLocator);
                     String nonCatalogTitle = properties.getProperty("orderTitle");
                     nonCatalogTitleLocator.fill(nonCatalogTitle + "-" + prType);
                     break;
                 case "MH":
-                    Locator mhTitleLocator = page.locator(TITLE);
+                    Locator mhTitleLocator = page.locator(TITLE.getLocator());
                     waitForLocator(mhTitleLocator);
                     String mhTitle = properties.getProperty("orderTitle");
                     mhTitleLocator.fill(mhTitle + "-" + prType);
@@ -105,7 +105,7 @@ public class Create implements IPrCreate {
         try {
             String shipToYokogawaValue = properties.getProperty("shipToYokogawa").toLowerCase().trim();
             if (shipToYokogawaValue.equals("no")) {
-                page.locator(SHIP_TO_YOKOGAWA).check();
+                page.locator(SHIP_TO_YOKOGAWA.getLocator()).check();
             }
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
@@ -113,32 +113,32 @@ public class Create implements IPrCreate {
     }
 
     public void salesOrder(){
-        Locator salesOrderLocator = page.locator(SALES_ORDER);
+        Locator salesOrderLocator = page.locator(SALES_ORDER.getLocator());
         waitForLocator(salesOrderLocator);
         salesOrderLocator.click();
 
         String salesOrderValue = properties.getProperty("salesOrder");
-        Locator salesOrderSearchLocator = page.locator(SALESORDER_SEARCH);
+        Locator salesOrderSearchLocator = page.locator(SALESORDER_SEARCH.getLocator());
         waitForLocator(salesOrderSearchLocator);
         salesOrderSearchLocator.fill(salesOrderValue);
 
-        String salesOrderSelectLocator = getSalesOrder(salesOrderValue);
+        String salesOrderSelectLocator = getString(salesOrderValue);
         Locator salesOrderSelectElement = page.locator(salesOrderSelectLocator);
         waitForLocator(salesOrderSelectElement);
         salesOrderSelectElement.click();
     }
 
     public void departmentPIC(){
-        Locator depPIC = page.locator(DEPARTMENT_PIC);
+        Locator depPIC = page.locator(DEPARTMENT_PIC.getLocator());
         waitForLocator(depPIC);
         depPIC.click();
 
         String departmentPIC = properties.getProperty("departmentPIC");
-        Locator depPICSearch = page.locator(DEPARTMENT_PIC_SEARCH);
+        Locator depPICSearch = page.locator(DEPARTMENT_PIC_SEARCH.getLocator());
         waitForLocator(depPICSearch);
         depPICSearch.fill(departmentPIC);
 
-        String depPICSelectLocator = getDepartmentPic(departmentPIC);
+        String depPICSelectLocator = getString(departmentPIC);
         Locator depPICSelectElement = page.locator(depPICSelectLocator);
         waitForLocator(depPICSelectElement);
         depPICSelectElement.click();
@@ -204,16 +204,16 @@ public class Create implements IPrCreate {
 
     public void vendor() {
         try {
-            Locator vendorLocator = page.locator(VENDOR);
+            Locator vendorLocator = page.locator(VENDOR.getLocator());
             waitForLocator(vendorLocator);
             vendorLocator.click();
 
             String vendorNameValue = properties.getProperty("vendorName");
-            Locator vendorSearchLocator = page.locator(VENDOR_SEARCH);
+            Locator vendorSearchLocator = page.locator(VENDOR_SEARCH.getLocator());
             waitForLocator(vendorSearchLocator);
             vendorSearchLocator.fill(vendorNameValue);
 
-            String vendorOptionLocator = getVendor(vendorNameValue);
+            String vendorOptionLocator = getString(vendorNameValue);
             Locator vendorOption = page.locator(vendorOptionLocator);
             waitForLocator(vendorOption);
             vendorOption.click();
@@ -224,16 +224,16 @@ public class Create implements IPrCreate {
 
     public void rateContract() {
         try {
-            Locator rateContractLocator = page.locator(RATE_CONTRACT);
+            Locator rateContractLocator = page.locator(RATE_CONTRACT.getLocator());
             waitForLocator(rateContractLocator);
             rateContractLocator.click();
 
             String rateContractValue = properties.getProperty("rateContract");
-            Locator rateContractSearchLocator = page.locator(RATE_CONTRACT_SEARCH);
+            Locator rateContractSearchLocator = page.locator(RATE_CONTRACT_SEARCH.getLocator());
             waitForLocator(rateContractSearchLocator);
             rateContractSearchLocator.fill(rateContractValue);
 
-            String rateContractOptionLocator = getRateContract(rateContractValue);
+            String rateContractOptionLocator = getString(rateContractValue);
             Locator rateContractOption = page.locator(rateContractOptionLocator);
             waitForLocator(rateContractOption);
             rateContractOption.click();
@@ -244,15 +244,15 @@ public class Create implements IPrCreate {
 
     public void incoterm() {
         try {
-            Locator incotermLocator = page.locator(INCOTERM);
+            Locator incotermLocator = page.locator(INCOTERM.getLocator());
             waitForLocator(incotermLocator);
             incotermLocator.click();
 
             String incotermValue = properties.getProperty("incoterm");
-            Locator incotermSearchLocator = page.locator(INCOTERM_SEARCH);
+            Locator incotermSearchLocator = page.locator(INCOTERM_SEARCH.getLocator());
             incotermSearchLocator.fill(incotermValue);
 
-            String incotermOptionLocator = getIncoterm(incotermValue);
+            String incotermOptionLocator = getString(incotermValue);
             Locator incotermOption = page.locator(incotermOptionLocator);
             waitForLocator(incotermOption);
             incotermOption.click();
@@ -263,12 +263,12 @@ public class Create implements IPrCreate {
 
     public void shippingAddress() {
         try {
-            Locator shippingAddressLocator = page.locator(SHIPPING_ADDRESS);
+            Locator shippingAddressLocator = page.locator(SHIPPING_ADDRESS.getLocator());
             waitForLocator(shippingAddressLocator);
             shippingAddressLocator.click();
 
             String shippingAddressValue = properties.getProperty("shippingAddress");
-            String shippingAddressOptionLocator = getShippingAddress(shippingAddressValue);
+            String shippingAddressOptionLocator = getString(shippingAddressValue);
 
             Locator shippingAddressOption = page.locator(shippingAddressOptionLocator);
             waitForLocator(shippingAddressOption);
@@ -280,12 +280,12 @@ public class Create implements IPrCreate {
 
     public void billingType() {
         try {
-            Locator billingTypeLocator = page.locator(BILLING_TYPE);
+            Locator billingTypeLocator = page.locator(BILLING_TYPE.getLocator());
             waitForLocator(billingTypeLocator);
             billingTypeLocator.click();
 
             String selectedBillingType = properties.getProperty("billingType");
-            String billingTypeOptionLocator = getBillingType(selectedBillingType);
+            String billingTypeOptionLocator = getString(selectedBillingType);
 
             Locator billingTypeOption = page.locator(billingTypeOptionLocator);
             waitForLocator(billingTypeOption);
@@ -297,7 +297,7 @@ public class Create implements IPrCreate {
 
     public void shippingMode() {
         try {
-            String shippingMode = prType.equals("Catalog") ? CATALOG_SHIPPING_MODE : NON_CATALOG_MH_SHIPPING_MODE;
+            String shippingMode = prType.equals("Catalog") ? CATALOG_SHIPPING_MODE.getLocator() : NON_CATALOG_MH_SHIPPING_MODE.getLocator();
 
             Locator shippingModeLocator = page.locator(shippingMode);
             waitForLocator(shippingModeLocator);
@@ -305,11 +305,11 @@ public class Create implements IPrCreate {
 
             String getShippingMode = properties.getProperty("shippingMode");
 
-            Locator shippingModeSearch = page.locator(SHIPPING_MODE_SEARCH);
+            Locator shippingModeSearch = page.locator(SHIPPING_MODE_SEARCH.getLocator());
             waitForLocator(shippingModeSearch);
             shippingModeSearch.fill(getShippingMode);
 
-            String finalShippingMode = getShippingMode(getShippingMode);
+            String finalShippingMode = getString(getShippingMode);
 
             Locator finalShippingModeLocator = page.locator(finalShippingMode);
             waitForLocator(finalShippingModeLocator);
@@ -320,12 +320,12 @@ public class Create implements IPrCreate {
     }
 
     public void billableToCustomer(){
-        Locator billableLocator = page.locator(BILLABLE_TO_CUSTOMER);
+        Locator billableLocator = page.locator(BILLABLE_TO_CUSTOMER.getLocator());
         waitForLocator(billableLocator);
         billableLocator.click();
 
         String billableValue = properties.getProperty("billableToCustomer");
-        String billableOptionsLocator = getBillableToCustomer(billableValue);
+        String billableOptionsLocator = getString(billableValue);
 
         Locator billableOptionElement = page.locator(billableOptionsLocator);
         waitForLocator(billableOptionElement);
@@ -334,11 +334,11 @@ public class Create implements IPrCreate {
 
     public void quotationRequiredBy() {
         try {
-            Locator quotationRequiredByField = page.locator(QUOTATION_REQUIRED_BY);
+            Locator quotationRequiredByField = page.locator(QUOTATION_REQUIRED_BY.getLocator());
             waitForLocator(quotationRequiredByField);
             quotationRequiredByField.click();
 
-            Locator todayOption = page.locator(TODAY);
+            Locator todayOption = page.locator(TODAY.getLocator());
             waitForLocator(todayOption);
             todayOption.first().click();
         } catch (Exception error) {
@@ -348,11 +348,11 @@ public class Create implements IPrCreate {
 
     public void expectedPOIssue() {
         try {
-            Locator expectedPoIssueField = page.locator(EXPECTED_PO_ISSUE);
+            Locator expectedPoIssueField = page.locator(EXPECTED_PO_ISSUE.getLocator());
             waitForLocator(expectedPoIssueField);
             expectedPoIssueField.click();
 
-            Locator todayOption = page.locator(TODAY);
+            Locator todayOption = page.locator(TODAY.getLocator());
             for (int i = 0; i < todayOption.count(); i++) {
                 if (todayOption.nth(i).isVisible()) {
                     todayOption.nth(i).click(); // Click the visible element
@@ -370,11 +370,11 @@ public class Create implements IPrCreate {
 
     public void expectedDelivery() {
         try {
-            Locator expectedDeliveryField = page.locator(EXPECTED_DELIVERY);
+            Locator expectedDeliveryField = page.locator(EXPECTED_DELIVERY.getLocator());
             waitForLocator(expectedDeliveryField);
             expectedDeliveryField.click();
 
-            Locator todayOption = page.locator(TODAY);
+            Locator todayOption = page.locator(TODAY.getLocator());
             for (int i = 0; i < todayOption.count(); i++) {
                 if (todayOption.nth(i).isVisible()) {
                     todayOption.nth(i).click(); // Click the visible element
@@ -433,34 +433,34 @@ public class Create implements IPrCreate {
 //    }
 
     public void buyerGroup(){
-        Locator buyerGroupDropdown = page.locator(BUYER_GROUP);
+        Locator buyerGroupDropdown = page.locator(BUYER_GROUP.getLocator());
         waitForLocator(buyerGroupDropdown);
         buyerGroupDropdown.click();
 
         String buyerGroupName = properties.getProperty("buyerGroupName");
 
-        Locator buyerGroupSearch = page.locator(BUYER_GROUP_SEARCH);
+        Locator buyerGroupSearch = page.locator(BUYER_GROUP_SEARCH.getLocator());
         waitForLocator(buyerGroupSearch);
         buyerGroupSearch.fill(buyerGroupName);
 
-        String buyerGroupElement = getProjectManager(buyerGroupName);
+        String buyerGroupElement = getString(buyerGroupName);
         Locator buyerGroupSelect = page.locator(buyerGroupElement);
         waitForLocator(buyerGroupSelect);
         buyerGroupSelect.click();
     }
 
     public void checker(){
-        Locator checkerDropdown = page.locator(CHECKER);
+        Locator checkerDropdown = page.locator(CHECKER.getLocator());
         waitForLocator(checkerDropdown);
         checkerDropdown.click();
 
         String checkerName = properties.getProperty("checker");
 
-        Locator checkerSearch = page.locator(CHECKER_SEARCH);
+        Locator checkerSearch = page.locator(CHECKER_SEARCH.getLocator());
         waitForLocator(checkerSearch);
         checkerSearch.fill(checkerName);
 
-        String checkerElement = getChecker(checkerName);
+        String checkerElement = getString(checkerName);
         Locator checkerElementLocator = page.locator(checkerElement);
         waitForLocator(checkerElementLocator);
         checkerElementLocator.click();
@@ -472,7 +472,7 @@ public class Create implements IPrCreate {
             String compliance = properties.getProperty("rohsCompliance").toLowerCase().trim();
 
             if (compliance.equals("no")) {
-                Locator rohsComplianceLocator = page.locator(ROHS_COMPLIANCE);
+                Locator rohsComplianceLocator = page.locator(ROHS_COMPLIANCE.getLocator());
                 waitForLocator(rohsComplianceLocator);
                 rohsComplianceLocator.click();
             }
@@ -485,17 +485,17 @@ public class Create implements IPrCreate {
         try {
             if (prType.equals("NonCatalog")) {
 
-                Locator oiAndTpCurrencyLocator = page.locator(OI_AND_TP_CURRENCY);
+                Locator oiAndTpCurrencyLocator = page.locator(OI_AND_TP_CURRENCY.getLocator());
                 waitForLocator(oiAndTpCurrencyLocator);
                 oiAndTpCurrencyLocator.click();
 
                 String currency = properties.getProperty("oiAndTpCurrency").toLowerCase().trim();
 
-                Locator oiAndTpCurrencySearchLocator = page.locator(OI_AND_TP_CURRENCY_SEARCH);
+                Locator oiAndTpCurrencySearchLocator = page.locator(OI_AND_TP_CURRENCY_SEARCH.getLocator());
                 waitForLocator(oiAndTpCurrencySearchLocator);
                 oiAndTpCurrencySearchLocator.fill(currency);
 
-                String currencySelect = getOiAndTpCurrency(currency);
+                String currencySelect = getString(currency);
                 Locator currencySelectLocator = page.locator(currencySelect);
                 waitForLocator(currencySelectLocator);
                 currencySelectLocator.click();
@@ -508,7 +508,7 @@ public class Create implements IPrCreate {
     public void orderIntake(){
         try {
             String orderIntake = properties.getProperty("orderIntake");
-            Locator orderIntakeLocator = page.locator(ORDER_INTAKE);
+            Locator orderIntakeLocator = page.locator(ORDER_INTAKE.getLocator());
             waitForLocator(orderIntakeLocator);
             orderIntakeLocator.fill(orderIntake);
         } catch (Exception error) {
@@ -520,7 +520,7 @@ public class Create implements IPrCreate {
         try {
 //            if (prType.equals("NonCatalog")) {
                 String targetPrice = properties.getProperty("targetPrice");
-                Locator targetPriceLocator = page.locator(TARGET_PRICE);
+                Locator targetPriceLocator = page.locator(TARGET_PRICE.getLocator());
                 waitForLocator(targetPriceLocator);
                 targetPriceLocator.fill(targetPrice);
 //            }
@@ -532,7 +532,7 @@ public class Create implements IPrCreate {
     public void caseMarking(){
         try {
             String caseMarkingDetails = properties.getProperty("caseMarking");
-            Locator caseMarking = page.locator(CASE_MARKING);
+            Locator caseMarking = page.locator(CASE_MARKING.getLocator());
             waitForLocator(caseMarking);
             caseMarking.fill(caseMarkingDetails);
         } catch (Exception error) {
@@ -543,7 +543,7 @@ public class Create implements IPrCreate {
     public void messageToSourcing(){
         try {
             String messageDetails = properties.getProperty("messageToSourcing");
-            Locator messageToSourcing = page.locator(MESSAGE_TO_SOURCING);
+            Locator messageToSourcing = page.locator(MESSAGE_TO_SOURCING.getLocator());
             waitForLocator(messageToSourcing);
             messageToSourcing.fill(messageDetails);
         } catch (Exception error) {
@@ -554,17 +554,17 @@ public class Create implements IPrCreate {
     public void warrantyRequirements(){
         try {
             if (prType.equals("NonCatalog")) {
-                Locator warrantyRequirementsLocator = page.locator(WARRANTY_REQUIREMENTS);
+                Locator warrantyRequirementsLocator = page.locator(WARRANTY_REQUIREMENTS.getLocator());
                 waitForLocator(warrantyRequirementsLocator);
                 warrantyRequirementsLocator.click();
 
                 String warrantyRequirement = properties.getProperty("warrantyRequirement");
 
-                Locator warrantyRequirementsSearchLocator = page.locator(WARRANTY_REQUIREMENTS_SEARCH);
+                Locator warrantyRequirementsSearchLocator = page.locator(WARRANTY_REQUIREMENTS_SEARCH.getLocator());
                 waitForLocator(warrantyRequirementsSearchLocator);
                 warrantyRequirementsSearchLocator.fill(warrantyRequirement);
 
-                String warrantyRequirementSelector = getWarrantyRequirements(warrantyRequirement);
+                String warrantyRequirementSelector = getString(warrantyRequirement);
                 Locator warrantyRequirementOptionLocator = page.locator(warrantyRequirementSelector);
                 waitForLocator(warrantyRequirementOptionLocator);
                 warrantyRequirementOptionLocator.click();
@@ -576,17 +576,17 @@ public class Create implements IPrCreate {
 
     public void priceValidity(){
         try {
-            Locator priceValidityLocator = page.locator(PRICE_VALIDITY);
+            Locator priceValidityLocator = page.locator(PRICE_VALIDITY.getLocator());
             waitForLocator(priceValidityLocator);
             priceValidityLocator.click();
 
             String warrantyRequirement = properties.getProperty("priceValidity");
 
-            Locator priceValiditySearchLocator = page.locator(PRICE_VALIDITY_SEARCH);
+            Locator priceValiditySearchLocator = page.locator(PRICE_VALIDITY_SEARCH.getLocator());
             waitForLocator(priceValiditySearchLocator);
             priceValiditySearchLocator.fill(warrantyRequirement);
 
-            String priceValiditySelector = getPriceValidity(warrantyRequirement);
+            String priceValiditySelector = getString(warrantyRequirement);
             Locator priceValidityOptionLocator = page.locator(priceValiditySelector);
             waitForLocator(priceValidityOptionLocator);
             priceValidityOptionLocator.click();
@@ -600,7 +600,7 @@ public class Create implements IPrCreate {
             boolean isInspectionRequired = Boolean.parseBoolean(properties.getProperty("inspectionRequired"));
 
             if (isInspectionRequired) {
-                Locator inspectionRequiredLocator = page.locator(INSPECTION_REQUIRED);
+                Locator inspectionRequiredLocator = page.locator(INSPECTION_REQUIRED.getLocator());
                 waitForLocator(inspectionRequiredLocator);
                 inspectionRequiredLocator.click();
             }
@@ -614,11 +614,11 @@ public class Create implements IPrCreate {
             String liquidatedDamages = properties.getProperty("liquidatedDamages").toLowerCase().trim();
 
             if (liquidatedDamages.equals("special")) {
-                Locator liquidatedDamagesSelector = page.locator(LIQUIDATED_DAMAGES_SELECT);
+                Locator liquidatedDamagesSelector = page.locator(LIQUIDATED_DAMAGES_SELECT.getLocator());
                 waitForLocator(liquidatedDamagesSelector);
                 liquidatedDamagesSelector.click();
 
-                Locator liquidatedDamagesInput = page.locator(LIQUIDATED_DAMAGES);
+                Locator liquidatedDamagesInput = page.locator(LIQUIDATED_DAMAGES.getLocator());
                 waitForLocator(liquidatedDamagesInput);
                 liquidatedDamagesInput.fill("Special Liquidated Damages");
             }
@@ -629,11 +629,11 @@ public class Create implements IPrCreate {
 
     public void addLineRequisitionItems() {
         try {
-            Locator addLineItemButton = page.locator(ADD_LINE_ITEM_BUTTON);
+            Locator addLineItemButton = page.locator(ADD_LINE_ITEM_BUTTON.getLocator());
             waitForLocator(addLineItemButton);
             addLineItemButton.click();
 
-            Locator itemsDropdown = page.locator(ITEMS);
+            Locator itemsDropdown = page.locator(ITEMS.getLocator());
             waitForLocator(itemsDropdown);
             itemsDropdown.click();
 
@@ -642,7 +642,7 @@ public class Create implements IPrCreate {
             page.locator("#quantity").fill("10");
             page.locator("#remarks").fill("Remarks 1");
             page.locator("#description").fill("Desc 1");
-            Locator addItemButton = page.locator(ADD_ITEM_BUTTON);
+            Locator addItemButton = page.locator(ADD_ITEM_BUTTON.getLocator());
             waitForLocator(addItemButton);
             addItemButton.click();
 
@@ -816,7 +816,7 @@ public class Create implements IPrCreate {
     public void notes() {
         try {
             String notesText = properties.getProperty("requisitionNotes");
-            Locator notesField = page.locator(NOTES);
+            Locator notesField = page.locator(NOTES.getLocator());
             waitForLocator(notesField);
             notesField.fill(notesText);
         } catch (Exception error) {
@@ -827,36 +827,36 @@ public class Create implements IPrCreate {
     public void attachments(){
         try {
 //TODO Internal Attachment
-            Locator attachmentsButton = page.locator(ATTACHMENTS);
+            Locator attachmentsButton = page.locator(ATTACHMENTS.getLocator());
             waitForLocator(attachmentsButton);
             attachmentsButton.click();
 
-            Locator internalFileUpload = page.locator(FILE_UPLOAD);
+            Locator internalFileUpload = page.locator(FILE_UPLOAD.getLocator());
             waitForLocator(internalFileUpload);
             internalFileUpload.setInputFiles(Paths.get(properties.getProperty("internalFilePath")));
 
-            Locator attachInternalFileButton = page.locator(ATTACH_FILE_BUTTON);
+            Locator attachInternalFileButton = page.locator(ATTACH_FILE_BUTTON.getLocator());
             waitForLocator(attachInternalFileButton);
             attachInternalFileButton.click();
 
-            Locator continueButton = page.locator(CONTINUE_BUTTON);
+            Locator continueButton = page.locator(CONTINUE_BUTTON.getLocator());
             waitForLocator(continueButton);
             continueButton.click();
 
 //TODO External Attachment
-            Locator externalAttachmentsButton = page.locator(ATTACHMENTS);
+            Locator externalAttachmentsButton = page.locator(ATTACHMENTS.getLocator());
             waitForLocator(externalAttachmentsButton);
             externalAttachmentsButton.click();
 
-            Locator externalFileUpload = page.locator(FILE_UPLOAD);
+            Locator externalFileUpload = page.locator(FILE_UPLOAD.getLocator());
             waitForLocator(externalFileUpload);
             externalFileUpload.setInputFiles(Paths.get(properties.getProperty("externalFilePath")));
 
-            Locator externalRadioButton = page.locator(EXTERNAL_RADIO_BUTTON);
+            Locator externalRadioButton = page.locator(EXTERNAL_RADIO_BUTTON.getLocator());
             waitForLocator(externalRadioButton);
             externalRadioButton.click();
 
-            Locator attachExternalFileButton = page.locator(ATTACH_FILE_BUTTON);
+            Locator attachExternalFileButton = page.locator(ATTACH_FILE_BUTTON.getLocator());
             waitForLocator(attachExternalFileButton);
             attachExternalFileButton.click();
 
@@ -871,11 +871,11 @@ public class Create implements IPrCreate {
 
     public void prCreate() {
         try {
-            Locator createDraftButtonLocator = page.locator(CREATE_DRAFT_BUTTON);
+            Locator createDraftButtonLocator = page.locator(CREATE_DRAFT_BUTTON.getLocator());
             waitForLocator(createDraftButtonLocator);
             createDraftButtonLocator.click();
 
-            Locator yesButtonLocator = page.locator(YES);
+            Locator yesButtonLocator = page.locator(YES.getLocator());
             waitForLocator(yesButtonLocator);
             yesButtonLocator.click();
 
