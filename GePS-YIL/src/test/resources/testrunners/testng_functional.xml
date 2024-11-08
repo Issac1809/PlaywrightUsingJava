@@ -6,55 +6,55 @@
     <listeners>
         <listener class-name="org.testng.reporters.EmailableReporter2" />
         <listener class-name="com.reports.ExtentReportListener" />
-        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+<!--        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>-->
     </listeners>
 
-    <test name="YCA Login Page Test">
+    <test name="YIL Login Page Test">
         <classes>
-            <class name="com.classes.login.LoginTest" />
+            <class name="com.procurement.nonPoc.login.LoginTest" />
         </classes>
     </test>
 
     <test name="Requisition Create Page Test">
         <classes>
-            <class name="com.classes.requisition.create.CreateTest" />
+            <class name="com.procurement.nonPoc.requisition.create.CreateTest" />
         </classes>
     </test>
 
-    <test name="Requisition Edit Page Test">
-        <classes>
-            <class name="com.procurement.poc.requisition.edit.EditTest" />
-        </classes>
-    </test>
+<!--    <test name="Requisition Edit Page Test">-->
+<!--        <classes>-->
+<!--            <class name="com.procurement.poc.requisition.edit.EditTest" />-->
+<!--        </classes>-->
+<!--    </test>-->
 
     <test name="Requisition Send For Approval Page Test">
         <classes>
-            <class name="com.procurement.poc.requisition.sendforapproval.SendForApprovalTest" />
+            <class name="com.procurement.nonPoc.requisition.sendforapproval.SendForApprovalTest" />
         </classes>
     </test>
 
-    <test name="Requisition Reject Page Test">
-        <classes>
-            <class name="com.procurement.poc.requisition.reject.RejectTest" />
-        </classes>
-    </test>
+<!--    <test name="Requisition Reject Page Test">-->
+<!--        <classes>-->
+<!--            <class name="com.procurement.nonPoc.requisition.reject.RejectTest" />-->
+<!--        </classes>-->
+<!--    </test>-->
 
     <test name="Requisition Approve Page Test">
         <classes>
-            <class name="com.procurement.poc.requisition.approve.ApproveTest" />
+            <class name="com.procurement.nonPoc.requisition.approve.ApproveTest" />
         </classes>
     </test>
 
-    <test name="Requisition Assign Page Test">
-        <classes>
-            <class name="com.procurement.poc.requisition.assign.AssignTest" />
-        </classes>
-    </test>
+<!--    <test name="Requisition Assign Page Test">-->
+<!--        <classes>-->
+<!--            <class name="com.procurement.poc.requisition.assign.AssignTest" />-->
+<!--        </classes>-->
+<!--    </test>-->
 
-    <test name="Requisition Buyer Suspend Page Test">
-        <classes>
-            <class name="com.procurement.poc.requisition.suspend.SuspendTest" />
-        </classes>
-    </test>
+<!--    <test name="Requisition Buyer Suspend Page Test">-->
+<!--        <classes>-->
+<!--            <class name="com.procurement.poc.requisition.suspend.SuspendTest" />-->
+<!--        </classes>-->
+<!--    </test>-->
 
 </suite>

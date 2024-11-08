@@ -1,10 +1,10 @@
 #PoReferenceId
-#Thu Nov 07 17:43:47 IST 2024
+#Fri Nov 08 12:57:27 IST 2024
 Approver1=c.senthilkumar@yokogawa.com
 Approver2=c.senthilkumar@yokogawa.com
-ApproverCount=2
-POReferenceId=2Q0024REQ02704
-PRReferenceNumber=2Q0024REQ02704
+ApproverCount=1
+POReferenceId=2Q0024REQ02718
+PRReferenceNumber=2Q0024REQ02718
 adminEmail=manoj.yavagal@yokogawa.com
 appUrl=https\://dprocure-uat.cormsquare.com/Identity/Account/Login
 billableToCustomer=Yes

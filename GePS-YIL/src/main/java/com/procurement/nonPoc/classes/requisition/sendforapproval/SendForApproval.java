@@ -67,13 +67,13 @@ public class SendForApproval implements IPrSendForApproval {
 
         String prRefId = page.locator("#referenceId").textContent();
 
-        page.locator("#btnSendApproval").click();
-        Response response = page.waitForResponse(
-                resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/api/Approvals") && resp.status() == 200,
-                () -> {
-                    page.locator("//button[contains(text(), 'Yes')]").click();
-                }
-        );
+//        page.locator("#btnSendApproval").click();
+//        Response response = page.waitForResponse(
+//                resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/api/Approvals") && resp.status() == 200,
+//                () -> {
+//                    page.locator("//button[contains(text(), 'Yes')]").click();
+//                }
+//        );
         List<String> matchingApprovers = new ArrayList<>();
         List<String> approvalTable = page.locator("#approvalData tbody tr td").allTextContents();
         String approverMailId = "@cormsquare.com";
@@ -87,6 +87,10 @@ public class SendForApproval implements IPrSendForApproval {
         }
         for (int i = 1; i <= matchingApprovers.size();i++){
             String approverEmail = matchingApprovers.get(i-1);
+            if(i<matchingApprovers.size()) {
+                if (approverEmail.equals(matchingApprovers.get(i)))
+                    matchingApprovers.remove(i);
+            }
             PlaywrightFactory.saveToPropertiesFile(("Approver"+i),approverEmail);
             PlaywrightFactory.saveToPropertiesFile("ApproverCount", String.valueOf(matchingApprovers.size()));
         }

@@ -70,10 +70,7 @@ public class LPrCreate {
     public static final String BILLING_TYPE = "#select2-billingTypeId-container";
     public static final String BILLABLE_TO_CUSTOMER = "#select2-billableToCustomer-container";
 
-
-
-    private LPrCreate() {
-    }
+    private LPrCreate() {}
 
 //TODO Constructor
     public LPrCreate(Properties properties) {
