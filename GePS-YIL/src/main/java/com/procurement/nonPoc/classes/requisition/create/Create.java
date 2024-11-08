@@ -3,8 +3,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Locale;
 import java.util.Properties;
 
 import com.microsoft.playwright.Download;
@@ -118,7 +116,7 @@ public class Create implements IPrCreate {
         salesOrderLocator.click();
 
         String salesOrderValue = properties.getProperty("salesOrder");
-        Locator salesOrderSearchLocator = page.locator(SALESORDER_SEARCH.getLocator());
+        Locator salesOrderSearchLocator = page.locator(SEARCH.getLocator());
         waitForLocator(salesOrderSearchLocator);
         salesOrderSearchLocator.fill(salesOrderValue);
 
@@ -134,7 +132,7 @@ public class Create implements IPrCreate {
         depPIC.click();
 
         String departmentPIC = properties.getProperty("departmentPIC");
-        Locator depPICSearch = page.locator(DEPARTMENT_PIC_SEARCH.getLocator());
+        Locator depPICSearch = page.locator(SEARCH.getLocator());
         waitForLocator(depPICSearch);
         depPICSearch.fill(departmentPIC);
 
@@ -209,7 +207,7 @@ public class Create implements IPrCreate {
             vendorLocator.click();
 
             String vendorNameValue = properties.getProperty("vendorName");
-            Locator vendorSearchLocator = page.locator(VENDOR_SEARCH.getLocator());
+            Locator vendorSearchLocator = page.locator(SEARCH.getLocator());
             waitForLocator(vendorSearchLocator);
             vendorSearchLocator.fill(vendorNameValue);
 
@@ -229,7 +227,7 @@ public class Create implements IPrCreate {
             rateContractLocator.click();
 
             String rateContractValue = properties.getProperty("rateContract");
-            Locator rateContractSearchLocator = page.locator(RATE_CONTRACT_SEARCH.getLocator());
+            Locator rateContractSearchLocator = page.locator(SEARCH.getLocator());
             waitForLocator(rateContractSearchLocator);
             rateContractSearchLocator.fill(rateContractValue);
 
@@ -249,7 +247,7 @@ public class Create implements IPrCreate {
             incotermLocator.click();
 
             String incotermValue = properties.getProperty("incoterm");
-            Locator incotermSearchLocator = page.locator(INCOTERM_SEARCH.getLocator());
+            Locator incotermSearchLocator = page.locator(SEARCH.getLocator());
             incotermSearchLocator.fill(incotermValue);
 
             String incotermOptionLocator = getString(incotermValue);
@@ -305,7 +303,7 @@ public class Create implements IPrCreate {
 
             String getShippingMode = properties.getProperty("shippingMode");
 
-            Locator shippingModeSearch = page.locator(SHIPPING_MODE_SEARCH.getLocator());
+            Locator shippingModeSearch = page.locator(SEARCH.getLocator());
             waitForLocator(shippingModeSearch);
             shippingModeSearch.fill(getShippingMode);
 
@@ -359,6 +357,8 @@ public class Create implements IPrCreate {
                     break; // Stop the loop once the visible element is found and clicked
                 }
             }
+
+    //this is because after selecting the expected PO date it requires another click outside to click on Expected Delivery
             page.locator("//label[@for='expectedDelivery']").click();
 
 //            waitForLocator(todayOption);
@@ -439,7 +439,7 @@ public class Create implements IPrCreate {
 
         String buyerGroupName = properties.getProperty("buyerGroupName");
 
-        Locator buyerGroupSearch = page.locator(BUYER_GROUP_SEARCH.getLocator());
+        Locator buyerGroupSearch = page.locator(SEARCH.getLocator());
         waitForLocator(buyerGroupSearch);
         buyerGroupSearch.fill(buyerGroupName);
 
@@ -456,7 +456,7 @@ public class Create implements IPrCreate {
 
         String checkerName = properties.getProperty("checker");
 
-        Locator checkerSearch = page.locator(CHECKER_SEARCH.getLocator());
+        Locator checkerSearch = page.locator(SEARCH.getLocator());
         waitForLocator(checkerSearch);
         checkerSearch.fill(checkerName);
 
@@ -491,7 +491,7 @@ public class Create implements IPrCreate {
 
                 String currency = properties.getProperty("oiAndTpCurrency").toLowerCase().trim();
 
-                Locator oiAndTpCurrencySearchLocator = page.locator(OI_AND_TP_CURRENCY_SEARCH.getLocator());
+                Locator oiAndTpCurrencySearchLocator = page.locator(SEARCH.getLocator());
                 waitForLocator(oiAndTpCurrencySearchLocator);
                 oiAndTpCurrencySearchLocator.fill(currency);
 
@@ -560,7 +560,7 @@ public class Create implements IPrCreate {
 
                 String warrantyRequirement = properties.getProperty("warrantyRequirement");
 
-                Locator warrantyRequirementsSearchLocator = page.locator(WARRANTY_REQUIREMENTS_SEARCH.getLocator());
+                Locator warrantyRequirementsSearchLocator = page.locator(SEARCH.getLocator());
                 waitForLocator(warrantyRequirementsSearchLocator);
                 warrantyRequirementsSearchLocator.fill(warrantyRequirement);
 
@@ -582,7 +582,7 @@ public class Create implements IPrCreate {
 
             String warrantyRequirement = properties.getProperty("priceValidity");
 
-            Locator priceValiditySearchLocator = page.locator(PRICE_VALIDITY_SEARCH.getLocator());
+            Locator priceValiditySearchLocator = page.locator(SEARCH.getLocator());
             waitForLocator(priceValiditySearchLocator);
             priceValiditySearchLocator.fill(warrantyRequirement);
 
