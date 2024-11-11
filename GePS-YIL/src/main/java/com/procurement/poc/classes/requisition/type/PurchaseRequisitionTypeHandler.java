@@ -34,11 +34,14 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                     iPrCreate.rateContract();
                     iPrCreate.shippingAddress();
                     iPrCreate.shippingMode();
+                    iPrCreate.checker();
                     iPrCreate.expectedPOIssue();
                     iPrCreate.expectedDelivery();
+                    iPrCreate.buyerGroup();
                     iPrCreate.orderIntake();
                     iPrCreate.inspectionRequired();
                     iPrCreate.addLineRequisitionItems();
+                    iPrCreate.importItems();
                     iPrCreate.notes();
                     iPrCreate.attachments();
                     iPrCreate.prCreate();

@@ -17,7 +17,8 @@ public interface IPrCreate {
     void quotationRequiredBy();
     void expectedPOIssue();
     void expectedDelivery();
-//    void buyerManager();
+    void buyerGroup();
+    void checker();
 //    void projectManager();
     void rohsCompliance();
     void inspectionRequired();
@@ -28,6 +29,8 @@ public interface IPrCreate {
     void priceValidity();
     void liquidatedDamages();
     void addLineRequisitionItems();
+    void createItemsFile();
+    void importItems();
     void notes();
     void attachments();
     void prCreate();

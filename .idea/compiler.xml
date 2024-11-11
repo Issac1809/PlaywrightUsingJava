@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="GePS-YIL" />
+        <module name="YCA" />
         <module name="GePS-YCA" />
         <module name="GePS-YEA" />
-        <module name="GePS-YIL" />
+        <module name="YEF" />
         <module name="GePS-YEF" />
-        <module name="YIL" />
       </profile>
     </annotationProcessing>
   </component>
