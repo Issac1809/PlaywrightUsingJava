@@ -64,67 +64,67 @@
 
     <test name="YEA NonCatalog Request For Quotation Create Page Test">
         <classes>
-            <class name="com.procurement.requestforquotation.create.RFQCreateTest" />
+            <class name="com.classes.requestforquotation.create.RFQCreateTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog Request For Quotation Edit Page Test">
         <classes>
-            <class name="com.procurement.requestforquotation.edit.RfqEditTest" />
+            <class name="com.classes.requestforquotation.edit.RfqEditTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog Request For Quotation Suspend RFQ Edit Page Test">
         <classes>
-            <class name="com.procurement.requestforquotation.suspend.RfqSuspendRfqEditTest" />
+            <class name="com.classes.requestforquotation.suspend.RfqSuspendRfqEditTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog Request For Quotation Suspend PR Edit Page Test">
         <classes>
-            <class name="com.procurement.requestforquotation.suspend.RfqSuspendPrEditTest" />
+            <class name="com.classes.requestforquotation.suspend.RfqSuspendPrEditTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog Request For Quotation Regret Test">
         <classes>
-            <class name="com.procurement.requestforquotation.quotationregret.RegretBeforeRequoteTest" />
+            <class name="com.classes.requestforquotation.quotationregret.RegretBeforeRequoteTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog Quotation Submit Page Test">
         <classes>
-            <class name="com.procurement.requestforquotation.quotationsubmit.QuotationSubmitTest" />
+            <class name="com.classes.requestforquotation.quotationsubmit.QuotationSubmitTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog Quotation Requote Page Test">
         <classes>
-            <class name="com.procurement.requestforquotation.quotationrequote.QuotationRequoteTest" />
+            <class name="com.classes.requestforquotation.quotationrequote.QuotationRequoteTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog Ready For Evaluation Page Test">
         <classes>
-            <class name="com.procurement.requestforquotation.readyforevaluation.ReadyForEvaluationTest" />
+            <class name="com.classes.requestforquotation.readyforevaluation.ReadyForEvaluationTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog Technical Evaluation Reject Page Test">
         <classes>
-            <class name="com.procurement.requestforquotation.technicalevaluation.TechnicalEvaluationRejectTest" />
+            <class name="com.classes.requestforquotation.technicalevaluation.TechnicalEvaluationRejectTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog Technical Evaluation Approve Page Test">
         <classes>
-            <class name="com.procurement.requestforquotation.technicalevaluation.TechnicalEvaluationTest" />
+            <class name="com.classes.requestforquotation.technicalevaluation.TechnicalEvaluationTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog Commercial Evaluation Page Test">
         <classes>
-            <class name="com.procurement.requestforquotation.commercialevaluation.CommercialEvaluationTest" />
+            <class name="com.classes.requestforquotation.commercialevaluation.CommercialEvaluationTest" />
         </classes>
     </test>
 
