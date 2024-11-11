@@ -4,7 +4,10 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/GePS-YIL/pom.xml" />
+        <option value="$PROJECT_DIR$/GePS-YEF/pom.xml" />
+        <option value="$PROJECT_DIR$/GePS-YEA/pom.xml" />
+        <option value="$PROJECT_DIR$/GePS-YCA/pom.xml" />
       </list>
     </option>
   </component>

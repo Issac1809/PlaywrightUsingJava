@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Requisition Suite" parallel="false">
+
+    <test name="Group">
+        <groups>
+            <run>
+                <include name="requisition" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.procurement.requisition.create.NonCatalogPrCreateTest" />
+            <class name="com.procurement.requisition.edit.NonCatalogPrEditTest" />
+            <class name="com.procurement.requisition.sendforapproval.NonCatalogPrSendForApprovalTest" />
+            <class name="com.procurement.requisition.reject.NonCatalogPrRejectTest" />
+            <class name="com.procurement.requisition.approve.NonCatalogPrApproveTest" />
+            <class name="com.procurement.requisition.suspend.BuyerManagerNonCatalogPrSuspendTest" />
+            <class name="com.procurement.requisition.assign.RequisitionAssignTest" />
+            <class name="com.procurement.requisition.suspend.BuyerNonCatalogPrSuspendTest" />
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="YCN Playwright Suite" >
+    <!-->parallel="tests" thread-count="1" verbose="1"-->
+
+    <listeners>
+        <listener class-name="org.testng.reporters.EmailableReporter2" />
+        <listener class-name="com.reports.ExtentReportListener" />
+    </listeners>
+    <test name="YIL Login Page Test">
+        <classes>
+            <class name="com.procurement.nonPoc.login.LoginTest" />
+        </classes>
+    </test>
+
+    <test name="Requisition Create Page Test">
+        <classes>
+            <class name="com.procurement.nonPoc.requisition.create.CreateTest" />
+        </classes>
+    </test>
+
+<!--    <test name="Requisition Edit Page Test">-->
+<!--        <classes>-->
+<!--            <class name="com.procurement.poc.requisition.edit.EditTest" />-->
+<!--        </classes>-->
+<!--    </test>-->
+
+    <test name="Requisition Send For Approval Page Test">
+        <classes>
+            <class name="com.procurement.nonPoc.requisition.sendforapproval.SendForApprovalTest" />
+        </classes>
+    </test>
+
+<!--    <test name="Requisition Reject Page Test">-->
+<!--        <classes>-->
+<!--            <class name="com.procurement.nonPoc.requisition.reject.RejectTest" />-->
+<!--        </classes>-->
+<!--    </test>-->
+
+    <test name="Requisition Approve Page Test">
+        <classes>
+            <class name="com.procurement.nonPoc.requisition.approve.ApproveTest" />
+        </classes>
+    </test>
+
+<!--    <test name="Requisition Assign Page Test">-->
+<!--        <classes>-->
+<!--            <class name="com.procurement.poc.requisition.assign.AssignTest" />-->
+<!--        </classes>-->`
+<!--    </test>-->
+
+<!--    <test name="Requisition Buyer Suspend Page Test">-->
+<!--        <classes>-->
+<!--            <class name="com.procurement.poc.requisition.suspend.SuspendTest" />-->
+<!--        </classes>-->
+<!--    </test>-->
+
+</suite>
