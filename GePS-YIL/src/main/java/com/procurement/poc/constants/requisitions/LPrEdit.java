@@ -1,17 +1,20 @@
 package com.procurement.poc.constants.requisitions;
 
-public class LPrEdit {
+public enum LPrEdit {
 
-    public static final String EDIT_BUTTON = "#btnEdit";
-    public static final String UPDATE_BUTTON = "#btnUpdate";
-    public static final String YES = ".bootbox-accept";
+    EDIT_BUTTON("#btnEdit"),
+    UPDATE_BUTTON("#btnUpdate"),
+    ACCEPT("//button[contains(@class, 'bootbox-accept')]");
 
+    private final String locatorsName;
 //TODO Constructor
-    private LPrEdit(){
+    LPrEdit(String locatorsName){
+        this.locatorsName = locatorsName;
     }
 
     public static String getTitle(String title){
-        String title1 = "//*[contains(text(), '" + title + "')]";
-        return title1;
+        return "//*[contains(text(), '" + title + "')]";
     }
+
+    public String getLocator(){return locatorsName;}
 }

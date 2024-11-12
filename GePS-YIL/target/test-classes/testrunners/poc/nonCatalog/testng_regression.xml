@@ -9,7 +9,7 @@
             </run>
         </groups>
         <classes>
-            <class name="com.procurement.poc.requisition.create.CreateTest" />
+            <class name="com.classes.requisition.create.CreateTest" />
             <class name="com.procurement.poc.requisition.edit.EditTest" />
             <class name="com.procurement.poc.requisition.sendforapproval.SendForApprovalTest" />
             <class name="com.procurement.poc.requisition.reject.RejectTest" />
