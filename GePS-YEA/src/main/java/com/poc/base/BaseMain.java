@@ -79,8 +79,6 @@ import com.procurement.requestforquotations.commercialevaluation.CommercialEvalu
 import com.procurement.requestforquotations.create.PocRfqCreate;
 import com.procurement.requestforquotations.edit.PocRfqEdit;
 import com.procurement.requestforquotations.quotationregret.RegisteredVendorQuotationRegret;
-import com.procurement.requestforquotations.quotationrequote.RegisteredVendorQuotationRequote;
-import com.procurement.requestforquotations.quotationsubmit.RegisteredVendorQuotationSubmit;
 import com.procurement.requestforquotations.readyforevaluation.ReadyForEvaluation;
 import com.procurement.requestforquotations.suspend.PocRfqSuspend;
 import com.procurement.requestforquotations.technicalevaluation.TechnicalEvaluation;
@@ -198,9 +196,9 @@ public class BaseMain {
             rfqCreate = new PocRfqCreate(loginPageInterface, properties, page, logoutPageInterface);
             rfqEdit = new PocRfqEdit(loginPageInterface, properties, page, logoutPageInterface);
             rfqSuspend = new PocRfqSuspend(loginPageInterface, properties, page, logoutPageInterface, rfqEdit, prEdit, prSendForApproval, prApprove, prAssign, rfqCreate);
-            quotationSubmit = new RegisteredVendorQuotationSubmit(loginPageInterface, properties, page, logoutPageInterface);
+            quotationSubmit = new com.procurement.requestforquotations.quotationsubmit.Quote(loginPageInterface, properties, page, logoutPageInterface);
             quotationRegret = new RegisteredVendorQuotationRegret(quotationSubmit, loginPageInterface, properties, page, logoutPageInterface);
-            quotationRequote = new RegisteredVendorQuotationRequote(loginPageInterface, properties, page, logoutPageInterface);
+            quotationRequote = new com.procurement.requestforquotations.quotationrequote.Requote(loginPageInterface, properties, page, logoutPageInterface);
             readyForEvalutationInterface = new ReadyForEvaluation(loginPageInterface, properties, page, logoutPageInterface);
             teReject = new TechnicalEvaluationReject(loginPageInterface, properties, page, logoutPageInterface);
             technicalEvaluationInterface = new TechnicalEvaluation(loginPageInterface, properties, page, logoutPageInterface);

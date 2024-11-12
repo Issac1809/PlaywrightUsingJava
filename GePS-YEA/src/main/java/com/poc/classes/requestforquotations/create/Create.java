@@ -1,9 +1,12 @@
 package com.poc.classes.requestforquotations.create;
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.poc.interfaces.login.ILogin;
 import com.poc.interfaces.logout.ILogout;
 import com.poc.interfaces.requestforquotation.IRfqCreate;
 import java.util.Properties;
+import static com.constants.requestforquotations.LRfqCreate.*;
+import static com.factory.PlaywrightFactory.waitForLocator;
 
 public class Create implements IRfqCreate {
 
@@ -35,27 +38,38 @@ public class Create implements IRfqCreate {
     public void buyerRfqCreate() {
         try {
         String title = properties.getProperty("Title");
-        page.locator("//*[contains(text(),'"+ title +"')]").first().click();
-        page.locator("#btnCreateRFQ").click();
+        Locator getTitleLocator = page.locator(getTitle(title));
+        waitForLocator(getTitleLocator);
+        getTitleLocator.first().click();
+
+        page.locator(CREATE_RFQ_BUTTON).click();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
     }
 
-    public void RfQNotes() {
+    public void rfqNotes() {
         try {
-        page.locator("#notes").fill(properties.getProperty("RfQNotes"));
+        String rfqNotes = properties.getProperty("RfQNotes");
+        Locator notesLocator = page.locator(NOTES);
+        waitForLocator(notesLocator);
+        notesLocator.fill(rfqNotes);
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
     }
 
-    public void RFQCreate() throws InterruptedException {
+    public void rfqCreate() {
         try {
-        Thread.sleep(1000);
-        page.locator("#btnCreate").click();
-        page.locator("//button[contains(text(),'Yes')]").click();
-        logoutPageInterface.LogoutMethod();
+        Locator createButtonLocator = page.locator(CREATE_BUTTON);
+        waitForLocator(createButtonLocator);
+        createButtonLocator.click();
+
+        Locator yesButtonLocator = page.locator(YES_BUTTON);
+        waitForLocator(yesButtonLocator);
+        yesButtonLocator.click();
+
+        iLogout.performLogout();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
