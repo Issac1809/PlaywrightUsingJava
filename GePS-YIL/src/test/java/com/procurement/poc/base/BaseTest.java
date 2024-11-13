@@ -82,7 +82,6 @@ public class BaseTest {
             reject = new RejectTest();
             iPrSuspend = new BuyerSuspend(iLogin, properties, page, iLogout, iPrEdit);
             suspend = new SuspendTest();
-
         } catch (Exception exception) {
             System.out.println("Error :" + exception);
         }
