@@ -1,4 +1,5 @@
 package com.procurement.poc.classes.requisition.edit;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.procurement.poc.interfaces.login.ILogin;
 import com.procurement.poc.interfaces.logout.ILogout;
@@ -58,7 +59,15 @@ public class Edit implements IPrEdit {
 
         Locator submitButtonLocator = page.locator(ACCEPT.getLocator());
         waitForLocator(submitButtonLocator);
-        submitButtonLocator.click();
+//        Response response = page.waitForResponse(
+//                    resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/api/requisitions") && resp.status() == 200,
+//                    submitButtonLocator::click
+//            );
+        Response response = page.waitForResponse(
+                resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/Procurement/Requisitions/POC_Details") && resp.status() == 200,
+                submitButtonLocator::click
+        );
+
         iLogout.performLogout();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

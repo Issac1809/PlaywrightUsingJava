@@ -39,6 +39,7 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                     iPrCreate.expectedDelivery();
                     iPrCreate.buyerGroup();
                     iPrCreate.orderIntake();
+                    iPrCreate.targetPrice();
                     iPrCreate.inspectionRequired();
                     iPrCreate.addLineRequisitionItems();
                     iPrCreate.importItems();

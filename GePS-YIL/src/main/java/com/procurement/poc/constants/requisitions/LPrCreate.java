@@ -26,7 +26,7 @@ public enum LPrCreate {
     ROHS_COMPLIANCE ("#rohsnotcomplianceid"),
     OI_AND_TP_CURRENCY ("#select2-oiTpCurrencyId-container"),
     ORDER_INTAKE ("#orderInTakeId"),
-    TARGET_PRICE ("#targetPriceId"),
+    TARGET_PRICE ("//input[@id='targetPriceId']"),
     CASE_MARKING ("#caseMarking"),
     MESSAGE_TO_SOURCING ("#messageToSourcing"),
     WARRANTY_REQUIREMENTS ("#select2-warrantyrequirementsid-container"),

@@ -1,16 +1,16 @@
 #PoReferenceId
-#Fri Nov 08 16:17:01 IST 2024
+#Wed Nov 13 16:31:26 IST 2024
 Approver1=c.senthilkumar@yokogawa.com
-Approver2=c.senthilkumar@yokogawa.com
-ApproverCount=1
-POReferenceId=2Q0024REQ02718
-PRReferenceNumber=2Q0024REQ02721
+Approver2=shashanka.s@yokogawa.com
+ApproverCount=2
+POReferenceId=2Q0024REQ02753
+PRReferenceNumber=2Q0024REQ02753
 adminEmail=manoj.yavagal@yokogawa.com
 appUrl=https\://dprocure-uat.cormsquare.com/Identity/Account/Login
 billableToCustomer=Yes
 billingType=TimeSheet
 browserType=chrome
-buyerEmail=aditi.agarwal@yokogawa.com
+buyerEmail=Aditi.Agarwal@yokogawa.com
 buyerGroupName=BG2
 buyerManagerEmail=chandrashekar.hegde@yokogawa.com
 caseMarking=Case Marking Details
@@ -41,7 +41,7 @@ mhItem=Engineering Services
 modelDescription=Model - 1
 netWeightKg=35
 oiAndTpCurrency=SGD
-orderIntake=9000
+orderIntake=10000
 orderTitle=POC-Automation
 packageType=Drum
 partNumber=PN - 1
@@ -71,7 +71,7 @@ shipToYokogawa=yes
 shippingAddress=200019769 - REICHHOLD INDIA PVT LTD
 shippingMode=Road Freight
 sourceCountry=India
-targetPrice=4500
+targetPrice=5000
 taxCode=PZ-Zero Rated Purchase
 totalChargeableWeightKg=200
 unitRate=200

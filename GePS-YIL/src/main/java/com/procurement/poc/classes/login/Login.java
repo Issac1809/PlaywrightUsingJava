@@ -1,5 +1,7 @@
 package com.procurement.poc.classes.login;
 import java.util.Properties;
+
+import com.microsoft.playwright.Response;
 import com.procurement.poc.interfaces.login.ILogin;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -34,7 +36,12 @@ public class Login implements ILogin {
 
             Locator loginButtonLocator = page.locator(LOGIN_BUTTON.getLocatorsName());
             waitForLocator(loginButtonLocator);
-            loginButtonLocator.click();
+
+            Response response = page.waitForResponse(
+                    resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/Identity/Account/Login") && resp.status() == 200,
+                    loginButtonLocator::click
+            );
+
         } catch (Exception error) {
             System.out.println("Login error: " + error.getMessage());
         }

@@ -3,6 +3,8 @@ package com.procurement.poc.classes.requisition.create;
 import com.microsoft.playwright.Download;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
+import com.microsoft.playwright.options.LoadState;
 import com.procurement.poc.interfaces.login.ILogin;
 import com.procurement.poc.interfaces.logout.ILogout;
 import com.procurement.poc.interfaces.requisitions.IPrCreate;
@@ -158,7 +160,14 @@ public class Create implements IPrCreate {
             String projectSelectLocator = getString(projectCodeValue);
             Locator projectSelectElement = page.locator(projectSelectLocator);
             waitForLocator(projectSelectElement);
-            projectSelectElement.click();
+
+            Response response = page.waitForResponse(
+                    resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/api/workBreakdownStructures/search?projectid") && resp.status() == 200,
+                    projectSelectElement::click
+            );
+
+
+
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -199,7 +208,14 @@ public class Create implements IPrCreate {
             String vendorOptionLocator = getString(vendorNameValue);
             Locator vendorOption = page.locator(vendorOptionLocator);
             waitForLocator(vendorOption);
-            vendorOption.click();
+
+            Response response = page.waitForResponse(
+                    resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/api/RateContractsByVendorId?vendorId") && resp.status() == 200,
+                    vendorOption::click
+            );
+
+
+
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -503,12 +519,10 @@ public class Create implements IPrCreate {
 
     public void targetPrice(){
         try {
-//            if (prType.equals("NonCatalog")) {
                 String targetPrice = properties.getProperty("targetPrice");
                 Locator targetPriceLocator = page.locator(TARGET_PRICE.getLocator());
                 waitForLocator(targetPriceLocator);
                 targetPriceLocator.fill(targetPrice);
-//            }
         } catch (Exception error) {
             System.out.println("Error encountered: " + error.getMessage());
         }
@@ -788,7 +802,7 @@ public class Create implements IPrCreate {
             System.out.println("Excel file updated successfully!");
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("What is the error: " + e.getMessage());
         }
     }
     public void importItems(){
@@ -863,7 +877,11 @@ public class Create implements IPrCreate {
 
             Locator yesButtonLocator = page.locator(YES.getLocator());
             waitForLocator(yesButtonLocator);
-            yesButtonLocator.click();
+
+            Response response = page.waitForResponse(
+                    resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/Procurement/Requisitions/POC_Details") && resp.status() == 200,
+                    yesButtonLocator::click
+            );
 
             iLogout.performLogout();
         } catch (Exception error) {
