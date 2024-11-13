@@ -1,16 +1,22 @@
 package com.procurement.poc.constants.requisitions;
 
-public class LPrApprove {
+public enum LPrApprove {
 
-    public static final String APPROVE = "#btnApprove";
-    public static final String YES = ".bootbox-accept";
+    MY_APPROVALS("#ni-my-approvals"),
+    APPROVE("#btnApprove"),
+    YES(".bootbox-accept");
 
+    private final String locatorName;
 //TODO Constructor
-    private LPrApprove(){
+    LPrApprove(String locatorName){
+        this.locatorName = locatorName;
     }
 
-    public static String getApproveButton(String title){
-        String approve = "//*[contains(text(), '" + title + "')]";
-        return  approve;
+    public static String getString(String title){
+        return "//*[contains(text(), '" + title + "')]";
+    }
+
+    public String getLocator(){
+        return locatorName;
     }
 }

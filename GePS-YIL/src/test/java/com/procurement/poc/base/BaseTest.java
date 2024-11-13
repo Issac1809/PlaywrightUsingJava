@@ -13,7 +13,7 @@ import com.procurement.poc.classes.requisition.assign.Assign;
 import com.procurement.poc.classes.requisition.edit.Edit;
 import com.procurement.poc.classes.requisition.reject.Reject;
 import com.procurement.poc.classes.requisition.sendforapproval.SendForApproval;
-import com.procurement.poc.classes.requisition.suspend.BuyerSuspend;
+import com.procurement.poc.classes.requisition.suspend.Suspend;
 import com.procurement.poc.classes.requisition.type.PurchaseRequisitionTypeHandler;
 import com.procurement.poc.interfaces.login.ILogin;
 import com.procurement.poc.interfaces.logout.ILogout;
@@ -80,7 +80,7 @@ public class BaseTest {
             edit = new EditTest();
             iPrReject = new Reject(iLogin, properties, page, iLogout, iPrEdit);
             reject = new RejectTest();
-            iPrSuspend = new BuyerSuspend(iLogin, properties, page, iLogout, iPrEdit);
+            iPrSuspend = new Suspend(iLogin, properties, page, iLogout, iPrEdit);
             suspend = new SuspendTest();
         } catch (Exception exception) {
             System.out.println("Error :" + exception);

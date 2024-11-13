@@ -10,7 +10,7 @@ import com.procurement.poc.classes.requisition.create.Create;
 import com.procurement.poc.classes.requisition.edit.Edit;
 import com.procurement.poc.classes.requisition.reject.Reject;
 import com.procurement.poc.classes.requisition.sendforapproval.SendForApproval;
-import com.procurement.poc.classes.requisition.suspend.BuyerSuspend;
+import com.procurement.poc.classes.requisition.suspend.Suspend;
 import com.procurement.poc.classes.requisition.type.PurchaseRequisitionTypeHandler;
 import com.procurement.poc.interfaces.login.ILogin;
 import com.procurement.poc.interfaces.logout.ILogout;
@@ -55,7 +55,7 @@ public class BaseMain {
             iPrAssign = new Assign(iLogin, properties, page, iLogout);
             iPrEdit = new Edit(iLogin, properties, page, iLogout, iPrSendForApproval, iPrApprove, iPrAssign);
             iPrReject = new Reject(iLogin, properties, page, iLogout, iPrEdit);
-            iPrSuspend = new BuyerSuspend(iLogin, properties, page, iLogout, iPrEdit);
+            iPrSuspend = new Suspend(iLogin, properties, page, iLogout, iPrEdit);
 
         } catch (Exception exception) {
 //            logger.error("Error initializing BaseMain", exception);

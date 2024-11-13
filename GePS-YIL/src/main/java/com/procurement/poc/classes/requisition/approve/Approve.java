@@ -47,18 +47,14 @@ public class Approve implements IPrApprove {
 
     public void ApproveMethod(String ApproverMailId , String PRReferenceNumber) throws InterruptedException {
         iLogin.performLogin(ApproverMailId);
-        page.locator("#ni-my-approvals").click();
+        page.locator(MY_APPROVALS.getLocator()).click();
         String title = "Requisition "+ PRReferenceNumber;
-        page.locator(String.format("//*[contains(text(), '%s')]", title)).first().click();
-        String poReferenceId = page.waitForSelector("#referenceId").textContent();
-        PlaywrightFactory.saveToPropertiesFile("POReferenceId",poReferenceId);
-        page.locator("#btnApprove").click();
-
+        page.locator(getString(title)).first().click();
+        page.locator(APPROVE.getLocator()).click();
         Response response = page.waitForResponse(
                 resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/Procurement/Requisitions/POC_Details") && resp.status() == 200,
-                page.locator(".bootbox-accept")::click
+                page.locator(YES.getLocator())::click
         );
-
         iLogout.performLogout();
     }
 }

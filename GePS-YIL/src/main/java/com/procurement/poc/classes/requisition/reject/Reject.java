@@ -1,4 +1,5 @@
 package com.procurement.poc.classes.requisition.reject;
+import com.microsoft.playwright.Response;
 import com.procurement.poc.interfaces.logout.ILogout;
 import com.procurement.poc.interfaces.requisitions.IPrEdit;
 import com.procurement.poc.interfaces.requisitions.IPrReject;
@@ -49,7 +50,11 @@ public class Reject implements IPrReject {
 
         Locator yesButtonLocator = page.locator(YES.getLocator());
         waitForLocator(yesButtonLocator);
-        yesButtonLocator.click();
+
+        Response response = page.waitForResponse(
+                resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/Procurement/Requisitions/POC_Details") && resp.status() == 200,
+                yesButtonLocator::click
+        );
 
         iLogout.performLogout();
 //        iPrEdit.rejectEdit();
