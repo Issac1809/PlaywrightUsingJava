@@ -1,5 +1,5 @@
 package com.procurement.invoice.poinvoice.sendforapproval;
-import com.base.BaseTest;
+import com.poc.base.BaseTest;
 import org.testng.annotations.Test;
 
 public class POInvoiceSendForApprovalTest extends BaseTest {

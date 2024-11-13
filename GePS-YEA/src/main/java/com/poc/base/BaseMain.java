@@ -1,135 +1,84 @@
 package com.poc.base;
-import com.interfaces.dn.*;
-import com.interfaces.ffr.FFRInvite;
-import com.interfaces.ffr.FFRQuotation;
-import com.interfaces.ffr.FFRRequote;
-import com.interfaces.ins.InsFail;
-import com.interfaces.ins.InspectionAssignInterface;
-import com.interfaces.ins.InspectionCreateInterface;
-import com.interfaces.inv.poinv.*;
-import com.interfaces.inv.woinv.*;
-import com.interfaces.login.LoginPageInterface;
-import com.interfaces.logout.LogoutPageInterface;
-import com.interfaces.os.OSEdit;
-import com.interfaces.os.OSReject;
-import com.interfaces.os.OrderScheduleApproveInterface;
-import com.interfaces.os.OrderScheduleInterface;
-import com.interfaces.po.POSendForApprovalInterface;
-import com.interfaces.po.PurchaseOrderInterface;
-import com.interfaces.por.*;
-import com.interfaces.pr.*;
-import com.interfaces.rfq.*;
-import com.interfaces.wo.WOSendForApprovalInterface;
-import com.interfaces.wo.WOTrackerStatusInterface;
-import com.interfaces.wo.WorkOrderCreateInterface;
+import com.factory.PlaywrightFactory;
 import com.microsoft.playwright.Page;
-import com.factory.PlayWrightFactory;
-import com.procurement.currencyexchangerate.CurrencyExchangeRate;
-import com.procurement.dispatchnotes.assign.DispatchNotesAssign;
-import com.procurement.dispatchnotes.cancel.PocDnCancel;
-import com.procurement.dispatchnotes.create.DispatchNoteCreate;
-import com.procurement.dispatchnotes.dnreturn.PocDnReturn;
-import com.procurement.dispatchnotes.edit.PocDnEdit;
-import com.procurement.freightforwarder.invite.FreightForwarderInvite;
-import com.procurement.freightforwarder.quote.FreightQuotation;
-import com.procurement.freightforwarder.requote.FreightForwarderRequote;
-import com.procurement.inspections.assign.InspectionAssign;
-import com.procurement.inspections.create.InspectionCreate;
-import com.procurement.inspections.fail.InspectionFail;
-import com.procurement.invoice.poinvoice.approve.POInvoiceApproval;
-import com.procurement.invoice.poinvoice.cancel.PoInvoiceCancel;
-import com.procurement.invoice.poinvoice.checklist.ChecklistAccept;
-import com.procurement.invoice.poinvoice.checklist.ChecklistReject;
-import com.procurement.invoice.poinvoice.create.POInvoiceCreate;
-import com.procurement.invoice.poinvoice.edit.POInvoiceEdit;
-import com.procurement.invoice.poinvoice.hold.POInvoiceHold;
-import com.procurement.invoice.poinvoice.invreturn.POInvoiceReturn;
-import com.procurement.invoice.poinvoice.reject.POInvoiceReject;
-import com.procurement.invoice.poinvoice.revert.POInvoiceRevert;
-import com.procurement.invoice.poinvoice.sendforapproval.POInvoiceSendForApproval;
-import com.procurement.invoice.poinvoice.verify.POInvoiceVerify;
-import com.procurement.invoice.woinvoice.approve.WOInvoiceApproval;
-import com.procurement.invoice.woinvoice.cancel.WoInvoiceCancel;
-import com.procurement.invoice.woinvoice.checklist.WOChecklistAccept;
-import com.procurement.invoice.woinvoice.checklist.WOChecklistReject;
-import com.procurement.invoice.woinvoice.create.WOInvoiceCreate;
-import com.procurement.invoice.woinvoice.edit.WOInvoiceEdit;
-import com.procurement.invoice.woinvoice.hold.WOInvoiceHold;
-import com.procurement.invoice.woinvoice.invreturn.WOInvoiceReturn;
-import com.procurement.invoice.woinvoice.reject.WOInvoiceReject;
-import com.procurement.invoice.woinvoice.revert.WOInvoiceRevert;
-import com.procurement.invoice.woinvoice.sendforapproval.WOInvoiceSendForApproval;
-import com.procurement.invoice.woinvoice.verify.WOInvoiceVerify;
-import com.procurement.login.LoginPage;
-import com.procurement.logout.LogoutPage;
-import com.procurement.msa.PorInspectPO;
-import com.procurement.orderschedule.approve.OrderScheduleApprove;
-import com.procurement.orderschedule.create.OrderScheduleCreate;
-import com.procurement.orderschedule.edit.OrderScheduleEdit;
-import com.procurement.orderschedule.reject.OrderScheduleReject;
-import com.procurement.purchaseorder.BuyerPurchaseOrder;
-import com.procurement.purchaseorderrequest.approval.Approve;
-import com.procurement.purchaseorderrequest.approval.PocPorSendForApproval;
-import com.procurement.purchaseorderrequest.create.PocNonCatalogPorCreate;
-import com.procurement.purchaseorderrequest.edit.PocPorEdit;
-import com.procurement.purchaseorderrequest.approvalandapprove.PorApprovalAndApprove;
-import com.procurement.purchaseorderrequest.reject.PocPorReject;
-import com.procurement.purchaseorderrequest.suspend.PocPorSuspend;
-import com.procurement.requestforquotations.commercialevaluation.CommercialEvaluation;
-import com.procurement.requestforquotations.create.PocRfqCreate;
-import com.procurement.requestforquotations.edit.PocRfqEdit;
-import com.procurement.requestforquotations.quotationregret.RegisteredVendorQuotationRegret;
-import com.procurement.requestforquotations.readyforevaluation.ReadyForEvaluation;
-import com.procurement.requestforquotations.suspend.PocRfqSuspend;
-import com.procurement.requestforquotations.technicalevaluation.TechnicalEvaluation;
-import com.procurement.requestforquotations.technicalevaluation.TechnicalEvaluationReject;
-import com.procurement.requisition.approve.PocPrApprove;
-import com.procurement.requisition.edit.PocPrEdit;
-import com.procurement.requisition.reject.PocPrReject;
-import com.procurement.requisition.assign.PocPrAssign;
-import com.procurement.requisition.create.POCNonCatalogPrCreate;
-import com.procurement.requisition.sendforapproval.PocPrSendForApproval;
-import com.procurement.requisition.suspend.PocPrBuyerManagerSuspend;
-import com.procurement.requisition.suspend.PocPrBuyerSuspend;
-import com.procurement.workorder.create.WorkOrderCreate;
-import com.procurement.workorder.trackerstatus.WOTrackerStatus;
+import com.poc.classes.login.Login;
+import com.poc.classes.logout.Logout;
+import com.poc.classes.purchaseorder.create.PoCreate;
+import com.poc.classes.purchaseorder.sendforvendor.SendForVendor;
+import com.poc.classes.purchaseorderrequest.approvalandapprove.PorSendForApprovalAndApprove;
+import com.poc.classes.purchaseorderrequest.approve.PorApprove;
+import com.poc.classes.purchaseorderrequest.create.PorCreate;
+import com.poc.classes.purchaseorderrequest.edit.PorEdit;
+import com.poc.classes.purchaseorderrequest.reject.PorReject;
+import com.poc.classes.purchaseorderrequest.sendforapproval.PorSendForApproval;
+import com.poc.classes.purchaseorderrequest.suspend.PorSuspend;
+import com.poc.classes.requestforquotations.commercialevaluation.CommercialEvaluation;
+import com.poc.classes.requestforquotations.create.RfqCreate;
+import com.poc.classes.requestforquotations.edit.RfqEdit;
+import com.poc.classes.requestforquotations.quote.Quote;
+import com.poc.classes.requestforquotations.readyforevaluation.ReadyForEvaluation;
+import com.poc.classes.requestforquotations.regret.QuotationRegret;
+import com.poc.classes.requestforquotations.requote.Requote;
+import com.poc.classes.requestforquotations.suspend.RfqSuspend;
+import com.poc.classes.requestforquotations.technicalevaluation.TechnicalEvaluation;
+import com.poc.classes.requestforquotations.technicalevaluation.TechnicalEvaluationReject;
+import com.poc.classes.requisition.approve.Approve;
+import com.poc.classes.requisition.assign.Assign;
+import com.poc.classes.requisition.create.Create;
+import com.poc.classes.requisition.edit.Edit;
+import com.poc.classes.requisition.reject.Reject;
+import com.poc.classes.requisition.sendforapproval.SendForApproval;
+import com.poc.classes.requisition.suspend.BuyerManagerSuspend;
+import com.poc.classes.requisition.suspend.BuyerSuspend;
+import com.poc.classes.requisition.type.PurchaseRequisitionTypeHandler;
+import com.poc.interfaces.login.ILogin;
+import com.poc.interfaces.logout.ILogout;
+import com.poc.interfaces.purchaseorderrequests.*;
+import com.poc.interfaces.purchaseorders.IPoCreate;
+import com.poc.interfaces.purchaseorders.IPoSendForVendor;
+import com.poc.interfaces.requestforquotation.*;
+import com.poc.interfaces.requisitions.*;
 import java.util.Properties;
 
 public class BaseMain {
 
-    protected PlayWrightFactory playWrightFactory;
+    protected PlaywrightFactory playwrightFactory;
     protected Page page;
     protected Properties properties;
     protected CurrencyExchangeRate currencyExchangeRate;
-    protected LoginPageInterface loginPageInterface;
-    protected LogoutPageInterface logoutPageInterface;
-    protected PrCreate prCreate;
-    protected PrEdit prEdit;
-    protected PrSendForApproval prSendForApproval;
-    protected PrApprove prApprove;
-    protected PrReject prReject;
-    protected PrSuspend prSuspendBuyerManager;
-    protected PrSuspend prSuspendBuyer;
-    protected PrAssign prAssign;
-    protected RfqCreate rfqCreate;
-    protected RfqEdit rfqEdit;
-    protected RfqSuspend rfqSuspend;
-    protected QuotationRegret quotationRegret;
-    protected QuotationSubmit quotationSubmit;
-    protected QuotationRequote quotationRequote;
-    protected ReadyForEvalutationInterface readyForEvalutationInterface;
-    protected TEReject teReject;
-    protected TechnicalEvaluationInterface technicalEvaluationInterface;
-    protected CommercialEvaluationInterface commercialEvaluationInterface;
-    protected PorCreateNonCatalog porCreateNonCatalog;
-    protected PorEdit porEdit;
-    protected PorSuspend porSuspend;
-    protected PorApproval porApproval;
-    protected PorReject porReject;
-    protected PorApprove porApprove;
-    protected ApprovalAndApprove approvalAndApprove;
-    protected PorInspectPoInterface porInspectPoInterface;
-    protected PurchaseOrderInterface purchaseOrderInterface;
+    protected ILogin iLogin;
+    protected ILogout iLogout;
+    protected IPrType iPrType;
+    protected IPrCreate iPrCreate;
+    protected IPrEdit iPrEdit;
+    protected IPrSendForApproval iPrSendForApproval;
+    protected IPrApprove iPrApprove;
+    protected IPrReject iPrReject;
+    protected IPrBuyerManagerSuspend iPrBuyerManagerSuspend;
+    protected IPrBuyerSuspend iPrBuyerSuspend;
+    protected IPrAssign iPrAssign;
+    protected IRfqCreate iRfqCreate;
+    protected IRfqEdit iRfqEdit;
+    protected IRfqSuspend iRfqSuspend;
+    protected IQuoRegret iQuoRegret;
+    protected IQuoSubmit iQuoSubmit;
+    protected IQuoRequote iQuoRequote;
+    protected IReadyForEvalutation iReadyForEvalutation;
+    protected ITeCreate iTeCreate;
+    protected ITeReject iTeReject;
+    protected ICeCreate iCeCreate;
+    protected IPorCreate iPorCreate;
+    protected IPorEdit iPorEdit;
+    protected IPorSuspend iPorSuspend;
+    protected IPorSendForApproval iPorSendForApproval;
+    protected IPorReject iPorReject;
+    protected IPorApprove iPorApprove;
+    protected IPorSendForApprovalAndApprove iPorSendForApprovalAndApprove;
+    protected IPoCreate iPoCreate;
+    protected IPoSendForVendor iPoSendForVendor;
+    
+    
+
     protected OrderScheduleInterface orderScheduleInterface;
     protected OSEdit osEdit;
     protected OSReject osReject;
@@ -174,105 +123,106 @@ public class BaseMain {
 
 //TODO Constructor
     public BaseMain() {
-            playWrightFactory = new PlayWrightFactory();
-            properties = playWrightFactory.initializeProperties();
-            page = playWrightFactory.initializeBrowser(properties);
+        playwrightFactory = new PlaywrightFactory();
+        properties = playwrightFactory.initializeProperties();
+        page = playwrightFactory.initializePage(properties);
 
 //TODO Login && Logout
-            loginPageInterface = new LoginPage(properties, page);
-            logoutPageInterface = new LogoutPage(page);
+        iLogin = new Login(properties, page);
+        iLogout = new Logout(page);
 
 //TODO Requisition
-            prCreate = new POCNonCatalogPrCreate(loginPageInterface, properties, page, logoutPageInterface);
-            prApprove = new PocPrApprove(loginPageInterface, properties, page, logoutPageInterface);
-            prSendForApproval = new PocPrSendForApproval(loginPageInterface, properties, page, logoutPageInterface);
-            prAssign = new PocPrAssign(loginPageInterface, properties, page, logoutPageInterface);
-            prEdit = new PocPrEdit(loginPageInterface, properties, page, logoutPageInterface, prSendForApproval, prApprove, prAssign);
-            prReject = new PocPrReject(loginPageInterface, properties, page, logoutPageInterface, prEdit);
-            prSuspendBuyerManager = new PocPrBuyerManagerSuspend(loginPageInterface, properties, page, logoutPageInterface, prEdit);
-            prSuspendBuyer = new PocPrBuyerSuspend(loginPageInterface, properties, page, logoutPageInterface, prEdit);
+        iPrCreate = new Create(iLogin, properties, page, iLogout);
+        iPrType = new PurchaseRequisitionTypeHandler(iPrCreate, properties);
+        iPrSendForApproval = new SendForApproval(iLogin, properties, page, iLogout);
+        iPrApprove = new Approve(iLogin, properties, page, iLogout);
+        iPrAssign = new Assign(iLogin, properties, page, iLogout);
+        iPrEdit = new Edit(iLogin, properties, page, iLogout, iPrSendForApproval, iPrApprove, iPrAssign);
+        iPrReject = new Reject(iLogin, properties, page, iLogout, iPrEdit);
+        iPrBuyerManagerSuspend = new BuyerManagerSuspend(iLogin, properties, page, iLogout, iPrEdit);
+        iPrBuyerSuspend = new BuyerSuspend(iLogin, properties, page, iLogout, iPrEdit);
 
 //TODO Request For Quotation
-            rfqCreate = new PocRfqCreate(loginPageInterface, properties, page, logoutPageInterface);
-            rfqEdit = new PocRfqEdit(loginPageInterface, properties, page, logoutPageInterface);
-            rfqSuspend = new PocRfqSuspend(loginPageInterface, properties, page, logoutPageInterface, rfqEdit, prEdit, prSendForApproval, prApprove, prAssign, rfqCreate);
-            quotationSubmit = new com.procurement.requestforquotations.quotationsubmit.Quote(loginPageInterface, properties, page, logoutPageInterface);
-            quotationRegret = new RegisteredVendorQuotationRegret(quotationSubmit, loginPageInterface, properties, page, logoutPageInterface);
-            quotationRequote = new com.procurement.requestforquotations.quotationrequote.Requote(loginPageInterface, properties, page, logoutPageInterface);
-            readyForEvalutationInterface = new ReadyForEvaluation(loginPageInterface, properties, page, logoutPageInterface);
-            teReject = new TechnicalEvaluationReject(loginPageInterface, properties, page, logoutPageInterface);
-            technicalEvaluationInterface = new TechnicalEvaluation(loginPageInterface, properties, page, logoutPageInterface);
-            commercialEvaluationInterface = new CommercialEvaluation(loginPageInterface, properties, page, logoutPageInterface);
+        iRfqCreate = new RfqCreate(iLogin, properties, page, iLogout);
+        iRfqEdit = new RfqEdit(iLogin, properties, page, iLogout);
+        iRfqSuspend = new RfqSuspend(iLogin, properties, page, iLogout, iRfqEdit, iPrEdit, iPrSendForApproval, iPrApprove, iPrAssign, iRfqCreate);
+        iQuoSubmit = new Quote(iLogin, properties, page, iLogout);
+        iQuoRegret = new QuotationRegret(iQuoSubmit, iLogin, properties, page, iLogout);
+        iQuoRequote = new Requote(iLogin, properties, page, iLogout);
+        iReadyForEvalutation = new ReadyForEvaluation(iLogin, properties, page, iLogout);
+        iTeReject = new TechnicalEvaluationReject(iLogin, properties, page, iLogout);
+        iTeCreate = new TechnicalEvaluation(iLogin, properties, page, iLogout);
+        iCeCreate = new CommercialEvaluation(iLogin, properties, page, iLogout);
 
 //TODO Purchase Order Request
-            porCreateNonCatalog = new PocNonCatalogPorCreate(loginPageInterface, properties, page, logoutPageInterface);
-            porEdit = new PocPorEdit(loginPageInterface, properties, page, logoutPageInterface);
-            porSuspend = new PocPorSuspend(loginPageInterface, properties, page, logoutPageInterface, porEdit, commercialEvaluationInterface, porCreateNonCatalog);
-            porApproval = new PocPorSendForApproval(loginPageInterface, properties, page, logoutPageInterface);
-            porApprove = new Approve(loginPageInterface, properties, page, logoutPageInterface);
-            porReject = new PocPorReject(loginPageInterface, properties, page, logoutPageInterface, porEdit, porApproval);
-            approvalAndApprove = new PorApprovalAndApprove(porApprove, porApproval);
-            porInspectPoInterface = new PorInspectPO(loginPageInterface, properties, page, logoutPageInterface);
+        iPorCreate = new PorCreate(iLogin, properties, page, iLogout);
+        iPorEdit = new PorEdit(iLogin, properties, page, iLogout);
+        iPorSuspend = new PorSuspend(iLogin, properties, page, iLogout, iPorEdit, iCeCreate, iPorCreate);
+        iPorSendForApproval = new PorSendForApproval(iLogin, properties, page, iLogout);
+        iPorApprove = new PorApprove(iLogin, properties, page, iLogout);
+        iPorReject = new PorReject(iLogin, properties, page, iLogout, iPorEdit, iPorSendForApproval);
+        iPorSendForApprovalAndApprove = new PorSendForApprovalAndApprove(iPorApprove, iPorSendForApproval);
 
 //TODO Purchase Orders
-            purchaseOrderInterface = new BuyerPurchaseOrder(loginPageInterface, properties, page, logoutPageInterface);
+        iPoCreate = new PoCreate(iLogin, properties, page, iLogout);
+        iPoSendForVendor = new SendForVendor(iLogin, properties, page, iLogout);
 
 //TODO Order Schedule
-            orderScheduleInterface = new OrderScheduleCreate(loginPageInterface, properties, page, logoutPageInterface, playWrightFactory);
-            osEdit = new OrderScheduleEdit(loginPageInterface, properties, page, logoutPageInterface);
-            osReject = new OrderScheduleReject(loginPageInterface, properties, page, logoutPageInterface);
-            orderScheduleApproveInterface = new OrderScheduleApprove(loginPageInterface, properties, page, logoutPageInterface);
+            orderScheduleInterface = new OrderScheduleCreate(iLogin, properties, page, iLogout, playWrightFactory);
+            osEdit = new OrderScheduleEdit(iLogin, properties, page, iLogout);
+            osReject = new OrderScheduleReject(iLogin, properties, page, iLogout);
+            orderScheduleApproveInterface = new OrderScheduleApprove(iLogin, properties, page, iLogout);
 
 //TODO Inspection
-            inspectionCreateInterface = new InspectionCreate(loginPageInterface, properties, page, logoutPageInterface);
-            insFail = new InspectionFail(loginPageInterface, properties, page, logoutPageInterface, inspectionCreateInterface);
-            inspectionAssignInterface = new InspectionAssign(loginPageInterface, properties, page, logoutPageInterface);
+            inspectionCreateInterface = new InspectionCreate(iLogin, properties, page, iLogout);
+            insFail = new InspectionFail(iLogin, properties, page, iLogout, inspectionCreateInterface);
+            inspectionAssignInterface = new InspectionAssign(iLogin, properties, page, iLogout);
 
 //TODO Dispatch Notes
-            dispatchNoteCreateInterface = new DispatchNoteCreate(loginPageInterface, properties, page, logoutPageInterface);
-            dnEdit = new PocDnEdit(loginPageInterface, properties, page, logoutPageInterface);
-            dnReturn = new PocDnReturn(loginPageInterface, properties, page, logoutPageInterface, dnEdit);
-            dnCancel = new PocDnCancel(loginPageInterface, properties, page, logoutPageInterface, dispatchNoteCreateInterface);
-            dispatchNotesAssignInterface = new DispatchNotesAssign(loginPageInterface, properties, page, logoutPageInterface, playWrightFactory);
+            dispatchNoteCreateInterface = new DispatchNoteCreate(iLogin, properties, page, iLogout);
+            dnEdit = new PocDnEdit(iLogin, properties, page, iLogout);
+            dnReturn = new PocDnReturn(iLogin, properties, page, iLogout, dnEdit);
+            dnCancel = new PocDnCancel(iLogin, properties, page, iLogout, dispatchNoteCreateInterface);
+            dispatchNotesAssignInterface = new DispatchNotesAssign(iLogin, properties, page, iLogout, playWrightFactory);
 
 //TODO Freight Forwarder Requests
-            ffrInvite = new FreightForwarderInvite(loginPageInterface, properties, page, logoutPageInterface);
-            ffrQuotation = new FreightQuotation(loginPageInterface, properties, page, logoutPageInterface);
+            ffrInvite = new FreightForwarderInvite(iLogin, properties, page, iLogout);
+            ffrQuotation = new FreightQuotation(iLogin, properties, page, iLogout);
             ffrRequote = new FreightForwarderRequote(ffrQuotation);
 
 //TODO Work Orders
-            workOrderCreateInterface = new WorkOrderCreate(loginPageInterface, properties, page, logoutPageInterface);
-            woTrackerStatusInterface = new WOTrackerStatus(loginPageInterface, properties, page, logoutPageInterface, playWrightFactory);
+            workOrderCreateInterface = new WorkOrderCreate(iLogin, properties, page, iLogout);
+            woTrackerStatusInterface = new WOTrackerStatus(iLogin, properties, page, iLogout, playWrightFactory);
 
 //TODO POInvoice
-            poInvoiceCreateInterface = new POInvoiceCreate(playWrightFactory, loginPageInterface, properties, page, logoutPageInterface, currencyExchangeRate);
-            poInvCancel = new PoInvoiceCancel(loginPageInterface, properties, page, logoutPageInterface, poInvoiceCreateInterface);
-            poInvHold = new POInvoiceHold(loginPageInterface, properties, page, logoutPageInterface);
-            poInvRevert = new POInvoiceRevert(loginPageInterface, properties, page, logoutPageInterface);
-            poInvAccept = new ChecklistAccept(loginPageInterface, properties, page, logoutPageInterface);
-            poInvChecklistReject = new ChecklistReject(loginPageInterface, properties, page, logoutPageInterface);
-            poSendForApprovalInterface = new POInvoiceSendForApproval(loginPageInterface, properties, page, logoutPageInterface);
-            poInvReturn = new POInvoiceReturn(loginPageInterface, properties, page, logoutPageInterface, poSendForApprovalInterface);
-            poInvVerify = new POInvoiceVerify(loginPageInterface, properties, page, logoutPageInterface);
-            poInvEdit = new POInvoiceEdit(loginPageInterface, properties, page, logoutPageInterface, poSendForApprovalInterface);
-            poInvReject = new POInvoiceReject(loginPageInterface, properties, page, logoutPageInterface, poSendForApprovalInterface);
-            poInvoiceApprovalInterface = new POInvoiceApproval(loginPageInterface, properties, page, logoutPageInterface);
+            poInvoiceCreateInterface = new POInvoiceCreate(playWrightFactory, iLogin, properties, page, iLogout, currencyExchangeRate);
+            poInvCancel = new PoInvoiceCancel(iLogin, properties, page, iLogout, poInvoiceCreateInterface);
+            poInvHold = new POInvoiceHold(iLogin, properties, page, iLogout);
+            poInvRevert = new POInvoiceRevert(iLogin, properties, page, iLogout);
+            poInvAccept = new ChecklistAccept(iLogin, properties, page, iLogout);
+            poInvChecklistReject = new ChecklistReject(iLogin, properties, page, iLogout);
+            poSendForApprovalInterface = new POInvoiceSendForApproval(iLogin, properties, page, iLogout);
+            poInvReturn = new POInvoiceReturn(iLogin, properties, page, iLogout, poSendForApprovalInterface);
+            poInvVerify = new POInvoiceVerify(iLogin, properties, page, iLogout);
+            poInvEdit = new POInvoiceEdit(iLogin, properties, page, iLogout, poSendForApprovalInterface);
+            poInvReject = new POInvoiceReject(iLogin, properties, page, iLogout, poSendForApprovalInterface);
+            poInvoiceApprovalInterface = new POInvoiceApproval(iLogin, properties, page, iLogout);
 
 //TODO WOInvoice
-            woInvoiceCreateInterface = new WOInvoiceCreate(playWrightFactory, loginPageInterface, properties, page, logoutPageInterface, currencyExchangeRate);
-            woInvCancel = new WoInvoiceCancel(loginPageInterface, properties, page, logoutPageInterface, woInvoiceCreateInterface);
-            woInvHold = new WOInvoiceHold(loginPageInterface, properties, page, logoutPageInterface);
-            woInvRevert = new WOInvoiceRevert(loginPageInterface, properties, page, logoutPageInterface);
-            woInvAccept = new WOChecklistAccept(loginPageInterface, properties, page, logoutPageInterface);
-            woInvChecklistReject = new WOChecklistReject(loginPageInterface, properties, page, logoutPageInterface);
-            woSendForApprovalInterface = new WOInvoiceSendForApproval(loginPageInterface, properties, page, logoutPageInterface);
-            woInvReturn = new WOInvoiceReturn(loginPageInterface, properties, page, logoutPageInterface, woSendForApprovalInterface);
-            woInvVerify = new WOInvoiceVerify(loginPageInterface, properties, page, logoutPageInterface);
-            woInvEdit = new WOInvoiceEdit(loginPageInterface, properties, page, logoutPageInterface, woSendForApprovalInterface);
-            woInvReject = new WOInvoiceReject(loginPageInterface, properties, page, logoutPageInterface, woSendForApprovalInterface);
-            woInvoiceApprovalInterface = new WOInvoiceApproval(loginPageInterface, properties, page, logoutPageInterface);
+            woInvoiceCreateInterface = new WOInvoiceCreate(playWrightFactory, iLogin, properties, page, iLogout, currencyExchangeRate);
+            woInvCancel = new WoInvoiceCancel(iLogin, properties, page, iLogout, woInvoiceCreateInterface);
+            woInvHold = new WOInvoiceHold(iLogin, properties, page, iLogout);
+            woInvRevert = new WOInvoiceRevert(iLogin, properties, page, iLogout);
+            woInvAccept = new WOChecklistAccept(iLogin, properties, page, iLogout);
+            woInvChecklistReject = new WOChecklistReject(iLogin, properties, page, iLogout);
+            woSendForApprovalInterface = new WOInvoiceSendForApproval(iLogin, properties, page, iLogout);
+            woInvReturn = new WOInvoiceReturn(iLogin, properties, page, iLogout, woSendForApprovalInterface);
+            woInvVerify = new WOInvoiceVerify(iLogin, properties, page, iLogout);
+            woInvEdit = new WOInvoiceEdit(iLogin, properties, page, iLogout, woSendForApprovalInterface);
+            woInvReject = new WOInvoiceReject(iLogin, properties, page, iLogout, woSendForApprovalInterface);
+            woInvoiceApprovalInterface = new WOInvoiceApproval(iLogin, properties, page, iLogout);
 
 //TODO Others
-            currencyExchangeRate = new CurrencyExchangeRate(playWrightFactory, loginPageInterface, properties, logoutPageInterface);
+            currencyExchangeRate = new CurrencyExchangeRate(playWrightFactory, iLogin, properties, iLogout);
     }
 }

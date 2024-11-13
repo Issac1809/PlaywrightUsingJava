@@ -40,7 +40,9 @@ public class Edit implements IPrEdit {
 
     public void edit() {
         try {
-        iLogin.performLogin(properties.getProperty("requesterEmail"));
+        String requesterEmailId = properties.getProperty("requesterEmail");
+        iLogin.performLogin(requesterEmailId);
+
         String title = properties.getProperty("orderTitle");
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle);
@@ -68,6 +70,17 @@ public class Edit implements IPrEdit {
         try {
         edit();
         iPrSendForApproval.sendForApproval();
+        } catch (Exception error) {
+            System.out.println("What is the error: " + error.getMessage());
+        }
+    }
+
+    public void buyerManagerSuspendEdit()  {
+        try {
+            edit();
+            iPrSendForApproval.sendForApproval();
+            iPrApprove.approve();
+            iPrAssign.buyerManagerLogin();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }

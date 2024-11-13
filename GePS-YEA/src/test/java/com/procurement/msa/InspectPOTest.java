@@ -1,5 +1,5 @@
 package com.procurement.msa;
-import com.base.BaseTest;
+import com.poc.base.BaseTest;
 import org.testng.annotations.Test;
 
 public class InspectPOTest extends BaseTest {

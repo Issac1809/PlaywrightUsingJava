@@ -1,38 +1,54 @@
-package com.procurement.requestforquotations.readyforevaluation;
-import com.interfaces.rfq.ReadyForEvalutationInterface;
+package com.poc.classes.requestforquotations.readyforevaluation;
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.interfaces.login.LoginPageInterface;
-import com.interfaces.logout.LogoutPageInterface;
+import com.poc.interfaces.login.ILogin;
+import com.poc.interfaces.logout.ILogout;
+import com.poc.interfaces.requestforquotation.IReadyForEvalutation;
 import java.util.Properties;
+import static com.constants.requestforquotations.LReadyForEvaluation.*;
+import static com.factory.PlaywrightFactory.waitForLocator;
 
-public class ReadyForEvaluation implements ReadyForEvalutationInterface {
+public class ReadyForEvaluation implements IReadyForEvalutation {
 
     Properties properties;
     Page page;
-    LoginPageInterface loginPageInterface;
-    LogoutPageInterface logoutPageInterface;
+    ILogin iLogin;
+    ILogout iLogout;
 
     private ReadyForEvaluation(){
     }
 
 //TODO Constructor
-    public ReadyForEvaluation(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
-        this.loginPageInterface = loginPageInterface;
+    public ReadyForEvaluation(ILogin iLogin, Properties properties, Page page, ILogout iLogout){
+        this.iLogin = iLogin;
         this.properties = properties;
         this.page = page;
-        this.logoutPageInterface = logoutPageInterface;
-
+        this.iLogout = iLogout;
     }
 
-    public void ReadyForEvaluationButton(){
+    public void readyForEvaluationButton(){
         try {
-        loginPageInterface.LoginMethod(properties.getProperty("Buyer"));
-        page.locator("//*[contains(text(), 'Request For Quotations')]").click();
+        String buyerMailId = properties.getProperty("Buyer");
+        iLogin.performLogin(buyerMailId);
+
+        Locator rfqNavigationBarLocator = page.locator(RFQ_NAVIGATION_BAR);
+        waitForLocator(rfqNavigationBarLocator);
+        rfqNavigationBarLocator.click();
+
         String title = properties.getProperty("Title");
-        page.locator("//span[contains(text(), '"+ title +"')]").first().click();
-        page.locator("#btnReadyForEvalution").click();
-        page.locator(".bootbox-accept").click();
-        logoutPageInterface.LogoutMethod();
+        Locator titleLocator = page.locator(getTitle(title));
+        waitForLocator(titleLocator);
+        titleLocator.first().click();
+
+        Locator readyForEvaluationButtonLocator = page.locator(READY_FOR_EVALUATION_BUTTON);
+        waitForLocator(readyForEvaluationButtonLocator);
+        readyForEvaluationButtonLocator.click();
+
+        Locator acceptLocator = page.locator(YES);
+        waitForLocator(acceptLocator);
+        acceptLocator.click();
+
+        iLogout.performLogout();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }

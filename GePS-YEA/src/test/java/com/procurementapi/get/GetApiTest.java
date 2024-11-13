@@ -1,5 +1,5 @@
 package com.procurementapi.get;
-import com.base.BaseApiTest;
+import com.poc.base.BaseApiTest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.options.RequestOptions;

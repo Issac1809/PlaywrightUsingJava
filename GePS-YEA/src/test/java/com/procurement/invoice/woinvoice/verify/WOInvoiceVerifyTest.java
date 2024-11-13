@@ -1,5 +1,5 @@
 package com.procurement.invoice.woinvoice.verify;
-import com.base.BaseTest;
+import com.poc.base.BaseTest;
 import org.testng.annotations.Test;
 
 public class WOInvoiceVerifyTest extends BaseTest {

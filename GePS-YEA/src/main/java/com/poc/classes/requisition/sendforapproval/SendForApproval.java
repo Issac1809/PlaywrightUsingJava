@@ -32,7 +32,8 @@ public class SendForApproval implements IPrSendForApproval {
     public void sendForApproval() {
         try {
         String title = properties.getProperty("orderTitle");
-        iLogin.performLogin(properties.getProperty("requesterEmail"));
+        String requesterMailId = properties.getProperty("requesterEmail");
+        iLogin.performLogin(requesterMailId);
 
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle);

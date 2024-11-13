@@ -1,48 +1,94 @@
-package com.procurement.requestforquotations.technicalevaluation;
-import com.interfaces.rfq.TechnicalEvaluationInterface;
+package com.poc.classes.requestforquotations.technicalevaluation;
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.interfaces.login.LoginPageInterface;
-import com.interfaces.logout.LogoutPageInterface;
+import com.poc.interfaces.login.ILogin;
+import com.poc.interfaces.logout.ILogout;
+import com.poc.interfaces.requestforquotation.ITeCreate;
 import java.util.Properties;
+import static com.constants.requestforquotations.LTeCreate.*;
+import static com.factory.PlaywrightFactory.waitForLocator;
 
-public class TechnicalEvaluation implements TechnicalEvaluationInterface {
+public class TechnicalEvaluation implements ITeCreate {
 
     Properties properties;
     Page page;
-    LoginPageInterface loginPageInterface;
-    LogoutPageInterface logoutPageInterface;
+    ILogin iLogin;
+    ILogout iLogout;
 
     private TechnicalEvaluation(){
     }
 
 //TODO Constructor
-    public TechnicalEvaluation(LoginPageInterface loginPageInterface, Properties properties, Page page, LogoutPageInterface logoutPageInterface){
-        this.loginPageInterface = loginPageInterface;
+    public TechnicalEvaluation(ILogin iLogin, Properties properties, Page page, ILogout iLogout){
+        this.iLogin = iLogin;
         this.properties = properties;
         this.page = page;
-        this.logoutPageInterface = logoutPageInterface;
+        this.iLogout = iLogout;
     }
 
-    public void TechnicalEvaluationButton() {
+    public void technicalEvaluationButton() {
         try {
-        loginPageInterface.LoginMethod();
-        page.locator("//*[contains(text(), 'Request For Quotations')]").click();
+        iLogin.performLogin();
+
+        Locator rfqNavigationBarLocator = page.locator(RFQ_NAVIGATION_BAR);
+        waitForLocator(rfqNavigationBarLocator);
+        rfqNavigationBarLocator.click();
+
         String title = properties.getProperty("Title");
-        page.locator("//span[contains(text(), '"+ title +"')]").first().click();
-        page.locator("#btnCreateTE").click();
-        page.locator(".border-primary").click();
-        page.locator("#btnCreate").click();
-        page.locator(".bootbox-accept").click();
-        page.locator("#btnSendApproval").click();
-        page.locator(".select2-selection--single").first().click();
+        Locator titleLocator = page.locator(getTitle(title));
+        waitForLocator(titleLocator);
+        titleLocator.first().click();
+
+        Locator teCreateButtonLocator = page.locator(TE_CREATE_BUTTON);
+        waitForLocator(teCreateButtonLocator);
+        teCreateButtonLocator.click();
+
+        Locator vendorSelectCheckboxLocator = page.locator(VENDOR_SELECT_CHECKBOX);
+        waitForLocator(vendorSelectCheckboxLocator);
+        vendorSelectCheckboxLocator.click();
+
+        Locator createTeButtonLocator = page.locator(CREATE_TECHNICAL_EVALUATION_BUTTON);
+        waitForLocator(createTeButtonLocator);
+        createTeButtonLocator.click();
+
+        Locator remarksAccept = page.locator(YES);
+        waitForLocator(remarksAccept);
+        remarksAccept.click();
+
+        Locator sendForApprovalLocator = page.locator(SEND_FOR_APPROVAL);
+        waitForLocator(sendForApprovalLocator);
+        sendForApprovalLocator.click();
+
+        Locator teApproverSelectLocator = page.locator(APPROVER_SELECT);
+        waitForLocator(teApproverSelectLocator);
+        teApproverSelectLocator.first().click();
+
         String teApprover = properties.getProperty("TEApprover");
-        page.locator(".select2-search__field").fill(teApprover);
-        page.locator("//li[contains(text(), '"+ teApprover +"')]").click();
-        page.locator("#saveApproverAssign").click();
-        page.locator(".bootbox-accept").click();
-        page.locator("#btnApprove").click();
-        page.locator(".bootbox-accept").click();
-        logoutPageInterface.LogoutMethod();
+        Locator teApproverSearchLocator = page.locator(SEARCH_FIELD);
+        waitForLocator(teApproverSearchLocator);
+        teApproverSearchLocator.fill(teApprover);
+
+        Locator getTeApproverLocator = page.locator(getTeApprover(teApprover));
+        waitForLocator(getTeApproverLocator);
+        getTeApproverLocator.click();
+
+        Locator saveApproverLocator = page.locator(SAVE_APPROVER);
+        waitForLocator(saveApproverLocator);
+        saveApproverLocator.click();
+
+        Locator acceptLocator = page.locator(YES);
+        waitForLocator(acceptLocator);
+        acceptLocator.click();
+
+        Locator approveButtonLocator = page.locator(APPROVE_BUTTON);
+        waitForLocator(approveButtonLocator);
+        approveButtonLocator.click();
+
+        Locator acceptLocator1 = page.locator(YES);
+        waitForLocator(acceptLocator1);
+        acceptLocator1.click();
+
+        iLogout.performLogout();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
