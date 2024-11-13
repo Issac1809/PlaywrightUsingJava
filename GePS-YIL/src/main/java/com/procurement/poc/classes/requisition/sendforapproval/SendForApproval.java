@@ -7,7 +7,7 @@ import com.procurement.poc.interfaces.login.ILogin;
 
 import java.util.Properties;
 import static com.factory.PlaywrightFactory.waitForLocator;
-import static com.procurement.nonPoc.constants.requisitions.LPrSendForApproval.*;
+import static com.procurement.poc.constants.requisitions.LPrSendForApproval.*;
 
 public class SendForApproval implements IPrSendForApproval {
 
@@ -33,15 +33,15 @@ public class SendForApproval implements IPrSendForApproval {
         iLogin.performLogin(properties.getProperty("requesterEmail"));
 
         String getTitle = getTitle(title);
-        Locator titleLocator = page.locator(getTitle);
+        Locator titleLocator = page.locator(getTitle).first();
         waitForLocator(titleLocator);
         titleLocator.first().click();
 
-        Locator sendForApprovalButtonLocator = page.locator(SEND_FOR_APPROVAL_BUTTON);
+        Locator sendForApprovalButtonLocator = page.locator(SEND_FOR_APPROVAL_BUTTON.getLocator());
         waitForLocator(sendForApprovalButtonLocator);
         sendForApprovalButtonLocator.click();
 
-        Locator yesButtonLocator = page.locator(YES);
+        Locator yesButtonLocator = page.locator(YES.getLocator());
         waitForLocator(yesButtonLocator);
         yesButtonLocator.click();
         iLogout.performLogout();

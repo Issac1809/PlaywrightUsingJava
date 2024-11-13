@@ -8,7 +8,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import static com.factory.PlaywrightFactory.waitForLocator;
-import static com.procurement.nonPoc.constants.requisitions.LPrAssign.*;
+import static com.procurement.poc.constants.requisitions.LPrAssign.*;
 
 public class Assign implements IPrAssign {
 

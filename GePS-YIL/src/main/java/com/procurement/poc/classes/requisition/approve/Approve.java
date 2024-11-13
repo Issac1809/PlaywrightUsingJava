@@ -7,7 +7,7 @@ import com.procurement.poc.interfaces.login.ILogin;
 
 import java.util.Properties;
 import static com.factory.PlaywrightFactory.waitForLocator;
-import static com.procurement.nonPoc.constants.requisitions.LPrApprove.*;
+import static com.procurement.poc.constants.requisitions.LPrApprove.*;
 
 public class Approve implements IPrApprove {
 

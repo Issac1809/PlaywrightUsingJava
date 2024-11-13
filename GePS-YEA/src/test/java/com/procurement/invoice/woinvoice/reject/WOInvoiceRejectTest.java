@@ -1,5 +1,5 @@
 package com.procurement.invoice.woinvoice.reject;
-import com.base.BaseTest;
+import com.poc.base.BaseTest;
 import org.testng.annotations.Test;
 
 public class WOInvoiceRejectTest extends BaseTest {

@@ -34,7 +34,9 @@ public class Reject implements IPrReject {
 
     public void reject()  {
         try {
-        iLogin.performLogin(properties.getProperty("projectManagerEmail"));
+        String projectManagerMailId = properties.getProperty("projectManagerEmail");
+        iLogin.performLogin(projectManagerMailId);
+
         String title = properties.getProperty("orderTitle");
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle);

@@ -7,6 +7,7 @@
         <listener class-name="org.testng.reporters.EmailableReporter2" />
         <listener class-name="com.reports.ExtentReportListener" />
     </listeners>
+
     <test name="YIL Login Page Test">
         <classes>
             <class name="com.procurement.nonPoc.login.LoginTest" />

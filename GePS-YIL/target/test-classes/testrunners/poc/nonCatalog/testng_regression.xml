@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Requisition Suite">
+
+    <test name="Group">
+        <groups>
+            <run>
+                <include name="requisition" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.classes.requisition.create.CreateTest" />
+            <class name="com.procurement.poc.requisition.edit.EditTest" />
+            <class name="com.procurement.poc.requisition.sendforapproval.SendForApprovalTest" />
+            <class name="com.procurement.poc.requisition.reject.RejectTest" />
+            <class name="com.procurement.poc.requisition.approve.ApproveTest" />
+            <class name="com.procurement.poc.requisition.suspend.SuspendTest" />
+            <class name="com.procurement.poc.requisition.assign.AssignTest" />
+            <class name="com.procurement.poc.requisition.suspend.SuspendTest" />
+        </classes>
+    </test>
+</suite>

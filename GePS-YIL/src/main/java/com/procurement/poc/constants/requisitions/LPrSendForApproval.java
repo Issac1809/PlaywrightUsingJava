@@ -1,16 +1,19 @@
 package com.procurement.poc.constants.requisitions;
 
-public class LPrSendForApproval {
+public enum LPrSendForApproval {
 
-    public static final String SEND_FOR_APPROVAL_BUTTON = "#btnSendApproval";
-    public static final String YES = "//button[contains(text(), 'Yes')]";
+    SEND_FOR_APPROVAL_BUTTON("#btnSendApproval"),
+    YES("//button[contains(text(), 'Yes')]");
 
+    private final String locatorsName;
     //TODO Constructor
-    private LPrSendForApproval(){
+    LPrSendForApproval(String locatorsName){
+        this.locatorsName = locatorsName;
     }
 
     public static String getTitle(String title){
-        String title1 = "//*[contains(text(), '" + title + "')]";
-        return title1;
+        return "//*[contains(text(), '" + title + "')]";
     }
+
+    public String getLocator(){return locatorsName;}
 }

@@ -1,5 +1,5 @@
 package com.procurement.inspections.fail;
-import com.base.BaseTest;
+import com.poc.base.BaseTest;
 import org.testng.annotations.Test;
 
 public class InspectionFailTest extends BaseTest {

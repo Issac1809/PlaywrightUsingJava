@@ -55,7 +55,7 @@ public enum LPrCreate {
         this.locatorsName = locatorsName;
     }
     
-//TODO Methods to get dynamic locators
+    //TODO Methods to get dynamic locators
     public static String getPrType(String type) {
         return "//a[@href='/Procurement/Requisitions/POC_" + type + "_Create']";
     }

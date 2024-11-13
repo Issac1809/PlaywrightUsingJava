@@ -1,5 +1,5 @@
 package com.procurement.logintest;
-import com.base.BaseTest;
+import com.poc.base.BaseTest;
 import org.testng.annotations.Test;
 public class LoginPageTest extends BaseTest{
 
@@ -19,7 +19,7 @@ public class LoginPageTest extends BaseTest{
 //    @Test (dataProvider = "DataProvider")
 //    public void LoginTestMethod(String id) {
 //        try {
-//            loginPageInterface.LoginMethod(id);
+//            iLogin.LoginMethod(id);
 //        } catch (Exception error) {
 //            System.out.println("Error :" + error);
 //        }
@@ -27,7 +27,7 @@ public class LoginPageTest extends BaseTest{
     @Test
     public void LoginTestMethod() {
         try {
-            loginPageInterface.LoginMethod();
+            iLogin.LoginMethod();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }

@@ -17,5 +17,4 @@ public class LCeCreate {
         String title1 = "//span[contains(text(), '"+ title +"')]";
         return title1;
     }
-
 }

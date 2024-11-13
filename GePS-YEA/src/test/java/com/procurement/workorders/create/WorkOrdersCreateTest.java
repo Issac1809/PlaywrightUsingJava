@@ -1,5 +1,5 @@
 package com.procurement.workorders.create;
-import com.base.BaseTest;
+import com.poc.base.BaseTest;
 import org.testng.annotations.Test;
 
 public class WorkOrdersCreateTest extends BaseTest {

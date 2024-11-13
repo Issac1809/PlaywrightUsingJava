@@ -1,4 +1,5 @@
 package com.procurement.poc.classes.requisition.edit;
+import com.microsoft.playwright.options.LoadState;
 import com.procurement.poc.interfaces.login.ILogin;
 import com.procurement.poc.interfaces.logout.ILogout;
 import com.procurement.poc.interfaces.requisitions.IPrApprove;
@@ -10,7 +11,7 @@ import com.microsoft.playwright.Page;
 
 import java.util.Properties;
 import static com.factory.PlaywrightFactory.waitForLocator;
-import static com.procurement.nonPoc.constants.requisitions.LPrEdit.*;
+import static com.procurement.poc.constants.requisitions.LPrEdit.*;
 
 public class Edit implements IPrEdit {
 
@@ -41,21 +42,23 @@ public class Edit implements IPrEdit {
         iLogin.performLogin(properties.getProperty("requesterEmail"));
         String title = properties.getProperty("orderTitle");
         String getTitle = getTitle(title);
-        Locator titleLocator = page.locator(getTitle);
+        Locator titleLocator = page.locator(getTitle).first();
         waitForLocator(titleLocator);
         titleLocator.first().click();
 
-        Locator editButtonLocator = page.locator(EDIT_BUTTON);
+        Locator editButtonLocator = page.locator(EDIT_BUTTON.getLocator()).first();
         waitForLocator(editButtonLocator);
         editButtonLocator.click();
 
-        Locator updateButtonLocator = page.locator(UPDATE_BUTTON);
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+
+        Locator updateButtonLocator = page.locator(UPDATE_BUTTON.getLocator());
         waitForLocator(updateButtonLocator);
         updateButtonLocator.click();
 
-        Locator yesButtonLocator = page.locator(YES);
-        waitForLocator(yesButtonLocator);
-        yesButtonLocator.click();
+        Locator submitButtonLocator = page.locator(ACCEPT.getLocator());
+        waitForLocator(submitButtonLocator);
+        submitButtonLocator.click();
         iLogout.performLogout();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

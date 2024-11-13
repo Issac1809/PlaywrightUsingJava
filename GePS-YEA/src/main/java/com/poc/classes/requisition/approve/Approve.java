@@ -4,9 +4,7 @@ import com.microsoft.playwright.Page;
 import com.poc.interfaces.login.ILogin;
 import com.poc.interfaces.logout.ILogout;
 import com.poc.interfaces.requisitions.IPrApprove;
-
 import java.util.Properties;
-
 import static com.constants.requisitions.LPrApprove.*;
 import static com.factory.PlaywrightFactory.waitForLocator;
 
@@ -32,6 +30,7 @@ public class Approve implements IPrApprove {
         try {
         String projectManager = properties.getProperty("projectManagerEmail");
         iLogin.performLogin(projectManager);
+
         String title = properties.getProperty("orderTitle");
         String approveButtonLocator = getApproveButton(title);
         Locator projectManagerOption = page.locator(approveButtonLocator);
