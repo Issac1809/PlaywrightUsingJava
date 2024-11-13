@@ -1,18 +1,15 @@
 package com.poc.classes.requisition.suspend;
-
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.poc.interfaces.login.ILogin;
 import com.poc.interfaces.logout.ILogout;
 import com.poc.interfaces.requisitions.IPrEdit;
-import com.poc.interfaces.requisitions.IPrSuspend;
-
+import com.poc.interfaces.requisitions.IPrBuyerSuspend;
 import java.util.Properties;
-
 import static com.constants.requisitions.LPrBuyerSuspend.*;
 import static com.factory.PlaywrightFactory.waitForLocator;
 
-public class BuyerSuspend implements IPrSuspend {
+public class BuyerSuspend implements IPrBuyerSuspend {
 
     private ILogin iLogin;
     private ILogout iLogout;
@@ -34,7 +31,9 @@ public class BuyerSuspend implements IPrSuspend {
 
     public void suspend(){
         try {
-        iLogin.performLogin(properties.getProperty("buyerEmail"));
+        String buyerMailId = properties.getProperty("buyerEmail");
+        iLogin.performLogin(buyerMailId);
+
         String title = properties.getProperty("orderTitle");
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle);

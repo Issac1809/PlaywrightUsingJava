@@ -1,5 +1,5 @@
 package com.procurement.freightforwarderrequests.quote;
-import com.base.BaseTest;
+import com.poc.base.BaseTest;
 import org.testng.annotations.Test;
 
 public class FFRQuoteTest extends BaseTest {

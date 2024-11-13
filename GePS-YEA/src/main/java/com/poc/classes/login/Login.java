@@ -62,4 +62,24 @@ public class Login implements ILogin {
             System.out.println("Login error: " + error.getMessage());
         }
     }
+
+    public void performLogin(String emailId, Page page) {
+        try {
+            Locator emailLocator = page.locator(EMAIL);
+            waitForLocator(emailLocator);
+            emailLocator.click();
+            emailLocator.fill(emailId);
+
+            Locator passwordLocator = page.locator(PASSWORD);
+            waitForLocator(passwordLocator);
+            passwordLocator.click();
+            passwordLocator.fill(properties.getProperty("loginPassword"));
+
+            Locator loginButtonLocator = page.locator(LOGIN_BUTTON);
+            waitForLocator(loginButtonLocator);
+            loginButtonLocator.click();
+        } catch (Exception error) {
+            System.out.println("Login error: " + error.getMessage());
+        }
+    }
 }
