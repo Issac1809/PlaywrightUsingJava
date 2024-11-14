@@ -1,10 +1,12 @@
 #PoReferenceId
-#Wed Nov 13 18:07:32 IST 2024
-Approver1=c.senthilkumar@yokogawa.com
+#Thu Nov 14 17:34:33 IST 2024
+Approver1=chandrashekar.hegde@yokogawa.com
 Approver2=shashanka.s@yokogawa.com
-ApproverCount=2
+Approver3=harshit.patel@yokogawa.com
+ApproverCount=3
+PORReferenceNumber=2Q0024POR01803
 POReferenceId=2Q0024REQ02753
-PRReferenceNumber=2Q0024REQ02756
+PRReferenceNumber=2Q0024REQ02770
 adminEmail=manoj.yavagal@yokogawa.com
 appUrl=https\://dprocure-uat.cormsquare.com/Identity/Account/Login
 billableToCustomer=Yes
@@ -47,6 +49,7 @@ packageType=Drum
 partNumber=PN - 1
 poReferenceId=240024PO00289
 poValue=9000
+porNotes=Purchase Order Request Notes
 prApproverGroupBEmail=admin@yokogawa.com
 prApproverGroupCEmail=departmentmanager@yokogawa.com
 prApproverGroupDEmail=businessunitmanager@yokogawa.com
@@ -54,7 +57,6 @@ presidentDirectorCorporateEmail=hazel@sharklasers.com
 priceValidity=3 Months
 projectCode=E256232Q00
 projectManagerEmail=projectmanager@yokogawa.com
-purchaseOrderNotes=Purchase Order Request Notes
 purchaseType=Catalog
 quantityList=150,200,20,80,90,35,40,20,10,5
 quotationNotes=Quotation Notes
