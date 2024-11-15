@@ -1,12 +1,12 @@
 #PoReferenceId
-#Thu Nov 14 17:41:45 IST 2024
+#Fri Nov 15 10:10:58 IST 2024
 Approver1=chandrashekar.hegde@yokogawa.com
 Approver2=shashanka.s@yokogawa.com
 Approver3=harshit.patel@yokogawa.com
 ApproverCount=3
-PORReferenceNumber=2Q0024POR01804
+PORReferenceNumber=2Q0024POR01806
 POReferenceId=2Q0024REQ02753
-PRReferenceNumber=2Q0024REQ02771
+PRReferenceNumber=2Q0024REQ02773
 adminEmail=manoj.yavagal@yokogawa.com
 appUrl=https\://dprocure-uat.cormsquare.com/Identity/Account/Login
 billableToCustomer=Yes
@@ -44,7 +44,7 @@ modelDescription=Model - 1
 netWeightKg=35
 oiAndTpCurrency=SGD
 orderIntake=10000
-orderTitle=POC-Automation
+orderTitle=POC-rc-
 packageType=Drum
 partNumber=PN - 1
 poReferenceId=240024PO00289
@@ -57,7 +57,7 @@ presidentDirectorCorporateEmail=hazel@sharklasers.com
 priceValidity=3 Months
 projectCode=E256232Q00
 projectManagerEmail=projectmanager@yokogawa.com
-purchaseType=Catalog
+purchaseType=catalog
 quantityList=150,200,20,80,90,35,40,20,10,5
 quotationNotes=Quotation Notes
 quotationReferenceNumber=QUO-47329
@@ -76,6 +76,7 @@ sourceCountry=India
 targetPrice=5000
 taxCode=PZ-Zero Rated Purchase
 totalChargeableWeightKg=200
+typeOfPurchase=Approved Vendor
 unitRate=200
 vendorEmail=sales@nandipowertronics.com
 vendorName=YIL

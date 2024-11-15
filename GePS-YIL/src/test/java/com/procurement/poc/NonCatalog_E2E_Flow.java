@@ -3,13 +3,13 @@ import com.procurement.poc.base.BaseTest;
 import org.testng.annotations.Test;
 
 
-public class Catalog_E2E_Flow extends BaseTest {
+public class NonCatalog_E2E_Flow extends BaseTest {
     @Test
     public void Flow() throws InterruptedException {
-//        PRRejectSuspend();
-        PRPosititve();
+        PRRejectSuspend();
+//        PRPosititve();
 //        PORSuspendPREdit();
-        PORPositive();
+//        PORPositive();
     }
 
     void PRPosititve(){

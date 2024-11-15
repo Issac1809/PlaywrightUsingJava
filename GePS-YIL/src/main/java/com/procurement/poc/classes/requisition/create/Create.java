@@ -4,7 +4,6 @@ import com.microsoft.playwright.Download;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Response;
-import com.microsoft.playwright.options.LoadState;
 import com.procurement.poc.interfaces.login.ILogin;
 import com.procurement.poc.interfaces.logout.ILogout;
 import com.procurement.poc.interfaces.requisitions.IPrCreate;
@@ -13,12 +12,10 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import com.procurement.poc.constants.requisitions.LPrCreate;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Properties;
 
 import static com.factory.PlaywrightFactory.waitForLocator;
@@ -76,24 +73,24 @@ public class Create implements IPrCreate {
         try {
             prType=properties.getProperty("purchaseType");
             switch (prType) {
-                case "Catalog":
+                case "catalog":
                     Locator catalogTitleLocator = page.locator(TITLE.getLocator());
                     waitForLocator(catalogTitleLocator);
                     String catalogTitle = properties.getProperty("orderTitle");
-                    catalogTitleLocator.fill(catalogTitle + "-" + prType);
+                    catalogTitleLocator.fill(catalogTitle + "-Catalog");
                     break;
-                case "NonCatalog":
+                case "noncatalog":
                     Locator nonCatalogTitleLocator = page.locator(TITLE.getLocator());
                     waitForLocator(nonCatalogTitleLocator);
                     String nonCatalogTitle = properties.getProperty("orderTitle");
-                    nonCatalogTitleLocator.fill(nonCatalogTitle + "-" + prType);
+                    nonCatalogTitleLocator.fill(nonCatalogTitle + "-Non Catalog");
                     break;
-                case "MH":
-                    Locator mhTitleLocator = page.locator(TITLE.getLocator());
-                    waitForLocator(mhTitleLocator);
-                    String mhTitle = properties.getProperty("orderTitle");
-                    mhTitleLocator.fill(mhTitle + "-" + prType);
-                    break;
+//                case "MH":
+//                    Locator mhTitleLocator = page.locator(TITLE.getLocator());
+//                    waitForLocator(mhTitleLocator);
+//                    String mhTitle = properties.getProperty("orderTitle");
+//                    mhTitleLocator.fill(mhTitle + "-" + prType);
+//                    break;
                 default:
                     System.out.println("--Enter Proper PR Type--");
                     break;
@@ -162,7 +159,7 @@ public class Create implements IPrCreate {
             waitForLocator(projectSelectElement);
 
             Response response = page.waitForResponse(
-                    resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/api/workBreakdownStructures/search?projectid") && resp.status() == 200,
+                    resp -> resp.url().startsWith(GET_WBS_API.getAPI()) && resp.status() == 200,
                     projectSelectElement::click
             );
 
@@ -210,7 +207,7 @@ public class Create implements IPrCreate {
             waitForLocator(vendorOption);
 
             Response response = page.waitForResponse(
-                    resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/api/RateContractsByVendorId?vendorId") && resp.status() == 200,
+                    resp -> resp.url().startsWith(GET_RATE_CONTRACTS_API.getAPI()) && resp.status() == 200,
                     vendorOption::click
             );
 
@@ -296,7 +293,7 @@ public class Create implements IPrCreate {
 
     public void shippingMode() {
         try {
-            String shippingMode = prType.equals("Catalog") ? CATALOG_SHIPPING_MODE.getLocator() : NON_CATALOG_MH_SHIPPING_MODE.getLocator();
+            String shippingMode = prType.equals("catalog") ? CATALOG_SHIPPING_MODE.getLocator() : NON_CATALOG_MH_SHIPPING_MODE.getLocator();
 
             Locator shippingModeLocator = page.locator(shippingMode);
             waitForLocator(shippingModeLocator);
@@ -360,7 +357,7 @@ public class Create implements IPrCreate {
             }
 
     //this is because after selecting the expected PO date it requires another click outside to click on Expected Delivery
-            page.locator("//label[@for='expectedDelivery']").click();
+            page.locator(EXPECTED_PO_ISSUE_LABEL.getLocator()).click();
 
 //            waitForLocator(todayOption);
 //            todayOption.last().click();
@@ -484,7 +481,7 @@ public class Create implements IPrCreate {
 
     public void oiAndTpCurrency(){
         try {
-            if (prType.equals("NonCatalog")) {
+            if (!(prType.equals("catalog"))) {
 
                 Locator oiAndTpCurrencyLocator = page.locator(OI_AND_TP_CURRENCY.getLocator());
                 waitForLocator(oiAndTpCurrencyLocator);
@@ -528,6 +525,23 @@ public class Create implements IPrCreate {
         }
     }
 
+    public void typeOfPurchase(){
+        Locator typeOfPurchase = page.locator(TYPE_OF_PURCHASE.getLocator());
+        waitForLocator(typeOfPurchase);
+        typeOfPurchase.click();
+
+        String typeOfPurchaseValue = properties.getProperty("typeOfPurchase");
+
+        Locator typeOfPurchaseSearchLocator = page.locator(SEARCH.getLocator());
+        waitForLocator(typeOfPurchaseSearchLocator);
+        typeOfPurchaseSearchLocator.fill(typeOfPurchaseValue);
+
+        String typeOfPurchaseSelector = getString(typeOfPurchaseValue);
+        Locator typeOfPurchaseOptionLocator = page.locator(typeOfPurchaseSelector);
+        waitForLocator(typeOfPurchaseOptionLocator);
+        typeOfPurchaseOptionLocator.click();
+    }
+
     public void caseMarking(){
         try {
             String caseMarkingDetails = properties.getProperty("caseMarking");
@@ -552,22 +566,20 @@ public class Create implements IPrCreate {
 
     public void warrantyRequirements(){
         try {
-            if (prType.equals("NonCatalog")) {
-                Locator warrantyRequirementsLocator = page.locator(WARRANTY_REQUIREMENTS.getLocator());
-                waitForLocator(warrantyRequirementsLocator);
-                warrantyRequirementsLocator.click();
+            Locator warrantyRequirementsLocator = page.locator(WARRANTY_REQUIREMENTS.getLocator());
+            waitForLocator(warrantyRequirementsLocator);
+            warrantyRequirementsLocator.click();
 
-                String warrantyRequirement = properties.getProperty("warrantyRequirement");
+            String warrantyRequirement = properties.getProperty("warrantyRequirement");
 
-                Locator warrantyRequirementsSearchLocator = page.locator(SEARCH.getLocator());
-                waitForLocator(warrantyRequirementsSearchLocator);
-                warrantyRequirementsSearchLocator.fill(warrantyRequirement);
+            Locator warrantyRequirementsSearchLocator = page.locator(SEARCH.getLocator());
+            waitForLocator(warrantyRequirementsSearchLocator);
+            warrantyRequirementsSearchLocator.fill(warrantyRequirement);
 
-                String warrantyRequirementSelector = getString(warrantyRequirement);
-                Locator warrantyRequirementOptionLocator = page.locator(warrantyRequirementSelector);
-                waitForLocator(warrantyRequirementOptionLocator);
-                warrantyRequirementOptionLocator.click();
-            }
+            String warrantyRequirementSelector = getString(warrantyRequirement);
+            Locator warrantyRequirementOptionLocator = page.locator(warrantyRequirementSelector);
+            waitForLocator(warrantyRequirementOptionLocator);
+            warrantyRequirementOptionLocator.click();
         } catch (Exception error) {
             System.out.println("Error encountered: " + error.getMessage());
         }
@@ -611,7 +623,6 @@ public class Create implements IPrCreate {
     public void liquidatedDamages(){
         try {
             String liquidatedDamages = properties.getProperty("liquidatedDamages").toLowerCase().trim();
-
             if (liquidatedDamages.equals("special")) {
                 Locator liquidatedDamagesSelector = page.locator(LIQUIDATED_DAMAGES_SELECT.getLocator());
                 waitForLocator(liquidatedDamagesSelector);
@@ -635,12 +646,14 @@ public class Create implements IPrCreate {
             Locator itemsDropdown = page.locator(ITEMS.getLocator());
             waitForLocator(itemsDropdown);
             itemsDropdown.click();
-
-            page.locator("(//ul[@id='select2-rcitemId-results']/li)[1]").click();
+            ////div[label[contains(text(),'Item')]]//span[contains(text(),'Item')]
+            Locator firstItem = page.locator(FIRST_ITEM.getLocator());
+            waitForLocator(firstItem);
+            firstItem.click();
 //            page.locator("#soItemNumber").fill("1");
-            page.locator("#quantity").fill("10");
-            page.locator("#remarks").fill("Remarks 1");
-            page.locator("#description").fill("Desc 1");
+            page.locator(QUANTITY.getLocator()).fill("10");
+//            page.locator("#remarks").fill("Remarks 1");
+            page.locator(DESCRIPTION.getLocator()).fill("Desc 1");
             Locator addItemButton = page.locator(ADD_ITEM_BUTTON.getLocator());
             waitForLocator(addItemButton);
             addItemButton.click();
@@ -725,19 +738,19 @@ public class Create implements IPrCreate {
     }
 
     public void createItemsFile() {
-        page.locator("#itemImport").click();
+        page.locator(IMPORT_ITEM.getLocator()).click();
 
         // Wait for the new tab (or page) to be created
         Page newTab = page.waitForPopup(() -> {
-            page.click("#btntoCatalogExport");  // Clicking on a link that opens a new tab
+            page.click(DOWNLOAD_RATE_CONTRACT.getLocator());  // Clicking on a link that opens a new tab
         });
-        page.click("//button[(@aria-label='Close') and (contains(text(),'Cancel'))]");
+        page.click(CANCEL_ITEM_IMPORT.getLocator());
 
         // Now you can interact with the new tab
         newTab.waitForLoadState();
-        newTab.locator(".form-control-sm").fill(properties.getProperty("rateContract"));
+        newTab.locator(SEARCH_RC_FOR_DOWNLOAD.getLocator()).fill(properties.getProperty("rateContract"));
         Download download = newTab.waitForDownload(() -> {
-            newTab.click("//a[(@class='export-link') and (contains(text(),'" + properties.getProperty("rateContract") + "'))]");
+            newTab.click(SELECT_RATE_CONTRACT_DOWNLOAD.getLocator());
         });
         // Wait for the download to complete and save it to a specific location
         download.saveAs(Paths.get("Downloads/" + download.suggestedFilename()));
@@ -806,11 +819,20 @@ public class Create implements IPrCreate {
         }
     }
     public void importItems(){
-        createItemsFile();
-        page.locator("#itemImport").click();
-        Locator itemFile = page.locator("#formFile");
-        itemFile.setInputFiles(Paths.get("Downloads/ExportItems.xlsx"));
-        page.locator("#btnUpload").click();
+
+        if(properties.getProperty("purchaseType").equals("catalog")) {
+            createItemsFile();
+            page.locator(IMPORT_ITEM.getLocator()).click();
+            Locator itemFile = page.locator(CHOOSE_FILE.getLocator());
+            itemFile.setInputFiles(Paths.get("Downloads/ExportItems.xlsx"));
+        }
+        else{
+            page.locator(IMPORT_ITEM.getLocator()).click();
+            Locator itemFile = page.locator(CHOOSE_FILE.getLocator());
+            itemFile.setInputFiles(Paths.get("Downloads/NonCatalogPRItemsImport.xlsx"));
+        }
+        page.locator(UPLOAD.getLocator()).click();
+
     }
 
     public void notes() {
@@ -879,7 +901,7 @@ public class Create implements IPrCreate {
             waitForLocator(yesButtonLocator);
 
             Response response = page.waitForResponse(
-                    resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/Procurement/Requisitions/POC_Details") && resp.status() == 200,
+                    resp -> resp.url().startsWith(POC_DETAILS_PAGE_API.getAPI()) && resp.status() == 200,
                     yesButtonLocator::click
             );
 

@@ -45,7 +45,11 @@ public class Edit implements IPrEdit {
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle).first();
         waitForLocator(titleLocator);
-        titleLocator.first().click();
+        Response response1 = page.waitForResponse(
+                resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/Procurement/Requisitions/POC_Details") && resp.status() == 200,
+                titleLocator::click
+        );
+//        titleLocator.first().click();
 
         Locator editButtonLocator = page.locator(EDIT_BUTTON.getLocator()).first();
         waitForLocator(editButtonLocator);
