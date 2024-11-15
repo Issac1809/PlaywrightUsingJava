@@ -1,8 +1,24 @@
 package com.poc.base;
 import com.factory.PlaywrightFactory;
 import com.microsoft.playwright.Page;
+import com.poc.classes.dispatchnotes.assign.DnAssign;
+import com.poc.classes.dispatchnotes.cancel.DnCancel;
+import com.poc.classes.dispatchnotes.create.DnCreate;
+import com.poc.classes.dispatchnotes.dnreturn.DnReturn;
+import com.poc.classes.dispatchnotes.edit.DnEdit;
+import com.poc.classes.freightforwarderrequests.invite.FfrInvite;
+import com.poc.classes.freightforwarderrequests.quote.FfrQuote;
+import com.poc.classes.freightforwarderrequests.requote.FfrRequote;
+import com.poc.classes.inspections.assign.InsAssign;
+import com.poc.classes.inspections.create.InsCreate;
+import com.poc.classes.inspections.fail.InsFail;
+import com.poc.classes.inspections.readyforinspection.InsReadyForInspection;
 import com.poc.classes.login.Login;
 import com.poc.classes.logout.Logout;
+import com.poc.classes.orderschedule.approve.OsApprove;
+import com.poc.classes.orderschedule.create.OsCreate;
+import com.poc.classes.orderschedule.edit.OsEdit;
+import com.poc.classes.orderschedule.reject.OsReject;
 import com.poc.classes.purchaseorder.create.PoCreate;
 import com.poc.classes.purchaseorder.sendforvendor.SendForVendor;
 import com.poc.classes.purchaseorderrequest.approvalandapprove.PorSendForApprovalAndApprove;
@@ -31,13 +47,29 @@ import com.poc.classes.requisition.sendforapproval.SendForApproval;
 import com.poc.classes.requisition.suspend.BuyerManagerSuspend;
 import com.poc.classes.requisition.suspend.BuyerSuspend;
 import com.poc.classes.requisition.type.PurchaseRequisitionTypeHandler;
+import com.poc.classes.workorder.create.WoCreate;
+import com.poc.classes.workorder.trackerstatus.WoTrackerStatus;
+import com.poc.interfaces.dispatchnotes.*;
+import com.poc.interfaces.freightforwarderrequests.IFfrInvite;
+import com.poc.interfaces.freightforwarderrequests.IFfrQuote;
+import com.poc.interfaces.freightforwarderrequests.IFfrRequote;
+import com.poc.interfaces.inspections.IInsAssign;
+import com.poc.interfaces.inspections.IInsCreate;
+import com.poc.interfaces.inspections.IInsFail;
+import com.poc.interfaces.inspections.IInsReadyForInspection;
 import com.poc.interfaces.login.ILogin;
 import com.poc.interfaces.logout.ILogout;
+import com.poc.interfaces.orderschedule.IOsApprove;
+import com.poc.interfaces.orderschedule.IOsCreate;
+import com.poc.interfaces.orderschedule.IOsEdit;
+import com.poc.interfaces.orderschedule.IOsReject;
 import com.poc.interfaces.purchaseorderrequests.*;
 import com.poc.interfaces.purchaseorders.IPoCreate;
 import com.poc.interfaces.purchaseorders.IPoSendForVendor;
 import com.poc.interfaces.requestforquotation.*;
 import com.poc.interfaces.requisitions.*;
+import com.poc.interfaces.workorders.IWoCreate;
+import com.poc.interfaces.workorders.IWoTrackerStatus;
 import java.util.Properties;
 
 public class BaseMain {
@@ -45,7 +77,7 @@ public class BaseMain {
     protected PlaywrightFactory playwrightFactory;
     protected Page page;
     protected Properties properties;
-    protected CurrencyExchangeRate currencyExchangeRate;
+//    protected CurrencyExchangeRate currencyExchangeRate;
     protected ILogin iLogin;
     protected ILogout iLogout;
     protected IPrType iPrType;
@@ -76,26 +108,26 @@ public class BaseMain {
     protected IPorSendForApprovalAndApprove iPorSendForApprovalAndApprove;
     protected IPoCreate iPoCreate;
     protected IPoSendForVendor iPoSendForVendor;
-    
-    
+    protected IOsCreate iOsCreate;
+    protected IOsEdit iOsEdit;
+    protected IOsReject iOsReject;
+    protected IOsApprove iOsApprove;
+    protected IInsReadyForInspection iInsReadyForInspection;
+    protected IInsCreate iInsCreate;
+    protected IInsAssign iInsAssign;
+    protected IInsFail iInsFail;
+    protected IDnCreate iDnCreate;
+    protected IDnReturn iDnReturn;
+    protected IDnEdit iDnEdit;
+    protected IDnAssign iDnAssign;
+    protected IDnCancel iDnCancel;
+    protected IFfrInvite iFfrInvite;
+    protected IFfrQuote iFfrQuote;
+    protected IFfrRequote iFfrRequote;
+    protected IWoCreate iWoCreate;
+    protected IWoTrackerStatus iWoTrackerStatus;
 
-    protected OrderScheduleInterface orderScheduleInterface;
-    protected OSEdit osEdit;
-    protected OSReject osReject;
-    protected OrderScheduleApproveInterface orderScheduleApproveInterface;
-    protected InspectionCreateInterface inspectionCreateInterface;
-    protected InsFail insFail;
-    protected InspectionAssignInterface inspectionAssignInterface;
-    protected DispatchNoteCreateInterface dispatchNoteCreateInterface;
-    protected DnReturn dnReturn;
-    protected DnEdit dnEdit;
-    protected DispatchNotesAssignInterface dispatchNotesAssignInterface;
-    protected DnCancel dnCancel;
-    protected FFRInvite ffrInvite;
-    protected FFRQuotation ffrQuotation;
-    protected FFRRequote ffrRequote;
-    protected WorkOrderCreateInterface workOrderCreateInterface;
-    protected WOTrackerStatusInterface woTrackerStatusInterface;
+
     protected POInvoiceCreateInterface poInvoiceCreateInterface;
     protected PoInvHold poInvHold;
     protected PoInvRevert poInvRevert;
@@ -168,31 +200,32 @@ public class BaseMain {
         iPoSendForVendor = new SendForVendor(iLogin, properties, page, iLogout);
 
 //TODO Order Schedule
-            orderScheduleInterface = new OrderScheduleCreate(iLogin, properties, page, iLogout, playWrightFactory);
-            osEdit = new OrderScheduleEdit(iLogin, properties, page, iLogout);
-            osReject = new OrderScheduleReject(iLogin, properties, page, iLogout);
-            orderScheduleApproveInterface = new OrderScheduleApprove(iLogin, properties, page, iLogout);
+        iOsCreate = new OsCreate(iLogin, properties, page, iLogout, playwrightFactory);
+        iOsEdit = new OsEdit(iLogin, properties, page, iLogout);
+        iOsReject = new OsReject(iLogin, properties, page, iLogout);
+        iOsApprove = new OsApprove(iLogin, properties, page, iLogout);
 
 //TODO Inspection
-            inspectionCreateInterface = new InspectionCreate(iLogin, properties, page, iLogout);
-            insFail = new InspectionFail(iLogin, properties, page, iLogout, inspectionCreateInterface);
-            inspectionAssignInterface = new InspectionAssign(iLogin, properties, page, iLogout);
+        iInsReadyForInspection = new InsReadyForInspection(iLogin, properties, page, iLogout);
+        iInsCreate = new InsCreate(iLogin, properties, page, iLogout);
+        iInsAssign = new InsAssign(iLogin, properties, page, iLogout);
+        iInsFail = new InsFail(iLogin, properties, page, iLogout, iInsReadyForInspection);
 
 //TODO Dispatch Notes
-            dispatchNoteCreateInterface = new DispatchNoteCreate(iLogin, properties, page, iLogout);
-            dnEdit = new PocDnEdit(iLogin, properties, page, iLogout);
-            dnReturn = new PocDnReturn(iLogin, properties, page, iLogout, dnEdit);
-            dnCancel = new PocDnCancel(iLogin, properties, page, iLogout, dispatchNoteCreateInterface);
-            dispatchNotesAssignInterface = new DispatchNotesAssign(iLogin, properties, page, iLogout, playWrightFactory);
+        iDnCreate = new DnCreate(iLogin, properties, page, iLogout);
+        iDnEdit = new DnEdit(iLogin, properties, page, iLogout);
+        iDnReturn = new DnReturn(iLogin, properties, page, iLogout, iDnEdit);
+        iDnCancel = new DnCancel(iLogin, properties, page, iLogout, iDnCreate);
+        iDnAssign = new DnAssign(iLogin, properties, page, iLogout, playwrightFactory);
 
 //TODO Freight Forwarder Requests
-            ffrInvite = new FreightForwarderInvite(iLogin, properties, page, iLogout);
-            ffrQuotation = new FreightQuotation(iLogin, properties, page, iLogout);
-            ffrRequote = new FreightForwarderRequote(ffrQuotation);
+        iFfrInvite = new FfrInvite(iLogin, properties, page, iLogout);
+        iFfrQuote = new FfrQuote(iLogin, properties, page, iLogout);
+        iFfrRequote = new FfrRequote(iLogin, properties, iFfrQuote, iLogout, page);
 
 //TODO Work Orders
-            workOrderCreateInterface = new WorkOrderCreate(iLogin, properties, page, iLogout);
-            woTrackerStatusInterface = new WOTrackerStatus(iLogin, properties, page, iLogout, playWrightFactory);
+        iWoCreate = new WoCreate(iLogin, properties, page, iLogout);
+        iWoTrackerStatus = new WoTrackerStatus(iLogin, properties, page, iLogout, playwrightFactory);
 
 //TODO POInvoice
             poInvoiceCreateInterface = new POInvoiceCreate(playWrightFactory, iLogin, properties, page, iLogout, currencyExchangeRate);

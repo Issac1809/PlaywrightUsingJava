@@ -39,15 +39,15 @@ public class Reject implements IPrReject {
         waitForLocator(titleLocator);
         titleLocator.first().click();
 
-        Locator rejectButtonLocator = page.locator(REJECT_BUTTON);
+        Locator rejectButtonLocator = page.locator(REJECT_BUTTON.getLocator());
         waitForLocator(rejectButtonLocator);
         rejectButtonLocator.click();
 
-        Locator remarksLocator = page.locator(REMARKS);
+        Locator remarksLocator = page.locator(REMARKS.getLocator());
         waitForLocator(remarksLocator);
         remarksLocator.fill("Rejected");
 
-        Locator yesButtonLocator = page.locator(YES);
+        Locator yesButtonLocator = page.locator(YES.getLocator());
         waitForLocator(yesButtonLocator);
         yesButtonLocator.click();
 

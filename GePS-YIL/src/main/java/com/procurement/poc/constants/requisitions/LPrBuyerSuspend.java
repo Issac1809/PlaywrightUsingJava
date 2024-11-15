@@ -1,17 +1,24 @@
 package com.procurement.poc.constants.requisitions;
 
-public class LPrBuyerSuspend {
+public enum LPrBuyerSuspend {
 
-    public static final String SUSPEND_BUTTON = "#btnSuspend";
-    public static final String REMARKS = ".bootbox-input";
-    public static final String YES = ".bootbox-accept";
+    SUSPEND_BUTTON("#btnSuspend"),
+    REMARKS(".bootbox-input"),
+    YES(".bootbox-accept"),
+    STATUS("//span[@id='status']//span");
 
+    private final String locatorName;
     //TODO Constructor
-    private LPrBuyerSuspend(){
+    LPrBuyerSuspend(String locatorName){
+        this.locatorName = locatorName;
     }
 
     public static String getTitle(String title){
         String title1 = "//*[contains(text(), '" + title + "')]";
         return title1;
+    }
+
+    public String getLocator(){
+        return locatorName;
     }
 }

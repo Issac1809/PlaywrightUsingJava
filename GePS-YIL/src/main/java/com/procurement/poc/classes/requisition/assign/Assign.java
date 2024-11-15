@@ -1,6 +1,7 @@
 package com.procurement.poc.classes.requisition.assign;
 import java.util.Properties;
 
+import com.microsoft.playwright.Response;
 import com.procurement.poc.interfaces.login.ILogin;
 import com.procurement.poc.interfaces.logout.ILogout;
 import com.procurement.poc.interfaces.requisitions.IPrAssign;
@@ -40,6 +41,7 @@ public class Assign implements IPrAssign {
 
     public void buyerManagerAssign() {
         try {
+            buyerManagerLogin();
         String title = properties.getProperty("orderTitle");
         String buyerMailId = properties.getProperty("buyerEmail");
         String getTitle = getTitle(title);
@@ -48,22 +50,25 @@ public class Assign implements IPrAssign {
         waitForLocator(titleLocator);
         titleLocator.first().click();
 
-        Locator assignUser = page.locator(ASSIGN_USER);
+        Locator assignUser = page.locator(ASSIGN_USER.getLocator());
         waitForLocator(assignUser);
         assignUser.click();
 
-        Locator selectAssignUser = page.locator(SELECT_ASSIGN_USER);
+        Locator selectAssignUser = page.locator(SELECT_ASSIGN_USER.getLocator());
         waitForLocator(selectAssignUser);
         selectAssignUser.click();
 
-        page.locator(SEARCHBOX).fill(buyerMailId);
+        page.locator(SEARCHBOX.getLocator()).fill(buyerMailId);
         String getBuyerMailId = getBuyerMailId(buyerMailId);
         Locator buyerManager = page.locator(getBuyerMailId);
         waitForLocator(buyerManager);
         buyerManager.first().click();
-        Locator saveUser = page.locator(SAVE_USER);
+        Locator saveUser = page.locator(SAVE_USER.getLocator());
         waitForLocator(saveUser);
-        saveUser.click();
+        Response response = page.waitForResponse(
+                resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/Procurement/Requisitions/POC_Details") && resp.status() == 200,
+                saveUser::click
+        );
         iLogout.performLogout();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

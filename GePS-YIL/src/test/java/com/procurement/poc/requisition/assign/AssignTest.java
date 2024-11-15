@@ -7,7 +7,7 @@ public class AssignTest extends BaseTest {
     @Test
     public void assign() {
         try {
-            iPrAssign.buyerManagerLogin();
+//            iPrAssign.buyerManagerLogin();
             iPrAssign.buyerManagerAssign();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

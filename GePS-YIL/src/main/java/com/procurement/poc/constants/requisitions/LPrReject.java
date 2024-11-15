@@ -1,17 +1,20 @@
 package com.procurement.poc.constants.requisitions;
 
-public class LPrReject {
+public enum LPrReject {
 
-    public static final String REJECT_BUTTON = "#btnReject";
-    public static final String REMARKS = ".bootbox-input";
-    public static final String YES = ".bootbox-accept";
+    REJECT_BUTTON("#btnReject"),
+    REMARKS(".bootbox-input"),
+    YES(".bootbox-accept");
 
+    private final String locatorsName;
     //TODO Constructor
-    private LPrReject(){
+    LPrReject(String locatorsName){
+        this.locatorsName = locatorsName;
     }
 
     public static String getTitle(String title){
-        String title1 = "//*[contains(text(), '" + title + "')]";
-        return title1;
+        return "//*[contains(text(), '" + title + "')]";
     }
+
+    public String getLocator(){return locatorsName;}
 }

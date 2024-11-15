@@ -25,6 +25,7 @@ public interface IPrCreate {
     void oiAndTpCurrency();
     void orderIntake();
     void targetPrice();
+    void typeOfPurchase();
     void warrantyRequirements();
     void priceValidity();
     void liquidatedDamages();

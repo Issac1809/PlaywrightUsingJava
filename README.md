@@ -1,5 +1,3 @@
-**FOR_MY_REFERENCE**
-
 **GePS - YIL = India; GePS - YEF = Europe; GePS - YEA = Singapore; GePS - YCA = America; GePS - YCN = China; GePS - GHT = Japan.**
 
 **E-Procurement Functional End To End Flow Test Script Using PlayWright Java.**
