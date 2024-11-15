@@ -2,6 +2,7 @@ package com.procurement.poc.classes.logout;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.procurement.poc.interfaces.logout.ILogout;
 
 import static com.factory.PlaywrightFactory.waitForLocator;

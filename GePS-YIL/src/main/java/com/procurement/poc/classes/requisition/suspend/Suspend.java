@@ -1,4 +1,5 @@
 package com.procurement.poc.classes.requisition.suspend;
+import com.microsoft.playwright.Response;
 import com.procurement.poc.interfaces.logout.ILogout;
 import com.procurement.poc.interfaces.requisitions.IPrEdit;
 import com.procurement.poc.interfaces.requisitions.IPrSuspend;
@@ -8,9 +9,9 @@ import com.procurement.poc.interfaces.login.ILogin;
 
 import java.util.Properties;
 import static com.factory.PlaywrightFactory.waitForLocator;
-import static com.procurement.nonPoc.constants.requisitions.LPrBuyerSuspend.*;
+import static com.procurement.poc.constants.requisitions.LPrBuyerSuspend.*;
 
-public class BuyerSuspend implements IPrSuspend {
+public class Suspend implements IPrSuspend {
 
     private ILogin iLogin;
     private ILogout iLogout;
@@ -18,11 +19,11 @@ public class BuyerSuspend implements IPrSuspend {
     private Page page;
     private IPrEdit iPrEdit;
 
-    private BuyerSuspend(){
+    private Suspend(){
     }
 
 //TODO Constructor
-    public BuyerSuspend(ILogin iLogin, Properties properties, Page page, ILogout iLogout, IPrEdit iPrEdit){
+    public Suspend(ILogin iLogin, Properties properties, Page page, ILogout iLogout, IPrEdit iPrEdit){
         this.iLogin = iLogin;
         this.properties = properties;
         this.page = page;
@@ -32,26 +33,43 @@ public class BuyerSuspend implements IPrSuspend {
 
     public void suspend(){
         try {
-        iLogin.performLogin(properties.getProperty("buyerEmail"));
+        iLogin.performLogin(properties.getProperty("buyerManagerEmail"));
+        boolean buyer = false;
+
         String title = properties.getProperty("orderTitle");
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle);
         waitForLocator(titleLocator);
         titleLocator.first().click();
 
-        Locator suspendButtonLocator = page.locator(SUSPEND_BUTTON);
+        String status = page.locator(STATUS.getLocator()).textContent();
+        if(status.contains("Assigned")){
+            iLogout.performLogout();
+            iLogin.performLogin(properties.getProperty("buyerEmail"));
+            waitForLocator(titleLocator);
+            titleLocator.first().click();
+            buyer = true;
+        }
+        Locator suspendButtonLocator = page.locator(SUSPEND_BUTTON.getLocator());
         waitForLocator(suspendButtonLocator);
         suspendButtonLocator.click();
 
-        Locator remarksLocator = page.locator(REMARKS);
+        Locator remarksLocator = page.locator(REMARKS.getLocator());
         waitForLocator(remarksLocator);
-        remarksLocator.fill("Buyer Suspended");
 
-        Locator yesButtonLocator = page.locator(YES);
+        if(buyer == true)
+            remarksLocator.fill("Buyer Suspended");
+        else
+            remarksLocator.fill("Buyer Manager Suspended");
+
+        Locator yesButtonLocator = page.locator(YES.getLocator());
         waitForLocator(yesButtonLocator);
-        yesButtonLocator.click();
+        Response response = page.waitForResponse(
+                resp -> resp.url().startsWith("https://dprocure-uat.cormsquare.com/Procurement/Requisitions/POC_Details") && resp.status() == 200,
+                yesButtonLocator::click
+        );
         iLogout.performLogout();
-        iPrEdit.buyerSuspendEdit();
+//        iPrEdit.buyerSuspendEdit();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }

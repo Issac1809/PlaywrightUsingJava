@@ -1,16 +1,19 @@
 package com.procurement.poc.constants.requisitions;
 
-public class LPrAssign {
+public enum LPrAssign {
 
-    public static final String ASSIGN_USER = "#btnAssignUser";
-    public static final String SEARCHBOX = ".select2-search__field";
-    public static final String SELECT_ASSIGN_USER = "#select2-bgUser-container";
-    public static final String SAVE_USER = "#saveBuyerUser";
+    ASSIGN_USER("#btnAssignUser"),
+    SEARCHBOX(".select2-search__field"),
+    SELECT_ASSIGN_USER("#select2-bgUser-container"),
+    SAVE_USER("#saveBGAssign");
 
+
+    private final String locatorsName;
 //TODO Constructor
-
-    private LPrAssign(){
+    LPrAssign(String locatorsName){
+        this.locatorsName = locatorsName;
     }
+
 
     public static String getTitle(String title){
         String title1 = "//*[contains(text(), '"+ title +"')]";
@@ -21,4 +24,5 @@ public class LPrAssign {
         String mailId1 = "//li[contains(text(), '"+ mailId +"')]";
         return mailId1;
     }
+    public String getLocator(){return locatorsName;}
 }
