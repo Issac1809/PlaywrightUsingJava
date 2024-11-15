@@ -63,9 +63,11 @@ public class Login implements ILogin {
             waitForLocator(loginButtonLocator);
             loginButtonLocator.click();
 
-            Locator requisitionsNavLocator = page.locator(RequisitionsNav_Button.getLocatorsName());
-            waitForLocator(requisitionsNavLocator);
-            requisitionsNavLocator.click();
+            if(emailId.contains("yokogawa")) {
+                Locator requisitionsNavLocator = page.locator(RequisitionsNav_Button.getLocatorsName());
+                waitForLocator(requisitionsNavLocator);
+                requisitionsNavLocator.click();
+            }
         } catch (Exception error) {
             System.out.println("Login error: " + error.getMessage());
         }

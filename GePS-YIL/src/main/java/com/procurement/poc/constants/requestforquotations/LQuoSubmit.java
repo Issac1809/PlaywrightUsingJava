@@ -1,65 +1,65 @@
 package com.procurement.poc.constants.requestforquotations;
 
-public class LQuoSubmit {
+public enum LQuoSubmit {
 
-    public static final String RFQ_NAVIGATION_BAR = "//*[contains(text(), 'Request For Quotations')]";
-    public static final String INVITE_VENDORS = "#addRequestForQuotationVendors";
-    public static final String VENDOR_SEARCH_FIELD = "#select2-vendorId-container";
-    public static final String VENDOR_SEARCH = ".select2-search__field";
-    public static final String INVITE_BUTTON = "#saveRequestForQuotationVendor";
-    public static final String VENDOR_EMAIL_POP_UP = "#vendorSendMailBtnId";
-    public static final String SEND_QUOTE_BUTTON = "#btnSendQuote";
-    public static final String INCOTERM_LOCATION = "#incotermLocation";
-    public static final String QUOTATION_REFERENCE_NUMBER = "#quotationReferenceNumber";
-    public static final String VALIDITY_DATE = "#dates";
-    public static final String TODAY = "//span[@class='flatpickr-day today']";
-    public static final String FIRST_DAY_OF_NEXT_MONTH = ".flatpickr-day.nextMonthDay";
-    public static final String LIQUIDATED_DAMAGES = "#liquidatedComplyId";
-    public static final String ROHS_COMPLIANCE = "#rohsComplyId";
-    public static final String WARRANTY_REQUIREMENTS = "#warrantyRequirementsComplyId";
-    public static final String RFQ_ITEM_LIST = "#rfqVendorItems-container tr td label[id^='lineNumber-']";
-    public static final String HS_CODE = "#hsCode-";
-    public static final String MAKE = "#make-";
-    public static final String MODEL = "#model-";
-    public static final String PART_NUMBER = "#partNumber-";
-    public static final String COUNTRY_OF_ORIGIN = "#countryOfOrigin-";
-    public static final String RATE = "#rate-";
-    public static final String DISCOUNT = "#discount-";
-    public static final String LEAD_TIME = "#leadTime-";
-    public static final String QUOTATION_NOTES = "#notes-";
-    public static final String GST = "#gstId";
-    public static final String ATTACH_FILE = "#attachFile";
-    public static final String FILE_INPUT = "#formFilePreupload";
-    public static final String ATTACHMENT_TYPE_DROPDOWN = "#select2-attachmentTypeId-container";
-    public static final String SAVE_ATTACHMENTS = "#attachmentSaveId";
-    public static final String CREATE_BUTTON = "#btnCreate";
-    public static final String ACCEPT_BUTTON_LOCATOR = ".bootbox-accept";
+    RFQ_NAVIGATION_BAR("//*[contains(text(), 'Request For Quotations')]"),
+    INVITE_VENDORS("#addRequestForQuotationVendors"),
+    VENDOR_SEARCH_FIELD("#select2-vendorId-container"),
+    VENDOR_SEARCH(".select2-search__field"),
+    INVITE_BUTTON("#saveRequestForQuotationVendor"),
+    VENDOR_EMAIL_POP_UP("#vendorSendMailBtnId"),
+    SEND_QUOTE_BUTTON("#btnSendQuote"),
+    INCOTERM_LOCATION("#incotermLocation"),
+    QUOTATION_REFERENCE_NUMBER("#quotationReferenceNumber"),
+    VALIDITY_DATE("#dates"),
+    TODAY("//span[@class='flatpickr-day today']"),
+    FIRST_DAY_OF_NEXT_MONTH(".flatpickr-day.nextMonthDay"),
+    LIQUIDATED_DAMAGES("#liquidatedComplyId"),
+    ROHS_COMPLIANCE("#rohsComplyId"),
+    WARRANTY_REQUIREMENTS("#warrantyRequirementsComplyId"),
+    PACKING_FORWARDING("#packingForwardingComplyId"),
+    FREIGHT("#freightComplyId"),
+    INSURANCE("#insuranceComplyId"),
+    BANK_GUARANTEE("#bankGuaranteeComplyId"),
+    RFQ_ITEM_LIST("#rfqVendorItems-container tr td label[id^='lineNumber-']"),
+    HS_CODE("#hsnsac-"),
+    MAKE("#make-"),
+    MODEL("#model-"),
+    PART_NUMBER("#partNumber-"),
+    COUNTRY_OF_ORIGIN("#countryOfOrigin-"),
+    RATE("#rate-"),
+    CGST("#cgst-"),
+    SGST("#sgst-"),
+    DISCOUNT("#discount-"),
+    LEAD_TIME("#leadTime-"),
+    QUOTATION_NOTES("#notes-"),
+    GST("#gstId"),
+    ATTACH_FILE("#attachFile"),
+    FILE_INPUT("#formFilePreupload"),
+    ATTACHMENT_TYPE_DROPDOWN("#select2-attachmentTypeId-container"),
+    SAVE_ATTACHMENTS("#attachmentSaveId"),
+    CREATE_BUTTON("#btnCreate"),
+    ACCEPT_BUTTON_LOCATOR(".bootbox-accept");
 
-    private LQuoSubmit(){
+
+    private final String locatorName;
+    LQuoSubmit(String locatorName){ this.locatorName =  locatorName;
     }
 
-    public static String getTitle(String title){
-        String title1 = "//span[contains(text(), '"+ title +"')]";
-        return title1;
+    public static String getString(String string){
+        return "//span[contains(text(), '"+ string +"')]";
     }
 
-    public static String getVendor(String vendor){
-        String vendor1 = "//li[contains(text(), '"+ vendor +"')]";
-        return vendor1;
+    public static String getListOption(String string){
+        return "//li[contains(text(), '"+ string +"')]";
     }
 
-    public static String getThirtyOne(int num){
-        String num1 = "//span[contains(text(), '" + num + "')]";
-        return num1;
+
+    public String getLocator(){
+        return  locatorName;
     }
 
-    public static String getNextDay(int num){
-        String nextDayLocator = "//span[contains(text(), '" + num + "')]";
-        return nextDayLocator;
-    }
-
-    public static String getAttatmentType(String type){
-        String attachmentType = "//li[contains(text(), '" + type + "')]";
-        return attachmentType;
+    public String getApi(){
+        return locatorName;
     }
 }

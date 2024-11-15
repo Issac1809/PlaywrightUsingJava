@@ -2,6 +2,7 @@ package com.procurement.poc.classes.requestforquotations.create;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.procurement.poc.interfaces.login.ILogin;
 import com.procurement.poc.interfaces.logout.ILogout;
 import com.procurement.poc.interfaces.requestforquotation.IRfqCreate;
@@ -29,23 +30,36 @@ public class RfqCreate implements IRfqCreate {
         this.iLogout = iLogout;
     }
 
+    public void createRFQ(){
+        buyerLogin();
+        buyerRfqCreate();
+        rfqNotes();
+        createRFQ();
+    }
+
     public void buyerLogin() {
         try {
-        String buyerMailId = properties.getProperty("Buyer");
+        String buyerMailId = properties.getProperty("buyerEmail");
         iLogin.performLogin(buyerMailId);
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
     }
 
+
     public void buyerRfqCreate() {
         try {
-        String title = properties.getProperty("Title");
+        String title = properties.getProperty("orderTitle");
         Locator getTitleLocator = page.locator(getTitle(title));
         waitForLocator(getTitleLocator);
         getTitleLocator.first().click();
 
-        page.locator(CREATE_RFQ_BUTTON).click();
+        Locator createButton = page.locator(CREATE_RFQ_BUTTON.getLocator());
+            Response response = page.waitForResponse(
+                    resp -> resp.url().startsWith(LOADPAGE.getAPI()) && resp.status() == 200,
+                    createButton::click
+            );
+
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
@@ -53,8 +67,8 @@ public class RfqCreate implements IRfqCreate {
 
     public void rfqNotes() {
         try {
-        String rfqNotes = properties.getProperty("RfQNotes");
-        Locator notesLocator = page.locator(NOTES);
+        String rfqNotes = properties.getProperty("rfqNotes");
+        Locator notesLocator = page.locator(NOTES.getLocator());
         waitForLocator(notesLocator);
         notesLocator.fill(rfqNotes);
         } catch (Exception error) {
@@ -64,11 +78,11 @@ public class RfqCreate implements IRfqCreate {
 
     public void rfqCreate() {
         try {
-        Locator createButtonLocator = page.locator(CREATE_BUTTON);
+        Locator createButtonLocator = page.locator(CREATE_BUTTON.getLocator());
         waitForLocator(createButtonLocator);
         createButtonLocator.click();
 
-        Locator yesButtonLocator = page.locator(YES_BUTTON);
+        Locator yesButtonLocator = page.locator(YES_BUTTON.getLocator());
         waitForLocator(yesButtonLocator);
         yesButtonLocator.click();
 

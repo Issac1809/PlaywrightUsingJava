@@ -1,18 +1,32 @@
 package com.procurement.poc.constants.requestforquotations;
 
-public class LRfqCreate {
+public enum LRfqCreate {
 
-    public static final String CREATE_RFQ_BUTTON = "#btnCreateRFQ";
-    public static final String NOTES = "#notes";
-    public static final String CREATE_BUTTON = "#btnCreate";
-    public static final String YES_BUTTON = "//button[contains(text(),'Yes')]";
+    CREATE_RFQ_BUTTON("#btnCreateRFQ"),
+    NOTES("#notes"),
+    CREATE_BUTTON("#btnCreate"),
+    YES_BUTTON("//button[contains(text(),'Yes')]"),
 
+
+    LOADPAGE("https://dprocure-uat.cormsquare.com/Procurement/RequestForQuotations/POC_Create?uid")
+    ;
+
+
+    private final String locatorName;
 //TODO Constructor
-    private LRfqCreate(){
+    LRfqCreate(String locatorName){
+        this.locatorName = locatorName;
     }
 
     public static String getTitle(String title){
         String title1 = "//*[contains(text(), '" + title + "')]";
         return title1;
+    }
+
+    public String getLocator(){
+        return locatorName;
+    }
+    public String getAPI(){
+        return locatorName;
     }
 }
