@@ -3,10 +3,10 @@ package com.procurement.poc.constants.requestforquotations;
 public enum LRfqCreate {
 
     CREATE_RFQ_BUTTON("#btnCreateRFQ"),
+    LOAD_PROJECT("https://dprocure-uat.cormsquare.com/api/Locations/SearchByProjectId?id"),
     NOTES("#notes"),
     CREATE_BUTTON("#btnCreate"),
     YES_BUTTON("//button[contains(text(),'Yes')]"),
-
 
     LOADPAGE("https://dprocure-uat.cormsquare.com/Procurement/RequestForQuotations/POC_Create?uid")
     ;

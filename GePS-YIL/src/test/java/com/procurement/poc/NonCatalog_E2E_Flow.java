@@ -8,7 +8,7 @@ public class NonCatalog_E2E_Flow extends BaseTest {
     @Test
     public void Flow() throws InterruptedException {
 //        PRRejectSuspend();
-//        PRPosititve();
+        PRPosititve();
         RFQFlow();
 //        PORSuspendPREdit();
 //        PORPositive();
@@ -63,9 +63,9 @@ public class NonCatalog_E2E_Flow extends BaseTest {
     }
 
     void RFQFlow(){
-//        iRfqCreate.createRFQ();
-//        iRfqEdit.rfqEditMethod();
-//        iQuoSubmit.inviteRegisteredVendor();
+        iRfqCreate.createRFQ();
+        iRfqEdit.rfqEditMethod();
+        iQuoSubmit.inviteRegisteredVendor();
         iQuoSubmit.quotationCreateAndSubmit();
     }
 }

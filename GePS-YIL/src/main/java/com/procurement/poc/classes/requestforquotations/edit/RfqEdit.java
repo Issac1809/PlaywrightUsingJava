@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import static com.procurement.poc.constants.requestforquotations.LRfqEdit.*;
 import static com.factory.PlaywrightFactory.waitForLocator;
+import static com.procurement.poc.constants.requisitions.LPrCreate.POC_DETAILS_PAGE_API;
 
 public class RfqEdit implements IRfqEdit {
 
@@ -46,12 +47,10 @@ public class RfqEdit implements IRfqEdit {
 
         Locator editButtonLocator = page.locator(EDIT_BUTTON.getAPI());
         waitForLocator(editButtonLocator);
-
-
-            Response response = page.waitForResponse(
-                    resp -> resp.url().startsWith(LOAD_PAGE.getAPI()) && resp.status() == 200,
-                    editButtonLocator::click
-            );
+        Response response = page.waitForResponse(
+                resp -> resp.url().startsWith(LOAD_PAGE.getAPI()) && resp.status() == 200,
+                editButtonLocator::click
+        );
 
         Locator updateButtonLocator = page.locator(UPDATE_BUTTON.getLocator());
         waitForLocator(updateButtonLocator);

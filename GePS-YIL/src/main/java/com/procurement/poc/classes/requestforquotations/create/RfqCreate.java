@@ -34,7 +34,7 @@ public class RfqCreate implements IRfqCreate {
         buyerLogin();
         buyerRfqCreate();
         rfqNotes();
-        createRFQ();
+        rfqCreate();
     }
 
     public void buyerLogin() {
@@ -56,7 +56,7 @@ public class RfqCreate implements IRfqCreate {
 
         Locator createButton = page.locator(CREATE_RFQ_BUTTON.getLocator());
             Response response = page.waitForResponse(
-                    resp -> resp.url().startsWith(LOADPAGE.getAPI()) && resp.status() == 200,
+                    resp -> resp.url().startsWith(LOAD_PROJECT.getAPI()) && resp.status() == 200,
                     createButton::click
             );
 
