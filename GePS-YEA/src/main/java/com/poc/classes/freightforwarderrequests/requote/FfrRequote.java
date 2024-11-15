@@ -1,41 +1,41 @@
-package com.poc.classes.dispatchnotes.dnreturn;
+package com.poc.classes.freightforwarderrequests.requote;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.poc.interfaces.dispatchnotes.IDnEdit;
-import com.poc.interfaces.dispatchnotes.IDnReturn;
+import com.poc.interfaces.freightforwarderrequests.IFfrQuote;
+import com.poc.interfaces.freightforwarderrequests.IFfrRequote;
 import com.poc.interfaces.login.ILogin;
 import com.poc.interfaces.logout.ILogout;
 import java.util.List;
 import java.util.Properties;
-import static com.constants.dispatchnotes.LDnReturn.*;
+import static com.constants.freightforwarderrequests.LFfrReQuote.*;
 import static com.factory.PlaywrightFactory.waitForLocator;
 
-public class DnReturn implements IDnReturn {
+public class FfrRequote implements IFfrRequote {
 
-    Properties properties;
-    Page page;
     ILogin iLogin;
     ILogout iLogout;
-    IDnEdit iDnEdit;
+    Properties properties;
+    IFfrQuote iFfrQuote;
+    Page page;
 
-    private DnReturn(){
+    private FfrRequote(){
     }
 
 //TODO Constructor
-    public DnReturn(ILogin iLogin, Properties properties, Page page, ILogout iLogout, IDnEdit iDnEdit){
+    public FfrRequote(ILogin iLogin, Properties properties, IFfrQuote iFfrQuote, ILogout iLogout, Page page){
         this.iLogin = iLogin;
         this.properties = properties;
-        this.page = page;
+        this.iFfrQuote = iFfrQuote;
         this.iLogout = iLogout;
-        this.iDnEdit = iDnEdit;
+        this.page = page;
     }
 
-    public void dnReturn() {
+    public void requote(){
         try {
         String logisticsManager = properties.getProperty("LogisticsManager");
         iLogin.performLogin(logisticsManager);
 
-        Locator dnNavigationBarLocator = page.locator(DN_NAVIGATION_BAR);
+        Locator dnNavigationBarLocator = page.locator(FFR_NAVIGATION_BAR);
         waitForLocator(dnNavigationBarLocator);
         dnNavigationBarLocator.click();
 
@@ -49,23 +49,8 @@ public class DnReturn implements IDnReturn {
             }
         }
 
-        Locator dropDownLocator = page.locator(DROP_DOWN);
-        waitForLocator(dropDownLocator);
-        dropDownLocator.click();
 
-        Locator returnButtonLocator = page.locator(RETURN_BUTTON);
-        waitForLocator(returnButtonLocator);
-        returnButtonLocator.click();
-
-        Locator remarksLocator = page.locator(REMARKS_FIELD);
-        waitForLocator(remarksLocator);
-        remarksLocator.fill("Returned");
-
-        Locator acceptLocator = page.locator(ACCEPT_BUTTON);
-        waitForLocator(acceptLocator);
-        acceptLocator.click();
-
-        iLogout.performLogout();
+            iFfrQuote.quote();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }

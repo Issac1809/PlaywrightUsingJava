@@ -1,36 +1,33 @@
-package com.poc.classes.dispatchnotes.dnreturn;
+package com.poc.classes.freightforwarderrequests.invite;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.poc.interfaces.dispatchnotes.IDnEdit;
-import com.poc.interfaces.dispatchnotes.IDnReturn;
+import com.poc.interfaces.freightforwarderrequests.IFfrInvite;
 import com.poc.interfaces.login.ILogin;
 import com.poc.interfaces.logout.ILogout;
 import java.util.List;
 import java.util.Properties;
-import static com.constants.dispatchnotes.LDnReturn.*;
+import static com.constants.freightforwarderrequests.LFfrInvite.*;
 import static com.factory.PlaywrightFactory.waitForLocator;
 
-public class DnReturn implements IDnReturn {
+public class FfrInvite implements IFfrInvite {
 
     Properties properties;
     Page page;
     ILogin iLogin;
     ILogout iLogout;
-    IDnEdit iDnEdit;
 
-    private DnReturn(){
+    private FfrInvite(){
     }
 
 //TODO Constructor
-    public DnReturn(ILogin iLogin, Properties properties, Page page, ILogout iLogout, IDnEdit iDnEdit){
+    public FfrInvite(ILogin iLogin, Properties properties, Page page, ILogout iLogout){
         this.iLogin = iLogin;
         this.properties = properties;
         this.page = page;
         this.iLogout = iLogout;
-        this.iDnEdit = iDnEdit;
     }
 
-    public void dnReturn() {
+    public void invite() {
         try {
         String logisticsManager = properties.getProperty("LogisticsManager");
         iLogin.performLogin(logisticsManager);
@@ -49,21 +46,30 @@ public class DnReturn implements IDnReturn {
             }
         }
 
+        Locator inviteFreightForwarderButtonLocator = page.locator(INVITE_VENDOR_BUTTON);
+        waitForLocator(inviteFreightForwarderButtonLocator);
+        inviteFreightForwarderButtonLocator.click();
+
         Locator dropDownLocator = page.locator(DROP_DOWN);
         waitForLocator(dropDownLocator);
         dropDownLocator.click();
 
-        Locator returnButtonLocator = page.locator(RETURN_BUTTON);
-        waitForLocator(returnButtonLocator);
-        returnButtonLocator.click();
+        String freightVendor = properties.getProperty("Vendor");
+        Locator searchFieldLocator = page.locator(SEARCH_FIELD);
+        waitForLocator(searchFieldLocator);
+        searchFieldLocator.fill(freightVendor);
 
-        Locator remarksLocator = page.locator(REMARKS_FIELD);
-        waitForLocator(remarksLocator);
-        remarksLocator.fill("Returned");
+        Locator freightForwarderLocator = page.locator(getFreightForwarder(freightVendor));
+        waitForLocator(freightForwarderLocator);
+        freightForwarderLocator.click();
 
-        Locator acceptLocator = page.locator(ACCEPT_BUTTON);
-        waitForLocator(acceptLocator);
-        acceptLocator.click();
+        Locator saveButtonLocator = page.locator(SAVE_BUTTON);
+        waitForLocator(saveButtonLocator);
+        saveButtonLocator.click();
+
+        Locator emailPopUpLocator = page.locator(EMAIL_POP_UP);
+        waitForLocator(emailPopUpLocator);
+        emailPopUpLocator.click();
 
         iLogout.performLogout();
         } catch (Exception error) {

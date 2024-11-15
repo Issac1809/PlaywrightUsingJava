@@ -1,5 +1,37 @@
 package com.poc.base;
+import com.poc.classes.dispatchnotes.assign.DnAssign;
+import com.poc.classes.dispatchnotes.assign.DnAssignTest;
+import com.poc.classes.dispatchnotes.cancel.DnCancel;
+import com.poc.classes.dispatchnotes.cancel.DnCancelTest;
+import com.poc.classes.dispatchnotes.create.DnCreate;
+import com.poc.classes.dispatchnotes.create.DnCreateTest;
+import com.poc.classes.dispatchnotes.dnreturn.DnReturn;
+import com.poc.classes.dispatchnotes.dnreturn.DnReturnTest;
+import com.poc.classes.dispatchnotes.edit.DnEdit;
+import com.poc.classes.dispatchnotes.edit.DnEditTest;
+import com.poc.classes.freightforwarderrequests.invite.FfrInvite;
+import com.poc.classes.freightforwarderrequests.invite.FfrInviteTest;
+import com.poc.classes.freightforwarderrequests.quote.FfrQuote;
+import com.poc.classes.freightforwarderrequests.quote.FfrQuoteTest;
+import com.poc.classes.freightforwarderrequests.requote.FfrRequote;
+import com.poc.classes.freightforwarderrequests.requote.FfrRequoteTest;
+import com.poc.classes.inspections.assign.InsAssign;
+import com.poc.classes.inspections.assign.InsAssignTest;
+import com.poc.classes.inspections.create.InsCreate;
+import com.poc.classes.inspections.create.InsCreateTest;
+import com.poc.classes.inspections.fail.InsFail;
+import com.poc.classes.inspections.fail.InsFailTest;
+import com.poc.classes.inspections.readyforinspection.InsReadyForInspection;
+import com.poc.classes.inspections.readyforinspection.InsReadyForInspectionTest;
 import com.poc.classes.login.LoginTest;
+import com.poc.classes.orderschedule.approval.OsApproveTest;
+import com.poc.classes.orderschedule.approve.OsApprove;
+import com.poc.classes.orderschedule.create.OsCreate;
+import com.poc.classes.orderschedule.create.OsCreateTest;
+import com.poc.classes.orderschedule.edit.OsEdit;
+import com.poc.classes.orderschedule.edit.OsEditTest;
+import com.poc.classes.orderschedule.reject.OsReject;
+import com.poc.classes.orderschedule.reject.OsRejectTest;
 import com.poc.classes.purchaseorder.create.PoCreateTest;
 import com.poc.classes.purchaseorder.sendforapproval.PoSendForVendorTest;
 import com.poc.classes.purchaseorderrequest.approvalandapprove.PorSendForApprovalAndApproveTest;
@@ -61,13 +93,31 @@ import com.poc.classes.requisition.reject.Reject;
 import com.poc.classes.requisition.sendforapproval.SendForApproval;
 import com.poc.classes.requisition.suspend.BuyerSuspend;
 import com.poc.classes.requisition.type.PurchaseRequisitionTypeHandler;
+import com.poc.classes.workorder.create.WoCreate;
+import com.poc.classes.workorder.trackerstatus.WoTrackerStatus;
+import com.poc.classes.workorders.create.WoCreateTest;
+import com.poc.classes.workorders.trackerstatus.WoTrackerStatusTest;
+import com.poc.interfaces.dispatchnotes.*;
+import com.poc.interfaces.freightforwarderrequests.IFfrInvite;
+import com.poc.interfaces.freightforwarderrequests.IFfrQuote;
+import com.poc.interfaces.freightforwarderrequests.IFfrRequote;
+import com.poc.interfaces.inspections.IInsAssign;
+import com.poc.interfaces.inspections.IInsCreate;
+import com.poc.interfaces.inspections.IInsFail;
+import com.poc.interfaces.inspections.IInsReadyForInspection;
 import com.poc.interfaces.login.ILogin;
 import com.poc.interfaces.logout.ILogout;
+import com.poc.interfaces.orderschedule.IOsApprove;
+import com.poc.interfaces.orderschedule.IOsCreate;
+import com.poc.interfaces.orderschedule.IOsEdit;
+import com.poc.interfaces.orderschedule.IOsReject;
 import com.poc.interfaces.purchaseorderrequests.*;
 import com.poc.interfaces.purchaseorders.IPoCreate;
 import com.poc.interfaces.purchaseorders.IPoSendForVendor;
 import com.poc.interfaces.requestforquotation.*;
 import com.poc.interfaces.requisitions.*;
+import com.poc.interfaces.workorders.IWoCreate;
+import com.poc.interfaces.workorders.IWoTrackerStatus;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import java.util.Properties;
@@ -137,6 +187,42 @@ public class BaseTest {
     protected IPoCreate iPoCreate;
     protected PoSendForVendorTest poSendForVendorTest;
     protected IPoSendForVendor iPoSendForVendor;
+    protected OsCreateTest osCreateTest;
+    protected IOsCreate iOsCreate;
+    protected OsEditTest osEditTest;
+    protected IOsEdit iOsEdit;
+    protected OsRejectTest osRejectTest;
+    protected IOsReject iOsReject;
+    protected OsApproveTest osApproveTest;
+    protected IOsApprove iOsApprove;
+    protected InsReadyForInspectionTest insReadyForInspectionTest;
+    protected IInsReadyForInspection iInsReadyForInspection;
+    protected InsCreateTest insCreateTest;
+    protected IInsCreate iInsCreate;
+    protected InsAssignTest insAssignTest;
+    protected IInsAssign iInsAssign;
+    protected InsFailTest insFailTest;
+    protected IInsFail iInsFail;
+    protected DnCreateTest dnCreateTest;
+    protected IDnCreate iDnCreate;
+    protected DnReturnTest dnReturnTest;
+    protected IDnReturn iDnReturn;
+    protected DnEditTest dnEditTest;
+    protected IDnEdit iDnEdit;
+    protected DnAssignTest dnAssignTest;
+    protected IDnAssign iDnAssign;
+    protected DnCancelTest dnCancelTest;
+    protected IDnCancel iDnCancel;
+    protected FfrInviteTest ffrInviteTest;
+    protected IFfrInvite iFfrInvite;
+    protected FfrQuoteTest ffrQuoteTest;
+    protected IFfrQuote iFfrQuote;
+    protected FfrRequoteTest ffrRequoteTest;
+    protected IFfrRequote iFfrRequote;
+    protected WoCreateTest woCreateTest;
+    protected IWoCreate iWoCreate;
+    protected WoTrackerStatusTest woTrackerStatusTest;
+    protected IWoTrackerStatus iWoTrackerStatus;
 
 
 
@@ -221,6 +307,52 @@ public class BaseTest {
             poCreateTest = new PoCreateTest();
             iPoSendForVendor = new SendForVendor(iLogin, properties, page, iLogout);
             poSendForVendorTest = new PoSendForVendorTest();
+
+//TODO Order Schedule
+            iOsCreate = new OsCreate(iLogin, properties, page, iLogout, playwrightFactory);
+            osCreateTest = new OsCreateTest();
+            iOsEdit = new OsEdit(iLogin, properties, page, iLogout);
+            osEditTest = new OsEditTest();
+            iOsReject = new OsReject(iLogin, properties, page, iLogout);
+            osRejectTest = new OsRejectTest();
+            iOsApprove = new OsApprove(iLogin, properties, page, iLogout);
+            osApproveTest = new OsApproveTest();
+
+//TODO Inspection
+            iInsReadyForInspection = new InsReadyForInspection(iLogin, properties, page, iLogout);
+            insReadyForInspectionTest = new InsReadyForInspectionTest();
+            iInsCreate = new InsCreate(iLogin, properties, page, iLogout);
+            insCreateTest = new InsCreateTest();
+            iInsAssign = new InsAssign(iLogin, properties, page, iLogout);
+            insAssignTest = new InsAssignTest();
+            iInsFail = new InsFail(iLogin, properties, page, iLogout, iInsReadyForInspection);
+            insFailTest = new InsFailTest();
+
+//TODO Dispatch Notes
+            iDnCreate = new DnCreate(iLogin, properties, page, iLogout);
+            dnCreateTest = new DnCreateTest();
+            iDnEdit = new DnEdit(iLogin, properties, page, iLogout);
+            dnEditTest = new DnEditTest();
+            iDnReturn = new DnReturn(iLogin, properties, page, iLogout, iDnEdit);
+            dnReturnTest = new DnReturnTest();
+            iDnCancel = new DnCancel(iLogin, properties, page, iLogout, iDnCreate);
+            dnCancelTest = new DnCancelTest();
+            iDnAssign = new DnAssign(iLogin, properties, page, iLogout, playwrightFactory);
+            dnAssignTest = new DnAssignTest();
+
+//TODO Freight Forwarder Requests
+            iFfrInvite = new FfrInvite(iLogin, properties, page, iLogout);
+            ffrInviteTest = new FfrInviteTest();
+            iFfrQuote = new FfrQuote(iLogin, properties, page, iLogout);
+            ffrQuoteTest = new FfrQuoteTest();
+            iFfrRequote = new FfrRequote(iLogin, properties, iFfrQuote, iLogout, page);
+            ffrRequoteTest = new FfrRequoteTest();
+
+//TODO Work Orders
+            iWoCreate = new WoCreate(iLogin, properties, page, iLogout);
+            woCreateTest = new WoCreateTest();
+            iWoTrackerStatus = new WoTrackerStatus(iLogin, properties, page, iLogout, playwrightFactory);
+            woTrackerStatusTest = new WoTrackerStatusTest();
 
         } catch (Exception exception) {
             System.out.println("Error :" + exception);

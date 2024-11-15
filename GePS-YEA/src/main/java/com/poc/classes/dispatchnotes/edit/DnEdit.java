@@ -6,8 +6,8 @@ import com.poc.interfaces.login.ILogin;
 import com.poc.interfaces.logout.ILogout;
 import java.util.List;
 import java.util.Properties;
-import static com.constants.disptchnotes.LDnEdit.*;
-import static com.constants.disptchnotes.LDnReturn.ACCEPT_BUTTON;
+import static com.constants.dispatchnotes.LDnEdit.*;
+import static com.constants.dispatchnotes.LDnReturn.ACCEPT_BUTTON;
 import static com.factory.PlaywrightFactory.waitForLocator;
 
 public class DnEdit implements IDnEdit {

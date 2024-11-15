@@ -5,7 +5,7 @@ import com.poc.interfaces.dispatchnotes.IDnCreate;
 import com.poc.interfaces.login.ILogin;
 import com.poc.interfaces.logout.ILogout;
 import java.util.Properties;
-import static com.constants.disptchnotes.LDnCreate.*;
+import static com.constants.dispatchnotes.LDnCreate.*;
 import static com.factory.PlaywrightFactory.waitForLocator;
 
 public class DnCreate implements IDnCreate {

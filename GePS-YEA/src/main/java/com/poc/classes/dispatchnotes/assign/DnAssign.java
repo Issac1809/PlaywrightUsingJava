@@ -7,7 +7,7 @@ import com.poc.interfaces.login.ILogin;
 import com.poc.interfaces.logout.ILogout;
 import java.util.List;
 import java.util.Properties;
-import static com.constants.disptchnotes.LDnAssign.*;
+import static com.constants.dispatchnotes.LDnAssign.*;
 import static com.factory.PlaywrightFactory.waitForLocator;
 
 public class DnAssign implements IDnAssign {
