@@ -5,9 +5,9 @@ import org.testng.annotations.Test;
 public class PorSuspendRfqEditTest extends BaseTest {
 
     @Test
-    public void PorSuspendRfqEditTestMethod(){
+    public void suspend(){
         try {
-        porSuspend.SuspendRfqEdit();
+            iPorSuspend.suspendRfqEdit();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }
