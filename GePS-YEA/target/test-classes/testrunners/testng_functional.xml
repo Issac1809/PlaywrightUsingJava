@@ -6,175 +6,180 @@
     <listeners>
         <listener class-name="org.testng.reporters.EmailableReporter2" />
         <listener class-name="com.reports.ExtentReportListener" />
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
     </listeners>
 
     <test name="YEA Login Page Test">
         <classes>
-            <class name="com.procurement.logintest.LoginPageTest" />
+            <class name="com.poc.classes.login.LoginTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Requisition Create Page Test">
+    <test name="YEA Requisition Create Page Test">
         <classes>
-            <class name="com.procurement.requisition.create.NonCatalogPrCreateTest" />
+            <class name="com.poc.classes.requisition.create.CreateTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Requisition Edit Page Test">
+    <test name="YEA Requisition Edit Page Test">
         <classes>
-            <class name="com.procurement.requisition.edit.NonCatalogPrEditTest" />
+            <class name="com.poc.classes.requisition.edit.EditTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Requisition Send For Approval Page Test">
+    <test name="YEA Requisition Send For Approval Page Test">
         <classes>
-            <class name="com.procurement.requisition.sendforapproval.NonCatalogPrSendForApprovalTest" />
+            <class name="com.poc.classes.requisition.sendforapproval.SendForApprovalTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Requisition Reject Page Test">
+    <test name="YEA Requisition Reject Page Test">
         <classes>
-            <class name="com.procurement.requisition.reject.NonCatalogPrRejectTest" />
+            <class name="com.poc.classes.requisition.reject.RejectTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Requisition Approve Page Test">
+    <test name="YEA Requisition Approve Page Test">
         <classes>
-            <class name="com.procurement.requisition.approve.NonCatalogPrApproveTest" />
+            <class name="com.poc.classes.requisition.approve.ApproveTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Requisition Buyer Manager Suspend Page Test">
+    <test name="YEA Requisition Buyer Manager Suspend Page Test">
         <classes>
-            <class name="com.procurement.requisition.suspend.BuyerManagerNonCatalogPrSuspendTest" />
+            <class name="com.poc.classes.requisition.suspend.BuyerManagerSuspend" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Requisition Assign Page Test">
+    <test name="YEA Requisition Assign Page Test">
         <classes>
-            <class name="com.procurement.requisition.assign.RequisitionAssignTest" />
+            <class name="com.poc.classes.requisition.assign.AssignTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Requisition Buyer Suspend Page Test">
+    <test name="YEA Requisition Buyer Suspend Page Test">
         <classes>
-            <class name="com.procurement.requisition.suspend.BuyerNonCatalogPrSuspendTest" />
+            <class name="com.poc.classes.requisition.suspend.BuyerSuspend" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Request For Quotation Create Page Test">
+    <test name="YEA Request For Quotation Create Page Test">
         <classes>
-            <class name="com.classes.requestforquotation.create.RFQCreateTest" />
+            <class name="com.poc.classes.requestforquotation.create.RfqCreateTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Request For Quotation Edit Page Test">
+    <test name="YEA Request For Quotation Edit Page Test">
         <classes>
-            <class name="com.classes.requestforquotation.edit.RfqEditTest" />
+            <class name="com.poc.classes.requestforquotation.edit.RfqEditTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Request For Quotation Suspend RFQ Edit Page Test">
+    <test name="YEA Request For Quotation Suspend RFQ Edit Page Test">
         <classes>
-            <class name="com.classes.requestforquotation.suspend.RfqSuspendRfqEditTest" />
+            <class name="com.poc.classes.requestforquotation.suspend.RfqSuspendRfqEditTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Request For Quotation Suspend PR Edit Page Test">
+    <test name="YEA Request For Quotation Suspend PR Edit Page Test">
         <classes>
-            <class name="com.classes.requestforquotation.suspend.RfqSuspendPrEditTest" />
+            <class name="com.poc.classes.requestforquotation.suspend.RfqSuspendPrEditTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Request For Quotation Regret Test">
+    <test name="YEA Request For Quotation Regret Test">
         <classes>
-            <class name="com.classes.requestforquotation.quotationregret.RegretBeforeRequoteTest" />
+            <class name="com.poc.classes.requestforquotation.regret.RegretTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Quotation Submit Page Test">
+    <test name="YEA Quotation Submit Page Test">
         <classes>
-            <class name="com.classes.requestforquotation.quotationsubmit.QuotationSubmitTest" />
+            <class name="com.poc.classes.requestforquotation.quote.QuoteTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Quotation Requote Page Test">
+    <test name="YEA Quotation Requote Page Test">
         <classes>
-            <class name="com.classes.requestforquotation.quotationrequote.QuotationRequoteTest" />
+            <class name="com.poc.classes.requestforquotation.requote.RequoteTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Ready For Evaluation Page Test">
+    <test name="YEA Ready For Evaluation Page Test">
         <classes>
-            <class name="com.classes.requestforquotation.readyforevaluation.ReadyForEvaluationTest" />
+            <class name="com.poc.classes.requestforquotation.readyforevaluation.ReadyForEvaluationTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Technical Evaluation Reject Page Test">
+    <test name="YEA Technical Evaluation Reject Page Test">
         <classes>
-            <class name="com.classes.requestforquotation.technicalevaluation.TechnicalEvaluationRejectTest" />
+            <class name="com.poc.classes.requestforquotation.technicalevaluation.TechnicalEvaluationRejectTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Technical Evaluation Approve Page Test">
+    <test name="YEA Technical Evaluation Approve Page Test">
         <classes>
-            <class name="com.classes.requestforquotation.technicalevaluation.TechnicalEvaluationTest" />
+            <class name="com.poc.classes.requestforquotation.technicalevaluation.TechnicalEvaluationTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Commercial Evaluation Page Test">
+    <test name="YEA Commercial Evaluation Page Test">
         <classes>
-            <class name="com.classes.requestforquotation.commercialevaluation.CommercialEvaluationTest" />
+            <class name="com.poc.classes.requestforquotation.commercialevaluation.CommercialEvaluationTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Purchase Order Request Create Page Test">
+    <test name="YEA Purchase Order Request Create Page Test">
         <classes>
-            <class name="com.procurement.purchaseorderrequest.create.PorCreateTest" />
+            <class name="com.poc.classes.purchaseorderrequest.create.PorCreateTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Purchase Order Request Edit Page Test">
+    <test name="YEA Purchase Order Request Edit Page Test">
         <classes>
-            <class name="com.procurement.purchaseorderrequest.edit.PorEditTest" />
+            <class name="com.poc.classes.purchaseorderrequest.edit.PorEditTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Purchase Order Request Suspend Edit Page Test">
+    <test name="YEA Purchase Order Request Suspend Edit Page Test">
         <classes>
-            <class name="com.procurement.purchaseorderrequest.suspend.PorSuspendPorEditTest" />
+            <class name="com.poc.classes.purchaseorderrequest.suspend.PorSuspendPorEditTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Purchase Order Request Suspend RFQ Edit Page Test">
+    <test name="YEA Purchase Order Request Suspend RFQ Edit Page Test">
         <classes>
-            <class name="com.procurement.purchaseorderrequest.suspend.PorSuspendRfqEditTest" />
+            <class name="com.poc.classes.purchaseorderrequest.suspend.PorSuspendRfqEditTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Purchase Order Request Reject Page Test">
+    <test name="YEA Purchase Order Request Reject Page Test">
         <classes>
-            <class name="com.procurement.purchaseorderrequest.reject.PocPorRejectTest" />
+            <class name="com.poc.classes.purchaseorderrequest.reject.PorRejectTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Purchase Order Request Approve Page Test">
+    <test name="YEA Purchase Order Request Approve Page Test">
         <classes>
-            <class name="com.procurement.purchaseorderrequest.approvalandapprove.PorApprovalAndApproveTest" />
+            <class name="com.poc.classes.purchaseorderrequest.approvalandapprove.PorSendForApprovalAndApproveTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog MSA Page Test">
+    <test name="YEA Purchase Order Create Page Test">
         <classes>
-            <class name="com.procurement.msa.InspectPOTest" />
+            <class name="com.poc.classes.purchaseorder.create.PoCreateTest" />
         </classes>
     </test>
 
-    <test name="YEA NonCatalog Purchase Order Send For Vendor Page Test">
+    <test name="YEA Purchase Order Send For Vendor Page Test">
         <classes>
-            <class name="com.procurement.purchaseorder.POSendForVendorTest" />
+            <class name="com.poc.classes.purchaseorder.sendforapproval.PoSendForVendorTest" />
         </classes>
     </test>
+
+
+
+
 
     <test name="YEA NonCatalog Order Schedule Create Page Test">
         <classes>

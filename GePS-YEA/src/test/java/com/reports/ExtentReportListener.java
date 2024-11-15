@@ -9,15 +9,17 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.factory.PlayWrightFactory;
+import com.factory.PlaywrightFactory;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import static com.factory.PlayWrightFactory.takeScreenshot;
+
+import static com.factory.PlaywrightFactory.takeScreenshot;
+
 
 public class ExtentReportListener implements ITestListener {
 
-    PlayWrightFactory playWrightFactory;
+    PlaywrightFactory playwrightFactory;
     public String OUTPUT_FOLDER = "./build/";
     public String FILE_NAME = "TestExecutionReport.html";
     public ExtentReports extent = init();
@@ -38,7 +40,7 @@ public class ExtentReportListener implements ITestListener {
             }
         }
 
-        playWrightFactory = new PlayWrightFactory();
+        playwrightFactory = new PlaywrightFactory();
         extentReports = new ExtentReports();
         ExtentSparkReporter reporter = new ExtentSparkReporter(OUTPUT_FOLDER + FILE_NAME);
         reporter.config().setReportName("Yokogawa Engineering Asia Private Limited Test Results");
