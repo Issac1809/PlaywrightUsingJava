@@ -1,13 +1,15 @@
 package com.procurement.poc;
 import com.procurement.poc.base.BaseTest;
+import com.procurement.poc.interfaces.requestforquotation.IQuoSubmit;
 import org.testng.annotations.Test;
 
 
 public class NonCatalog_E2E_Flow extends BaseTest {
     @Test
     public void Flow() throws InterruptedException {
-        PRRejectSuspend();
-//        PRPosititve();
+//        PRRejectSuspend();
+        PRPosititve();
+        RFQFlow();
 //        PORSuspendPREdit();
 //        PORPositive();
     }
@@ -60,4 +62,10 @@ public class NonCatalog_E2E_Flow extends BaseTest {
         iPorApprove.approve();
     }
 
+    void RFQFlow(){
+        iRfqCreate.createRFQ();
+        iRfqEdit.rfqEditMethod();
+        iQuoSubmit.inviteRegisteredVendor();
+        iQuoSubmit.quotationCreateAndSubmit();
+    }
 }

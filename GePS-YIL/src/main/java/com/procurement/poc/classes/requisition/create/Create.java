@@ -818,8 +818,8 @@ public class Create implements IPrCreate {
             System.out.println("What is the error: " + e.getMessage());
         }
     }
-    public void importItems(){
 
+    public void importItems(){
         if(properties.getProperty("purchaseType").equals("catalog")) {
             createItemsFile();
             page.locator(IMPORT_ITEM.getLocator()).click();
@@ -832,7 +832,6 @@ public class Create implements IPrCreate {
             itemFile.setInputFiles(Paths.get("Downloads/NonCatalogPRItemsImport.xlsx"));
         }
         page.locator(UPLOAD.getLocator()).click();
-
     }
 
     public void notes() {
