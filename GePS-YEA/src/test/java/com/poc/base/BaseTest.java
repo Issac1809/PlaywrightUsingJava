@@ -23,6 +23,54 @@ import com.poc.classes.inspections.fail.InsFail;
 import com.poc.classes.inspections.fail.InsFailTest;
 import com.poc.classes.inspections.readyforinspection.InsReadyForInspection;
 import com.poc.classes.inspections.readyforinspection.InsReadyForInspectionTest;
+import com.poc.classes.invoice.poinvoice.approve.InvApproval;
+import com.poc.classes.invoice.poinvoice.approve.PoInvApprovalTest;
+import com.poc.classes.invoice.poinvoice.cancel.InvCancel;
+import com.poc.classes.invoice.poinvoice.cancel.PoInvCancelTest;
+import com.poc.classes.invoice.poinvoice.checklist.InvChecklistAccept;
+import com.poc.classes.invoice.poinvoice.checklist.InvChecklistReject;
+import com.poc.classes.invoice.poinvoice.checklist.PoInvChecklistAcceptTest;
+import com.poc.classes.invoice.poinvoice.checklist.PoInvChecklistRejectTest;
+import com.poc.classes.invoice.poinvoice.create.InvCreate;
+import com.poc.classes.invoice.poinvoice.create.PoInvCreateTest;
+import com.poc.classes.invoice.poinvoice.edit.InvEdit;
+import com.poc.classes.invoice.poinvoice.edit.PoInvEditTest;
+import com.poc.classes.invoice.poinvoice.hold.InvHold;
+import com.poc.classes.invoice.poinvoice.hold.PoInvHoldTest;
+import com.poc.classes.invoice.poinvoice.invreturn.InvReturn;
+import com.poc.classes.invoice.poinvoice.invreturn.PoInvReturnTest;
+import com.poc.classes.invoice.poinvoice.reject.InvReject;
+import com.poc.classes.invoice.poinvoice.reject.PoInvRejectTest;
+import com.poc.classes.invoice.poinvoice.revert.InvRevert;
+import com.poc.classes.invoice.poinvoice.revert.PoInvRevertTest;
+import com.poc.classes.invoice.poinvoice.sendforapproval.InvSendForApproval;
+import com.poc.classes.invoice.poinvoice.sendforapproval.PoInvSendForApprovalTest;
+import com.poc.classes.invoice.poinvoice.sendforapproval.WoInvSendForApprovalTest;
+import com.poc.classes.invoice.poinvoice.verify.InvVerify;
+import com.poc.classes.invoice.poinvoice.verify.PoInvVerifyTest;
+import com.poc.classes.invoice.woinvoice.approve.WoInvApproval;
+import com.poc.classes.invoice.woinvoice.approve.WoInvApprovalTest;
+import com.poc.classes.invoice.woinvoice.cancel.WoInvCancel;
+import com.poc.classes.invoice.woinvoice.cancel.WoInvCancelTest;
+import com.poc.classes.invoice.woinvoice.checklist.WoInvChecklistAccept;
+import com.poc.classes.invoice.woinvoice.checklist.WoInvChecklistAcceptTest;
+import com.poc.classes.invoice.woinvoice.checklist.WoInvChecklistReject;
+import com.poc.classes.invoice.woinvoice.checklist.WoInvChecklistRejectTest;
+import com.poc.classes.invoice.woinvoice.create.WoInvCreate;
+import com.poc.classes.invoice.woinvoice.create.WoInvCreateTest;
+import com.poc.classes.invoice.woinvoice.edit.WoInvEdit;
+import com.poc.classes.invoice.woinvoice.edit.WoInvEditTest;
+import com.poc.classes.invoice.woinvoice.hold.WoInvHold;
+import com.poc.classes.invoice.woinvoice.hold.WoInvHoldTest;
+import com.poc.classes.invoice.woinvoice.invreturn.WoInvReturn;
+import com.poc.classes.invoice.woinvoice.invreturn.WoInvReturnTest;
+import com.poc.classes.invoice.woinvoice.reject.WoInvReject;
+import com.poc.classes.invoice.woinvoice.reject.WoInvRejectTest;
+import com.poc.classes.invoice.woinvoice.revert.WoInvRevert;
+import com.poc.classes.invoice.woinvoice.revert.WoInvRevertTest;
+import com.poc.classes.invoice.woinvoice.sendforapproval.WoInvSendForApproval;
+import com.poc.classes.invoice.woinvoice.verify.WoInvVerify;
+import com.poc.classes.invoice.woinvoice.verify.WoInvVerifyTest;
 import com.poc.classes.login.LoginTest;
 import com.poc.classes.orderschedule.approval.OsApproveTest;
 import com.poc.classes.orderschedule.approve.OsApprove;
@@ -97,6 +145,7 @@ import com.poc.classes.workorder.create.WoCreate;
 import com.poc.classes.workorder.trackerstatus.WoTrackerStatus;
 import com.poc.classes.workorders.create.WoCreateTest;
 import com.poc.classes.workorders.trackerstatus.WoTrackerStatusTest;
+import com.poc.interfaces.currencyexchangerate.ICurrencyExchangeRate;
 import com.poc.interfaces.dispatchnotes.*;
 import com.poc.interfaces.freightforwarderrequests.IFfrInvite;
 import com.poc.interfaces.freightforwarderrequests.IFfrQuote;
@@ -105,6 +154,8 @@ import com.poc.interfaces.inspections.IInsAssign;
 import com.poc.interfaces.inspections.IInsCreate;
 import com.poc.interfaces.inspections.IInsFail;
 import com.poc.interfaces.inspections.IInsReadyForInspection;
+import com.poc.interfaces.invoices.poinvoices.*;
+import com.poc.interfaces.invoices.woinvoices.*;
 import com.poc.interfaces.login.ILogin;
 import com.poc.interfaces.logout.ILogout;
 import com.poc.interfaces.orderschedule.IOsApprove;
@@ -121,12 +172,16 @@ import com.poc.interfaces.workorders.IWoTrackerStatus;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import java.util.Properties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class BaseTest {
 
+    Logger logger;
     protected PlaywrightFactory playwrightFactory;
     protected Properties properties;
     protected Page page;
+    protected ICurrencyExchangeRate iCurrencyExchangeRate;
     protected LoginTest loginTest;
     protected ILogin iLogin;
     protected ILogout iLogout;
@@ -223,11 +278,54 @@ public class BaseTest {
     protected IWoCreate iWoCreate;
     protected WoTrackerStatusTest woTrackerStatusTest;
     protected IWoTrackerStatus iWoTrackerStatus;
-
-
-
-
-
+    protected PoInvCreateTest poInvCreateTest;
+    protected IInvCreate iInvCreate;
+    protected PoInvHoldTest poInvHoldTest;
+    protected IInvHold iInvHold;
+    protected PoInvRevertTest poInvRevertTest;
+    protected IInvRevert iInvRevert;
+    protected PoInvCancelTest poInvCancelTest;
+    protected IInvCancel iInvCancel;
+    protected PoInvSendForApprovalTest poInvSendForApprovalTest;
+    protected IInvSendForApproval iInvSendForApproval;
+    protected PoInvChecklistRejectTest poInvChecklistRejectTest;
+    protected IInvChecklistReject iInvChecklistReject;
+    protected PoInvChecklistAcceptTest poInvChecklistAcceptTest;
+    protected IInvChecklistAccept iInvChecklistAccept;
+    protected PoInvEditTest poInvEditTest;
+    protected IInvEdit iInvEdit;
+    protected PoInvReturnTest poInvReturnTest;
+    protected IInvReturn iInvReturn;
+    protected PoInvVerifyTest poInvVerifyTest;
+    protected IInvVerify iInvVerify;
+    protected PoInvRejectTest poInvRejectTest;
+    protected IInvReject iInvReject;
+    protected PoInvApprovalTest poInvApprovalTest;
+    protected IInvApproval iInvApproval;
+    protected WoInvCreateTest woInvCreateTest;
+    protected IWoInvCreate iWoInvCreate;
+    protected WoInvHoldTest woInvHoldTest;
+    protected IWoInvHold iWoInvHold;
+    protected WoInvRevertTest woInvRevertTest;
+    protected IWoInvRevert iWoInvRevert;
+    protected WoInvCancelTest woInvCancelTest;
+    protected IWoInvCancel iWoInvCancel;
+    protected WoInvSendForApprovalTest woInvSendForApprovalTest;
+    protected IWoInvSendForApproval iWoInvSendForApproval;
+    protected WoInvChecklistAcceptTest woInvChecklistAcceptTest;
+    protected IWoInvChecklistAccept iWoInvChecklistAccept;
+    protected WoInvChecklistRejectTest woInvChecklistRejectTest;
+    protected IWoInvChecklistReject iWoInvChecklistReject;
+    protected WoInvEditTest woInvEditTest;
+    protected IWoInvEdit iWoInvEdit;
+    protected WoInvReturnTest woInvReturnTest;
+    protected IWoInvReturn iWoInvReturn;
+    protected WoInvVerifyTest woInvVerifyTest;
+    protected IWoInvVerify iWoInvVerify;
+    protected WoInvRejectTest woInvRejectTest;
+    protected IWoInvReject iWoInvReject;
+    protected WoInvApprovalTest woInvApprovalTest;
+    protected IWoInvApproval iWoInvApproval;
 
 //TODO Constructor
     public BaseTest() {
@@ -236,6 +334,8 @@ public class BaseTest {
     @BeforeTest
     public void setUp(){
         try {
+            logger = LogManager.getLogger(BaseTest.class);
+            logger.info("Creating objects for all the classes");
             playwrightFactory = new PlaywrightFactory();
             properties = playwrightFactory.initializeProperties();
             page = playwrightFactory.initializePage(properties);
@@ -354,26 +454,80 @@ public class BaseTest {
             iWoTrackerStatus = new WoTrackerStatus(iLogin, properties, page, iLogout, playwrightFactory);
             woTrackerStatusTest = new WoTrackerStatusTest();
 
+//TODO POInvoice
+            iInvCreate = new InvCreate(playwrightFactory, iLogin, properties, page, iLogout, iCurrencyExchangeRate);
+            poInvCreateTest = new PoInvCreateTest();
+            iInvCancel = new InvCancel(iLogin, properties, page, iLogout, iInvCreate);
+            poInvCancelTest = new PoInvCancelTest();
+            iInvHold = new InvHold(iLogin, properties, page, iLogout);
+            poInvHoldTest = new PoInvHoldTest();
+            iInvRevert = new InvRevert(iLogin, properties, page, iLogout);
+            poInvRevertTest = new PoInvRevertTest();
+            iInvChecklistAccept = new InvChecklistAccept(iLogin, properties, page, iLogout);
+            poInvChecklistAcceptTest = new PoInvChecklistAcceptTest();
+            iInvChecklistReject = new InvChecklistReject(iLogin, properties, page, iLogout);
+            poInvChecklistRejectTest = new PoInvChecklistRejectTest();
+            iInvSendForApproval = new InvSendForApproval(iLogin, properties, page, iLogout);
+            poInvSendForApprovalTest = new PoInvSendForApprovalTest();
+            iInvReturn = new InvReturn(iLogin, properties, page, iLogout, iInvSendForApproval);
+            poInvReturnTest = new PoInvReturnTest();
+            iInvVerify = new InvVerify(iLogin, properties, page, iLogout);
+            poInvVerifyTest = new PoInvVerifyTest();
+            iInvEdit = new InvEdit(iLogin, properties, page, iLogout);
+            poInvEditTest = new PoInvEditTest();
+            iInvReject = new InvReject(iLogin, properties, page, iLogout, iInvSendForApproval);
+            poInvRejectTest = new PoInvRejectTest();
+            iInvApproval = new InvApproval(iLogin, properties, page, iLogout);
+            poInvApprovalTest = new PoInvApprovalTest();
+
+//TODO WOInvoice
+            iWoInvCreate = new WoInvCreate(playwrightFactory, iLogin, properties, page, iLogout, iCurrencyExchangeRate);
+            woInvCreateTest = new WoInvCreateTest();
+            iWoInvCancel = new WoInvCancel(iLogin, properties, page, iLogout, iWoInvCreate);
+            woInvCancelTest = new WoInvCancelTest();
+            iWoInvHold = new WoInvHold(iLogin, properties, page, iLogout);
+            woInvHoldTest = new WoInvHoldTest();
+            iWoInvRevert = new WoInvRevert(iLogin, properties, page, iLogout);
+            woInvRevertTest = new WoInvRevertTest();
+            iWoInvChecklistAccept = new WoInvChecklistAccept(iLogin, properties, page, iLogout);
+            woInvChecklistAcceptTest = new WoInvChecklistAcceptTest();
+            iWoInvChecklistReject = new WoInvChecklistReject(iLogin, properties, page, iLogout);
+            woInvChecklistRejectTest = new WoInvChecklistRejectTest();
+            iWoInvSendForApproval = new WoInvSendForApproval(iLogin, properties, page, iLogout);
+            woInvSendForApprovalTest = new WoInvSendForApprovalTest();
+            iWoInvReturn = new WoInvReturn(iLogin, properties, page, iLogout, iWoInvSendForApproval);
+            woInvReturnTest = new WoInvReturnTest();
+            iWoInvVerify = new WoInvVerify(iLogin, properties, page, iLogout);
+            woInvVerifyTest = new WoInvVerifyTest();
+            iWoInvEdit = new WoInvEdit(iLogin, properties, page, iLogout);
+            woInvEditTest = new WoInvEditTest();
+            iWoInvReject = new WoInvReject(iLogin, properties, page, iLogout, iWoInvSendForApproval);
+            woInvRejectTest = new WoInvRejectTest();
+            iWoInvApproval = new WoInvApproval(iLogin, properties, page, iLogout);
+            woInvApprovalTest = new WoInvApprovalTest();
+
         } catch (Exception exception) {
-            System.out.println("Error :" + exception);
+            logger.error("Error during object creation: ", exception.getMessage(), exception);
         }
     }
 
     @AfterTest
     public void tearDown() {
         try {
+            logger.info("Tear down method execution");
             page.context().browser().close();
         } catch (Exception exception) {
-            System.out.println("Error :" + exception);
+            logger.error("Error during object creation: ", exception.getMessage(), exception);
         }
     }
 
     @AfterTest
     public void tearDown(Page page) {
         try {
+            logger.info("Tear down method execution");
             page.context().browser().close();
         } catch (Exception exception) {
-            System.out.println("Error :" + exception);
+            logger.error("Error during object creation: ", exception.getMessage(), exception);
         }
     }
 }

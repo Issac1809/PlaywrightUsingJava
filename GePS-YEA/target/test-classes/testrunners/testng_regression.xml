@@ -156,7 +156,7 @@
 
     <test name="YEA NonCatalog Order Schedule Create Page Test">
         <classes>
-            <class name="com.procurement.orderschedule.create.OSCreateTest" />
+            <class name="com.procurement.orderschedule.create.OsCreateTest" />
         </classes>
     </test>
 
@@ -168,7 +168,7 @@
 
     <test name="YEA NonCatalog Inspection Create Page Test">
         <classes>
-            <class name="com.procurement.inspections.create.InspectionCreateTest" />
+            <class name="com.procurement.inspections.create.InsCreateTest" />
         </classes>
     </test>
 
@@ -192,13 +192,13 @@
 
     <test name="YEA NonCatalog Work Orders Create Page Test">
         <classes>
-            <class name="com.procurement.workorders.create.WorkOrdersCreateTest" />
+            <class name="com.procurement.workorders.create.WoCreateTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog Work Orders Tracker Status Page Test">
         <classes>
-            <class name="com.procurement.workorders.trackerstatus.WOTrackerStatusTest" />
+            <class name="com.procurement.workorders.trackerstatus.WoTrackerStatusTest" />
         </classes>
     </test>
 

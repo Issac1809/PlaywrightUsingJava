@@ -285,73 +285,73 @@
 
     <test name="YEA NonCatalog POInvoice Create Page Test">
         <classes>
-            <class name="com.procurement.invoice.poinvoice.create.InvoiceCreateTest" />
+            <class name="com.procurement.invoice.poinvoice.create.PoInvCreateTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog POInvoice Cancel Page Test">
         <classes>
-            <class name="com.procurement.invoice.poinvoice.cancel.InvoiceCancelTest" />
+            <class name="com.procurement.invoice.poinvoice.cancel.PoInvCancelTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog POInvoice Hold Page Test">
         <classes>
-            <class name="com.procurement.invoice.poinvoice.hold.InvoiceHoldTest" />
+            <class name="com.procurement.invoice.poinvoice.hold.PoInvHoldTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog POInvoice Revert Page Test">
         <classes>
-            <class name="com.procurement.invoice.poinvoice.revert.InvoiceRevertTest" />
+            <class name="com.procurement.invoice.poinvoice.revert.PoInvRevertTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog POInvoice Checklist Reject Page Test">
         <classes>
-            <class name="com.procurement.invoice.poinvoice.checklist.ChecklistRejectTest" />
+            <class name="com.procurement.invoice.poinvoice.checklist.PoInvChecklistRejectTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog POInvoice Return Page Test">
         <classes>
-            <class name="com.procurement.invoice.poinvoice.invreturn.InvoiceReturnTest" />
+            <class name="com.procurement.invoice.poinvoice.invreturn.PoInvReturnTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog POInvoice Edit Page Test">
         <classes>
-            <class name="com.procurement.invoice.poinvoice.edit.InvoiceEditTest" />
+            <class name="com.procurement.invoice.poinvoice.edit.PoInvEditTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog POInvoice Checklist Accept Page Test">
         <classes>
-            <class name="com.procurement.invoice.poinvoice.checklist.ChecklistAcceptTest" />
+            <class name="com.procurement.invoice.poinvoice.checklist.PoInvChecklistAcceptTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog POInvoice Verify Page Test">
         <classes>
-            <class name="com.procurement.invoice.poinvoice.verify.InvoiceVerifyTest" />
+            <class name="com.procurement.invoice.poinvoice.verify.PoInvVerifyTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog POInvoice Send For Approval Page Test">
         <classes>
-            <class name="com.procurement.invoice.poinvoice.sendforapproval.POInvoiceSendForApprovalTest" />
+            <class name="com.procurement.invoice.poinvoice.sendforapproval.PoInvSendForApprovalTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog POInvoice Reject Page Test">
         <classes>
-            <class name="com.procurement.invoice.poinvoice.reject.InvoiceRejectTest" />
+            <class name="com.procurement.invoice.poinvoice.reject.PoInvRejectTest" />
         </classes>
     </test>
 
     <test name="YEA NonCatalog POInvoice Approval Page Test">
         <classes>
-            <class name="com.procurement.invoice.poinvoice.approve.POInvoiceApprovalTest" />
+            <class name="com.procurement.invoice.poinvoice.approve.PoInvApprovalTest" />
         </classes>
     </test>
 

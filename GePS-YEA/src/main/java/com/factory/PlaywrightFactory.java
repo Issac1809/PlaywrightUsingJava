@@ -1,7 +1,6 @@
 package com.factory;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.WaitForSelectorState;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -107,6 +106,13 @@ public class PlaywrightFactory {
         }
     }
 
+    public static String takeScreenshot(){
+        String path = System.getProperty("user.dir") + "/screenshot/" + System.currentTimeMillis() + ".png";
+        byte[] buffer = getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
+        String base64Path = Base64.getEncoder().encodeToString(buffer);
+        return base64Path;
+    }
+
     public void tearDown() {
         try {
             getPage().context().browser().close();
@@ -115,10 +121,13 @@ public class PlaywrightFactory {
         }
     }
 
-    public static String takeScreenshot(){
-        String path = System.getProperty("user.dir") + "/screenshot/" + System.currentTimeMillis() + ".png";
-        byte[] buffer = getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
-        String base64Path = Base64.getEncoder().encodeToString(buffer);
-        return base64Path;
+    public void tearDown(Page page) {
+        try {
+            getPage().context().browser().close();
+        } catch (Exception error) {
+            System.out.println("Error :" + error);
+        }
     }
+
+
 }

@@ -1,9 +1,7 @@
 package com.poc.classes.logout;
-
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.poc.interfaces.logout.ILogout;
-
 import static com.constants.logout.LLogout.LOGIN_AVATAR;
 import static com.constants.logout.LLogout.SIGN_OUT;
 import static com.factory.PlaywrightFactory.waitForLocator;
@@ -18,6 +16,19 @@ public class Logout implements ILogout {
     }
 
     public void performLogout() {
+        try {
+            Locator avatarLocator = page.locator(LOGIN_AVATAR);
+            waitForLocator(avatarLocator);
+            avatarLocator.click();
+            Locator signOutLocator = page.locator(SIGN_OUT);
+            waitForLocator(signOutLocator);
+            signOutLocator.click();
+        } catch (Exception error) {
+            System.out.println("Logout error: " + error.getMessage());
+        }
+    }
+
+    public void performLogout(Page page) {
         try {
             Locator avatarLocator = page.locator(LOGIN_AVATAR);
             waitForLocator(avatarLocator);
