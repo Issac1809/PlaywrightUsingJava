@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com</groupId>
+  <artifactId>GePS-HOPES_YEA</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>GePS-HOPES_YEA</name>
+  <url>https://github.com/Issac1809</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>18</maven.compiler.source>
+    <maven.compiler.target>18</maven.compiler.target>
+    <testNG-version> 7.10.2 </testNG-version>
+    <chaintest-testng-version>1.0.7</chaintest-testng-version>
+    <playwright-version>1.49.0</playwright-version>
+    <maven-compiler-version>3.13.0</maven-compiler-version>
+    <maven-surefire-plugin>3.2.5</maven-surefire-plugin>
+    <jackson-api-version>2.18.2</jackson-api-version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+    <groupId>org.testng</groupId>
+    <artifactId>testng</artifactId>
+    <version>${testNG-version}</version>
+    <scope>test</scope>
+  </dependency>
+
+  <dependency>
+    <groupId>com.aventstack</groupId>
+    <artifactId>chaintest-testng</artifactId>
+    <version>${chaintest-testng-version}</version>
+  </dependency>
+
+  <dependency>
+    <groupId>com.microsoft.playwright</groupId>
+    <artifactId>playwright</artifactId>
+    <version>${playwright-version}</version>
+  </dependency>
+
+    <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>${jackson-api-version}</version>
+  </dependency>
+
+  </dependencies>
+
+<build>
+  <pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-version}</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin}</version>
+        <configuration>
+          <suiteXmlFiles>
+            <suiteXmlFile>src/test/resources/testrunners/testng_functional.xml</suiteXmlFile>
+          </suiteXmlFiles>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </pluginManagement>
+</build>
+</project>
