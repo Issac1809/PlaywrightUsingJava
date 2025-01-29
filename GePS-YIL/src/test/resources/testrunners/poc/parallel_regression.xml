@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="POC Suite" parallel="tests">
+
+    <test name="catalog">
+        <parameter name="purchaseType" value="catalog"/>
+        <classes>
+            <class name="com.procurement.poc.Catalog_E2E_Flow"/>
+        </classes>
+    </test>
+
+    <test name="nonCatalog">
+        <parameter name="purchaseType" value="noncatalog"/>
+        <classes>
+            <class name="com.procurement.poc.NonCatalog_E2E_Flow"/>
+        </classes>
+    </test>
+</suite>

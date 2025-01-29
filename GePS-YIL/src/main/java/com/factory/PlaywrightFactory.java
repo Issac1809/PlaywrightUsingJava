@@ -81,7 +81,9 @@ public class PlaywrightFactory {
 
     public static void waitForLocator(Locator locator){
         try {
+
             locator.waitFor(new Locator.WaitForOptions().setTimeout(5000).setState(WaitForSelectorState.VISIBLE));
+
         } catch (Exception error) {
             System.out.println("What is the Error: " + error);
         }

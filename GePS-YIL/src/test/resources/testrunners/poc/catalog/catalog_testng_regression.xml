@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="catalog_regression" parallel="tests">
+
+    <test name="catalog_flow">
+        <parameter name="purchaseType" value="catalog"/>
+        <classes>
+            <class name="com.procurement.poc.Catalog_E2E_Flow"/>
+        </classes>
+    </test>
+
+</suite>
