@@ -1,46 +1,46 @@
 pipeline {
-    agent any
+    agent { label 'linux' }
 
     tools {
-        maven 'maven-3.9.8'
+        maven 'Maven'
     }
 
     stages {
-        stage('Build') {
+        stage('Checkout Code') {
             steps {
-                git url: 'https://github.com/CormSquare/GePS.git', branch: 'master'
-            }
-            post {
-                success {
-                    archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
-                }
+                git credentialsId: 'github-credentials', url: 'https://github.com/CormSquare/GePS.git', branch: 'master'
             }
         }
 
-        stage('Deploy to Test Environment') {
+        stage('Build') {
             steps {
-                echo "Deploy to QA"
+                sh "mvn clean package"
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'target/*.jar', onlyIfSuccessful: true
+                }
             }
         }
 
         stage('Regression Automation Test') {
+            when {
+                succeeded()
+            }
             steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    git url: 'https://github.com/Issac1809/PlayWright.git', branch: 'master'
-                    bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_functional.xml"
-                }
+                echo "Executing Regression Tests on Latest Build..."
+                sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_functional.xml"
             }
         }
 
-        stage('Publish Extent Report') {
+        stage('Publish Test Report') {
             steps {
                 publishHTML([allowMissing: false,
-                             alwaysLinkToLastBuild: false,
+                             alwaysLinkToLastBuild: true,
                              keepAll: true,
-                             reportDir: 'build',
+                             reportDir: 'target/surefire-reports',
                              reportFiles: 'TestExecutionReport.html',
-                             reportName: 'HTML Extent Report',
-                             reportTitles: ''])
+                             reportName: 'HTML Extent Report'])
             }
         }
     }
