@@ -1,0 +1,22 @@
+name: Test of GePS-YEA-HOPES 
+on:
+workflow_dispatch:
+ 
+jobs:
+  build:
+    runs-on: self-hosted # Or choose a different runner if required
+ 
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+ 
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin   # You can change this to your preferred distribution
+          java-version: '11'        # Change the Java version if needed
+ 
+      - name: Run Maven Build
+        run: mvn clean install
+        # If your pom.xml is not in the repository root, add:
+        # working-directory: path/to/your/module
