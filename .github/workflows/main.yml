@@ -23,7 +23,7 @@ jobs:
       - name: Run Maven Build in CMD
         shell: cmd
         run: '"C:\Program Files\Apache\maven\maven\bin\mvn.cmd" clean install'
-        working-directory: GePS-HOPES-YEA
+        working-directory: GePS-YIL
 
         # run: mvn clean install
         # If your pom.xml is not in the repository root, add:
