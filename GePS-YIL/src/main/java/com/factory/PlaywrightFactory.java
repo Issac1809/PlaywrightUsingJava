@@ -66,7 +66,7 @@ public class PlaywrightFactory {
 
     public Page initializePage(Properties properties) {
 //      String browserName = properties.getProperty("browserType").trim().toUpperCase();
-        BrowserEnum browser = BrowserEnum.EDGE;
+        BrowserEnum browser = BrowserEnum.CHROME;
         switch (browser) {
             case CHROMIUM -> localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
             case CHROME -> localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel(browser.getBrowserName()).setHeadless(false)));

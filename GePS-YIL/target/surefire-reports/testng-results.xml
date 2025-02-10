@@ -2,12 +2,12 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-02-10T17:21:24 IST" name="catalog_regression" finished-at="2025-02-10T17:22:25 IST" duration-ms="60739">
+  <suite started-at="2025-02-10T17:57:16 IST" name="catalog_regression" finished-at="2025-02-10T17:58:22 IST" duration-ms="66897">
     <groups>
     </groups>
-    <test started-at="2025-02-10T17:21:24 IST" name="catalog_flow" finished-at="2025-02-10T17:22:25 IST" duration-ms="60739">
+    <test started-at="2025-02-10T17:57:16 IST" name="catalog_flow" finished-at="2025-02-10T17:58:22 IST" duration-ms="66897">
       <class name="com.procurement.poc.Catalog_E2E_Flow">
-        <test-method is-config="true" signature="setUp(java.lang.String)[pri:0, instance:com.procurement.poc.Catalog_E2E_Flow@74f0ea28]" started-at="2025-02-10T17:21:24 IST" name="setUp" finished-at="2025-02-10T17:21:32 IST" duration-ms="7105" status="PASS">
+        <test-method is-config="true" signature="setUp(java.lang.String)[pri:0, instance:com.procurement.poc.Catalog_E2E_Flow@74f0ea28]" started-at="2025-02-10T17:57:16 IST" name="setUp" finished-at="2025-02-10T17:57:24 IST" duration-ms="8073" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -18,11 +18,11 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="Flow()[pri:0, instance:com.procurement.poc.Catalog_E2E_Flow@74f0ea28]" started-at="2025-02-10T17:21:32 IST" name="Flow" finished-at="2025-02-10T17:22:19 IST" duration-ms="46968" status="PASS">
+        <test-method signature="Flow()[pri:0, instance:com.procurement.poc.Catalog_E2E_Flow@74f0ea28]" started-at="2025-02-10T17:57:24 IST" name="Flow" finished-at="2025-02-10T17:58:22 IST" duration-ms="58290" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Flow -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.procurement.poc.Catalog_E2E_Flow@74f0ea28]" started-at="2025-02-10T17:22:19 IST" name="tearDown" finished-at="2025-02-10T17:22:25 IST" duration-ms="6648" status="PASS">
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.procurement.poc.Catalog_E2E_Flow@74f0ea28]" started-at="2025-02-10T17:58:22 IST" name="tearDown" finished-at="2025-02-10T17:58:22 IST" duration-ms="491" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
