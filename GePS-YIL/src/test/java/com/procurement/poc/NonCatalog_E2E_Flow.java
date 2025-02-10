@@ -49,7 +49,7 @@ public class NonCatalog_E2E_Flow extends BaseTest {
     }
     void RFQFlow(){
         iRfqCreate.createRFQ();
-        iRfqEdit.rfqEditMethod();
+//        iRfqEdit.rfqEditMethod();
         iQuoSubmit.inviteRegisteredVendor();
         iQuoSubmit.quotationCreateAndSubmit();
         iReadyForEvalutation.readyForEvaluationButton();
@@ -57,21 +57,16 @@ public class NonCatalog_E2E_Flow extends BaseTest {
         iTeCreate.technicalEvaluationButton();
         iCeCreate.commercialEvaluationButton();
     }
-    void PORSuspendPREdit(){
+    void PORSuspendPREdit() throws IOException {
         iPorCreate.nonCatalogPORCreate();
         iPorSuspend.suspend();
-        iPrEdit.edit();
-        iPrSendForApproval.sendForApproval();
-        iPrApprove.approve();
-        iPrAssign.buyerManagerAssign();
-        iPorCreate.catalogPORCreate();
-        iPorSuspend.suspend();
+        iCeCreate.commercialEvaluationButton();
+        iPorCreate.nonCatalogPORCreate();
+        String approver = iPorSendForApproval.sendForApproval();
+        iPorReject.porReject(approver);
         iPorEdit.porEdit();
-        iPorSendForApproval.sendForApproval();
-//        iPorReject.porReject();
-        iPorEdit.porEdit();
-        iPorSendForApproval.sendForApproval();
-        iPorApprove.approve();
+        approver = iPorSendForApproval.sendForApproval();
+        iPorApprove.completeApprove(approver);
     }
     void PORPositive(){
         iPorCreate.nonCatalogPORCreate();

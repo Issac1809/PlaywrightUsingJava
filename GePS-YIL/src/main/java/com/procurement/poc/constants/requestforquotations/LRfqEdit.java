@@ -8,8 +8,6 @@ public enum LRfqEdit {
     REMARKS_POP_UP(".bootbox-input"),
     REMARKS("Updated"),
     ACCEPT_REMARKS_POP_UP(".bootbox-accept"),
-
-    LOAD_PAGE("https://geps_hopes_yil.cormsquare.com/api/RequestForQuotations/")
     ;
 
 

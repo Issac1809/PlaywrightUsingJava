@@ -3,18 +3,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Response;
-import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.requisitions.IPrApprove;
 import com.microsoft.playwright.Page;
-import com.procurement.poc.interfaces.login.ILogin;
+import com.interfaces.ILogin;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import static com.factory.PlaywrightFactory.statusAssertion;
 import static com.procurement.poc.constants.requisitions.LPrApprove.*;
 
 public class Approve implements IPrApprove {
@@ -24,6 +23,7 @@ public class Approve implements IPrApprove {
     private Properties properties;
     private Page page;
     private ObjectMapper objectMapper;
+    private String url;
 
     //TODO Constructor
     public Approve(ILogin iLogin, Properties properties, Page page, ILogout iLogout, ObjectMapper objectMapper) {
@@ -32,7 +32,8 @@ public class Approve implements IPrApprove {
         this.page = page;
         this.iLogout = iLogout;
         this.objectMapper = objectMapper;
-    }
+        this.url = properties.getProperty("appUrl");
+            }
 
     public void approve() {
         try {
@@ -57,7 +58,7 @@ public class Approve implements IPrApprove {
         page.locator(getString(title)).first().click();
         page.locator(APPROVE.getLocator()).click();
         Response response = page.waitForResponse(
-                resp -> resp.url().startsWith("https://geps_hopes_yil.cormsquare.com/Procurement/Requisitions/POC_Details") && resp.status() == 200,
+                resp -> resp.url().startsWith(url + "/Procurement/Requisitions/POC_Details") && resp.status() == 200,
                 page.locator(YES.getLocator())::click
         );
         iLogout.performLogout();
@@ -79,15 +80,16 @@ public class Approve implements IPrApprove {
 
 
                 Response requisition = page.waitForResponse(
-                        resp -> resp.url().startsWith("https://geps_hopes_yil.cormsquare.com/api/Requisitions/" + uid) && resp.status() == 200,
+                        resp -> resp.url().startsWith(url + "/api/Requisitions/" + uid) && resp.status() == 200,
                         page.locator(YES.getLocator())::click
                 );
 
-//                APIResponse requisition = page.request().fetch("https://geps_hopes_yil.cormsquare.com/api/Requisitions/" + uid, RequestOptions.create());
                 JsonNode requisitionJson = objectMapper.readTree(requisition.body());
                 String requisitionId = requisitionJson.get("requisitionId").asText();
 
-                APIResponse approvalAPI = page.request().fetch("https://geps_hopes_yil.cormsquare.com/api/Approvals?entityId=" + requisitionId + "&approvalTypeEnum=Requisition", RequestOptions.create());
+
+                // Get Approver with pending status
+                APIResponse approvalAPI = page.request().fetch(url + "/api/Approvals?entityId=" + requisitionId + "&approvalTypeEnum=Requisition", RequestOptions.create());
                 JsonNode rootNode = objectMapper.readTree(approvalAPI.body());
                 JsonNode approvers = rootNode.path("approvers");
                 String newApproverEmail = "";
@@ -97,10 +99,18 @@ public class Approve implements IPrApprove {
                         break;
                     }
                 }
-                if (newApproverEmail.isEmpty())
+
+                // If no approvers are found with pending status
+                if (newApproverEmail.isEmpty()){
                     pending = false;
-                else
+                    statusAssertion(page, page::reload,"requisition","Approved");
+                }
+
+                // If approver with pending status is found
+                else {
                     approverEmail = newApproverEmail;
+                    statusAssertion(page, page::reload,"requisition","Pending");
+                }
                 iLogout.performLogout();
             }
             catch (Exception error) {

@@ -1,13 +1,14 @@
 package com.procurement.poc.classes.requisition.suspend;
-import com.microsoft.playwright.Response;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.requisitions.IPrEdit;
 import com.procurement.poc.interfaces.requisitions.IPrSuspend;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.procurement.poc.interfaces.login.ILogin;
+import com.interfaces.ILogin;
 
 import java.util.Properties;
+
+import static com.factory.PlaywrightFactory.statusAssertion;
 import static com.factory.PlaywrightFactory.waitForLocator;
 import static com.procurement.poc.constants.requisitions.LPrBuyerSuspend.*;
 
@@ -36,7 +37,7 @@ public class Suspend implements IPrSuspend {
         iLogin.performLogin(properties.getProperty("buyerManagerEmail"));
         boolean buyer = false;
 
-        String title = properties.getProperty("orderTitle");
+        String title = properties.getProperty("currentTitle");
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle);
         waitForLocator(titleLocator);
@@ -64,11 +65,11 @@ public class Suspend implements IPrSuspend {
 
         Locator yesButtonLocator = page.locator(YES.getLocator());
         waitForLocator(yesButtonLocator);
-        Response response = page.waitForResponse(
-                resp -> resp.url().startsWith("https://geps_hopes_yil.cormsquare.com/Procurement/Requisitions/POC_Details") && resp.status() == 200,
-                yesButtonLocator::click
-        );
-        iLogout.performLogout();
+        yesButtonLocator.click();
+
+        statusAssertion(page, page::reload,"requisition","Suspended");
+
+            iLogout.performLogout();
 //        iPrEdit.buyerSuspendEdit();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

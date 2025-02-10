@@ -4,17 +4,16 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Response;
-import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.requisitions.IPrSendForApproval;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.procurement.poc.interfaces.login.ILogin;
+import com.interfaces.ILogin;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
+
+import static com.factory.PlaywrightFactory.statusAssertion;
 import static com.factory.PlaywrightFactory.waitForLocator;
 import static com.procurement.poc.constants.requisitions.LPrSendForApproval.*;
 
@@ -25,6 +24,7 @@ public class SendForApproval implements IPrSendForApproval {
     private ILogin iLogin;
     private ILogout iLogout;
     private ObjectMapper objectMapper;
+    private String url;
 
     private SendForApproval() {
     }
@@ -36,6 +36,7 @@ public class SendForApproval implements IPrSendForApproval {
         this.iLogin = iLogin;
         this.iLogout = iLogout;
         this.objectMapper = objectMapper;
+        this.url = properties.getProperty("appUrl");
     }
 
 //    public void sendForApproval() {
@@ -55,7 +56,7 @@ public class SendForApproval implements IPrSendForApproval {
 //            Locator yesButtonLocator = page.locator(YES.getLocator());
 //            waitForLocator(yesButtonLocator);
 //            Response response = page.waitForResponse(
-//                    resp -> resp.url().startsWith("https://geps_hopes_yil.cormsquare.com/api/Approvals") && resp.status() == 200,
+//                    resp -> resp.url().startsWith(url + "/api/Approvals") && resp.status() == 200,
 //                    yesButtonLocator::click
 //            );
 //
@@ -91,7 +92,7 @@ public class SendForApproval implements IPrSendForApproval {
     public String sendForApproval() {
         String approverEmail = "";
         try {
-            String title = properties.getProperty("orderTitle");
+            String title = properties.getProperty("currentTitle");
             iLogin.performLogin(properties.getProperty("requesterEmail"));
 
             String getTitle = getTitle(title);
@@ -102,13 +103,14 @@ public class SendForApproval implements IPrSendForApproval {
             String PRRefereneNumber = page.locator("#referenceId").textContent();
             PlaywrightFactory.saveToPropertiesFile("PRReferenceNumber",PRRefereneNumber);
 
-            String url = page.url();
-            String[] x = url.split("=");
+            String pageUrl = page.url();
+            String[] x = pageUrl.split("=");
             String uid = x[1];
 
-            APIResponse requisition = page.request().fetch("https://geps_hopes_yil.cormsquare.com/api/Requisitions/" + uid, RequestOptions.create());
+            APIResponse requisition = page.request().fetch(url + "/api/Requisitions/" + uid, RequestOptions.create());
             JsonNode requisitionJson = objectMapper.readTree(requisition.body());
             String requisitionId = requisitionJson.get("requisitionId").asText();
+//            String requisitionId =  JsonParser.parseString(requisition.text()).getAsJsonObject().get("requisitionId").getAsString();
 
             Locator sendForApprovalButtonLocator = page.locator(SEND_FOR_APPROVAL_BUTTON.getLocator());
             waitForLocator(sendForApprovalButtonLocator);
@@ -118,7 +120,7 @@ public class SendForApproval implements IPrSendForApproval {
             waitForLocator(yesButtonLocator);
 
             Response approvalAPI = page.waitForResponse(
-                    resp -> resp.url().startsWith("https://geps_hopes_yil.cormsquare.com/api/Approvals?entityId="+requisitionId+"&approvalTypeEnum=Requisition") && resp.status() == 200,
+                    resp -> resp.url().startsWith(url + "/api/Approvals?entityId="+requisitionId+"&approvalTypeEnum=Requisition") && resp.status() == 200,
                     yesButtonLocator::click
             );
             JsonNode rootNode = objectMapper.readTree(approvalAPI.body());
@@ -129,6 +131,9 @@ public class SendForApproval implements IPrSendForApproval {
                     break;
                 }
             }
+
+            statusAssertion(page, page::reload,"requisition","Pending");
+
             iLogout.performLogout();
         }
         catch (Exception error) {

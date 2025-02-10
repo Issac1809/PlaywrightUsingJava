@@ -2,14 +2,14 @@ package com.procurement.poc.classes.purchaseorderrequest.create;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
-import com.procurement.poc.interfaces.login.ILogin;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogin;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.purchaseorderrequests.IPorCreate;
 
 import java.util.Properties;
 
+import static com.factory.PlaywrightFactory.statusAssertion;
 import static com.procurement.poc.constants.purchaseorderrequests.LPorCreate.*;
 import static com.factory.PlaywrightFactory.waitForLocator;
 
@@ -46,7 +46,7 @@ public class PorCreate implements IPorCreate {
             waitForLocator(rfqNavigationBarLocator);
             rfqNavigationBarLocator.click();
 
-            String title = properties.getProperty("orderTitle");
+            String title = properties.getProperty("currentTitle");
             Locator titleLocator = page.locator(getString(title));
             waitForLocator(titleLocator);
             titleLocator.first().click();
@@ -66,13 +66,15 @@ public class PorCreate implements IPorCreate {
             waitForLocator(isPreselected);
             isPreselected.first().click();
 
-            Locator createButton = page.locator(CREATE_BUTTON.getLocator());
-            waitForLocator(createButton);
-            createButton.first().click();
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+            Locator createButtonLocator = page.locator(CREATE_BUTTON.getLocator());
+            waitForLocator(createButtonLocator);
+            createButtonLocator.click();
 
             Locator yesButtonLocator = page.locator(YES.getLocator());
             waitForLocator(yesButtonLocator);
-            yesButtonLocator.click();
+
+            statusAssertion(page, yesButtonLocator::click, "por", "Draft");
 
             iLogout.performLogout();
         } catch (Exception error) {
@@ -95,7 +97,7 @@ public class PorCreate implements IPorCreate {
         waitForLocator(requisitionNavBarLocator);
         requisitionNavBarLocator.click();
 
-        String title = properties.getProperty("orderTitle");
+        String title = properties.getProperty("currentTitle");
         Locator titleLocator = page.locator(getString(title));
         waitForLocator(titleLocator);
         titleLocator.first().click();
@@ -153,7 +155,8 @@ public class PorCreate implements IPorCreate {
 
         Locator yesButtonLocator = page.locator(YES.getLocator());
         waitForLocator(yesButtonLocator);
-        yesButtonLocator.click();
+
+        statusAssertion(page, yesButtonLocator::click, "por", "Draft");
 
         iLogout.performLogout();
         } catch (Exception error) {

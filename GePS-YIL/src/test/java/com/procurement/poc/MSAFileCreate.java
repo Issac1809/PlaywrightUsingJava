@@ -1,7 +1,6 @@
 package com.procurement.poc;
 
 import com.procurement.poc.base.BaseTest;
-import com.procurement.poc.interfaces.IMSA;
 import org.testng.annotations.Test;
 
 import java.io.IOException;

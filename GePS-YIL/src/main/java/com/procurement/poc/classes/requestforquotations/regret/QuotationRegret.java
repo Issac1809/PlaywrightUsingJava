@@ -2,8 +2,8 @@ package com.procurement.poc.classes.requestforquotations.regret;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.procurement.poc.interfaces.login.ILogin;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogin;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.requestforquotation.IQuoRegret;
 import com.procurement.poc.interfaces.requestforquotation.IQuoSubmit;
 
@@ -39,7 +39,7 @@ public class QuotationRegret implements IQuoRegret {
         String vendorMailId = properties.getProperty("VendorMailId");
         iLogin.performLogin(vendorMailId);
 
-        String title = properties.getProperty("Title");
+        String title = properties.getProperty("currentTitle");
         Locator titleLocator = page.locator(getTitle(title));
         waitForLocator(titleLocator);
         titleLocator.first().click();

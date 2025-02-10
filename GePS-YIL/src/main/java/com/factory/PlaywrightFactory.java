@@ -7,7 +7,9 @@ import java.util.Base64;
 import java.util.Properties;
 
 import com.enums.BrowserEnum;
+import com.google.gson.JsonParser;
 import com.microsoft.playwright.*;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class PlaywrightFactory {
@@ -87,6 +89,26 @@ public class PlaywrightFactory {
         } catch (Exception error) {
             System.out.println("What is the Error: " + error);
         }
+    }
+
+    public static void statusAssertion(Page page,Runnable action, String module, String expectedStatus){
+        String x = "";
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+        switch(module){
+            case "requisition":         { x = properties.getProperty("appUrl") + "/api/Requisitions/";              break;}
+            case "salesRequisition" :   { x = properties.getProperty("appUrl") + "/api/RequisitionsOthers/";        break;}
+            case "rfq":                 { x = properties.getProperty("appUrl") + "/api/RequestForQuotations/";      break;}
+            case "por":                 { x = properties.getProperty("appUrl") + "/api/PurchaseOrderRequests/";     break;}
+        }
+        final String api = x;
+
+        Response response = page.waitForResponse(
+                resp -> resp.url().startsWith(api) && resp.status() == 200,
+                action
+        );
+        String jsonStatus = JsonParser.parseString(response.text()).getAsJsonObject().get("status").getAsString();
+        assert expectedStatus.equals(jsonStatus) : "Expected status to be: " + expectedStatus + ", but got: " + jsonStatus;
+        assert page.locator("//span[@id='status']//span").innerText().contains(jsonStatus) : "Expected status text to contain: " + jsonStatus;
     }
 
     public static void saveToPropertiesFile(String attributeKey, String attributeValue) {

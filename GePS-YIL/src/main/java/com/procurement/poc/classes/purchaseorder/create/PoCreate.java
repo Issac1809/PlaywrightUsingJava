@@ -2,8 +2,8 @@ package com.procurement.poc.classes.purchaseorder.create;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.procurement.poc.interfaces.login.ILogin;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogin;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.purchaseorders.IPoCreate;
 
 import java.util.Properties;
@@ -44,7 +44,6 @@ public class PoCreate implements IPoCreate {
             titleLocator.first().click();
 
             Locator createPOButtonLocator = page.locator(CREATE_PO_BUTTON);
-            waitForLocator(createPOButtonLocator);
             createPOButtonLocator.evaluate("(element) => { element.style.display = 'block'; }");
             createPOButtonLocator.click();
 

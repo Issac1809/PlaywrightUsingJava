@@ -5,7 +5,6 @@ public enum LPrEdit {
     EDIT_BUTTON("#btnEdit"),
     UPDATE_BUTTON("#btnUpdate"),
     ACCEPT("//button[contains(@class, 'bootbox-accept')]");
-
     private final String locatorsName;
 //TODO Constructor
     LPrEdit(String locatorsName){

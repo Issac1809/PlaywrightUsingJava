@@ -2,12 +2,13 @@ package com.procurement.poc.classes.requestforquotations.commercialevaluation;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.procurement.poc.interfaces.login.ILogin;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogin;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.requestforquotation.ICeCreate;
 
 import java.util.Properties;
 
+import static com.factory.PlaywrightFactory.statusAssertion;
 import static com.procurement.poc.constants.requestforquotations.LCeCreate.*;
 import static com.procurement.poc.constants.requisitions.LPrAssign.getTitle;
 import static com.factory.PlaywrightFactory.waitForLocator;
@@ -38,11 +39,13 @@ public class CommercialEvaluation implements ICeCreate {
         waitForLocator(rfqNavigationBarLocator);
         rfqNavigationBarLocator.click();
 
-        String title = properties.getProperty("orderTitle");
+        String title = properties.getProperty("currentTitle");
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle);
         waitForLocator(titleLocator);
         titleLocator.first().click();
+
+        statusAssertion(page,page::reload,"rfq","TEApproved");
 
         Locator createButtonLocator = page.locator(CREATE_BUTTON);
         waitForLocator(createButtonLocator);
@@ -59,7 +62,9 @@ public class CommercialEvaluation implements ICeCreate {
 
         Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
         waitForLocator(acceptButtonLocator);
-        acceptButtonLocator.click();
+//        acceptButtonLocator.click();
+
+        statusAssertion(page,acceptButtonLocator::click,"rfq","CESubmitted");
 
         iLogout.performLogout();
         } catch (Exception error) {

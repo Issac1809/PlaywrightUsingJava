@@ -1,13 +1,13 @@
 package com.procurement.poc.classes.requisition.assign;
 import java.util.Properties;
 
-import com.microsoft.playwright.Response;
-import com.procurement.poc.interfaces.login.ILogin;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogin;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.requisitions.IPrAssign;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
+import static com.factory.PlaywrightFactory.statusAssertion;
 import static com.factory.PlaywrightFactory.waitForLocator;
 import static com.procurement.poc.constants.requisitions.LPrAssign.*;
 
@@ -42,7 +42,7 @@ public class Assign implements IPrAssign {
     public void buyerManagerAssign() {
         try {
             buyerManagerLogin();
-        String title = properties.getProperty("orderTitle");
+        String title = properties.getProperty("currentTitle");
         String buyerMailId = properties.getProperty("buyerEmail");
         String getTitle = getTitle(title);
 
@@ -65,11 +65,10 @@ public class Assign implements IPrAssign {
         buyerManager.first().click();
         Locator saveUser = page.locator(SAVE_USER.getLocator());
         waitForLocator(saveUser);
-        Response response = page.waitForResponse(
-                resp -> resp.url().startsWith("https://geps_hopes_yil.cormsquare.com/Procurement/Requisitions/POC_Details") && resp.status() == 200,
-                saveUser::click
-        );
-        iLogout.performLogout();
+
+        statusAssertion(page, saveUser::click,"requisition","Assigned");
+
+            iLogout.performLogout();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }

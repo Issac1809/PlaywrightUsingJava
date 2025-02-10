@@ -33,7 +33,7 @@ public class BuyerSuspend implements IPrSuspend {
     public void suspend(){
         try {
         iLogin.performLogin(properties.getProperty("buyerEmail"));
-        String title = properties.getProperty("orderTitle");
+        String title = properties.getProperty("currentTitle");
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle);
         waitForLocator(titleLocator);

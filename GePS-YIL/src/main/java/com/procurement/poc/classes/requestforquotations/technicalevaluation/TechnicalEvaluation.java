@@ -3,8 +3,8 @@ package com.procurement.poc.classes.requestforquotations.technicalevaluation;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
-import com.procurement.poc.interfaces.login.ILogin;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogin;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.requestforquotation.ITeCreate;
 
 import java.util.Properties;
@@ -38,7 +38,7 @@ public class TechnicalEvaluation implements ITeCreate {
         waitForLocator(rfqNavigationBarLocator);
         rfqNavigationBarLocator.click();
 
-        String title = properties.getProperty("orderTitle");
+        String title = properties.getProperty("currentTitle");
         Locator titleLocator = page.locator(getString(title));
         waitForLocator(titleLocator);
         titleLocator.first().click();
@@ -64,7 +64,7 @@ public class TechnicalEvaluation implements ITeCreate {
         sendForApprovalLocator.click();
 
         Locator teApproverSelectLocator = page.locator(APPROVER_SELECT.getLocator());
-        waitForLocator(teApproverSelectLocator);
+//        waitForLocator(teApproverSelectLocator);
         teApproverSelectLocator.first().click();
 
         String teApprover = properties.getProperty("teApprover");

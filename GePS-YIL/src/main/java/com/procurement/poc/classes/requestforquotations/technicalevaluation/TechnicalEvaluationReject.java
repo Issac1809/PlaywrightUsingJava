@@ -2,8 +2,8 @@ package com.procurement.poc.classes.requestforquotations.technicalevaluation;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.procurement.poc.interfaces.login.ILogin;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogin;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.requestforquotation.ITeReject;
 
 import java.util.Properties;
@@ -37,7 +37,7 @@ public class TechnicalEvaluationReject implements ITeReject {
         waitForLocator(rfqNavigationBarLocator);
         rfqNavigationBarLocator.click();
 
-        String title = properties.getProperty("orderTitle");
+        String title = properties.getProperty("currentTitle");
         Locator titleLocator = page.locator(getTitle(title));
         waitForLocator(titleLocator);
         titleLocator.first().click();

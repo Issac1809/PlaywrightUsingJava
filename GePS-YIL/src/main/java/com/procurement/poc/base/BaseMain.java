@@ -1,10 +1,10 @@
 package com.procurement.poc.base;
 
+import com.factory.Login;
+import com.factory.Logout;
 import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.Page;
-import com.procurement.poc.classes.login.Login;
-import com.procurement.poc.classes.logout.Logout;
 import com.procurement.poc.classes.requisition.approve.Approve;
 import com.procurement.poc.classes.requisition.assign.Assign;
 import com.procurement.poc.classes.requisition.create.Create;
@@ -13,8 +13,8 @@ import com.procurement.poc.classes.requisition.reject.Reject;
 import com.procurement.poc.classes.requisition.sendforapproval.SendForApproval;
 import com.procurement.poc.classes.requisition.suspend.Suspend;
 import com.procurement.poc.classes.requisition.type.PurchaseRequisitionTypeHandler;
-import com.procurement.poc.interfaces.login.ILogin;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogin;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.requisitions.*;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
@@ -49,7 +49,7 @@ public class BaseMain {
             page = playwrightFactory.initializePage(properties);
             objectmapper = new ObjectMapper();
 
-            iLogin = (com.procurement.poc.interfaces.login.ILogin) new Login(properties, page);
+            iLogin = (ILogin) new Login(properties, page);
             iLogout = new Logout(page);
             iPrCreate = new Create(iLogin, properties, page, iLogout, objectmapper, type);
             iPrType = new PurchaseRequisitionTypeHandler(iPrCreate, properties, type);

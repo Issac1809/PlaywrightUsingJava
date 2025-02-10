@@ -6,9 +6,7 @@ public enum LRfqCreate {
     LOAD_PROJECT("https://geps_hopes_yil.cormsquare.com/api/Locations/SearchByProjectId?id"),
     NOTES("#notes"),
     CREATE_BUTTON("#btnCreate"),
-    YES_BUTTON("//button[contains(text(),'Yes')]"),
-
-    LOADPAGE("https://geps_hopes_yil.cormsquare.com/Procurement/RequestForQuotations/POC_Create?uid")
+    YES_BUTTON("//button[contains(text(),'Yes')]")
     ;
 
 

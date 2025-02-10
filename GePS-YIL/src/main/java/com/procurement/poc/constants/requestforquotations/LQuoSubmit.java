@@ -13,7 +13,9 @@ public enum LQuoSubmit {
     QUOTATION_REFERENCE_NUMBER("#quotationReferenceNumber"),
     VALIDITY_DATE("#dates"),
     TODAY("//span[@class='flatpickr-day today']"),
+    NEXT_MONTH_BUTTON("//i[contains(@class,'bi-chevron-right')]"),
     FIRST_DAY_OF_NEXT_MONTH(".flatpickr-day.nextMonthDay"),
+    DAY20("//span[contains(text(),'20') and contains(@class,'flatpickr')]"),
     LIQUIDATED_DAMAGES("#liquidatedComplyId"),
     ROHS_COMPLIANCE("#rohsComplyId"),
     WARRANTY_REQUIREMENTS("#warrantyRequirementsComplyId"),
@@ -44,6 +46,8 @@ public enum LQuoSubmit {
 
 
     private final String locatorName;
+
+
     LQuoSubmit(String locatorName){ this.locatorName =  locatorName;
     }
 

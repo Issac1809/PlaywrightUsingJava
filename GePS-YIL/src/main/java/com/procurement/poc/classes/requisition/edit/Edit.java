@@ -1,8 +1,8 @@
 package com.procurement.poc.classes.requisition.edit;
 import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
-import com.procurement.poc.interfaces.login.ILogin;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogin;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.requisitions.IPrApprove;
 import com.procurement.poc.interfaces.requisitions.IPrAssign;
 import com.procurement.poc.interfaces.requisitions.IPrEdit;
@@ -11,6 +11,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import java.util.Properties;
+
+import static com.factory.PlaywrightFactory.statusAssertion;
 import static com.factory.PlaywrightFactory.waitForLocator;
 import static com.procurement.poc.constants.requisitions.LPrEdit.*;
 
@@ -23,6 +25,7 @@ public class Edit implements IPrEdit {
     private IPrSendForApproval iPrSendForApproval;
     private IPrApprove iPrApprove;
     private IPrAssign iPrAssign;
+    private String url;
 
     private Edit(){
     }
@@ -36,21 +39,21 @@ public class Edit implements IPrEdit {
         this.iPrSendForApproval = iPrSendForApproval;
         this.iPrApprove = iPrApprove;
         this.iPrAssign = iPrAssign;
+        this.url = properties.getProperty("appUrl");
     }
 
     public void edit() {
         try {
 
         iLogin.performLogin(properties.getProperty("requesterEmail"));
-        String title = properties.getProperty("orderTitle");
+        String title = properties.getProperty("currentTitle");
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle).first();
         waitForLocator(titleLocator);
-        Response response1 = page.waitForResponse(
-                resp -> resp.url().startsWith("https://geps_hopes_yil.cormsquare.com/Procurement/Requisitions/POC_Details") && resp.status() == 200,
+        Response response = page.waitForResponse(
+                resp -> resp.url().startsWith(url + "/api/Requisitions/") && resp.status() == 200,
                 titleLocator::click
         );
-//        titleLocator.first().click();
 
         Locator editButtonLocator = page.locator(EDIT_BUTTON.getLocator()).first();
         waitForLocator(editButtonLocator);
@@ -64,14 +67,8 @@ public class Edit implements IPrEdit {
 
         Locator submitButtonLocator = page.locator(ACCEPT.getLocator());
         waitForLocator(submitButtonLocator);
-//        Response response = page.waitForResponse(
-//                    resp -> resp.url().startsWith("https://geps_hopes_yil.cormsquare.com/api/requisitions") && resp.status() == 200,
-//                    submitButtonLocator::click
-//            );
-        Response response = page.waitForResponse(
-                resp -> resp.url().startsWith("https://geps_hopes_yil.cormsquare.com/Procurement/Requisitions/POC_Details") && resp.status() == 200,
-                submitButtonLocator::click
-        );
+
+        statusAssertion(page, submitButtonLocator::click, "requisition", "Draft");
 
         iLogout.performLogout();
         } catch (Exception error) {

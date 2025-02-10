@@ -2,8 +2,8 @@ package com.procurement.poc.classes.requestforquotations.suspend;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.procurement.poc.interfaces.login.ILogin;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogin;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.requestforquotation.IRfqCreate;
 import com.procurement.poc.interfaces.requestforquotation.IRfqEdit;
 import com.procurement.poc.interfaces.requestforquotation.IRfqSuspend;
@@ -57,7 +57,7 @@ public class RfqSuspend implements IRfqSuspend {
         waitForLocator(rfqNavigationBarLocator);
         rfqNavigationBarLocator.click();
 
-        String title = properties.getProperty("Title");
+        String title = properties.getProperty("currentTitle");
         Locator titleLocator = page.locator(getTitle(title));
         waitForLocator(titleLocator);
         titleLocator.first().click();

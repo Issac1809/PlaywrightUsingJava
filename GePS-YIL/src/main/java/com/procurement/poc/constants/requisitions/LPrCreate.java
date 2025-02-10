@@ -25,6 +25,8 @@ public enum LPrCreate {
     EXPECTED_DELIVERY ("//div[@id='dates']/div[label[contains(text(),'Delivery')]]/input[not(@type='hidden')]"),
     TODAY ("//span[@class='flatpickr-day today']"),
     BUYER_GROUP ("//div[label[contains(text(),'Buyer Group')]]//span[@class='select2-selection__rendered']"),
+    DAYS_OF_MONTH("//div[contains(@class,'open')]//div[@class='dayContainer']/span[not(contains(@class,'next'))]"),
+    DAYS_OF_NEXT_MONTH("//div[contains(@class,'open')]//div[@class='dayContainer']/span[contains(@class,'next')]"),
     CHECKER ("#select2-checkerId-container"),
     ROHS_COMPLIANCE ("#rohsnotcomplianceid"),
     OI_AND_TP_CURRENCY ("#select2-oiTpCurrencyId-container"),

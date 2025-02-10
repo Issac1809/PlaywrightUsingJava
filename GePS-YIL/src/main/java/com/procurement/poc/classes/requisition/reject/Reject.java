@@ -1,13 +1,14 @@
 package com.procurement.poc.classes.requisition.reject;
-import com.microsoft.playwright.Response;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.requisitions.IPrEdit;
 import com.procurement.poc.interfaces.requisitions.IPrReject;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.procurement.poc.interfaces.login.ILogin;
+import com.interfaces.ILogin;
 
 import java.util.Properties;
+
+import static com.factory.PlaywrightFactory.statusAssertion;
 import static com.factory.PlaywrightFactory.waitForLocator;
 import static com.procurement.poc.constants.requisitions.LPrReject.*;
 
@@ -18,6 +19,7 @@ public class Reject implements IPrReject {
     private Properties properties;
     private Page page;
     private IPrEdit iPrEdit;
+    private String url;
 
     private Reject(){
     }
@@ -29,12 +31,13 @@ public class Reject implements IPrReject {
         this.page = page;
         this.iLogout = iLogout;
         this.iPrEdit = iPrEdit;
+        this.url = properties.getProperty("appUrl");
     }
 
     public void reject(String approver)  {
         try {
         iLogin.performLogin(approver);
-        String title = properties.getProperty("orderTitle");
+        String title = properties.getProperty("currentTitle");
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle);
         waitForLocator(titleLocator);
@@ -51,13 +54,9 @@ public class Reject implements IPrReject {
         Locator yesButtonLocator = page.locator(YES.getLocator());
         waitForLocator(yesButtonLocator);
 
-        Response response = page.waitForResponse(
-                resp -> resp.url().startsWith("https://geps_hopes_yil.cormsquare.com/Procurement/Requisitions/POC_Details") && resp.status() == 200,
-                yesButtonLocator::click
-        );
+        statusAssertion(page, yesButtonLocator::click, "requisition", "Rejected");
 
-        iLogout.performLogout();
-//        iPrEdit.rejectEdit();
+            iLogout.performLogout();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }

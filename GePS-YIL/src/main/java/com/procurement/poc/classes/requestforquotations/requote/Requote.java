@@ -2,8 +2,8 @@ package com.procurement.poc.classes.requestforquotations.requote;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.procurement.poc.interfaces.login.ILogin;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogin;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.requestforquotation.IQuoRequote;
 
 import java.util.Properties;
@@ -38,7 +38,7 @@ public class Requote implements IQuoRequote {
         waitForLocator(rfqNavigationBarButtonLocator);
         rfqNavigationBarButtonLocator.click();
 
-        String title = properties.getProperty("Title");
+        String title = properties.getProperty("currentTitle");
         Locator getTitleLocator = page.locator(getTitle(title));
         waitForLocator(getTitleLocator);
         getTitleLocator.first().click();

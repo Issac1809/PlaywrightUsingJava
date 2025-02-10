@@ -21,7 +21,7 @@
     <allure-maven-reports-version> 2.14.0 </allure-maven-reports-version>
     <playwright-version>1.47.0</playwright-version>
     <maven-compiler-version>3.13.0</maven-compiler-version>
-    <maven-surefire-plugin>3.2.5</maven-surefire-plugin>
+    <maven-surefire-plugin>3.5.2</maven-surefire-plugin>
     <logger-version>2.0.7</logger-version>
   </properties>
 
@@ -43,6 +43,12 @@
       <groupId>org.apache.poi</groupId>
       <artifactId>poi-ooxml</artifactId>
       <version>5.2.5</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.6</version>
     </dependency>
 
     <dependency>
@@ -83,6 +89,12 @@
       <artifactId>slf4j-api</artifactId>
       <version>${logger-version}</version>
     </dependency>
+      <dependency>
+          <groupId>io.qameta.allure</groupId>
+          <artifactId>allure-java-commons</artifactId>
+          <version>2.29.0</version>
+          <scope>compile</scope>
+      </dependency>
 
   </dependencies>
 
@@ -120,12 +132,10 @@
           <version>${maven-surefire-plugin}</version>
           <configuration>
             <suiteXmlFiles>
-              <suiteXmlFile>src/test/resources/testrunners/testng_functional.xml</suiteXmlFile>
+              <suiteXmlFile>src/test/resources/testrunners/poc/catalog/catalog_testng_regression.xml</suiteXmlFile>
             </suiteXmlFiles>
           </configuration>
         </plugin>
-
-
       </plugins>
 
     </pluginManagement>

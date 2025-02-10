@@ -39,7 +39,7 @@ public class Edit implements IPrEdit {
     public void edit() {
         try {
         iLogin.performLogin(properties.getProperty("requesterEmail"));
-        String title = properties.getProperty("orderTitle");
+        String title = properties.getProperty("currentTitle");
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle);
         waitForLocator(titleLocator);

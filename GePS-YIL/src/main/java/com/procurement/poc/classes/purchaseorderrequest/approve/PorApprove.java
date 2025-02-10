@@ -6,14 +6,15 @@ import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.RequestOptions;
-import com.procurement.poc.interfaces.login.ILogin;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogin;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.purchaseorderrequests.IPorApprove;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import static com.factory.PlaywrightFactory.statusAssertion;
 import static com.procurement.poc.constants.purchaseorderrequests.LPorApprove.*;
 
 public class PorApprove implements IPorApprove {
@@ -23,6 +24,7 @@ public class PorApprove implements IPorApprove {
     ILogin iLogin;
     ILogout iLogout;
     ObjectMapper objectMapper;
+    private String url;
 
     private PorApprove() {
     }
@@ -34,6 +36,7 @@ public class PorApprove implements IPorApprove {
         this.page = page;
         this.iLogout = iLogout;
         this.objectMapper = objectMapper;
+        this.url = properties.getProperty("appUrl");
     }
 
     public void approve() {
@@ -59,7 +62,7 @@ public class PorApprove implements IPorApprove {
         page.locator(getString(title)).first().click();
         page.locator(APPROVE_BUTTON.getLocator()).click();
         Response response = page.waitForResponse(
-                resp -> resp.url().startsWith("https://geps_hopes_yil.cormsquare.com/Procurement/PurchaseOrderRequests/POC_Details?uid") && resp.status() == 200,
+                resp -> resp.url().startsWith(url + "/Procurement/PurchaseOrderRequests/POC_Details?uid") && resp.status() == 200,
                 page.locator(ACCEPT_BUTTON.getLocator())::click
         );
         iLogout.performLogout();
@@ -80,13 +83,13 @@ public class PorApprove implements IPorApprove {
                 page.locator(APPROVE_BUTTON.getLocator()).click();
 
                 Response por = page.waitForResponse(
-                        resp -> resp.url().startsWith("https://geps_hopes_yil.cormsquare.com/api/PurchaseOrderRequests/" + uid) && resp.status() == 200,
+                        resp -> resp.url().startsWith(url + "/api/PurchaseOrderRequests/" + uid) && resp.status() == 200,
                         page.locator(ACCEPT_BUTTON.getLocator())::click
                 );
                 JsonNode porJson = objectMapper.readTree(por.body());
                 String porId = porJson.get("id").asText();
 
-                APIResponse approvalAPI = page.request().fetch("https://geps_hopes_yil.cormsquare.com/api/Approvals?entityId=" + porId + "&approvalTypeEnum=PurchaseOrderRequest", RequestOptions.create());
+                APIResponse approvalAPI = page.request().fetch(url + "/api/Approvals?entityId=" + porId + "&approvalTypeEnum=PurchaseOrderRequest", RequestOptions.create());
                 JsonNode rootNode = objectMapper.readTree(approvalAPI.body());
                 JsonNode approvers = rootNode.path("approvers");
                 String newApproverEmail = "";
@@ -96,10 +99,14 @@ public class PorApprove implements IPorApprove {
                         break;
                     }
                 }
-                if (newApproverEmail.isEmpty())
+                if (newApproverEmail.isEmpty()) {
                     pending = false;
-                else
+//                    statusAssertion(page, page::reload, "por", "ProcessingPO");
+                }
+                else {
                     approverEmail = newApproverEmail;
+                    statusAssertion(page, page::reload, "por", "Pending");
+                }
                 iLogout.performLogout();
             }
             catch (Exception e){

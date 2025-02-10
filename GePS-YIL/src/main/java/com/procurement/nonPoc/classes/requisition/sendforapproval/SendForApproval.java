@@ -33,7 +33,7 @@ public class SendForApproval implements IPrSendForApproval {
 
     public void sendForApproval() {
         try {
-        String title = properties.getProperty("orderTitle");
+        String title = properties.getProperty("currentTitle");
         iLogin.performLogin(properties.getProperty("requesterEmail"));
 
         String getTitle = getTitle(title);
@@ -55,7 +55,7 @@ public class SendForApproval implements IPrSendForApproval {
     }
 
     public void SendForApproval() {
-        String title = properties.getProperty("orderTitle");
+        String title = properties.getProperty("currentTitle");
         iLogin.performLogin(properties.getProperty("requesterEmail"));
 
         String getTitle = getTitle(title);

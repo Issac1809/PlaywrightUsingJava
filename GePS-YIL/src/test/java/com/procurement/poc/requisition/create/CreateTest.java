@@ -1,6 +1,5 @@
 package com.procurement.poc.requisition.create;
 import com.procurement.poc.base.BaseTest;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class CreateTest extends BaseTest {
@@ -8,7 +7,7 @@ public class CreateTest extends BaseTest {
     @Test
     public void create(){
         try{
-//            iPrType.processRequisitionType();
+            iPrType.processRequisitionType();
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());
         }

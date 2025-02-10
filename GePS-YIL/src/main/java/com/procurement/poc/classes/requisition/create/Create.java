@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
-import com.procurement.poc.interfaces.login.ILogin;
-import com.procurement.poc.interfaces.logout.ILogout;
+import com.interfaces.ILogin;
+import com.interfaces.ILogout;
 import com.procurement.poc.interfaces.requisitions.IPrCreate;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -14,17 +14,13 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.Console;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.*;
 
-import static com.factory.PlaywrightFactory.saveToPropertiesFile;
-import static com.factory.PlaywrightFactory.waitForLocator;
+import static com.factory.PlaywrightFactory.*;
 import static com.procurement.poc.constants.requisitions.LPrCreate.*;
 
 public class Create implements IPrCreate {
@@ -36,6 +32,7 @@ public class Create implements IPrCreate {
     private String prType;
     private ObjectMapper objectMapper;
     private String type;
+    private String url;
 
     private Create(){
     }
@@ -47,6 +44,7 @@ public class Create implements IPrCreate {
         this.iLogout = iLogout;
         this.objectMapper = objectMapper;
         this.type = type;
+        this.url = properties.getProperty("appUrl");
     }
 
     public void requesterLoginPRCreate() {
@@ -94,7 +92,7 @@ public class Create implements IPrCreate {
                     Locator catalogTitleLocator = page.locator(TITLE.getLocator());
                     waitForLocator(catalogTitleLocator);
                     Integer catCount = Integer.parseInt(properties.getProperty("catCount"));
-                    String catalogTitle = properties.getProperty("orderTitle") + "-Catalog-" + catCount;
+                    String catalogTitle = properties.getProperty("orderTitle") + "PS-Catalog-" + catCount;
                     catalogTitleLocator.fill(catalogTitle);
                     catCount++;
                     saveToPropertiesFile("catCount",catCount.toString());
@@ -104,7 +102,7 @@ public class Create implements IPrCreate {
                     Locator nonCatalogTitleLocator = page.locator(TITLE.getLocator());
                     waitForLocator(nonCatalogTitleLocator);
                     Integer ncCount = Integer.parseInt(properties.getProperty("nonCatalogCount"));
-                    String nonCatalogTitle = properties.getProperty("orderTitle")+ "-Non Catalog-" + ncCount;
+                    String nonCatalogTitle = properties.getProperty("orderTitle")+ "PS-Non Catalog-" + ncCount;
                     nonCatalogTitleLocator.fill(nonCatalogTitle);
                     ncCount++;
                     saveToPropertiesFile("nonCatalogCount",ncCount.toString());
@@ -404,7 +402,7 @@ public class Create implements IPrCreate {
             waitForLocator(quotationRequiredByField);
             quotationRequiredByField.click();
 
-            Locator todayOption = page.locator(TODAY.getLocator());
+            Locator todayOption = page.locator(DAYS_OF_MONTH.getLocator()).last();
             waitForLocator(todayOption);
             todayOption.first().click();
         } catch (Exception error) {
@@ -418,7 +416,7 @@ public class Create implements IPrCreate {
             waitForLocator(expectedPoIssueField);
             expectedPoIssueField.click();
 
-            Locator todayOption = page.locator(TODAY.getLocator());
+            Locator todayOption = page.locator(DAYS_OF_NEXT_MONTH.getLocator()).first();
             for (int i = 0; i < todayOption.count(); i++) {
                 if (todayOption.nth(i).isVisible()) {
                     todayOption.nth(i).click(); // Click the visible element
@@ -442,7 +440,7 @@ public class Create implements IPrCreate {
             waitForLocator(expectedDeliveryField);
             expectedDeliveryField.click();
 
-            Locator todayOption = page.locator(TODAY.getLocator());
+            Locator todayOption = page.locator(DAYS_OF_NEXT_MONTH.getLocator()).last();
             for (int i = 0; i < todayOption.count(); i++) {
                 if (todayOption.nth(i).isVisible()) {
                     todayOption.nth(i).click(); // Click the visible element
@@ -962,7 +960,6 @@ public class Create implements IPrCreate {
 
     public void prCreate() {
         try {
-
             Locator createDraftButtonLocator = page.locator(CREATE_DRAFT_BUTTON.getLocator());
             waitForLocator(createDraftButtonLocator);
             createDraftButtonLocator.click();
@@ -970,10 +967,7 @@ public class Create implements IPrCreate {
             Locator yesButtonLocator = page.locator(YES.getLocator());
             waitForLocator(yesButtonLocator);
 
-            Response response = page.waitForResponse(
-                    resp -> resp.url().startsWith(POC_DETAILS_PAGE_API.getAPI()) && resp.status() == 200,
-                    yesButtonLocator::click
-            );
+            statusAssertion(page, yesButtonLocator::click,"requisition","Draft");
 
             iLogout.performLogout();
         } catch (Exception error) {
@@ -995,13 +989,13 @@ public class Create implements IPrCreate {
             String projectSelectLocator = getString(projectCodeValue);
             Locator projectSelectElement = page.locator(projectSelectLocator);
             projectSelectElement.click();
-//            Response response = page.waitForResponse(response1 -> response1.url().equals("https://geps_hopes_yil.cormsquare.com/api/Projects/search?keyword=" + projectCodeValue),projectSelectElement::click);
+//            Response response = page.waitForResponse(response1 -> response1.url().equals(url + "/api/Projects/search?keyword=" + projectCodeValue),projectSelectElement::click);
 //            JsonNode abc = objectMapper.readTree(response.body());
-            APIResponse projectResponse = page.request().fetch("https://geps_hopes_yil.cormsquare.com/api/Projects/search?keyword=" + projectCodeValue, RequestOptions.create());
+            APIResponse projectResponse = page.request().fetch(url + "/api/Projects/search?keyword=" + projectCodeValue, RequestOptions.create());
             JsonNode projectCodeJson = objectMapper.readTree(projectResponse.body());
             JsonNode firstProjectObject = projectCodeJson.get(0);
             String projectId = firstProjectObject.get("id").asText();
-            APIResponse wbsResponse = page.request().fetch("https://geps_hopes_yil.cormsquare.com/api/workBreakdownStructures/search?projectid=" + projectId, RequestOptions.create());
+            APIResponse wbsResponse = page.request().fetch(url + "/api/workBreakdownStructures/search?projectid=" + projectId, RequestOptions.create());
             JsonNode wbsCodeJson = objectMapper.readTree(wbsResponse.body());
             for(JsonNode wbs : wbsCodeJson){
                 if(wbs.has("text")){
@@ -1044,7 +1038,7 @@ public class Create implements IPrCreate {
             Locator vendorLocator = page.locator(VENDOR.getLocator());
             vendorLocator.click();
 
-            APIResponse vendorApiResponse = page.request().fetch("https://geps_hopes_yil.cormsquare.com/api/Vendors/ApprovedVendorsByKeyword?keyword=" + vendorNameValue, RequestOptions.create());
+            APIResponse vendorApiResponse = page.request().fetch(url+"/api/Vendors/ApprovedVendorsByKeyword?keyword=" + vendorNameValue, RequestOptions.create());
             JsonNode vendorJson = objectMapper.readTree(vendorApiResponse.body());
             JsonNode vendorIdJson = vendorJson.get(0);
             int vendorId = vendorIdJson.get("id").asInt();
@@ -1058,10 +1052,10 @@ public class Create implements IPrCreate {
 
             APIResponse rateContractApiResponse;
             if(rateContractType.toLowerCase().equals("standard")){
-                rateContractApiResponse = page.request().fetch("https://geps_hopes_yil.cormsquare.com/api/RateContractsByVendorId?vendorId=" + vendorId + "&&itemType=" + 1, RequestOptions.create());
+                rateContractApiResponse = page.request().fetch(url + "/api/RateContractsByVendorId?vendorId=" + vendorId + "&&itemType=" + 1, RequestOptions.create());
             }
             else{
-                rateContractApiResponse = page.request().fetch("https://geps_hopes_yil.cormsquare.com/api/RateContractsByVendorId?vendorId=" + vendorId + "&&itemType=" + 0, RequestOptions.create());
+                rateContractApiResponse = page.request().fetch(url + "/api/RateContractsByVendorId?vendorId=" + vendorId + "&&itemType=" + 0, RequestOptions.create());
 
             }
             JsonNode rateContractJson = objectMapper.readTree(rateContractApiResponse.body());
@@ -1076,7 +1070,6 @@ public class Create implements IPrCreate {
         } catch (Exception error) {
             System.out.println("Error in Vendor Function: " + error.getMessage());
         }
-        System.out.println(rateContractArray);
         return rateContractArray;
     }
 
@@ -1101,19 +1094,15 @@ public class Create implements IPrCreate {
                     String rateContractType = properties.getProperty("rateContractType").trim().toLowerCase();
                     APIResponse rateContractResponse;
 
-
-
-
-
                     if(rateContractType.contains("bop")){
-                        rateContractResponse = page.request().fetch("https://geps_hopes_yil.cormsquare.com/api/RateContracts/bopRCItemSearch?bopRcId=" + rateContractId, RequestOptions.create());
+                        rateContractResponse = page.request().fetch(url + "/api/RateContracts/bopRCItemSearch?bopRcId=" + rateContractId, RequestOptions.create());
                         JsonNode rateContractJsonResponse = objectMapper.readTree(rateContractResponse.body());
                         for(JsonNode Response : rateContractJsonResponse) {
                             rateContractItems.add(Response.get("bopCode").asText());
                         }
                     }
                     else{
-                         rateContractResponse = page.request().fetch("https://geps_hopes_yil.cormsquare.com/api/RateContracts/ratecontract?rateContractId=" + rateContractId, RequestOptions.create());
+                         rateContractResponse = page.request().fetch(url + "/api/RateContracts/ratecontract?rateContractId=" + rateContractId, RequestOptions.create());
                         JsonNode rateContractJsonResponse = objectMapper.readTree(rateContractResponse.body());
                         JsonNode itemsArray = rateContractJsonResponse.get("items");
                         for(JsonNode item : itemsArray){
@@ -1208,14 +1197,14 @@ public class Create implements IPrCreate {
                 String itemName = itemNames[i].trim();
                 String encodedName = itemName.replace(" ", "%20");
 
-                APIResponse itemSpecificationResponse = page.request().fetch("https://geps_hopes_yil.cormsquare.com/api/ItemandCategory/search?keyword=" + encodedName + "&purchaseMethod=NonCatalog");
+                APIResponse itemSpecificationResponse = page.request().fetch(url + "/api/ItemandCategory/search?keyword=" + encodedName + "&purchaseMethod=NonCatalog");
                 JsonNode itemSpecificationsObject = objectMapper.readTree(itemSpecificationResponse.body());
                 idValue = itemSpecificationsObject.get(0).get("id").asText();
 
                 Locator itemOption = page.locator(getString(itemNames[i]));
                 itemOption.first().click();
 
-                APIResponse getItemSpecifications = page.request().fetch("https://geps_hopes_yil.cormsquare.com/api/Items/Spefications?itemId=" + idValue);
+                APIResponse getItemSpecifications = page.request().fetch(url + "/api/Items/Spefications?itemId=" + idValue);
                 JsonNode getItemSpecificationsJson = objectMapper.readTree(getItemSpecifications.body());
 
                 if(!getItemSpecificationsJson.isNull()){
