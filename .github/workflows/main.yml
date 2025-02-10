@@ -13,7 +13,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          distribution: Oracle   # You can change this to your preferred distribution
+          distribution: oracle   # You can change this to your preferred distribution
           java-version: '23'        # Change the Java version if needed
 
       - name: Add Maven to Path
