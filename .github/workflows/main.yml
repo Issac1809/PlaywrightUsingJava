@@ -15,6 +15,10 @@ jobs:
         with:
           distribution: temurin   # You can change this to your preferred distribution
           java-version: '11'        # Change the Java version if needed
+
+      - name: Add Maven to Path
+        run: echo "C:\Program Files\Apache\maven\bin" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
+
  
       - name: Run Maven Build
         run: mvn clean install
