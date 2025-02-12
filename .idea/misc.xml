@@ -9,7 +9,17 @@
         <option value="$PROJECT_DIR$/GePS-YEA/pom.xml" />
         <option value="$PROJECT_DIR$/GePS-YCA/pom.xml" />
         <option value="$PROJECT_DIR$/GePS-HOPES-YIL/pom.xml" />
+        <option value="$PROJECT_DIR$/GePS_HOPES/pom.xml" />
+        <option value="$PROJECT_DIR$/GePS-HOPES_YEF/pom.xml" />
+        <option value="$PROJECT_DIR$/GePS-HOPES_YEA/pom.xml" />
+        <option value="$PROJECT_DIR$/GePS-HOPES_YIL/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/GePS-HOPES-YIL/pom.xml" />
+        <option value="$PROJECT_DIR$/GePS_HOPES/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_22" default="true" project-jdk-name="22" project-jdk-type="JavaSDK">
