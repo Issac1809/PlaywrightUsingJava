@@ -28,7 +28,7 @@ public class Create implements IPrCreate {
     ILogout iLogout;
     Properties properties;
     double randomNumber;
-
+    String appUrl;
     private Create(){
     }
 
@@ -42,6 +42,7 @@ public class Create implements IPrCreate {
         this.properties = properties;
         this.iLogin = iLogin;
         this.iLogout = iLogout;
+        this.appUrl = properties.getProperty("appUrl");
     }
 
     public void requesterLoginPRCreate() {
@@ -117,12 +118,12 @@ public class Create implements IPrCreate {
             Locator projectSelect = page.locator(projectSelectLocator);
             projectSelect.click();
 
-            APIResponse projectResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/Projects/searchByUserId?keyword=" + projectCodeValue, RequestOptions.create());
+            APIResponse projectResponse = page.request().fetch(appUrl + "/api/Projects/searchByUserId?keyword=" + projectCodeValue, RequestOptions.create());
             JsonNode projectCodeJson = objectMapper.readTree(projectResponse.body());
             JsonNode firstProjectObject = projectCodeJson.get(0);
             String projectId = firstProjectObject.get("id").asText();
 
-            APIResponse wbsResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/workBreakdownStructures/search?projectid=" + projectId, RequestOptions.create());
+            APIResponse wbsResponse = page.request().fetch(appUrl + "/api/workBreakdownStructures/search?projectid=" + projectId, RequestOptions.create());
             JsonNode wbsCodeJson = objectMapper.readTree(wbsResponse.body());
 
             for(JsonNode wbs : wbsCodeJson){
@@ -172,6 +173,8 @@ public class Create implements IPrCreate {
             String companySelectLocator = getCompany(company);
             Locator companySelect = page.locator(companySelectLocator);
             companySelect.click();
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
         } catch (Exception exception) {
             logger.error("Exception in Company Function: {}", exception.getMessage());
         }
@@ -238,13 +241,16 @@ public class Create implements IPrCreate {
         }
     }
 
-    public void warrantyRequirements(){
+    public void warrantyRequirements(String type){
         try {
             String warrantyRequirement = properties.getProperty("warrantyRequirement");
 
-            Locator warrantyRequirementsLocator = page.locator(WARRANTY_REQUIREMENTS);
-            warrantyRequirementsLocator.click();
-
+            if(type.equalsIgnoreCase("PS")) {
+                page.locator(WARRANTY_REQUIREMENTS).click();
+            }
+            else {
+                page.locator(SALES_WARRANTY_REQUIREMENTS).click();
+            }
             Locator warrantyRequirementsSearch = page.locator(WARRANTY_REQUIREMENTS_SEARCH);
             warrantyRequirementsSearch.fill(warrantyRequirement);
 
@@ -256,13 +262,14 @@ public class Create implements IPrCreate {
         }
     }
 
-    public void priceValidity(){
+    public void priceValidity(String type){
         try {
             String priceValidity = properties.getProperty("priceValidity");
 
-            Locator priceValidityLocator = page.locator(PRICE_VALIDITY);
-            priceValidityLocator.click();
-
+            if(type.equalsIgnoreCase("PS"))
+                page.locator(PRICE_VALIDITY).click();
+            else
+                page.locator(SALES_PRICE_VALIDITY).click();
             Locator priceValiditySearch = page.locator(PRICE_VALIDITY_SEARCH);
             priceValiditySearch.fill(priceValidity);
 
@@ -311,7 +318,8 @@ public class Create implements IPrCreate {
     public void quotationRequiredBy() {
         try {
             page.locator(QUOTATION_REQUIRED_BY).click();
-            page.locator(TODAY + "[1]").first().click();
+            page.locator(DAYS_OF_MONTH).last().click();
+            page.locator(EXPECTED_PO_ISSUE_LABEL).click();
         } catch (Exception exception) {
             logger.error("Exception in Quotation Required By Function: {}", exception.getMessage());
         }
@@ -323,10 +331,10 @@ public class Create implements IPrCreate {
             Locator todayOption;
             if(purchaseType.equalsIgnoreCase("catalog")){
                 expectedPoIssueField = page.locator(EXPECTED_PO_ISSUE_CATALOG);
-                todayOption = page.locator(TODAY + "[1]");
+                todayOption = page.locator(DAYS_OF_NEXT_MONTH).first();
             } else {
                 expectedPoIssueField = page.locator(EXPECTED_PO_ISSUE_NON_CATALOG);
-                todayOption = page.locator(TODAY + "[2]");
+                todayOption = page.locator(DAYS_OF_NEXT_MONTH).first();
             }
             expectedPoIssueField.click();
             todayOption.click();
@@ -341,10 +349,10 @@ public class Create implements IPrCreate {
             Locator todayOption;
             if(purchaseType.equalsIgnoreCase("catalog")){
                 expectedDeliveryField = page.locator(EXPECTED_DELIVERY_CATALOG);
-                todayOption = page.locator(TODAY + "[2]");
+                todayOption = page.locator(DAYS_OF_MONTH).last();
             } else {
                 expectedDeliveryField = page.locator(EXPECTED_DELIVERY_NON_CATALOG);
-                todayOption = page.locator(TODAY + "[3]");
+                todayOption = page.locator(DAYS_OF_MONTH).last();
             }
             expectedDeliveryField.click();
             todayOption.click();
@@ -365,7 +373,7 @@ public class Create implements IPrCreate {
         }
     }
 
-    public void inspectionRequired(String purchaseType) {
+    public void inspectionRequired(String type, String purchaseType) {
         try {
             Locator inspectionRequiredLocator;
             String isInspectionRequired = properties.getProperty("inspectionRequired");
@@ -373,8 +381,11 @@ public class Create implements IPrCreate {
             if (isInspectionRequired.equalsIgnoreCase("yes")) {
                 if (purchaseType.equalsIgnoreCase("catalog")){
                     inspectionRequiredLocator = page.locator(CATALOG_INSPECTION_REQUIRED);
-                } else {
+                } else if (type.equals("PS")) {
                     inspectionRequiredLocator = page.locator(NON_CATALOG_INSPECTION_REQUIRED);
+                }
+                else {
+                    inspectionRequiredLocator = page.locator(SALES_NON_CATALOG_INSPECTION_REQUIRED);
                 }
                 inspectionRequiredLocator.click();
             }
@@ -392,25 +403,34 @@ public class Create implements IPrCreate {
 
             String currencySelect = getOiAndTpCurrency(currency);
             page.locator(currencySelect).click();
+
+            page.locator(OI_AND_TP_CURRENCY_LABEL).click();
+
         } catch (Exception exception) {
             logger.error("Exception in OI/TP Currency Function: {}", exception.getMessage());
         }
     }
 
-    public void orderIntake(){
+    public void orderIntake(String type){
         try {
             String orderIntake = properties.getProperty("orderIntake");
-            page.locator(ORDER_INTAKE).fill(orderIntake);
+            if(type.equals("PS"))
+                page.locator(ORDER_INTAKE).fill(orderIntake);
+            else
+                page.locator(SALES_ORDER_INTAKE).fill(orderIntake);
         } catch (Exception exception) {
             logger.error("Exception in Order Intake Function: {}", exception.getMessage());
         }
     }
 
-    public void targetPrice(String purchaseType){
+    public void targetPrice(String type, String purchaseType){
         try {
             if (purchaseType.equalsIgnoreCase("NonCatalog")) {
                 String targetPrice = properties.getProperty("targetPrice");
-                page.locator(TARGET_PRICE).fill(targetPrice);
+                if(type.equalsIgnoreCase("PS"))
+                    page.locator(TARGET_PRICE).fill(targetPrice);
+                else
+                    page.locator(SALES_TARGET_PRICE).fill(targetPrice);
             }
         } catch (Exception exception) {
             logger.error("Exception in Target Price Function: {}", exception.getMessage());
@@ -434,13 +454,13 @@ public class Create implements IPrCreate {
                 String itemName = itemNames[i];
                 String encodedName = itemName.replace(" ", "%20");
 
-                APIResponse itemSpecificationResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/Itemcategory/search?keyword=" + encodedName + "&purchaseMethod=NonCatalog");
+                APIResponse itemSpecificationResponse = page.request().fetch(appUrl + "/api/Itemcategory/search?keyword=" + encodedName + "&purchaseMethod=NonCatalog");
                 JsonNode itemSpecificationsObject = objectMapper.readTree(itemSpecificationResponse.body());
                 idValue = itemSpecificationsObject.get(0).get("id").asText();
 
                 page.locator(getItem(itemNames[i])).first().click();
 
-                APIResponse getItemSpecifications = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/Items/Spefications?itemId=" + idValue);
+                APIResponse getItemSpecifications = page.request().fetch(appUrl + "/api/Items/Spefications?itemId=" + idValue);
                 JsonNode getItemSpecificationsJson = objectMapper.readTree(getItemSpecifications.body());
 
                 if(!getItemSpecificationsJson.isNull()){
@@ -513,7 +533,7 @@ public class Create implements IPrCreate {
             String vendorNameValue = properties.getProperty("vendorName");
             page.locator(VENDOR).click();
 
-            APIResponse vendorApiResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/Vendors/GetAllVendorsByKeyword/1882?keyword=" + vendorNameValue, RequestOptions.create());
+            APIResponse vendorApiResponse = page.request().fetch(appUrl + "/api/Vendors/GetAllVendorsByKeyword/1882?keyword=" + vendorNameValue, RequestOptions.create());
             JsonNode vendorJson = objectMapper.readTree(vendorApiResponse.body());
             JsonNode vendorIdJson = vendorJson.get(0);
             int vendorId = vendorIdJson.get("id").asInt();
@@ -523,7 +543,7 @@ public class Create implements IPrCreate {
             String vendorOptionLocator = getVendor(vendorNameValue);
             page.locator(vendorOptionLocator).click();
 
-            APIResponse rateContractApiResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/RateContractsByVendorIdandCompany?vendorId=" + vendorId, RequestOptions.create());
+            APIResponse rateContractApiResponse = page.request().fetch(appUrl + "/api/RateContractsByVendorIdandCompany?vendorId=" + vendorId, RequestOptions.create());
             JsonNode rateContractJson = objectMapper.readTree(rateContractApiResponse.body());
 
             for(JsonNode rateContract : rateContractJson){
@@ -554,7 +574,7 @@ public class Create implements IPrCreate {
                     String rateContractOptionLocator = getRateContract(rateContractValue);
                     page.locator(rateContractOptionLocator).click();
 
-                    APIResponse rateContractResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/RateContracts/ratecontract?rateContractId=" + rateContractId, RequestOptions.create());
+                    APIResponse rateContractResponse = page.request().fetch(appUrl + "/api/RateContracts/ratecontract?rateContractId=" + rateContractId, RequestOptions.create());
                     JsonNode rateContractJsonResponse = objectMapper.readTree(rateContractResponse.body());
                     JsonNode itemsArray = rateContractJsonResponse.get("items");
                     for(JsonNode item : itemsArray){
@@ -688,19 +708,28 @@ public class Create implements IPrCreate {
         }
     }
 
-    public int prCreate(String purchaseType) {
+    public int prCreate(String type, String purchaseType) {
         int status = 0;
         try {
             page.locator(CREATE_DRAFT_BUTTON).click();
             page.locator(YES).click();
 
-            page.waitForURL("**/POC_Details?uid=*", new Page.WaitForURLOptions().setTimeout(10000));
+            if(type.equalsIgnoreCase("PS"))
+                page.waitForURL("**/POC_Details?uid=*", new Page.WaitForURLOptions().setTimeout(10000));
+            else
+                page.waitForURL("**/Sales_Details?uid=*", new Page.WaitForURLOptions().setTimeout(10000));
 
             String url = page.url();
             String[] uid = url.split("=");
             String finalUid = uid[1];
 
-            APIResponse statusResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/Requisitions/" + finalUid, RequestOptions.create());
+            String api;
+            if(type.equalsIgnoreCase("PS"))
+                api = appUrl + "/api/Requisitions/" + finalUid;
+            else
+                api = appUrl + "/api/RequisitionsOthers/" + finalUid;
+
+            APIResponse statusResponse = page.request().fetch(api, RequestOptions.create());
             JsonNode response = objectMapper.readTree(statusResponse.body());
 
             String requisitionStatus = "";

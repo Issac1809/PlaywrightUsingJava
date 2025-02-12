@@ -53,7 +53,7 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                         iPrCreate.buyerManager();
                         iPrCreate.projectManager();
                     }
-                    iPrCreate.inspectionRequired(purchaseType);
+                    iPrCreate.inspectionRequired(type, purchaseType);
                     if(type.equalsIgnoreCase("PS")) {
                         iPrCreate.tcasCompliance();
                     }
@@ -71,14 +71,14 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                         iPrCreate.projectManager();
                     }
                     iPrCreate.rohsCompliance();
-                    iPrCreate.inspectionRequired(purchaseType);
+                    iPrCreate.inspectionRequired(type, purchaseType);
                     iPrCreate.oiAndTpCurrency();
-                    iPrCreate.orderIntake();
-                    iPrCreate.targetPrice(purchaseType);
-                    iPrCreate.warrantyRequirements();
-                    iPrCreate.priceValidity();
-                    iPrCreate.liquidatedDamages();
+                    iPrCreate.orderIntake(type);
+                    iPrCreate.targetPrice(type, purchaseType);
+                    iPrCreate.warrantyRequirements(type);
+                    iPrCreate.priceValidity(type);
                     if(type.equalsIgnoreCase("PS")) {
+                        iPrCreate.liquidatedDamages();
                         iPrCreate.tcasCompliance();
                     }
                     iPrCreate.addLineRequisitionItemsNonCatalog();
@@ -89,7 +89,7 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
             }
             iPrCreate.notes();
             iPrCreate.attachments();
-            status = iPrCreate.prCreate(purchaseType);
+            status = iPrCreate.prCreate(type, purchaseType);
         } catch (Exception exception) {
             logger.error("Error in Purchase Type Function: {}", exception.getMessage());
         }

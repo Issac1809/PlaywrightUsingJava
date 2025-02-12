@@ -34,6 +34,9 @@ public class LPrCreate {
     public static final String EXPECTED_DELIVERY_CATALOG = "//*[@id='dates']/div[2]/input[2]";
     public static final String EXPECTED_DELIVERY_NON_CATALOG = "//*[@id='dates']/div[3]/input[2]";
     public static final String TODAY = "(//span[@class=\"flatpickr-day today\"])";
+    public static final String DAYS_OF_NEXT_MONTH = "//div[contains(@class,'open')]//div[@class='dayContainer']/span[(contains(@class,'next'))]";
+    public static final String DAYS_OF_MONTH = "//div[contains(@class,'open')]//div[@class='dayContainer']/span[not(contains(@class,'next'))]";
+    public static final String EXPECTED_PO_ISSUE_LABEL = "//label[contains(text(),'Issue')]";
     public static final String BUYER_MANAGER = "#select2-buyerManagerId-container";
     public static final String BUYER_MANAGER_SEARCH = ".select2-search__field";
     public static final String PROJECT_MANAGER = "#select2-projectManagerId-container";
@@ -41,14 +44,20 @@ public class LPrCreate {
     public static final String ROHS_COMPLIANCE = "#rohsnotcomplianceid";
     public static final String OI_AND_TP_CURRENCY = "#select2-oiTpCurrencyId-container";
     public static final String OI_AND_TP_CURRENCY_SEARCH = ".select2-search__field";
+    public static final String OI_AND_TP_CURRENCY_LABEL = "//label[contains(text(),'Currency')]";
     public static final String ORDER_INTAKE = "#orderintakeid";
+    public static final String SALES_ORDER_INTAKE = "#orderintakeId";
     public static final String TARGET_PRICE = "#targetpriceid";
+    public static final String SALES_TARGET_PRICE = "#targetpriceId";
     public static final String WARRANTY_REQUIREMENTS = "#select2-warrantyrequirementsid-container";
+    public static final String SALES_WARRANTY_REQUIREMENTS = "#select2-warrantyrequirementsId-container";
     public static final String WARRANTY_REQUIREMENTS_SEARCH = ".select2-search__field";
     public static final String PRICE_VALIDITY = "#select2-pricevalidityid-container";
+    public static final String SALES_PRICE_VALIDITY = "#select2-pricevalidityId-container";
     public static final String PRICE_VALIDITY_SEARCH = ".select2-search__field";
     public static final String CATALOG_INSPECTION_REQUIRED = "#inspectRequired";
     public static final String NON_CATALOG_INSPECTION_REQUIRED = "#inspectrequired";
+    public static final String SALES_NON_CATALOG_INSPECTION_REQUIRED = "#inspectrequiredId";
     public static final String LIQUIDATED_DAMAGES_SELECT = "#isLDStandardNoId";
     public static final String LIQUIDATED_DAMAGES = "#liquidatedamageTextId";
     public static final String TCAS_COMPLIANCE_APPLICABLE = "#tcasApplicable";
@@ -73,7 +82,7 @@ public class LPrCreate {
     public static final String EXTERNAL_RADIO_BUTTON = "#radioInActive";
     public static final String ATTACH_FILE_BUTTON = "#saveAttachments1";
     public static final String CONTINUE_BUTTON = "#submitAttachmentsId";
-    public static final String CREATE_DRAFT_BUTTON = "//*[contains(text(), 'Create Draft')]";
+    public static final String CREATE_DRAFT_BUTTON = "//button[contains(text(), 'Create')]";
     public static final String YES = ".bootbox-accept";
 
 //TODO Constructor

@@ -24,17 +24,17 @@ public interface IPrCreate {
     void buyerManager();
     void projectManager();
     void rohsCompliance();
-    void inspectionRequired(String purchaseType);
+    void inspectionRequired(String type, String purchaseType);
     void oiAndTpCurrency();
-    void orderIntake();
-    void targetPrice(String purchaseType);
-    void warrantyRequirements();
-    void priceValidity();
+    void orderIntake(String type);
+    void targetPrice(String type, String purchaseType);
+    void warrantyRequirements(String type);
+    void priceValidity(String type);
     void liquidatedDamages();
     void tcasCompliance();
     void addLineRequisitionItemsCatalog(List<String> rateContract);
     void addLineRequisitionItemsNonCatalog();
     void notes();
     void attachments();
-    int prCreate(String purchaseType);
+    int prCreate(String type, String purchaseType);
 }

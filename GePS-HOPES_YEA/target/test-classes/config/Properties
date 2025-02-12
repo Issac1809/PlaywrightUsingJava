@@ -1,10 +1,10 @@
-#title
-#Fri Feb 07 16:11:31 IST 2025
+#requisitionStatus
+#Wed Feb 12 12:02:09 IST 2025
 adminEmail=admin@cormsquare.com
-appUrl=https\://geps_hopes_yea.cormsquare.com/Identity/Account/Login
+appUrl=https\://geps_hopes_yea.cormsquare.com
 approveRemarks=Approved
 billingType=TimeSheet
-browserType=chrome
+browserType=edge
 businessUnit=CMM-Central Materials Management
 buyerEmail=buyer@cormsquare.com
 buyerManagerEmail=buyermanager@cormsquare.com
@@ -15,7 +15,7 @@ countryOfOrigin=India
 destinationCountry=India
 discountPercentage=20
 dispatchNoteReferenceId=
-externalFilePath=C\:\\My_Personal_Folder\\GePS-HOPES_YEA\\documents\\External Requisition Attachments.xlsx
+externalFilePath=documents/External Requisition Attachments.xlsx
 financeCheckerEmail=financechecker@cormsquare.com
 grossWeightKg=20
 gstPercentage=8
@@ -23,7 +23,7 @@ hsCode=1234
 incoterm=EXW - Ex Works
 incotermLocation=Bengaluru
 inspectionRequired=yes
-internalFilePath=C\:\\My_Personal_Folder\\GePS-HOPES_YEA\\documents\\Internal Requisition Attachments.xlsx
+internalFilePath=documents/Internal Requisition Attachments.xlsx
 items=Power Cable 3C x 2.5 Sqmm,TERMINAL MARKER 8/5,LED Type Indication Lamps 24V AMBER
 leadTimeDays=10
 liquidatedDamages=Special
@@ -75,9 +75,9 @@ sourceCountry=India
 targetPrice=4500
 taxCode=PZ-Zero Rated Purchase
 tcasComplianceApplicable=yes
-tcasFilePath=C\:\\My_Personal_Folder\\GePS-HOPES_YEA\\documents\\TCAS_File.xlsx
+tcasFilePath=documents/TCAS_File.xlsx
 tcasQuestionNumber=4
-title=PS-Automation-NONCATALOG-449.0
+title=PS-Automation-NONCATALOG-587.0
 totalChargeableWeightKg=200
 unitRate=200
 vendorEmail=ind2@cormsquare.com
