@@ -1,5 +1,6 @@
 package com.base;
 import com.factory.PlaywrightFactory;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
@@ -18,12 +19,15 @@ import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requisitions.*;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
+
+import java.io.File;
 import java.util.Properties;
 
 public class BaseMain {
 
     protected Logger logger;
     protected ObjectMapper objectMapper;
+    protected JsonNode jsonNode;
     protected Playwright playwright;
     protected PlaywrightFactory playwrightFactory;
     protected Properties properties;
@@ -45,14 +49,14 @@ public class BaseMain {
             logger = LoggerUtil.getLogger(BaseMain.class);
             objectMapper = new ObjectMapper();
             playwrightFactory = new PlaywrightFactory();
-            properties = playwrightFactory.initializeProperties();
-            page = playwrightFactory.initializePage(properties);
+            jsonNode = objectMapper.readTree(new File("./src/test/resources/config/test-data.json"));
+            page = playwrightFactory.initializePage(jsonNode);
 
 //TODO Requisition
-            iLogin = new Login(properties, page);
+            iLogin = new Login(jsonNode, page);
             iLogout = new Logout(page);
-            iPrCreate = new Create(playwrightFactory, objectMapper, playwright, iLogin, properties, page, iLogout);
-            iPrType = new PurchaseRequisitionTypeHandler(iPrCreate, properties);
+            iPrCreate = new Create(playwrightFactory, objectMapper, playwright, iLogin, jsonNode, page, iLogout);
+            iPrType = new PurchaseRequisitionTypeHandler(iPrCreate);
             iPrEdit = new Edit(iLogin, properties, page, iLogout);
             iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, properties, page, iLogout);
             iPrReject = new Reject(iLogin, properties, page, iLogout);
