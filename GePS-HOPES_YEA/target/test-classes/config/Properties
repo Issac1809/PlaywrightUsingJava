@@ -1,5 +1,5 @@
 #requisitionStatus
-#Wed Feb 12 12:06:21 IST 2025
+#Wed Feb 12 12:23:43 IST 2025
 adminEmail=admin@cormsquare.com
 appUrl=https\://geps_hopes_yea.cormsquare.com
 approveRemarks=Approved
@@ -62,10 +62,10 @@ requisitionAttachmentsTypes=internal,external
 requisitionNotes=Requisition Notes and Attachments
 requisitionStatus=Draft
 requisitionUid=ac377b81-a8fb-48ff-bb2b-464a46b66e7a
-rfqNotes=Request For Quotation Notes and Attachments
+
 rohsCompliance=No
 runHeadless=false
-salesReferenceId=SRI-38748
+
 shipToYokogawa=no
 shippingAddress=C5K00000 - Yokogawa Electric International Pte Ltd - 9001
 shippingAddressEnduser=200315579 - SATNA SMART CITY DEVELOPMENT LIMITED
@@ -74,10 +74,8 @@ shippingPoint=NA
 sourceCountry=India
 targetPrice=4500
 taxCode=PZ-Zero Rated Purchase
-tcasComplianceApplicable=yes
-tcasFilePath=documents/TCAS_File.xlsx
-tcasQuestionNumber=4
-title=PS-Automation-NONCATALOG-967.0
+
+title=PS-Automation-NONCATALOG-241.0
 totalChargeableWeightKg=200
 unitRate=200
 vendorEmail=ind2@cormsquare.com

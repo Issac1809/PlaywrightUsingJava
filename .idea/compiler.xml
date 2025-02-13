@@ -14,6 +14,7 @@
         <module name="YCA" />
         <module name="GePS-YCA" />
         <module name="GePS-YEA" />
+        <module name="GePS-HOPES_YIL" />
         <module name="YEF" />
         <module name="GePS-YEF" />
         <module name="YIL" />

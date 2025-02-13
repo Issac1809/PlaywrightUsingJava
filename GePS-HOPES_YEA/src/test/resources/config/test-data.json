@@ -1,15 +1,4 @@
 {
-  "requisition": {
-    "purchaseType": "Catalog",
-    "orderTitle": "-Automation",
-    "projectCode": "E256232400",
-    "wbsCode": "J11BOPH",
-    "vendorName": "Alpha Limited",
-    "rateContract": "Alpha's second Rate-Contract",
-    "shippingAddress": "C5K00000 - Yokogawa Electric International Pte Ltd - 9001",
-    "shippingMode": "Courier",
-    "requisitionStatus": "Approved"
-  },
   "mailIds": {
     "adminEmail": "admin@cormsquare.com",
     "buyerEmail": "buyer@cormsquare.com",
@@ -23,76 +12,103 @@
     "prApproverGroupDEmail": "businessunitmanager@cormsquare.com",
     "projectManagerEmail": "projectmanager@cormsquare.com",
     "presidentDirectorCorporateEmail": "hazel@sharklasers.com",
-    "vendorEmail": "ind2@cormsquare.com",
-    "requisitionStatus": ""
+    "vendorEmail": "ind2@cormsquare.com"
   },
-  "orderDetails": {
-    "orderTitle": "-Automation",
+
+  "commonRemarks": {
+    "approveRemarks": "Approved",
+    "rejectRemarks": "Rejected",
+    "assignRemarks": "Assigned",
+    "suspendRemarks": "Suspended",
+    "cancelRemarks": "Cancelled"
+  },
+
+  "requisition": {
     "purchaseType": "Catalog",
-    "vendorName": "Alpha Limited",
-    "items": "Power Cable 3C x 2.5 Sqmm,TERMINAL MARKER 8/5,LED Type Indication Lamps 24V AMBER",
-    "mhItem": "Engineering Services",
-    "poReferenceId": "240024PO00289",
+    "orderTitle": "-Automation",
+    "title": "PS-Automation-NONCATALOG-241.0",
+    "shipToYokogawa": "no",
+    "companyName": "Yokogawa Engineering Asia Pte Ltd",
+    "businessUnit": "CMM-Central Materials Management",
+    "salesReferenceId": "SRI-38748",
     "projectCode": "E256232400",
+    "wbsCode": "J11BOPH",
+    "incoterm": "EXW - Ex Works",
+    "shippingAddress": "C5K00000 - Yokogawa Electric International Pte Ltd - 9001",
+    "shippingAddressEnduser": "200315579 - SATNA SMART CITY DEVELOPMENT LIMITED",
+    "shippingMode": "Courier",
+    "oiAndTpCurrency": "SGD",
+    "orderIntake": 9000,
+    "targetPrice": 4500,
+    "liquidatedDamages": "Special",
+    "warrantyRequirement": "2 Years",
+    "priceValidity": "3 Months",
+    "inspectionRequired": "yes",
+    "rohsCompliance": "No",
+    "items": "Power Cable 3C x 2.5 Sqmm,TERMINAL MARKER 8/5,LED Type Indication Lamps 24V AMBER",
+    "shippingPoint": "NA",
+    "vendorName": "Alpha Limited",
+    "rateContract": "Alpha's second Rate-Contract",
+    "tcasComplianceApplicable": "yes",
+    "tcasQuestionNumber": "4",
+    "requisitionStatus": "Approved",
+    "requisitionNotes": "Requisition Notes and Attachments",
+    "requisitionFileType": "Internal",
+    "requisitionApprovers": "projectmanager@cormsquare.com",
+    "requisitionAttachmentsTypes": "internal,external",
+    "requisitionUid": "ac377b81-a8fb-48ff-bb2b-464a46b66e7a"
+  },
+
+  "requestForQuotation": {
+    "rfqNotes": "Request For Quotation Notes and Attachments",
+    "incotermLocation": "Bengaluru",
+    "countryOfOrigin": "India",
     "quantityList": "150,200,20",
-    "partNumber": "PN - 1",
+    "hsCode": "1234",
     "leadTimeDays": 10,
-    "packageType": "Drum",
     "makeDescription": "Make - 1",
     "modelDescription": "Model - 1",
-    "wbsCode": "J11BOPH"
-  },
-  "billingAndPricingDetails": {
-    "poValue": 9000,
-    "orderIntake": 9000,
-    "ratePerUnit": 690,
-    "unitRate": 200,
-    "taxCode": "PZ-Zero Rated Purchase",
-    "discountPercentage": 20,
-    "gstPercentage": 8,
-    "priceValidity": "3 Months",
-    "targetPrice": 4500,
-    "rateContract": "Alpha's second Rate-Contract",
-    "billingType": "TimeSheet",
-    "liquidatedDamages": "Special"
-  },
-  "locationAndShippingDetails": {
-    "countryOfOrigin": "India",
-    "destinationCountry": "India",
-    "sourceCountry": "India",
-    "shippingMode": "Courier",
-    "shippingAddress": "C5K00000 - Yokogawa Electric International Pte Ltd - 9001",
-    "incoterm": "EXW - Ex Works",
-    "incotermLocation": "Bengaluru",
-    "oiAndTpCurrency": "SGD",
-    "shipToYokogawa": "no"
-  },
-  "documentsAndNotes": {
-    "dispatchNoteReferenceId": "",
-    "purchaseOrderNotes": "Purchase Order Request Notes",
+    "partNumber": "PN - 1",
     "quotationNotes": "Quotation Notes",
     "quotationReferenceNumber": "QUO-47329",
-    "requisitionNotes": "Requisition Notes and Attachments",
-    "rfqNotes": "Request For Quotation Notes and Attachments",
-    "workOrderReferenceId": ""
+    "discount": 20,
+    "discountType": "Percentage",
+    "gstPercentage": 8
   },
-  "miscellaneousItemDetails": {
+
+  "purchaseOrderRequests": {
+    "taxCode": "PZ-Zero Rated Purchase",
+    "purchaseOrderNotes": "Purchase Order Request Notes"
+  },
+
+  "purchaseOrders": {
+    "poReferenceId": "240024PO00289",
+    "poValue": 9000,
+    "unitRate": 200
+  },
+
+  "dispatchNotes": {
+    "dispatchNoteReferenceId": "",
+    "packageType": "Drum",
     "grossWeightKg": 20,
     "netWeightKg": 35,
     "totalChargeableWeightKg": 200,
-    "volumeCm3": 50,
-    "warrantyRequirement": "2 Years",
-    "hsCode": "1234",
-    "inspectionRequired": "yes",
-    "rohsCompliance": "No"
+    "volumeCm3": 50
   },
-  "browserAndExecutionSettings": {
+
+  "workOrders": {
+    "sourceCountry": "India",
+    "destinationCountry": "India",
+    "workOrderReferenceId": ""
+  },
+
+  "configSettings": {
     "browserName": "edge",
     "runHeadless": false,
     "appUrl": "https://geps_hopes_yea.cormsquare.com",
     "loginPassword": "Admin@123",
     "internalFilePath": "documents/Internal Requisition Attachments.xlsx",
     "externalFilePath": "documents/External Requisition Attachments.xlsx",
-    "fileType": "Internal"
+    "tcasFilePath": "documents/TCAS_File.xlsx"
   }
 }
