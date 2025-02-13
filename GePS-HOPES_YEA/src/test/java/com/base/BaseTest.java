@@ -1,4 +1,5 @@
 package com.base;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.source.classes.login.LoginTest;
 import com.source.classes.requisition.approve.ApproveTest;
 import com.source.classes.requisition.assign.AssignTest;
@@ -26,15 +27,17 @@ import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+
+import java.io.File;
 import java.util.Properties;
 
 public class BaseTest {
 
     protected Logger logger;
     protected ObjectMapper objectMapper;
+    protected JsonNode jsonNode;
     protected Playwright playwright;
     protected PlaywrightFactory playwrightFactory;
-    protected Properties properties;
     protected Page page;
     protected LoginTest loginTest;
     protected ILogin iLogin;
@@ -63,28 +66,27 @@ public class BaseTest {
             logger = LoggerUtil.getLogger(BaseTest.class);
             objectMapper = new ObjectMapper();
             playwrightFactory = new PlaywrightFactory();
-            properties = playwrightFactory.initializeProperties();
-            page = playwrightFactory.initializePage(properties);
+            jsonNode = objectMapper.readTree(new File("src/test/resources/config/test-data.json"));
+            page = playwrightFactory.initializePage(jsonNode);
 
 //TODO Requisition
-            iLogin = new Login(properties, page);
+            iLogin = new Login(jsonNode, page);
             iLogout = new Logout(page);
-            loginTest = new LoginTest();
-            iPrCreate = new Create(playwrightFactory, objectMapper, playwright, iLogin, properties, page, iLogout);
-            iPrType = new PurchaseRequisitionTypeHandler(iPrCreate, properties);
-            iPrEdit = new Edit(iLogin, properties, page, iLogout);
-            iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, properties, page, iLogout);
-            iPrReject = new Reject(iLogin, properties, page, iLogout);
-
-            iPrApprove = new Approve(objectMapper, iLogin, properties, page, iLogout);
-            approveTest = new ApproveTest();
-
-            iPrAssign = new Assign(iLogin, properties, page, iLogout);
-            assign = new AssignTest();
-            iPrBuyerManagerSuspend = new BuyerManagerSuspend(iLogin, properties, page, iLogout, iPrEdit);
-            buyerManagerSuspendTest = new BuyerManagerSuspendTest();
-            iPrBuyerSuspend = new BuyerSuspend(iLogin, properties, page, iLogout, iPrEdit);
-            buyerSuspendTest = new BuyerSuspendTest();
+            iPrCreate = new Create(playwrightFactory, objectMapper, playwright, iLogin, jsonNode, page, iLogout);
+            iPrType = new PurchaseRequisitionTypeHandler(iPrCreate);
+//            iPrEdit = new Edit(iLogin, properties, page, iLogout);
+//            iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, properties, page, iLogout);
+//            iPrReject = new Reject(iLogin, properties, page, iLogout);
+//
+//            iPrApprove = new Approve(objectMapper, iLogin, properties, page, iLogout);
+//            approveTest = new ApproveTest();
+//
+//            iPrAssign = new Assign(iLogin, properties, page, iLogout);
+//            assign = new AssignTest();
+//            iPrBuyerManagerSuspend = new BuyerManagerSuspend(iLogin, properties, page, iLogout, iPrEdit);
+//            buyerManagerSuspendTest = new BuyerManagerSuspendTest();
+//            iPrBuyerSuspend = new BuyerSuspend(iLogin, properties, page, iLogout, iPrEdit);
+//            buyerSuspendTest = new BuyerSuspendTest();
         } catch (Exception error) {
             logger.error("Error Initializing SetUp Function: " + error.getMessage());
         }

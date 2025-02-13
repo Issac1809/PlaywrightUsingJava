@@ -1,12 +1,18 @@
 package com.factory;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.microsoft.playwright.*;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class PlaywrightFactory {
@@ -15,7 +21,6 @@ public class PlaywrightFactory {
     Playwright playwright;
     FileInputStream fileInputStream;
     FileOutputStream fileOutputStream;
-    Properties properties;
 
 //TODO Constructor
     public PlaywrightFactory() {
@@ -50,21 +55,9 @@ public class PlaywrightFactory {
         return localPage.get();
     }
 
-    public Properties initializeProperties() {
+    public Page initializePage(JsonNode jsonNode) {
         try {
-            fileInputStream = new FileInputStream("./src/test/resources/config/Properties");
-            properties = new Properties();
-            properties.load(fileInputStream);
-            fileInputStream.close();
-        } catch (IOException error) {
-            logger.error("Error in Initialize Property Function: " + error.getMessage());
-        }
-        return properties;
-    }
-
-    public Page initializePage(Properties properties) {
-        try {
-            String browserName = properties.getProperty("browserType").trim().toUpperCase();
+            String browserName = jsonNode.get("config").get("browserName").asText().trim().toUpperCase();
             switch (browserName.toUpperCase()) {
                 case "CHROMIUM":
                     localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
@@ -87,21 +80,38 @@ public class PlaywrightFactory {
             }
             localBrowserContext.set(getBrowser().newContext());
             localPage.set(getBrowserContext().newPage());
-            getPage().navigate(properties.getProperty("appUrl").trim());
+            getPage().navigate(jsonNode.get("config").get("appUrl").asText().trim());
         } catch (Exception error) {
             logger.error("Error in Initialize Page Function: " + error.getMessage());
         }
         return getPage();
     }
 
-    public void saveToPropertiesFile(String attributeKey, String attributeValue) {
+    public void saveToJsonFile(String attributeKey, String attributeValue) {
         try {
-            fileOutputStream = new FileOutputStream("./src/test/resources/config/Properties");
-            properties.setProperty(attributeKey, attributeValue);
-            properties.store(fileOutputStream, attributeKey);
-            fileOutputStream.close();
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(new File("./src/test/resources/config/test-data.json"));
+
+            // Traverse the JSON tree to find and update all occurrences of the key
+            updateJsonNode(jsonNode, attributeKey, attributeValue);
+
+            objectMapper.writeValue(new File("./src/test/resources/config/test-data.json"), jsonNode);
         } catch (Exception error) {
-            logger.error("Error in Save to Properties File Function: " + error.getMessage());
+            logger.error("Error in Save to JSON File Function: " + error.getMessage());
+        }
+    }
+
+    private void updateJsonNode(JsonNode jsonNode, String attributeKey, String attributeValue) {
+        if (jsonNode.isObject()) {
+            ObjectNode objectNode = (ObjectNode) jsonNode;
+            if (objectNode.has(attributeKey)) {
+                objectNode.put(attributeKey, attributeValue);
+            }
+            objectNode.fields().forEachRemaining(entry -> updateJsonNode(entry.getValue(), attributeKey, attributeValue));
+        } else if (jsonNode.isArray()) {
+            for (JsonNode arrayItem : jsonNode) {
+                updateJsonNode(arrayItem, attributeKey, attributeValue);
+            }
         }
     }
 

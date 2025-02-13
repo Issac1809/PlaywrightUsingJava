@@ -1,4 +1,5 @@
 package com.source.classes.login;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.*;
 import com.source.interfaces.login.ILogin;
 import com.utils.LoggerUtil;
@@ -10,28 +11,28 @@ public class Login implements ILogin {
 
     Logger logger;
     Page page;
-    Properties properties;
-
+    JsonNode jsonNode;
+    String appUrl;
     private Login() {
     }
 
 //TODO Constructor
-    public Login(Properties properties, Page page) {
-        this.properties = properties;
+    public Login(JsonNode jsonNode, Page page) {
+        this.jsonNode = jsonNode;
         this.page = page;
         logger = LoggerUtil.getLogger(Login.class);
+        this.appUrl = jsonNode.get("config").get("appUrl").asText();
     }
 
     public int performLogin(String emailId) {
         int status = 0;
         try {
-            String password = properties.getProperty("loginPassword");
-
+            String password = jsonNode.get("config").get("loginPassword").asText();
             page.locator(EMAIL).fill(emailId);
             page.locator(PASSWORD).fill(password);
             page.locator(LOGIN_BUTTON).click();
 
-            APIResponse apiResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/users/current");
+            APIResponse apiResponse = page.request().fetch(appUrl + "/api/users/current");
             status = apiResponse.status();
         } catch (Exception error) {
             logger.error("Error in Perform Login Function: " + error.getMessage());

@@ -8,7 +8,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void login() {
         try {
-            String emailId = properties.getProperty("requesterEmail");
+            String emailId = jsonNode.get("requesterEmail").asText();
             int statusCode = iLogin.performLogin(emailId);
 
             if(statusCode == 200) {

@@ -10,17 +10,15 @@ import java.util.Properties;
 public class PurchaseRequisitionTypeHandler implements IPrType {
 
     private IPrCreate iPrCreate;
-    private Properties properties;
     Logger logger;
 
     private PurchaseRequisitionTypeHandler(){
     }
 
 //TODO Constructor
-    public PurchaseRequisitionTypeHandler(IPrCreate iPrCreate, Properties properties){
+    public PurchaseRequisitionTypeHandler(IPrCreate iPrCreate){
         this.logger = LoggerUtil.getLogger(PurchaseRequisitionTypeHandler.class);
         this.iPrCreate = iPrCreate;
-        this.properties = properties;
     }
 
     public int processRequisitionType(String type, String purchaseType) {
