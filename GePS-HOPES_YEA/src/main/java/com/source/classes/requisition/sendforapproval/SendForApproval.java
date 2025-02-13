@@ -64,7 +64,7 @@ public class SendForApproval implements IPrSendForApproval {
         String[] urlArray = url.split("=");
         String getUid = urlArray[1];
 
-        playwrightFactory.saveToPropertiesFile("requisitionUid", getUid);
+        playwrightFactory.saveToJsonFile("requisitionUid", getUid);
 
         APIResponse approvalResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/Requisitions/" + getUid, RequestOptions.create());
         JsonNode getApproversJson = objectMapper.readTree(approvalResponse.body());
@@ -92,7 +92,7 @@ public class SendForApproval implements IPrSendForApproval {
 
             if(!approvers.isEmpty()){
                 for (String approver : approvers) {
-                    playwrightFactory.saveToPropertiesFile("requisitionApprovers", approver);
+                    playwrightFactory.saveToJsonFile("requisitionApprovers", approver);
                 }
             }
 

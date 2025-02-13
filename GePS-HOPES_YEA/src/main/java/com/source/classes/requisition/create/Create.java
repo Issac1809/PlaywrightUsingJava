@@ -26,28 +26,28 @@ public class Create implements IPrCreate {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
-    Properties properties;
+    JsonNode jsonNode;
     double randomNumber;
     String appUrl;
     private Create(){
     }
 
 //TODO Constructor
-    public Create(PlaywrightFactory playwrightFactory, ObjectMapper objectMapper, Playwright playwright, ILogin iLogin, Properties properties, Page page, ILogout iLogout){
+    public Create(PlaywrightFactory playwrightFactory, ObjectMapper objectMapper, Playwright playwright, ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
         this.logger = LoggerUtil.getLogger(Create.class);
         this.playwrightFactory = playwrightFactory;
         this.objectMapper = objectMapper;
         this.playwright = playwright;
         this.page = page;
-        this.properties = properties;
+        this.jsonNode = jsonNode;
         this.iLogin = iLogin;
         this.iLogout = iLogout;
-        this.appUrl = properties.getProperty("appUrl");
+        this.appUrl = jsonNode.get("config").get("appUrl").asText();
     }
 
     public void requesterLoginPRCreate() {
         try {
-            String emailId = properties.getProperty("requesterEmail");
+            String emailId = jsonNode.get("mail").get("requesterEmail").asText();
             iLogin.performLogin(emailId);
         } catch (Exception exception) {
             logger.error("Exception in Requester Login Function: {}", exception.getMessage());
@@ -80,12 +80,14 @@ public class Create implements IPrCreate {
 
     public void title(String type, String purchaseType) {
         try {
-            String getTitle = properties.getProperty("orderTitle");
+            String getTitle = jsonNode.get("requisition").get("orderTitle").asText();
             randomNumber = Math.round(Math.random() * 1000);
             String title = type.toUpperCase() + getTitle + "-" + purchaseType.toUpperCase() + "-" + randomNumber;
             Locator titleLocator = page.locator(TITLE);
             titleLocator.fill(title);
-            playwrightFactory.saveToPropertiesFile("title", title);
+//            playwrightFactory.saveToPropertiesFile("title", title);
+            playwrightFactory.saveToJsonFile("title", title);
+
         } catch (Exception exception) {
             logger.error("Exception in Title Function: {}", exception.getMessage());
         }
@@ -93,7 +95,7 @@ public class Create implements IPrCreate {
 
     public void shipToYokogawa() {
         try {
-            String value = properties.getProperty("shipToYokogawa").toLowerCase();
+            String value = jsonNode.get("requisition").get("shipToYokogawa").asText().toLowerCase();
             if (value.equals("no")) {
                 Locator shipToYokogawa = page.locator(SHIP_TO_YOKOGAWA);
                 shipToYokogawa.click();
@@ -106,7 +108,7 @@ public class Create implements IPrCreate {
     public List<String> project() {
         List<String> wbsValues = new ArrayList<>();
         try {
-            String projectCodeValue = properties.getProperty("projectCode");
+            String projectCodeValue = jsonNode.get("requisition").get("projectCode").asText();
 
             Locator project = page.locator(PROJECT);
             project.click();
@@ -139,7 +141,7 @@ public class Create implements IPrCreate {
 
     public void wbs(List<String> wbs) {
         try {
-            String wbsFromProperties = properties.getProperty("wbsCode");
+            String wbsFromProperties = jsonNode.get("requisition").get("wbsCode").asText();
 
             for(String getWbs : wbs) {
                 if (getWbs.equals(wbsFromProperties)) {
@@ -162,7 +164,7 @@ public class Create implements IPrCreate {
 
     public void company() {
         try {
-            String company = properties.getProperty("companyName");
+            String company = jsonNode.get("requisition").get("companyName").asText();
 
             Locator companyLocator = page.locator(COMPANY);
             companyLocator.click();
@@ -182,7 +184,7 @@ public class Create implements IPrCreate {
 
     public void businessUnit() {
         try {
-            String businessUnit = properties.getProperty("businessUnit");
+            String businessUnit = jsonNode.get("requisition").get("businessUnit").asText();
 
             Locator businessUnitLocator = page.locator(BUSINESS_UNIT);
             businessUnitLocator.click();
@@ -200,7 +202,7 @@ public class Create implements IPrCreate {
 
     public void salesReferenceId() {
         try {
-            String salesReferenceId = properties.getProperty("salesReferenceId");
+            String salesReferenceId = jsonNode.get("requisition").get("salesReferenceId").asText();
 
             Locator salesReferenceIdLocator = page.locator(SALES_REFERENCE_ID);
             salesReferenceIdLocator.fill(salesReferenceId);
@@ -214,7 +216,7 @@ public class Create implements IPrCreate {
             Locator incotermLocator = page.locator(INCOTERM);
             incotermLocator.click();
 
-            String incotermValue = properties.getProperty("incoterm");
+            String incotermValue = jsonNode.get("requisition").get("incoterm").asText();
             Locator incotermSearch = page.locator(INCOTERM_SEARCH);
             incotermSearch.fill(incotermValue);
 
@@ -228,7 +230,7 @@ public class Create implements IPrCreate {
 
     public void liquidatedDamages(){
         try {
-            String liquidatedDamages = properties.getProperty("liquidatedDamages");
+            String liquidatedDamages = jsonNode.get("requisition").get("liquidatedDamages").asText();
 
             if (liquidatedDamages.equalsIgnoreCase("special")) {
                 Locator liquidatedDamagesLocator = page.locator(LIQUIDATED_DAMAGES_SELECT);
@@ -243,7 +245,7 @@ public class Create implements IPrCreate {
 
     public void warrantyRequirements(String type){
         try {
-            String warrantyRequirement = properties.getProperty("warrantyRequirement");
+            String warrantyRequirement = jsonNode.get("requisition").get("warrantyRequirement").asText();
 
             if(type.equalsIgnoreCase("PS")) {
                 page.locator(WARRANTY_REQUIREMENTS).click();
@@ -264,7 +266,7 @@ public class Create implements IPrCreate {
 
     public void priceValidity(String type){
         try {
-            String priceValidity = properties.getProperty("priceValidity");
+            String priceValidity = jsonNode.get("requisition").get("priceValidity").asText();
 
             if(type.equalsIgnoreCase("PS"))
                 page.locator(PRICE_VALIDITY).click();
@@ -283,9 +285,9 @@ public class Create implements IPrCreate {
 
     public void shippingAddress() {
         try {
-            String shipToYokogawa = properties.getProperty("shipToYokogawa");
-            String shippingAddressValue = properties.getProperty("shippingAddress");
-            String shippingAddressEnduser = properties.getProperty("shippingAddressEnduser");
+            String shipToYokogawa = jsonNode.get("requisition").get("shipToYokogawa").asText();
+            String shippingAddressValue = jsonNode.get("requisition").get("shippingAddress").asText();
+            String shippingAddressEnduser = jsonNode.get("requisition").get("shippingAddressEnduser").asText();
 
             if(shipToYokogawa.equalsIgnoreCase("yes")){
                 page.locator(SHIPPING_ADDRESS).click();
@@ -304,7 +306,7 @@ public class Create implements IPrCreate {
 
     public void shippingMode(String purchaseType) {
         try {
-            String getShippingMode = properties.getProperty("shippingMode");
+            String getShippingMode = jsonNode.get("requisition").get("shippingMode").asText();
 
             page.locator(SHIPPING_MODE).click();
             page.locator(SHIPPING_MODE_SEARCH).fill(getShippingMode);
@@ -363,7 +365,7 @@ public class Create implements IPrCreate {
 
     public void rohsCompliance(){
         try {
-            String compliance = properties.getProperty("rohsCompliance");
+            String compliance = jsonNode.get("requisition").get("rohsCompliance").asText();
 
             if (compliance.equalsIgnoreCase("no")) {
                 page.locator(ROHS_COMPLIANCE).click();
@@ -376,7 +378,7 @@ public class Create implements IPrCreate {
     public void inspectionRequired(String type, String purchaseType) {
         try {
             Locator inspectionRequiredLocator;
-            String isInspectionRequired = properties.getProperty("inspectionRequired");
+            String isInspectionRequired = jsonNode.get("requisition").get("inspectionRequired").asText();
 
             if (isInspectionRequired.equalsIgnoreCase("yes")) {
                 if (purchaseType.equalsIgnoreCase("catalog")){
@@ -396,7 +398,7 @@ public class Create implements IPrCreate {
 
     public void oiAndTpCurrency(){
         try {
-            String currency = properties.getProperty("oiAndTpCurrency");
+            String currency = jsonNode.get("requisition").get("oiAndTpCurrency").asText();
 
             page.locator(OI_AND_TP_CURRENCY).click();
             page.locator(OI_AND_TP_CURRENCY_SEARCH).fill(currency);
@@ -413,7 +415,7 @@ public class Create implements IPrCreate {
 
     public void orderIntake(String type){
         try {
-            String orderIntake = properties.getProperty("orderIntake");
+            String orderIntake = jsonNode.get("requisition").get("orderIntake").asText();
             if(type.equals("PS"))
                 page.locator(ORDER_INTAKE).fill(orderIntake);
             else
@@ -426,7 +428,7 @@ public class Create implements IPrCreate {
     public void targetPrice(String type, String purchaseType){
         try {
             if (purchaseType.equalsIgnoreCase("NonCatalog")) {
-                String targetPrice = properties.getProperty("targetPrice");
+                String targetPrice = jsonNode.get("requisition").get("targetPrice").asText();
                 if(type.equalsIgnoreCase("PS"))
                     page.locator(TARGET_PRICE).fill(targetPrice);
                 else
@@ -441,8 +443,8 @@ public class Create implements IPrCreate {
         try {
             String idValue;
             List<String> inputTypes = new ArrayList<>();
-            String[] itemNames = properties.getProperty("items").split(",");
-            String[] quantities = properties.getProperty("quantityList").split(",");
+            String[] itemNames = jsonNode.get("requisition").get("items").asText().split(",");
+            String[] quantities = jsonNode.get("requisition").get("quantityList").asText().split(",");
 
             Locator addLineItemButton = page.locator(ADD_LINE_ITEM_BUTTON);
             addLineItemButton.click();
@@ -506,7 +508,7 @@ public class Create implements IPrCreate {
 
                 page.locator(QUANTITY).fill(quantities[i]);
 
-                String shippingPoint = properties.getProperty("shippingPoint");
+                String shippingPoint = jsonNode.get("requisition").get("shippingPoint").asText();
                 page.locator(SHIPPING_POINT_LOCATOR).click();
 
                 page.locator(SHIPPING_POINT_SEARCH_FIELD).fill(shippingPoint);
@@ -530,7 +532,7 @@ public class Create implements IPrCreate {
     public Map<String, String> vendor() {
         Map<String, String> rateContractArray = new HashMap<>();
         try {
-            String vendorNameValue = properties.getProperty("vendorName");
+            String vendorNameValue = jsonNode.get("requisition").get("vendorName").asText();
             page.locator(VENDOR).click();
 
             APIResponse vendorApiResponse = page.request().fetch(appUrl + "/api/Vendors/GetAllVendorsByKeyword/1882?keyword=" + vendorNameValue, RequestOptions.create());
@@ -562,7 +564,7 @@ public class Create implements IPrCreate {
     public List<String> rateContract(Map<String, String> rateContractArray) {
         List<String> rateContractItems = new ArrayList<>();
         try {
-            String rateContractValue = properties.getProperty("rateContract");
+            String rateContractValue = jsonNode.get("requisition").get("rateContract").asText();
 
             page.locator(RATE_CONTRACT).click();
 
@@ -593,7 +595,7 @@ public class Create implements IPrCreate {
 
     public void buyerManager(){
         try {
-            String buyerManagerName = properties.getProperty("buyerManagerEmail");
+            String buyerManagerName = jsonNode.get("mail").get("buyerManagerEmail").asText();
             page.locator(BUYER_MANAGER).click();
             page.locator(BUYER_MANAGER_SEARCH).fill(buyerManagerName);
             String buyerManagerLocator = getBuyerManager(buyerManagerName);
@@ -605,7 +607,7 @@ public class Create implements IPrCreate {
 
     public void projectManager(){
         try {
-            String projectManagerName = properties.getProperty("projectManagerEmail");
+            String projectManagerName = jsonNode.get("mail").get("projectManagerEmail").asText();
             page.locator(PROJECT_MANAGER).click();
             page.locator(PROJECT_MANAGER_SEARCH).fill(projectManagerName);
 
@@ -617,8 +619,8 @@ public class Create implements IPrCreate {
     }
 
     public void tcasCompliance(){
-        String tcasCompliance = properties.getProperty("tcasComplianceApplicable");
-        String[] tcasQuestionNumbers = properties.getProperty("tcasQuestionNumber").split(",");
+        String tcasCompliance = jsonNode.get("requisition").get("tcasComplianceApplicable").asText();
+        String[] tcasQuestionNumbers = jsonNode.get("requisition").get("tcasQuestionNumber").asText().split(",");
         try {
             if(tcasCompliance.equalsIgnoreCase("yes")){
                 page.locator(TCAS_COMPLIANCE_APPLICABLE).click();
@@ -629,7 +631,7 @@ public class Create implements IPrCreate {
 
                 page.locator(TCAS_ADD_BUTTON).click();
 
-                String tcasFilePath = properties.getProperty("tcasFilePath").trim();
+                String tcasFilePath = jsonNode.get("config").get("tcasFilePath").asText().trim();
                 page.locator(TCAS_FILE_UPLOAD_BUTTON).setInputFiles(Paths.get(tcasFilePath));
             }
         } catch (Exception exception) {
@@ -654,7 +656,7 @@ public class Create implements IPrCreate {
 
                 page.locator(QUANTITY).fill(String.valueOf(i + 10));
 
-                String shippingPoint = properties.getProperty("shippingPoint");
+                String shippingPoint = jsonNode.get("requisition").get("shippingPoint").asText();
                 page.locator(SHIPPING_POINT_LOCATOR).click();
 
                 page.locator(SHIPPING_POINT_SEARCH_FIELD).fill(shippingPoint);
@@ -678,7 +680,7 @@ public class Create implements IPrCreate {
 
     public void notes() {
         try {
-            String notesText = properties.getProperty("requisitionNotes");
+            String notesText = jsonNode.get("requisition").get("requisitionNotes").asText();
             page.locator(NOTES).fill(notesText);
         } catch (Exception exception) {
             logger.error("Exception in Requisition Notes Function: {}", exception.getMessage());
@@ -689,14 +691,14 @@ public class Create implements IPrCreate {
         try {
             page.locator(ATTACHMENTS).click();
 
-            String[] requisitionAttachmentsTypes = properties.getProperty("requisitionAttachmentsTypes").split(",");
+            String[] requisitionAttachmentsTypes = jsonNode.get("requisition").get("requisitionAttachmentsTypes").asText().split(",");
             for(int i = 0; i < requisitionAttachmentsTypes.length; i++){
                 if(requisitionAttachmentsTypes[i].equalsIgnoreCase("internal")){
-                    String internalFilePath = properties.getProperty("internalFilePath");
+                    String internalFilePath = jsonNode.get("config").get("internalFilePath").asText();
                     page.locator(FILE_UPLOAD).setInputFiles(Paths.get(internalFilePath));
                     page.locator(ATTACH_FILE_BUTTON).click();
                 } else if(requisitionAttachmentsTypes[i].equalsIgnoreCase("external")) {
-                    String externalFilePath = properties.getProperty("externalFilePath");
+                    String externalFilePath = jsonNode.get("config").get("externalFilePath").asText();
                     page.locator(FILE_UPLOAD).setInputFiles(Paths.get(externalFilePath));
                     page.locator(EXTERNAL_RADIO_BUTTON).click();
                     page.locator(ATTACH_FILE_BUTTON).click();
@@ -737,7 +739,7 @@ public class Create implements IPrCreate {
                 requisitionStatus = response.get("status").asText();
             }
 
-            playwrightFactory.saveToPropertiesFile("requisitionStatus", requisitionStatus);
+            playwrightFactory.saveToJsonFile("requisitionStatus", requisitionStatus);
 
             status = statusResponse.status();
 
