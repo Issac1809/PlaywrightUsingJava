@@ -1,11 +1,6 @@
 package com.base;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.source.classes.login.LoginTest;
-import com.source.classes.requisition.approve.ApproveTest;
-import com.source.classes.requisition.assign.AssignTest;
 import com.source.classes.requisition.create.Create;
-import com.source.classes.requisition.suspend.BuyerManagerSuspendTest;
-import com.source.classes.requisition.suspend.BuyerSuspendTest;
 import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.Page;
@@ -27,9 +22,7 @@ import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-
 import java.io.File;
-import java.util.Properties;
 
 public class BaseTest {
 
@@ -39,7 +32,6 @@ public class BaseTest {
     protected Playwright playwright;
     protected PlaywrightFactory playwrightFactory;
     protected Page page;
-    protected LoginTest loginTest;
     protected ILogin iLogin;
     protected ILogout iLogout;
     protected IPrType iPrType;
@@ -48,12 +40,8 @@ public class BaseTest {
     protected IPrSendForApproval iPrSendForApproval;
     protected IPrReject iPrReject;
     protected IPrApprove iPrApprove;
-    protected ApproveTest approveTest;
-    protected BuyerManagerSuspendTest buyerManagerSuspendTest;
     protected IPrBuyerManagerSuspend iPrBuyerManagerSuspend;
-    protected AssignTest assign;
     protected IPrAssign iPrAssign;
-    protected BuyerSuspendTest buyerSuspendTest;
     protected IPrBuyerSuspend iPrBuyerSuspend;
 
 //TODO Constructor
@@ -63,10 +51,10 @@ public class BaseTest {
     @BeforeClass
     public void setUp(){
         try {
-            logger = LoggerUtil.getLogger(BaseTest.class);
+            this.logger = LoggerUtil.getLogger(BaseTest.class);
             objectMapper = new ObjectMapper();
-            playwrightFactory = new PlaywrightFactory();
-            jsonNode = objectMapper.readTree(new File("src/test/resources/config/test-data.json"));
+            jsonNode = objectMapper.readTree(new File("./src/test/resources/config/test-data.json"));
+            playwrightFactory = new PlaywrightFactory(objectMapper, jsonNode);
             page = playwrightFactory.initializePage(jsonNode);
 
 //TODO Requisition
@@ -74,21 +62,15 @@ public class BaseTest {
             iLogout = new Logout(page);
             iPrCreate = new Create(playwrightFactory, objectMapper, playwright, iLogin, jsonNode, page, iLogout);
             iPrType = new PurchaseRequisitionTypeHandler(iPrCreate);
-//            iPrEdit = new Edit(iLogin, properties, page, iLogout);
-//            iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, properties, page, iLogout);
-//            iPrReject = new Reject(iLogin, properties, page, iLogout);
-//
-//            iPrApprove = new Approve(objectMapper, iLogin, properties, page, iLogout);
-//            approveTest = new ApproveTest();
-//
-//            iPrAssign = new Assign(iLogin, properties, page, iLogout);
-//            assign = new AssignTest();
-//            iPrBuyerManagerSuspend = new BuyerManagerSuspend(iLogin, properties, page, iLogout, iPrEdit);
-//            buyerManagerSuspendTest = new BuyerManagerSuspendTest();
-//            iPrBuyerSuspend = new BuyerSuspend(iLogin, properties, page, iLogout, iPrEdit);
-//            buyerSuspendTest = new BuyerSuspendTest();
-        } catch (Exception error) {
-            logger.error("Error Initializing SetUp Function: " + error.getMessage());
+            iPrEdit = new Edit(iLogin, jsonNode, page, iLogout);
+            iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, jsonNode, page, iLogout);
+            iPrReject = new Reject(iLogin, jsonNode, page, iLogout);
+            iPrApprove = new Approve(objectMapper, iLogin, jsonNode, page, iLogout);
+            iPrAssign = new Assign(iLogin, jsonNode, page, iLogout);
+            iPrBuyerManagerSuspend = new BuyerManagerSuspend(iLogin, jsonNode, page, iLogout, iPrEdit);
+            iPrBuyerSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout);
+        } catch (Exception exception) {
+            logger.error("Error Initializing SetUp Function: {}", exception.getMessage());
         }
     }
 
@@ -96,8 +78,8 @@ public class BaseTest {
     public void tearDown() {
         try {
             page.context().browser().close();
-        } catch (Exception error) {
-            logger.error("Error Initializing Tear Down Function: " + error.getMessage());
+        } catch (Exception exception) {
+            logger.error("Error Initializing Tear Down Function: {}", exception.getMessage());
         }
     }
 }

@@ -5,7 +5,6 @@ import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 public class PurchaseRequisitionTypeHandler implements IPrType {
 
@@ -82,7 +81,7 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                     iPrCreate.addLineRequisitionItemsNonCatalog();
                     break;
                 default:
-                    System.out.println("Enter Proper Purchase Type");
+                    System.out.println("__ Enter Proper Purchase Type __");
                     break;
             }
             iPrCreate.notes();

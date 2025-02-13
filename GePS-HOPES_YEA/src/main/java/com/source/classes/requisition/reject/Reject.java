@@ -1,16 +1,14 @@
 package com.source.classes.requisition.reject;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
-import com.source.interfaces.requisitions.IPrEdit;
 import com.source.interfaces.requisitions.IPrReject;
-import com.source.interfaces.requisitions.IPrSendForApproval;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-import java.util.Properties;
 import static com.constants.requisitions.LPrReject.*;
 
 public class Reject implements IPrReject {
@@ -18,18 +16,16 @@ public class Reject implements IPrReject {
     Logger logger;
     private ILogin iLogin;
     private ILogout iLogout;
-    private Properties properties;
     private Page page;
-    private IPrEdit iPrEdit;
-    private IPrSendForApproval iPrSendForApproval;
+    private JsonNode jsonNode;
 
     private Reject(){
     }
 
 //TODO Constructor
-    public Reject(ILogin iLogin, Properties properties, Page page, ILogout iLogout){
+    public Reject(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
         this.iLogin = iLogin;
-        this.properties = properties;
+        this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(Reject.class);
@@ -38,18 +34,13 @@ public class Reject implements IPrReject {
     public int reject(String purchaseType) {
         int rejectStatus = 0;
         try {
-            String[] approvers = properties.getProperty("requisitionApprovers").split(",");
-            String uid = properties.getProperty("requisitionUid");
+            String[] approvers = jsonNode.get("requisition").get("requisitionApprovers").asText().split(",");
+            String uid = jsonNode.get("requisition").get("requisitionUid").asText();
+            String title = jsonNode.get("requisition").get("title").asText();
+            String remarks = jsonNode.get("commonRemarks").get("rejectRemarks").asText();
 
             for(String approver : approvers){
                 iLogin.performLogin(approver);
-
-                String title;
-                if(purchaseType.toLowerCase().equals("catalog")){
-                    title = properties.getProperty("catalogTitle");
-                } else {
-                    title = properties.getProperty("nonCatalogTitle");
-                }
 
                 String getTitle = getTitle(title);
                 Locator titleLocator = page.locator(getTitle);
@@ -58,7 +49,6 @@ public class Reject implements IPrReject {
                 Locator rejectButtonLocator = page.locator(REJECT_BUTTON);
                 rejectButtonLocator.click();
 
-                String remarks = properties.getProperty("rejectRemarks");
                 Locator rejectRemarksLocator = page.locator(REJECTED_REMARKS);
                 rejectRemarksLocator.fill(remarks + " " + "by" + " " + approver);
 
@@ -71,8 +61,8 @@ public class Reject implements IPrReject {
             }
 
             iLogout.performLogout();
-        } catch (Exception error) {
-            logger.error("Error in Requisition Reject Function: " + error.getMessage());
+        } catch (Exception exception) {
+            logger.error("Error in Requisition Reject Function: {}", exception.getMessage());
         }
         return rejectStatus;
     }

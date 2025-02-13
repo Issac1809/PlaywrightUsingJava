@@ -19,9 +19,7 @@ import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requisitions.*;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-
 import java.io.File;
-import java.util.Properties;
 
 public class BaseMain {
 
@@ -30,7 +28,6 @@ public class BaseMain {
     protected JsonNode jsonNode;
     protected Playwright playwright;
     protected PlaywrightFactory playwrightFactory;
-    protected Properties properties;
     protected Page page;
     protected ILogin iLogin;
     protected ILogout iLogout;
@@ -46,10 +43,10 @@ public class BaseMain {
 //TODO Constructor
     public BaseMain(){
         try {
-            logger = LoggerUtil.getLogger(BaseMain.class);
+            this.logger = LoggerUtil.getLogger(BaseMain.class);
             objectMapper = new ObjectMapper();
-            playwrightFactory = new PlaywrightFactory();
             jsonNode = objectMapper.readTree(new File("./src/test/resources/config/test-data.json"));
+            playwrightFactory = new PlaywrightFactory(objectMapper, jsonNode);
             page = playwrightFactory.initializePage(jsonNode);
 
 //TODO Requisition
@@ -57,15 +54,15 @@ public class BaseMain {
             iLogout = new Logout(page);
             iPrCreate = new Create(playwrightFactory, objectMapper, playwright, iLogin, jsonNode, page, iLogout);
             iPrType = new PurchaseRequisitionTypeHandler(iPrCreate);
-            iPrEdit = new Edit(iLogin, properties, page, iLogout);
-            iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, properties, page, iLogout);
-            iPrReject = new Reject(iLogin, properties, page, iLogout);
-            iPrApprove = new Approve(objectMapper, iLogin, properties, page, iLogout);
-            iPrAssign = new Assign(iLogin, properties, page, iLogout);
-            iPrSuspend = new BuyerSuspend(iLogin, properties, page, iLogout, iPrEdit);
+            iPrEdit = new Edit(iLogin, jsonNode, page, iLogout);
+            iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, jsonNode, page, iLogout);
+            iPrReject = new Reject(iLogin, jsonNode, page, iLogout);
+            iPrApprove = new Approve(objectMapper, iLogin, jsonNode, page, iLogout);
+            iPrAssign = new Assign(iLogin, jsonNode, page, iLogout);
+            iPrSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout);
 
-        } catch (Exception error) {
-            logger.error("Error Initializing BaseMain Constructor: {}", error.getMessage());
+        } catch (Exception exception) {
+            logger.error("Error Initializing BaseMain Constructor: {}", exception.getMessage());
         }
     }
 }

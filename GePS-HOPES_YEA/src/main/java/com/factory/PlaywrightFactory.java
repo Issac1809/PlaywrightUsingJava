@@ -5,25 +5,20 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.microsoft.playwright.*;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
 
 public class PlaywrightFactory {
 
+    ObjectMapper objectMapper;
+    JsonNode jsonNode;
     static Logger logger;
     Playwright playwright;
-    FileInputStream fileInputStream;
-    FileOutputStream fileOutputStream;
 
 //TODO Constructor
-    public PlaywrightFactory() {
+    public PlaywrightFactory(ObjectMapper objectMapper, JsonNode jsonNode) {
+        this.objectMapper = objectMapper;
+        this.jsonNode = jsonNode;
         logger = LoggerUtil.getLogger(PlaywrightFactory.class);
     }
 
@@ -57,7 +52,7 @@ public class PlaywrightFactory {
 
     public Page initializePage(JsonNode jsonNode) {
         try {
-            String browserName = jsonNode.get("config").get("browserName").asText().trim().toUpperCase();
+            String browserName = jsonNode.get("configSettings").get("browserName").asText().toUpperCase();
             switch (browserName.toUpperCase()) {
                 case "CHROMIUM":
                     localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
@@ -80,38 +75,23 @@ public class PlaywrightFactory {
             }
             localBrowserContext.set(getBrowser().newContext());
             localPage.set(getBrowserContext().newPage());
-            getPage().navigate(jsonNode.get("config").get("appUrl").asText().trim());
-        } catch (Exception error) {
-            logger.error("Error in Initialize Page Function: " + error.getMessage());
+            getPage().navigate(jsonNode.get("configSettings").get("appUrl").asText().trim());
+        } catch (Exception exception) {
+            logger.error("Error in Initialize Page Function: {}", exception.getMessage());
         }
         return getPage();
     }
 
-    public void saveToJsonFile(String attributeKey, String attributeValue) {
+    public void savePropertiesIntoJsonFile(String parentKey, String attributeKey, String attributeValue) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(new File("./src/test/resources/config/test-data.json"));
-
-            // Traverse the JSON tree to find and update all occurrences of the key
-            updateJsonNode(jsonNode, attributeKey, attributeValue);
-
-            objectMapper.writeValue(new File("./src/test/resources/config/test-data.json"), jsonNode);
-        } catch (Exception error) {
-            logger.error("Error in Save to JSON File Function: " + error.getMessage());
-        }
-    }
-
-    private void updateJsonNode(JsonNode jsonNode, String attributeKey, String attributeValue) {
-        if (jsonNode.isObject()) {
-            ObjectNode objectNode = (ObjectNode) jsonNode;
-            if (objectNode.has(attributeKey)) {
-                objectNode.put(attributeKey, attributeValue);
+            if (jsonNode.has(parentKey) && jsonNode.get(parentKey).isObject()) {
+                ObjectNode parentNode = (ObjectNode) jsonNode.get(parentKey);
+                parentNode.put(attributeKey, attributeValue);
+            } else {
+                logger.warn("Parent key '{}' not found or not an object in JSON", parentKey);
             }
-            objectNode.fields().forEachRemaining(entry -> updateJsonNode(entry.getValue(), attributeKey, attributeValue));
-        } else if (jsonNode.isArray()) {
-            for (JsonNode arrayItem : jsonNode) {
-                updateJsonNode(arrayItem, attributeKey, attributeValue);
-            }
+        } catch (Exception exception) {
+            logger.error("Error in Save Properties Into Json File Function: {}", exception.getMessage());
         }
     }
 
@@ -121,8 +101,8 @@ public class PlaywrightFactory {
             String path = System.getProperty("user.dir") + "/screenshot/" + System.currentTimeMillis() + ".png";
             byte[] buffer = getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
             base64Path = Base64.getEncoder().encodeToString(buffer);
-        } catch (Exception error) {
-            logger.error("Error in Take Screenshot Function: " + error.getMessage());
+        } catch (Exception exception) {
+            logger.error("Error in Take Screenshot Function: {}", exception.getMessage());
         }
         return base64Path;
     }

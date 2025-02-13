@@ -11,8 +11,8 @@ public class ApproveTest extends BaseTest {
             int status = iPrApprove.approve();
 
             Assert.assertEquals(200, status, "API call was not successful");
-        } catch (Exception error) {
-            System.out.println("Error in Requisition Approve Test Function: " + error.getMessage());
+        } catch (Exception exception) {
+            logger.error("Error in Requisition Approve Test Function: {}", exception.getMessage());
         }
     }
 }

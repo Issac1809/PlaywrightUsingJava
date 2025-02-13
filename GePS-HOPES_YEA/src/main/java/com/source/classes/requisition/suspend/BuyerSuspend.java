@@ -1,42 +1,40 @@
 package com.source.classes.requisition.suspend;
-
+import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requisitions.IPrBuyerSuspend;
-import com.source.interfaces.requisitions.IPrEdit;
-
-import java.util.Properties;
-
+import org.apache.logging.log4j.Logger;
 import static com.constants.requisitions.LPrBuyerSuspend.*;
 
 public class BuyerSuspend implements IPrBuyerSuspend {
 
     private ILogin iLogin;
     private ILogout iLogout;
-    private Properties properties;
+    private JsonNode jsonNode;
     private Page page;
-    private IPrEdit iPrEdit;
+    Logger logger;
 
     private BuyerSuspend(){
     }
 
 //TODO Constructor
-    public BuyerSuspend(ILogin iLogin, Properties properties, Page page, ILogout iLogout, IPrEdit iPrEdit){
+    public BuyerSuspend(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
         this.iLogin = iLogin;
-        this.properties = properties;
+        this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
-        this.iPrEdit = iPrEdit;
     }
 
     public void suspend(){
         try {
-        String buyerMailId = properties.getProperty("buyerEmail");
+        String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
+        String title = jsonNode.get("requisition").get("title").asText();
+        String remarks = jsonNode.get("commonRemarks").get("suspendRemarks").asText();
+
         iLogin.performLogin(buyerMailId);
 
-        String title = properties.getProperty("orderTitle");
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle);
         titleLocator.first().click();
@@ -45,14 +43,14 @@ public class BuyerSuspend implements IPrBuyerSuspend {
         suspendButtonLocator.click();
 
         Locator remarksLocator = page.locator(REMARKS);
-        remarksLocator.fill("Buyer Suspended");
+        remarksLocator.fill(remarks + " " + "by" + " " + buyerMailId);
 
         Locator yesButtonLocator = page.locator(YES);
         yesButtonLocator.click();
+
         iLogout.performLogout();
-//        iPrEdit.buyerSuspendEdit();
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
+        } catch (Exception exception) {
+            logger.error("Error in Requisition Buyer Suspend Function: {}", exception.getMessage());
         }
     }
 }

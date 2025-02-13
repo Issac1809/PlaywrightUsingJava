@@ -13,7 +13,6 @@ import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import static com.constants.requisitions.LPrSendForApproval.*;
 
 public class SendForApproval implements IPrSendForApproval {
@@ -22,7 +21,7 @@ public class SendForApproval implements IPrSendForApproval {
     private PlaywrightFactory playwrightFactory;
     private ObjectMapper objectMapper;
     private Page page;
-    private Properties properties;
+    private JsonNode jsonNode;
     private ILogin iLogin;
     private ILogout iLogout;
 
@@ -30,10 +29,10 @@ public class SendForApproval implements IPrSendForApproval {
     }
 
 //TODO Constructor
-    public SendForApproval(PlaywrightFactory playwrightFactory, ObjectMapper objectMapper, ILogin iLogin, Properties properties, Page page, ILogout iLogout) {
+    public SendForApproval(PlaywrightFactory playwrightFactory, ObjectMapper objectMapper, ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout) {
         this.playwrightFactory = playwrightFactory;
         this.objectMapper = objectMapper;
-        this.properties = properties;
+        this.jsonNode = jsonNode;
         this.page = page;
         this.iLogin = iLogin;
         this.iLogout = iLogout;
@@ -45,16 +44,10 @@ public class SendForApproval implements IPrSendForApproval {
         List<String> approvers = new ArrayList<>();
 
         try {
-        String requesterMailId = properties.getProperty("requesterEmail");
+        String requesterMailId = jsonNode.get("requisition").get("requesterEmail").asText();
+        String title = jsonNode.get("requisition").get("title").asText();
 
         iLogin.performLogin(requesterMailId);
-
-        String title;
-        if(purchaseType.toLowerCase().equals("catalog")){
-            title = properties.getProperty("catalogTitle");
-        } else {
-            title = properties.getProperty("nonCatalogTitle");
-        }
 
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle);
@@ -64,7 +57,7 @@ public class SendForApproval implements IPrSendForApproval {
         String[] urlArray = url.split("=");
         String getUid = urlArray[1];
 
-        playwrightFactory.saveToJsonFile("requisitionUid", getUid);
+        playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionUid", getUid);
 
         APIResponse approvalResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/Requisitions/" + getUid, RequestOptions.create());
         JsonNode getApproversJson = objectMapper.readTree(approvalResponse.body());
@@ -92,13 +85,13 @@ public class SendForApproval implements IPrSendForApproval {
 
             if(!approvers.isEmpty()){
                 for (String approver : approvers) {
-                    playwrightFactory.saveToJsonFile("requisitionApprovers", approver);
+                    playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionApprovers", approver);
                 }
             }
 
             iLogout.performLogout();
-        } catch (Exception error) {
-            logger.error("Error in Requisition Send For Approval Function: " + error.getMessage());
+        } catch (Exception exception) {
+            logger.error("Error in Requisition Send For Approval Function: {}", exception.getMessage());
         }
         return approvalStatus;
     }

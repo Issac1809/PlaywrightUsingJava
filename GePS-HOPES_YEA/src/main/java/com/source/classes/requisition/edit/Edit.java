@@ -1,15 +1,14 @@
 package com.source.classes.requisition.edit;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requisitions.IPrEdit;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-import java.util.Properties;
 import static com.constants.requisitions.LPrEdit.*;
 
 public class Edit implements IPrEdit {
@@ -17,16 +16,16 @@ public class Edit implements IPrEdit {
     Logger logger;
     private ILogin iLogin;
     private ILogout iLogout;
-    private Properties properties;
+    private JsonNode jsonNode;
     private Page page;
 
     private Edit(){
     }
 
 //TODO Constructor
-    public Edit(ILogin iLogin, Properties properties, Page page, ILogout iLogout){
+    public Edit(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
         this.iLogin = iLogin;
-        this.properties = properties;
+        this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(Edit.class);
@@ -35,15 +34,10 @@ public class Edit implements IPrEdit {
     public int edit(String purchaseType) {
         int status = 0;
         try {
-        String requesterEmailId = properties.getProperty("requesterEmail");
-        iLogin.performLogin(requesterEmailId);
+        String requesterEmailId = jsonNode.get("requisition").get("requesterEmail").asText();
+        String title = jsonNode.get("requisition").get("title").asText();
 
-        String title;
-        if(purchaseType.toLowerCase().equals("catalog")){
-            title = properties.getProperty("catalogTitle");
-        } else {
-            title = properties.getProperty("nonCatalogTitle");
-        }
+        iLogin.performLogin(requesterEmailId);
 
         String getTitle = getTitle(title);
         Locator titleLocator = page.locator(getTitle);
@@ -53,7 +47,6 @@ public class Edit implements IPrEdit {
         editButtonLocator.click();
 
         Locator updateButtonLocator = page.locator(UPDATE_BUTTON);
-        page.waitForLoadState(LoadState.NETWORKIDLE); //This waits until there are no more ongoing network requests.
         updateButtonLocator.click();
 
         Locator yesButtonLocator = page.locator(YES);
@@ -63,41 +56,9 @@ public class Edit implements IPrEdit {
         status = updateResponse.status();
 
         iLogout.performLogout();
-        } catch (Exception error) {
-            logger.error("Error in Requisition Edit Function: " + error.getMessage());
+        } catch (Exception exception) {
+            logger.error("Error in Requisition Edit Function: {}", exception.getMessage());
         }
         return status;
     }
-
-//    public void rejectEdit()  {
-//        try {
-//        edit();
-//        iPrSendForApproval.sendForApproval();
-//        } catch (Exception error) {
-//            System.out.println("Error in Requisition Reject and Edit Function: " + error.getMessage());
-//        }
-//    }
-
-//    public void buyerManagerSuspendEdit()  {
-//        try {
-//            edit();
-//            iPrSendForApproval.sendForApproval();
-////            iPrApprove.approve();
-//            iPrAssign.buyerManagerLogin();
-//        } catch (Exception error) {
-//            System.out.println("Error in Requisition Buyer Manager Suspend Edit Function: " + error.getMessage());
-//        }
-//    }
-//
-//    public void buyerSuspendEdit()  {
-//        try {
-//        edit();
-//        iPrSendForApproval.sendForApproval();
-////        iPrApprove.approve();
-//        iPrAssign.buyerManagerLogin();
-//        iPrAssign.buyerManagerAssign();
-//        } catch (Exception error) {
-//            System.out.println("Error in Requisition Buyer Suspend Edit Function: " + error.getMessage());
-//        }
-//    }
 }

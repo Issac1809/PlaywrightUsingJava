@@ -4,7 +4,6 @@ import com.microsoft.playwright.*;
 import com.source.interfaces.login.ILogin;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-import java.util.Properties;
 import static com.constants.login.LLogin.*;
 
 public class Login implements ILogin {
@@ -12,7 +11,7 @@ public class Login implements ILogin {
     Logger logger;
     Page page;
     JsonNode jsonNode;
-    String appUrl;
+
     private Login() {
     }
 
@@ -21,21 +20,22 @@ public class Login implements ILogin {
         this.jsonNode = jsonNode;
         this.page = page;
         logger = LoggerUtil.getLogger(Login.class);
-        this.appUrl = jsonNode.get("config").get("appUrl").asText();
     }
 
     public int performLogin(String emailId) {
         int status = 0;
         try {
+            String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
             String password = jsonNode.get("config").get("loginPassword").asText();
+
             page.locator(EMAIL).fill(emailId);
             page.locator(PASSWORD).fill(password);
             page.locator(LOGIN_BUTTON).click();
 
             APIResponse apiResponse = page.request().fetch(appUrl + "/api/users/current");
             status = apiResponse.status();
-        } catch (Exception error) {
-            logger.error("Error in Perform Login Function: " + error.getMessage());
+        } catch (Exception exception) {
+            logger.error("Error in Perform Login Function: {}", exception.getMessage());
         }
         return status;
     }

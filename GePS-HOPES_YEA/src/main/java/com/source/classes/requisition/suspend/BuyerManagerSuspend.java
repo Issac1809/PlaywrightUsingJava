@@ -1,21 +1,21 @@
 package com.source.classes.requisition.suspend;
-
+import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requisitions.IPrBuyerManagerSuspend;
 import com.source.interfaces.requisitions.IPrEdit;
-
-import java.util.Properties;
-
+import com.utils.LoggerUtil;
+import org.apache.logging.log4j.Logger;
 import static com.constants.requisitions.LPrBuyerManagerSuspend.*;
 
 public class BuyerManagerSuspend implements IPrBuyerManagerSuspend {
 
+    Logger logger;
     ILogin iLogin;
     ILogout iLogout;
-    Properties properties;
+    JsonNode jsonNode;
     Page page;
     IPrEdit iPrEdit;
 
@@ -23,20 +23,23 @@ public class BuyerManagerSuspend implements IPrBuyerManagerSuspend {
     }
 
 //TODO Constructor
-    public BuyerManagerSuspend(ILogin iLogin, Properties properties, Page page, ILogout iLogout, IPrEdit iPrEdit){
+    public BuyerManagerSuspend(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout, IPrEdit iPrEdit){
         this.iLogin = iLogin;
-        this.properties = properties;
+        this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
         this.iPrEdit = iPrEdit;
+        this.logger = LoggerUtil.getLogger(BuyerManagerSuspend.class);
     }
 
     public void suspend() {
         try {
-            String buyerManagerMailId = properties.getProperty("BuyerManager");
+            String buyerManagerMailId = jsonNode.get("mailIds").get("BuyerManager").asText();
+            String title = jsonNode.get("requisition").get("title").asText();
+            String remarks = jsonNode.get("commonRemarks").get("suspendRemarks").asText();
+
             iLogin.performLogin(buyerManagerMailId);
 
-            String title = properties.getProperty("Title");
             Locator titleLocator = page.locator(getTitle(title));
             titleLocator.first().click();
 
@@ -44,16 +47,14 @@ public class BuyerManagerSuspend implements IPrBuyerManagerSuspend {
             suspendButtonLocator.click();
 
             Locator remarksLocator = page.locator(REMARKS);
-            remarksLocator.fill("Buyer Manager Suspended");
+            remarksLocator.fill(remarks + " " + "by" + " " + buyerManagerMailId);
 
             Locator acceptLocator = page.locator(YES);
             acceptLocator.click();
 
             iLogout.performLogout();
-//            iPrEdit.buyerManagerSuspendEdit();
-
         } catch (Exception exception) {
-            System.out.println("What is the Error: " + exception.getMessage());
+            logger.error("Error in Requisition Buyer Manager Suspend Function: {}", exception.getMessage());
         }
     }
 }

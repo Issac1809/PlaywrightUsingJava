@@ -29,6 +29,7 @@ public class Create implements IPrCreate {
     JsonNode jsonNode;
     double randomNumber;
     String appUrl;
+
     private Create(){
     }
 
@@ -47,7 +48,7 @@ public class Create implements IPrCreate {
 
     public void requesterLoginPRCreate() {
         try {
-            String emailId = jsonNode.get("mail").get("requesterEmail").asText();
+            String emailId = jsonNode.get("mailIds").get("requesterEmail").asText();
             iLogin.performLogin(emailId);
         } catch (Exception exception) {
             logger.error("Exception in Requester Login Function: {}", exception.getMessage());
@@ -85,9 +86,8 @@ public class Create implements IPrCreate {
             String title = type.toUpperCase() + getTitle + "-" + purchaseType.toUpperCase() + "-" + randomNumber;
             Locator titleLocator = page.locator(TITLE);
             titleLocator.fill(title);
-//            playwrightFactory.saveToPropertiesFile("title", title);
-            playwrightFactory.saveToJsonFile("title", title);
 
+            playwrightFactory.savePropertiesIntoJsonFile("requisition", "title", title);
         } catch (Exception exception) {
             logger.error("Exception in Title Function: {}", exception.getMessage());
         }
@@ -692,12 +692,12 @@ public class Create implements IPrCreate {
             page.locator(ATTACHMENTS).click();
 
             String[] requisitionAttachmentsTypes = jsonNode.get("requisition").get("requisitionAttachmentsTypes").asText().split(",");
-            for(int i = 0; i < requisitionAttachmentsTypes.length; i++){
-                if(requisitionAttachmentsTypes[i].equalsIgnoreCase("internal")){
+            for (String requisitionAttachmentsType : requisitionAttachmentsTypes) {
+                if (requisitionAttachmentsType.equalsIgnoreCase("internal")) {
                     String internalFilePath = jsonNode.get("config").get("internalFilePath").asText();
                     page.locator(FILE_UPLOAD).setInputFiles(Paths.get(internalFilePath));
                     page.locator(ATTACH_FILE_BUTTON).click();
-                } else if(requisitionAttachmentsTypes[i].equalsIgnoreCase("external")) {
+                } else if (requisitionAttachmentsType.equalsIgnoreCase("external")) {
                     String externalFilePath = jsonNode.get("config").get("externalFilePath").asText();
                     page.locator(FILE_UPLOAD).setInputFiles(Paths.get(externalFilePath));
                     page.locator(EXTERNAL_RADIO_BUTTON).click();
@@ -739,7 +739,7 @@ public class Create implements IPrCreate {
                 requisitionStatus = response.get("status").asText();
             }
 
-            playwrightFactory.saveToJsonFile("requisitionStatus", requisitionStatus);
+            playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionStatus", requisitionStatus);
 
             status = statusResponse.status();
 

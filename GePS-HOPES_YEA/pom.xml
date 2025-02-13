@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
 
   <name>GePS-HOPES_YEA</name>
-  <url>https://github.com/Issac1809</url>
+  <url>https://github.com/CormSquare/GePS-Testing/tree/main/GePS-HOPES_YEA</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -81,7 +81,7 @@
           <version>${maven-surefire-plugin}</version>
           <configuration>
             <suiteXmlFiles>
-              <suiteXmlFile>src/test/resources/testrunners/testng_functional.xml</suiteXmlFile>
+              <suiteXmlFile>src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml</suiteXmlFile>
             </suiteXmlFiles>
           </configuration>
         </plugin>

@@ -1,50 +1,51 @@
 package com.source.classes.requisition.approve;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requisitions.IPrApprove;
-
-import java.util.Properties;
-
+import com.utils.LoggerUtil;
+import org.apache.logging.log4j.Logger;
 import static com.constants.requisitions.LPrApprove.*;
 
 public class Approve implements IPrApprove {
 
+    private Logger logger;
     private ObjectMapper objectMapper;
     private ILogin iLogin;
     private ILogout iLogout;
-    private Properties properties;
+    private JsonNode jsonNode;
     private Page page;
 
     private Approve(){
     }
 
 //TODO Constructor
-    public Approve(ObjectMapper objectMapper, ILogin iLogin, Properties properties, Page page, ILogout iLogout){
+    public Approve(ObjectMapper objectMapper, ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
         this.objectMapper = objectMapper;
         this.iLogin = iLogin;
-        this.properties = properties;
+        this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
+        this.logger = LoggerUtil.getLogger(Approve.class);
     }
 
     public int approve() {
         int status = 0;
         try {
-            String[] approvers = properties.getProperty("requisitionApprovers").split(",");
-            String uid = properties.getProperty("requisitionUid");
+            String requisitionStatus = "";
+            String[] approvers = jsonNode.get("requisition").get("requisitionApprovers").asText().split(",");
+            String uid = jsonNode.get("requisition").get("requisitionUid").asText();
+            String title = jsonNode.get("requisition").get("orderTitle").asText();
+            String remarks = jsonNode.get("commonRemarks").get("approveRemarks").asText();
 
             for(String approver : approvers) {
                 iLogin.performLogin(approver);
 
-                String title = properties.getProperty("orderTitle");
                 String transactionLocator = getApproveButton(title);
                 Locator transaction = page.locator(transactionLocator);
                 transaction.first().click();
@@ -52,7 +53,6 @@ public class Approve implements IPrApprove {
                 Locator approveButton = page.locator(APPROVE);
                 approveButton.click();
 
-                String remarks = properties.getProperty("approveRemarks");
                 Locator approveRemarksLocator = page.locator(APPROVE_REMARKS);
                 approveRemarksLocator.fill(remarks + " " + "by" + " " + approver);
 
@@ -63,13 +63,9 @@ public class Approve implements IPrApprove {
                 status = statusResponse.status();
                 JsonNode responseJson = objectMapper.readTree(statusResponse.body());
 
-                String requisitionStatus = "";
                 if(responseJson.has("status")) {
                     requisitionStatus = responseJson.get("status").asText();
-                    break;
                 }
-
-                page.waitForLoadState(LoadState.NETWORKIDLE);
 
                 iLogout.performLogout();
 
@@ -77,8 +73,8 @@ public class Approve implements IPrApprove {
                     break;
                 }
             }
-        } catch (Exception error) {
-            System.out.println("Error in Requisition Approve Function: " + error.getMessage());
+        } catch (Exception exception) {
+            logger.error("Error in Requisition Approve Function: {}", exception.getMessage());
         }
         return status;
     }
