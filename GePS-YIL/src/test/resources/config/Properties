@@ -1,5 +1,5 @@
 #PoReferenceId
-#Thu Feb 13 11:16:56 IST 2025
+#Fri Feb 14 10:43:53 IST 2025
 Approver1=shashanka.s@yokogawa.com
 Approver2=manoj.yavagal@yokogawa.com
 Approver3=K.Rajagopalan@yokogawa.com
@@ -20,12 +20,12 @@ buyerEmail=Aditi.Agarwal@yokogawa.com
 buyerGroupName=BG2
 buyerManagerEmail=chandrashekar.hegde@yokogawa.com
 caseMarking=Case Marking Details
-catCount=225
+catCount=226
 cfoEmail=cfo@cormsquare.com
 cgst=9
 checker=shashanka.s@yokogawa.com
 countryOfOrigin=India
-currentTitle=2025-PS-Catalog-224
+currentTitle=2025-Sales-Catalog-225
 departmentPIC=c.senthilkumar@yokogawa.com
 destinationCountry=India
 discount=20
@@ -50,7 +50,7 @@ messageToSourcing=Message To Sourcing Details
 mhItem=Engineering Services
 model=Model -
 netWeightKg=35
-nonCatalogCount=117
+nonCatalogCount=118
 oiAndTpCurrency=SGD
 orderIntake=10000
 orderTitle=2025-
@@ -80,7 +80,7 @@ rfqNotes=Request For Quotation Notes and Attachments
 rohsCompliance=No
 runHeadless=false
 salesOrder=2009300877
-salesReference=46
+salesReference=48
 sgst=9
 shipToYokogawa=yes
 shippingAddress=200315579 - SATNA SMART CITY DEVELOPMENT LIMITED

@@ -43,7 +43,7 @@ public class Create implements IPrCreate {
         this.jsonNode = jsonNode;
         this.iLogin = iLogin;
         this.iLogout = iLogout;
-        this.appUrl = jsonNode.get("config").get("appUrl").asText();
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
     public void requesterLoginPRCreate() {
@@ -595,7 +595,7 @@ public class Create implements IPrCreate {
 
     public void buyerManager(){
         try {
-            String buyerManagerName = jsonNode.get("mail").get("buyerManagerEmail").asText();
+            String buyerManagerName = jsonNode.get("mailIds").get("buyerManagerEmail").asText();
             page.locator(BUYER_MANAGER).click();
             page.locator(BUYER_MANAGER_SEARCH).fill(buyerManagerName);
             String buyerManagerLocator = getBuyerManager(buyerManagerName);
@@ -607,7 +607,7 @@ public class Create implements IPrCreate {
 
     public void projectManager(){
         try {
-            String projectManagerName = jsonNode.get("mail").get("projectManagerEmail").asText();
+            String projectManagerName = jsonNode.get("mailIds").get("projectManagerEmail").asText();
             page.locator(PROJECT_MANAGER).click();
             page.locator(PROJECT_MANAGER_SEARCH).fill(projectManagerName);
 
@@ -631,7 +631,7 @@ public class Create implements IPrCreate {
 
                 page.locator(TCAS_ADD_BUTTON).click();
 
-                String tcasFilePath = jsonNode.get("config").get("tcasFilePath").asText().trim();
+                String tcasFilePath = jsonNode.get("configSettings").get("tcasFilePath").asText().trim();
                 page.locator(TCAS_FILE_UPLOAD_BUTTON).setInputFiles(Paths.get(tcasFilePath));
             }
         } catch (Exception exception) {
@@ -694,11 +694,11 @@ public class Create implements IPrCreate {
             String[] requisitionAttachmentsTypes = jsonNode.get("requisition").get("requisitionAttachmentsTypes").asText().split(",");
             for (String requisitionAttachmentsType : requisitionAttachmentsTypes) {
                 if (requisitionAttachmentsType.equalsIgnoreCase("internal")) {
-                    String internalFilePath = jsonNode.get("config").get("internalFilePath").asText();
+                    String internalFilePath = jsonNode.get("configSettings").get("internalFilePath").asText();
                     page.locator(FILE_UPLOAD).setInputFiles(Paths.get(internalFilePath));
                     page.locator(ATTACH_FILE_BUTTON).click();
                 } else if (requisitionAttachmentsType.equalsIgnoreCase("external")) {
-                    String externalFilePath = jsonNode.get("config").get("externalFilePath").asText();
+                    String externalFilePath = jsonNode.get("configSettings").get("externalFilePath").asText();
                     page.locator(FILE_UPLOAD).setInputFiles(Paths.get(externalFilePath));
                     page.locator(EXTERNAL_RADIO_BUTTON).click();
                     page.locator(ATTACH_FILE_BUTTON).click();
