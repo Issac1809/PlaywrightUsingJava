@@ -440,92 +440,110 @@ public class Create implements IPrCreate {
     }
 
     public void addLineRequisitionItemsNonCatalog() {
-        try {
-            String idValue;
-            List<String> inputTypes = new ArrayList<>();
-            String[] itemNames = jsonNode.get("requisition").get("items").asText().split(",");
-            String[] quantities = jsonNode.get("requisition").get("quantityList").asText().split(",");
+        Boolean itemImport = jsonNode.get("requisition").get("itemImport").asBoolean();
+        if(itemImport) {
+            try {
+                Locator importPopUpButton = page.locator(ITEM_IMPORT_POPUP);
+                importPopUpButton.click();
 
-            Locator addLineItemButton = page.locator(ADD_LINE_ITEM_BUTTON);
-            addLineItemButton.click();
+                Locator itemFile = page.locator(CHOOSE_FILE);
+                String filePath = jsonNode.get("configSettings").get("nonCatalogItemImportFilePath").asText();
+                itemFile.setInputFiles(Paths.get(filePath));
 
-            for (int i = 0; i < itemNames.length; i++) {
-                page.locator(NON_CATALOG_ITEMS_DROPDOWN).click();
-                page.locator(ITEM_SEARCH).fill(itemNames[i]);
-
-                String itemName = itemNames[i];
-                String encodedName = itemName.replace(" ", "%20");
-
-                APIResponse itemSpecificationResponse = page.request().fetch(appUrl + "/api/Itemcategory/search?keyword=" + encodedName + "&purchaseMethod=NonCatalog");
-                JsonNode itemSpecificationsObject = objectMapper.readTree(itemSpecificationResponse.body());
-                idValue = itemSpecificationsObject.get(0).get("id").asText();
-
-                page.locator(getItem(itemNames[i])).first().click();
-
-                APIResponse getItemSpecifications = page.request().fetch(appUrl + "/api/Items/Spefications?itemId=" + idValue);
-                JsonNode getItemSpecificationsJson = objectMapper.readTree(getItemSpecifications.body());
-
-                if(!getItemSpecificationsJson.isNull()){
-                    for(int j = 0; j < getItemSpecificationsJson.size(); j++){
-                        JsonNode item = getItemSpecificationsJson.get(j);
-                        if(item.has("inputType")) {
-                            inputTypes.add(item.get("inputType").asText());
-                        }
-                    }
-
-                    for(String inputType : inputTypes){
-                        if(inputType.equals("Text")){
-                            List<Locator> textFields = page.locator(ITEM_SPECIFICATIONS_TEXT_FIELD_LOCATORS).all();
-                            for(Locator textField : textFields){
-                                String idLocator = textField.getAttribute("id");
-                                Locator textFieldLocator = page.locator("#" + idLocator);
-                                if(textFieldLocator.isEnabled()){
-                                    textFieldLocator.fill("2000");
-                                }
-                            }
-                        } else if(inputType.equals("Selection")){
-                            List<Locator> selectionFields = page.locator(ITEM_SPECIFICATIONS_SELECTION_FIELD_LOCATORS).all();
-                            for(Locator selectionField : selectionFields){
-                                String idLocator = selectionField.getAttribute("id");
-                                Locator selectionFieldLocator = page.locator("#" + idLocator);
-                                if(selectionFieldLocator.isEnabled()){
-                                    selectionFieldLocator.click();
-                                    page.locator(ITEM_SPECIFICATIONS_SELECTION_FIELD_RESULT_LOCATOR).click();
-                                }
-                            }
-                        } else if(inputType.equals("CheckBox")){
-                            List<Locator> checkBoxFields = page.locator(ITEM_SPECIFICATIONS_CHECKBOX_FIELD_LOCATORS).all();
-                            for(Locator checkBoxField : checkBoxFields){
-                                String idLocator = checkBoxField.getAttribute("id");
-                                Locator checkBoxFieldLocator = page.locator("#" + idLocator);
-                                if(checkBoxFieldLocator.isEnabled()){
-                                    checkBoxFieldLocator.click();
-                                }
-                            }
-                        }
-                    }
-                }
-
-                page.locator(QUANTITY).fill(quantities[i]);
-
-                String shippingPoint = jsonNode.get("requisition").get("shippingPoint").asText();
-                page.locator(SHIPPING_POINT_LOCATOR).click();
-
-                page.locator(SHIPPING_POINT_SEARCH_FIELD).fill(shippingPoint);
-
-                String shippingPointOptionLocator = getShippingPoint(shippingPoint);
-                page.locator(shippingPointOptionLocator).last().click();
-
-                page.locator(ADD_ITEM_BUTTON).click();
-
-                if(i < itemNames.length - 1) {
-                    addLineItemButton.click();
-                } else {
-                    break;
-                }
+                Locator uploadButton = page.locator(UPLOAD_BUTTON);
+                uploadButton.click();
+            } catch (Exception exception) {
+                logger.error("Exception in Non Catalog Requisition Items Function: {}", exception.getMessage());
             }
-        } catch (Exception exception) {
-            logger.error("Exception in Non-Catalog Requisition Items Function: {}", exception.getMessage());
+        }
+        else{
+            try {
+                String idValue;
+                List<String> inputTypes = new ArrayList<>();
+                String[] itemNames = jsonNode.get("requisition").get("items").asText().split(",");
+                String[] quantities = jsonNode.get("requisition").get("quantityList").asText().split(",");
+
+                Locator addLineItemButton = page.locator(ADD_LINE_ITEM_BUTTON);
+                addLineItemButton.click();
+
+                for (int i = 0; i < itemNames.length; i++) {
+                    page.locator(NON_CATALOG_ITEMS_DROPDOWN).click();
+                    page.locator(ITEM_SEARCH).fill(itemNames[i]);
+
+                    String itemName = itemNames[i];
+                    String encodedName = itemName.replace(" ", "%20");
+
+                    APIResponse itemSpecificationResponse = page.request().fetch(appUrl + "/api/Itemcategory/search?keyword=" + encodedName + "&purchaseMethod=NonCatalog");
+                    JsonNode itemSpecificationsObject = objectMapper.readTree(itemSpecificationResponse.body());
+                    idValue = itemSpecificationsObject.get(0).get("id").asText();
+
+                    page.locator(getItem(itemNames[i])).first().click();
+
+                    APIResponse getItemSpecifications = page.request().fetch(appUrl + "/api/Items/Spefications?itemId=" + idValue);
+                    JsonNode getItemSpecificationsJson = objectMapper.readTree(getItemSpecifications.body());
+
+                    if (!getItemSpecificationsJson.isNull()) {
+                        for (int j = 0; j < getItemSpecificationsJson.size(); j++) {
+                            JsonNode item = getItemSpecificationsJson.get(j);
+                            if (item.has("inputType")) {
+                                inputTypes.add(item.get("inputType").asText());
+                            }
+                        }
+
+                        for (String inputType : inputTypes) {
+                            if (inputType.equals("Text")) {
+                                List<Locator> textFields = page.locator(ITEM_SPECIFICATIONS_TEXT_FIELD_LOCATORS).all();
+                                for (Locator textField : textFields) {
+                                    String idLocator = textField.getAttribute("id");
+                                    Locator textFieldLocator = page.locator("#" + idLocator);
+                                    if (textFieldLocator.isEnabled()) {
+                                        textFieldLocator.fill("2000");
+                                    }
+                                }
+                            } else if (inputType.equals("Selection")) {
+                                List<Locator> selectionFields = page.locator(ITEM_SPECIFICATIONS_SELECTION_FIELD_LOCATORS).all();
+                                for (Locator selectionField : selectionFields) {
+                                    String idLocator = selectionField.getAttribute("id");
+                                    Locator selectionFieldLocator = page.locator("#" + idLocator);
+                                    if (selectionFieldLocator.isEnabled()) {
+                                        selectionFieldLocator.click();
+                                        page.locator(ITEM_SPECIFICATIONS_SELECTION_FIELD_RESULT_LOCATOR).click();
+                                    }
+                                }
+                            } else if (inputType.equals("CheckBox")) {
+                                List<Locator> checkBoxFields = page.locator(ITEM_SPECIFICATIONS_CHECKBOX_FIELD_LOCATORS).all();
+                                for (Locator checkBoxField : checkBoxFields) {
+                                    String idLocator = checkBoxField.getAttribute("id");
+                                    Locator checkBoxFieldLocator = page.locator("#" + idLocator);
+                                    if (checkBoxFieldLocator.isEnabled()) {
+                                        checkBoxFieldLocator.click();
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    page.locator(QUANTITY).fill(quantities[i]);
+
+                    String shippingPoint = jsonNode.get("requisition").get("shippingPoint").asText();
+                    page.locator(SHIPPING_POINT_LOCATOR).click();
+
+                    page.locator(SHIPPING_POINT_SEARCH_FIELD).fill(shippingPoint);
+
+                    String shippingPointOptionLocator = getShippingPoint(shippingPoint);
+                    page.locator(shippingPointOptionLocator).last().click();
+
+                    page.locator(ADD_ITEM_BUTTON).click();
+
+                    if (i < itemNames.length - 1) {
+                        addLineItemButton.click();
+                    } else {
+                        break;
+                    }
+                }
+            } catch (Exception exception) {
+                logger.error("Exception in Non-Catalog Requisition Items Function: {}", exception.getMessage());
+            }
         }
     }
 
@@ -640,41 +658,59 @@ public class Create implements IPrCreate {
     }
 
     public void addLineRequisitionItemsCatalog(List<String> rateContractItems) {
-        Locator addLineItemButton;
-        Locator addItemButton;
-        try {
-            addLineItemButton = page.locator(ADD_LINE_ITEM_BUTTON);
-            addLineItemButton.click();
+        Boolean itemImport = jsonNode.get("requisition").get("itemImport").asBoolean();
+        if(itemImport){
+            try {
+                Locator importPopUpButton = page.locator(ITEM_IMPORT_POPUP);
+                importPopUpButton.click();
 
-            for(int i = 0; i < rateContractItems.size(); i++){
-                page.locator(CATALOG_ITEMS_DROPDOWN).click();
+                Locator itemFile = page.locator(CHOOSE_FILE);
+                String filePath = jsonNode.get("configSettings").get("catalogItemImportFilePath").asText();
+                itemFile.setInputFiles(Paths.get(filePath));
 
-                page.locator(ITEM_SEARCH).fill(rateContractItems.get(i));
-
-                String itemDropDownOptionSelect = getItem(rateContractItems.get(i));
-                page.locator(itemDropDownOptionSelect).click();
-
-                page.locator(QUANTITY).fill(String.valueOf(i + 10));
-
-                String shippingPoint = jsonNode.get("requisition").get("shippingPoint").asText();
-                page.locator(SHIPPING_POINT_LOCATOR).click();
-
-                page.locator(SHIPPING_POINT_SEARCH_FIELD).fill(shippingPoint);
-
-                String shippingPointOptionLocator = getShippingPoint(shippingPoint);
-                page.locator(shippingPointOptionLocator).last().click();
-
-                addItemButton = page.locator(ADD_ITEM_BUTTON);
-                addItemButton.click();
-
-                if(i < rateContractItems.size() - 1) {
-                    addLineItemButton.click();
-                } else {
-                    break;
-                }
+                Locator uploadButton = page.locator(UPLOAD_BUTTON);
+                uploadButton.click();
+            } catch (Exception exception) {
+                logger.error("Exception in Catalog Requisition Items Function: {}", exception.getMessage());
             }
-        } catch (Exception exception) {
-            logger.error("Exception in Catalog Requisition Items Function: {}", exception.getMessage());
+        }
+        else {
+            Locator addLineItemButton;
+            Locator addItemButton;
+            try {
+                addLineItemButton = page.locator(ADD_LINE_ITEM_BUTTON);
+                addLineItemButton.click();
+
+                for (int i = 0; i < rateContractItems.size(); i++) {
+                    page.locator(CATALOG_ITEMS_DROPDOWN).click();
+
+                    page.locator(ITEM_SEARCH).fill(rateContractItems.get(i));
+
+                    String itemDropDownOptionSelect = getItem(rateContractItems.get(i));
+                    page.locator(itemDropDownOptionSelect).click();
+
+                    page.locator(QUANTITY).fill(String.valueOf(i + 10));
+
+                    String shippingPoint = jsonNode.get("requisition").get("shippingPoint").asText();
+                    page.locator(SHIPPING_POINT_LOCATOR).click();
+
+                    page.locator(SHIPPING_POINT_SEARCH_FIELD).fill(shippingPoint);
+
+                    String shippingPointOptionLocator = getShippingPoint(shippingPoint);
+                    page.locator(shippingPointOptionLocator).last().click();
+
+                    addItemButton = page.locator(ADD_ITEM_BUTTON);
+                    addItemButton.click();
+
+                    if (i < rateContractItems.size() - 1) {
+                        addLineItemButton.click();
+                    } else {
+                        break;
+                    }
+                }
+            } catch (Exception exception) {
+                logger.error("Exception in Catalog Requisition Items Function: {}", exception.getMessage());
+            }
         }
     }
 
@@ -694,11 +730,11 @@ public class Create implements IPrCreate {
             String[] requisitionAttachmentsTypes = jsonNode.get("requisition").get("requisitionAttachmentsTypes").asText().split(",");
             for (String requisitionAttachmentsType : requisitionAttachmentsTypes) {
                 if (requisitionAttachmentsType.equalsIgnoreCase("internal")) {
-                    String internalFilePath = jsonNode.get("configSettings").get("internalFilePath").asText();
+                    String internalFilePath = jsonNode.get("configSettings").get("internalAttachmentFilePath").asText();
                     page.locator(FILE_UPLOAD).setInputFiles(Paths.get(internalFilePath));
                     page.locator(ATTACH_FILE_BUTTON).click();
                 } else if (requisitionAttachmentsType.equalsIgnoreCase("external")) {
-                    String externalFilePath = jsonNode.get("configSettings").get("externalFilePath").asText();
+                    String externalFilePath = jsonNode.get("configSettings").get("externalAttachmentFilePath").asText();
                     page.locator(FILE_UPLOAD).setInputFiles(Paths.get(externalFilePath));
                     page.locator(EXTERNAL_RADIO_BUTTON).click();
                     page.locator(ATTACH_FILE_BUTTON).click();
