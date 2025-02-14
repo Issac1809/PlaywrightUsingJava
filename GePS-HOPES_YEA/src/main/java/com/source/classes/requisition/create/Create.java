@@ -116,7 +116,7 @@ public class Create implements IPrCreate {
             Locator projectValue = page.locator(PROJECT_SEARCH);
             projectValue.fill(projectCodeValue);
 
-            String projectSelectLocator = getProject(projectCodeValue);
+            String projectSelectLocator = getLocator(projectCodeValue);
             Locator projectSelect = page.locator(projectSelectLocator);
             projectSelect.click();
 
@@ -151,7 +151,7 @@ public class Create implements IPrCreate {
                     Locator wbsSearch = page.locator(WBS_SEARCH);
                     wbsSearch.fill(wbsFromProperties);
 
-                    String wbsSelectLocator = getWBS(wbsFromProperties);
+                    String wbsSelectLocator = getLocator(wbsFromProperties);
                     Locator wbsSelect = page.locator(wbsSelectLocator);
                     wbsSelect.click();
                     break;
@@ -172,7 +172,7 @@ public class Create implements IPrCreate {
             Locator companySearch = page.locator(COMPANY_SEARCH);
             companySearch.fill(company);
 
-            String companySelectLocator = getCompany(company);
+            String companySelectLocator = getLocator(company);
             Locator companySelect = page.locator(companySelectLocator);
             companySelect.click();
             page.waitForLoadState(LoadState.NETWORKIDLE);
@@ -192,7 +192,7 @@ public class Create implements IPrCreate {
             Locator businessUnitSearch = page.locator(BUSINESS_UNIT_SEARCH);
             businessUnitSearch.fill(businessUnit);
 
-            String businessUnitSelectLocator = getbusinessUnit(businessUnit);
+            String businessUnitSelectLocator = getLocator(businessUnit);
             Locator businessUnitSelect = page.locator(businessUnitSelectLocator);
             businessUnitSelect.click();
         } catch (Exception exception) {
@@ -220,7 +220,7 @@ public class Create implements IPrCreate {
             Locator incotermSearch = page.locator(INCOTERM_SEARCH);
             incotermSearch.fill(incotermValue);
 
-            String incotermOptionLocator = getIncoterm(incotermValue);
+            String incotermOptionLocator = getLocator(incotermValue);
             Locator incotermSelect = page.locator(incotermOptionLocator);
             incotermSelect.click();
         } catch (Exception exception) {
@@ -258,7 +258,7 @@ public class Create implements IPrCreate {
             Locator warrantyRequirementsSearch = page.locator(WARRANTY_REQUIREMENTS_SEARCH);
             warrantyRequirementsSearch.fill(warrantyRequirement);
 
-            String warrantyRequirementSelector = getWarrantyRequirements(warrantyRequirement);
+            String warrantyRequirementSelector = getLocator(warrantyRequirement);
             Locator warrantyRequirementSelect = page.locator(warrantyRequirementSelector);
             warrantyRequirementSelect.click();
         } catch (Exception exception) {
@@ -281,7 +281,7 @@ public class Create implements IPrCreate {
             Locator priceValiditySearch = page.locator(PRICE_VALIDITY_SEARCH);
             priceValiditySearch.fill(priceValidity);
 
-            String priceValiditySelector = getPriceValidity(priceValidity);
+            String priceValiditySelector = getLocator(priceValidity);
             Locator priceValiditySelect = page.locator(priceValiditySelector);
             priceValiditySelect.click();
         } catch (Exception exception) {
@@ -299,7 +299,7 @@ public class Create implements IPrCreate {
                 Locator shippingAddress = page.locator(SHIPPING_ADDRESS);
                 shippingAddress.click();
 
-                String shippingAddressOptionLocator = getShippingAddress(shippingAddressValue);
+                String shippingAddressOptionLocator = getLocator(shippingAddressValue);
 
                 Locator shippingAddressSelectLocator = page.locator(shippingAddressOptionLocator);
                 shippingAddressSelectLocator.last().click();
@@ -310,7 +310,7 @@ public class Create implements IPrCreate {
                 Locator shippingAddressEnduserSearchLocator = page.locator(SHIPPING_ADDRESS_ENDUSERS_SEARCH);
                 shippingAddressEnduserSearchLocator.fill(shippingAddressEnduser);
 
-                String shippingAddressEnduserOptionLocator = getShippingAddressEnduser(shippingAddressEnduser);
+                String shippingAddressEnduserOptionLocator = getLocator(shippingAddressEnduser);
 
                 Locator shippingAddressEnduserSelectLocator = page.locator(shippingAddressEnduserOptionLocator);
                 shippingAddressEnduserSelectLocator.click();
@@ -330,7 +330,7 @@ public class Create implements IPrCreate {
             Locator shippingModeSearch = page.locator(SHIPPING_MODE_SEARCH);
             shippingModeSearch.fill(getShippingMode);
 
-            String finalShippingMode = getShippingMode(getShippingMode);
+            String finalShippingMode = getLocator(getShippingMode);
             Locator finalShippingModeLocator = page.locator(finalShippingMode);
             finalShippingModeLocator.click();
         } catch (Exception exception) {
@@ -433,7 +433,7 @@ public class Create implements IPrCreate {
             Locator oiAndTpCurremcySearchLocator = page.locator(OI_AND_TP_CURRENCY_SEARCH);
             oiAndTpCurremcySearchLocator.fill(currency);
 
-            String currencySelect = getOiAndTpCurrency(currency);
+            String currencySelect = getLocator(currency);
             Locator currencySelectLocator = page.locator(currencySelect);
             currencySelectLocator.click();
 
@@ -501,7 +501,7 @@ public class Create implements IPrCreate {
                 JsonNode itemSpecificationsObject = objectMapper.readTree(itemSpecificationResponse.body());
                 idValue = itemSpecificationsObject.get(0).get("id").asText();
 
-                Locator itemNameLocator = page.locator(getItem(itemNames[i]));
+                Locator itemNameLocator = page.locator(getLocator(itemNames[i]));
                 itemNameLocator.first().click();
 
                 APIResponse getItemSpecifications = page.request().fetch(appUrl + "/api/Items/Spefications?itemId=" + idValue);
@@ -559,7 +559,7 @@ public class Create implements IPrCreate {
                 Locator shippingPointSearchField = page.locator(SHIPPING_POINT_SEARCH_FIELD);
                 shippingPointSearchField.fill(shippingPoint);
 
-                String shippingPointOptionLocator = getShippingPoint(shippingPoint);
+                String shippingPointOptionLocator = getLocator(shippingPoint);
                 Locator shippingPointOptionSelect = page.locator(shippingPointOptionLocator);
                 shippingPointOptionSelect.last().click();
 
@@ -591,7 +591,7 @@ public class Create implements IPrCreate {
             Locator vendorSearchLocator = page.locator(VENDOR_SEARCH);
             vendorSearchLocator.fill(vendorNameValue);
 
-            String vendorOptionLocator = getVendor(vendorNameValue);
+            String vendorOptionLocator = getLocator(vendorNameValue);
             Locator vendorOptionSelectLocator = page.locator(vendorOptionLocator);
             vendorOptionSelectLocator.click();
 
@@ -625,7 +625,7 @@ public class Create implements IPrCreate {
                     Locator rateContractSearchLocator = page.locator(RATE_CONTRACT_SEARCH);
                     rateContractSearchLocator.fill(rateContractValue);
 
-                    String rateContractOptionLocator = getRateContract(rateContractValue);
+                    String rateContractOptionLocator = getLocator(rateContractValue);
                     Locator rateContractOptionSelectLocator = page.locator(rateContractOptionLocator);
                     rateContractOptionSelectLocator.click();
 
@@ -655,7 +655,7 @@ public class Create implements IPrCreate {
             Locator buyerManagerSearch = page.locator(BUYER_MANAGER_SEARCH);
             buyerManagerSearch.fill(buyerManagerName);
 
-            String buyerManagerLocator = getBuyerManager(buyerManagerName);
+            String buyerManagerLocator = getLocator(buyerManagerName);
             Locator buyerManagerSelectLocator = page.locator(buyerManagerLocator);
             buyerManagerSelectLocator.click();
         } catch (Exception exception) {
@@ -672,7 +672,7 @@ public class Create implements IPrCreate {
             Locator projectManagerSearch = page.locator(PROJECT_MANAGER_SEARCH);
             projectManagerSearch.fill(projectManagerName);
 
-            String projectManagerLocator = getProjectManager(projectManagerName);
+            String projectManagerLocator = getLocator(projectManagerName);
             Locator projectManagerSelectLocator = page.locator(projectManagerLocator);
             projectManagerSelectLocator.click();
         } catch (Exception exception) {
@@ -719,7 +719,7 @@ public class Create implements IPrCreate {
                 Locator itemSearch = page.locator(ITEM_SEARCH);
                 itemSearch.fill(rateContractItems.get(i));
 
-                String itemDropDownOptionSelect = getItem(rateContractItems.get(i));
+                String itemDropDownOptionSelect = getLocator(rateContractItems.get(i));
                 Locator itemSelect = page.locator(itemDropDownOptionSelect);
                 itemSelect.click();
 
@@ -733,7 +733,7 @@ public class Create implements IPrCreate {
                 Locator shippingPointSearch = page.locator(SHIPPING_POINT_SEARCH_FIELD);
                 shippingPointSearch.fill(shippingPoint);
 
-                String shippingPointOptionLocator = getShippingPoint(shippingPoint);
+                String shippingPointOptionLocator = getLocator(shippingPoint);
                 Locator shippingPointOptionSelect = page.locator(shippingPointOptionLocator);
                 shippingPointOptionSelect.last().click();
 

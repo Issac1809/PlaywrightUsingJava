@@ -1,9 +1,6 @@
 package com.constants.requisitions;
-import java.util.Properties;
 
 public class LPrCreate {
-
-    public Properties properties;
 
     public static final String CREATE_BUTTON = "//button[@data-bs-toggle='modal']";
     public static final String TITLE = "//input[@placeholder=\"Please Enter Title\"]";
@@ -98,71 +95,7 @@ public class LPrCreate {
         return "//a[@href='/Procurement/Requisitions/Sales_" + type + "_Create']";
     }
 
-    public static String getProject(String project) {
-        return "//li[contains(text(),'" + project + "')]";
-    }
-
-    public static String getCompany(String company) {
-        return "//li[contains(text(),'" + company + "')]";
-    }
-
-    public static String getShippingPoint(String shippingPoint) {
-        return "//li[contains(text(), " + shippingPoint + ")]";
-    }
-
-    public static String getWBS(String wbs) {
-        return "//li[contains(text(),'" + wbs + "')]";
-    }
-
-    public static String getbusinessUnit(String businessUnit) {
-        return "//li[contains(text(),'" + businessUnit + "')]";
-    }
-
-    public static String getVendor(String vendor) {
-        return "//li[contains(text(),'" + vendor + "')]";
-    }
-
-    public static String getRateContract(String rateContract) {
-        return "//li[contains(text(), \"" + rateContract + "\")]";
-    }
-
-    public static String getIncoterm(String incoterm) {
-        return "//li[contains(text(),'" + incoterm + "')]";
-    }
-
-    public static String getShippingAddress(String shippingAddress) {
-        return "//*[contains(text(),'" + shippingAddress + "')]";
-    }
-
-    public static String getShippingAddressEnduser(String shippingAddressEnduser){
-        return "//li[contains(text(), '" + shippingAddressEnduser + "')]";
-    }
-
-    public static String getShippingMode(String shippingMode) {
-        return "//li[contains(text(),'" + shippingMode + "')]";
-    }
-
-    public static String getBuyerManager(String buyerManager) {
-        return "//li[contains(text(),'" + buyerManager + "')]";
-    }
-
-    public static String getProjectManager(String projectManager) {
-        return "//li[contains(text(),'" + projectManager + "')]";
-    }
-
-    public static String getOiAndTpCurrency(String currency) {
-        return "//li[contains(text(),'" + currency + "')]";
-    }
-
-    public static String getWarrantyRequirements(String warrantyRequirements) {
-        return "//li[contains(text(),'" + warrantyRequirements + "')]";
-    }
-
-    public static String getPriceValidity(String priceValidity) {
-        return "//li[contains(text(),'" + priceValidity + "')]";
-    }
-
-    public static String getItem(String item) {
-        return "//li[contains(text(),'" + item + "')]";
+    public static String getLocator(String locator) {
+        return "//li[contains(text(),'" + locator + "')]";
     }
 }
