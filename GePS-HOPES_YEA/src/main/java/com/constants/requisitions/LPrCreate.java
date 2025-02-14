@@ -99,6 +99,6 @@ public class LPrCreate {
     }
 
     public static String getLocator(String locator) {
-        return "//li[contains(text(),'" + locator + "')]";
+        return "//li[contains(text(), \"" + locator + "\")]";
     }
 }

@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="GePS-HOPES_YEA PR - Invoice Functional Test Suite" parallel="tests" thread-count="4" verbose="1">
+<suite name="GePS-HOPES_YEA PR - Invoice Functional Test Suite" >
+
+<!--    parallel="tests" thread-count="4" verbose="1">-->
 
     <listeners>
         <listener class-name="org.testng.reporters.EmailableReporter2" />
 <!--        <listener class-name="com.aventstack.chaintest.plugins.ChainTestListener"/>-->
     </listeners>
 
-<!--    <test name="Sales Catalog Test Context">-->
-<!--        <parameter name="type" value="Sales"/>-->
-<!--        <parameter name="purchaseType" value="Catalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.context.CatalogTestContext"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Sales Catalog Test Context">
+        <parameter name="type" value="Sales"/>
+        <parameter name="purchaseType" value="Catalog"/>
+        <classes>
+            <class name="com.source.context.CatalogTestContext"/>
+        </classes>
+    </test>
 
-<!--    <test name="Sales Non-Catalog Test Context">-->
-<!--        <parameter name="type" value="Sales"/>-->
-<!--        <parameter name="purchaseType" value="NonCatalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.context.NonCatalogTestContext"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Sales Non-Catalog Test Context">
+        <parameter name="type" value="Sales"/>
+        <parameter name="purchaseType" value="NonCatalog"/>
+        <classes>
+            <class name="com.source.context.NonCatalogTestContext"/>
+        </classes>
+    </test>
 
     <test name="PS Catalog Test Context">
         <parameter name="type" value="PS"/>
@@ -31,12 +33,12 @@
         </classes>
     </test>
 
-<!--    <test name="PS Non-Catalog Test Context">-->
-<!--        <parameter name="type" value="PS"/>-->
-<!--        <parameter name="purchaseType" value="NonCatalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.context.NonCatalogTestContext"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="PS Non-Catalog Test Context">
+        <parameter name="type" value="PS"/>
+        <parameter name="purchaseType" value="NonCatalog"/>
+        <classes>
+            <class name="com.source.context.NonCatalogTestContext"/>
+        </classes>
+    </test>
 
 </suite>

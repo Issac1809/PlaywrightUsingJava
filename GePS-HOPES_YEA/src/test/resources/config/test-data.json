@@ -104,7 +104,7 @@
   },
 
   "configSettings": {
-    "browserName": "edge",
+    "browserName": "chrome",
     "runHeadless": false,
     "appUrl": "https://geps_hopes_yea.cormsquare.com",
     "loginPassword": "Admin@123",

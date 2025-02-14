@@ -22,7 +22,7 @@ public class PlaywrightFactory {
         logger = LoggerUtil.getLogger(PlaywrightFactory.class);
     }
 
-//TODO Thread Local to avoid flaky tests/to execute parallel tests
+//TODO Thread Local to execute parallel tests
     private static final ThreadLocal<Playwright> localPlaywright = new ThreadLocal<>();
     private static final ThreadLocal<Browser> localBrowser = new ThreadLocal<>();
     private static final ThreadLocal<BrowserContext> localBrowserContext = new ThreadLocal<>();
