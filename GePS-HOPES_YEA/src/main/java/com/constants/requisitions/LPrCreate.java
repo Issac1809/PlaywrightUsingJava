@@ -66,6 +66,9 @@ public class LPrCreate {
     public static final String NON_CATALOG_ITEMS_DROPDOWN = "#select2-itemid-container";
     public static final String ITEM_SEARCH = ".select2-search__field";
     public static final String QUANTITY = "#quantity";
+    public static final String ITEM_IMPORT_POPUP = "#itemImport";
+    public static final String CHOOSE_FILE = "#formFile";
+    public static final String UPLOAD_BUTTON = "#btnUpload";
     public static final String SHIPPING_POINT_LOCATOR = "#select2-itemShippingPointId-container";
     public static final String SHIPPING_POINT_SEARCH_FIELD = ".select2-search__field";
     public static final String ADD_ITEM_BUTTON = "#saveRequisitionItem";

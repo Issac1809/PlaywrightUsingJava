@@ -57,7 +57,8 @@
     "requisitionFileType": "Internal",
     "requisitionApprovers": "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes": "internal,external",
-    "requisitionUid": "ac377b81-a8fb-48ff-bb2b-464a46b66e7a"
+    "requisitionUid": "ac377b81-a8fb-48ff-bb2b-464a46b66e7a",
+    "itemImport" : "true"
   },
 
   "requestForQuotation": {
@@ -107,8 +108,10 @@
     "runHeadless": false,
     "appUrl": "https://geps_hopes_yea.cormsquare.com",
     "loginPassword": "Admin@123",
-    "internalFilePath": "documents/Internal Requisition Attachments.xlsx",
-    "externalFilePath": "documents/External Requisition Attachments.xlsx",
-    "tcasFilePath": "documents/TCAS_File.xlsx"
+    "internalAttachmentFilePath": "documents/Internal Requisition Attachments.xlsx",
+    "externalAttachmentFilePath": "documents/External Requisition Attachments.xlsx",
+    "tcasFilePath": "documents/TCAS_File.xlsx",
+    "catalogItemImportFilePath": "documents/Catalog_Item_Import.xlsx",
+    "nonCatalogItemImportFilePath": "documents/NonCatalog_Item_Import.xlsx"
   }
 }

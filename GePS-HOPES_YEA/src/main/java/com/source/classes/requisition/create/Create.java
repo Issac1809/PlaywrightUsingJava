@@ -30,9 +30,6 @@ public class Create implements IPrCreate {
     double randomNumber;
     String appUrl;
 
-    private Create(){
-    }
-
 //TODO Constructor
     public Create(PlaywrightFactory playwrightFactory, ObjectMapper objectMapper, Playwright playwright, ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
         this.logger = LoggerUtil.getLogger(Create.class);
@@ -116,7 +113,7 @@ public class Create implements IPrCreate {
             Locator projectValue = page.locator(PROJECT_SEARCH);
             projectValue.fill(projectCodeValue);
 
-            String projectSelectLocator = getLocator(projectCodeValue);
+            String projectSelectLocator = getProject(projectCodeValue);
             Locator projectSelect = page.locator(projectSelectLocator);
             projectSelect.click();
 
@@ -151,7 +148,7 @@ public class Create implements IPrCreate {
                     Locator wbsSearch = page.locator(WBS_SEARCH);
                     wbsSearch.fill(wbsFromProperties);
 
-                    String wbsSelectLocator = getLocator(wbsFromProperties);
+                    String wbsSelectLocator = getWBS(wbsFromProperties);
                     Locator wbsSelect = page.locator(wbsSelectLocator);
                     wbsSelect.click();
                     break;
@@ -172,7 +169,7 @@ public class Create implements IPrCreate {
             Locator companySearch = page.locator(COMPANY_SEARCH);
             companySearch.fill(company);
 
-            String companySelectLocator = getLocator(company);
+            String companySelectLocator = getCompany(company);
             Locator companySelect = page.locator(companySelectLocator);
             companySelect.click();
             page.waitForLoadState(LoadState.NETWORKIDLE);
@@ -192,7 +189,7 @@ public class Create implements IPrCreate {
             Locator businessUnitSearch = page.locator(BUSINESS_UNIT_SEARCH);
             businessUnitSearch.fill(businessUnit);
 
-            String businessUnitSelectLocator = getLocator(businessUnit);
+            String businessUnitSelectLocator = getbusinessUnit(businessUnit);
             Locator businessUnitSelect = page.locator(businessUnitSelectLocator);
             businessUnitSelect.click();
         } catch (Exception exception) {
@@ -220,7 +217,7 @@ public class Create implements IPrCreate {
             Locator incotermSearch = page.locator(INCOTERM_SEARCH);
             incotermSearch.fill(incotermValue);
 
-            String incotermOptionLocator = getLocator(incotermValue);
+            String incotermOptionLocator = getIncoterm(incotermValue);
             Locator incotermSelect = page.locator(incotermOptionLocator);
             incotermSelect.click();
         } catch (Exception exception) {
@@ -248,17 +245,15 @@ public class Create implements IPrCreate {
             String warrantyRequirement = jsonNode.get("requisition").get("warrantyRequirement").asText();
 
             if(type.equalsIgnoreCase("PS")) {
-                Locator warrantyRequirements = page.locator(WARRANTY_REQUIREMENTS);
-                warrantyRequirements.click();
+                page.locator(WARRANTY_REQUIREMENTS).click();
             }
             else {
-                Locator salesWarrantyRequirements = page.locator(SALES_WARRANTY_REQUIREMENTS);
-                salesWarrantyRequirements.click();
+                page.locator(SALES_WARRANTY_REQUIREMENTS).click();
             }
             Locator warrantyRequirementsSearch = page.locator(WARRANTY_REQUIREMENTS_SEARCH);
             warrantyRequirementsSearch.fill(warrantyRequirement);
 
-            String warrantyRequirementSelector = getLocator(warrantyRequirement);
+            String warrantyRequirementSelector = getWarrantyRequirements(warrantyRequirement);
             Locator warrantyRequirementSelect = page.locator(warrantyRequirementSelector);
             warrantyRequirementSelect.click();
         } catch (Exception exception) {
@@ -270,18 +265,14 @@ public class Create implements IPrCreate {
         try {
             String priceValidity = jsonNode.get("requisition").get("priceValidity").asText();
 
-            if(type.equalsIgnoreCase("PS")){
-                Locator priceValidityLocator = page.locator(PRICE_VALIDITY);
-                priceValidityLocator.click();
-            } else {
-                Locator salesPriceValidityLocator = page.locator(SALES_PRICE_VALIDITY);
-                salesPriceValidityLocator.click();
-            }
-
+            if(type.equalsIgnoreCase("PS"))
+                page.locator(PRICE_VALIDITY).click();
+            else
+                page.locator(SALES_PRICE_VALIDITY).click();
             Locator priceValiditySearch = page.locator(PRICE_VALIDITY_SEARCH);
             priceValiditySearch.fill(priceValidity);
 
-            String priceValiditySelector = getLocator(priceValidity);
+            String priceValiditySelector = getPriceValidity(priceValidity);
             Locator priceValiditySelect = page.locator(priceValiditySelector);
             priceValiditySelect.click();
         } catch (Exception exception) {
@@ -296,24 +287,14 @@ public class Create implements IPrCreate {
             String shippingAddressEnduser = jsonNode.get("requisition").get("shippingAddressEnduser").asText();
 
             if(shipToYokogawa.equalsIgnoreCase("yes")){
-                Locator shippingAddress = page.locator(SHIPPING_ADDRESS);
-                shippingAddress.click();
-
-                String shippingAddressOptionLocator = getLocator(shippingAddressValue);
-
-                Locator shippingAddressSelectLocator = page.locator(shippingAddressOptionLocator);
-                shippingAddressSelectLocator.last().click();
+                page.locator(SHIPPING_ADDRESS).click();
+                String shippingAddressOptionLocator = getShippingAddress(shippingAddressValue);
+                page.locator(shippingAddressOptionLocator).last().click();
             } else {
-                Locator shippingAddressEnduserLocator = page.locator(SHIPPING_ADDRESS_ENDUSERS_OR_OTHERS);
-                shippingAddressEnduserLocator.click();
-
-                Locator shippingAddressEnduserSearchLocator = page.locator(SHIPPING_ADDRESS_ENDUSERS_SEARCH);
-                shippingAddressEnduserSearchLocator.fill(shippingAddressEnduser);
-
-                String shippingAddressEnduserOptionLocator = getLocator(shippingAddressEnduser);
-
-                Locator shippingAddressEnduserSelectLocator = page.locator(shippingAddressEnduserOptionLocator);
-                shippingAddressEnduserSelectLocator.click();
+                page.locator(SHIPPING_ADDRESS_ENDUSERS_OR_OTHERS).click();
+                page.locator(SHIPPING_ADDRESS_ENDUSERS_SEARCH).fill(shippingAddressEnduser);
+                String shippingAddressEnduserOptionLocator = getShippingAddressEnduser(shippingAddressEnduser);
+                page.locator(shippingAddressEnduserOptionLocator).click();
             }
         } catch (Exception exception) {
             logger.error("Exception in Shipping Address Function: {}", exception.getMessage());
@@ -324,15 +305,10 @@ public class Create implements IPrCreate {
         try {
             String getShippingMode = jsonNode.get("requisition").get("shippingMode").asText();
 
-            Locator shippingMode = page.locator(SHIPPING_MODE);
-            shippingMode.click();
-
-            Locator shippingModeSearch = page.locator(SHIPPING_MODE_SEARCH);
-            shippingModeSearch.fill(getShippingMode);
-
-            String finalShippingMode = getLocator(getShippingMode);
-            Locator finalShippingModeLocator = page.locator(finalShippingMode);
-            finalShippingModeLocator.click();
+            page.locator(SHIPPING_MODE).click();
+            page.locator(SHIPPING_MODE_SEARCH).fill(getShippingMode);
+            String finalShippingMode = getShippingMode(getShippingMode);
+            page.locator(finalShippingMode).click();
         } catch (Exception exception) {
             logger.error("Exception in Shipping Mode Function: {}", exception.getMessage());
         }
@@ -340,14 +316,9 @@ public class Create implements IPrCreate {
 
     public void quotationRequiredBy() {
         try {
-            Locator quotationRequiredByLocator = page.locator(QUOTATION_REQUIRED_BY);
-            quotationRequiredByLocator.click();
-
-            Locator daysOfMonthLocator = page.locator(DAYS_OF_MONTH);
-            daysOfMonthLocator.last().click();
-
-            Locator expectedPoIssueLabelLocator = page.locator(EXPECTED_PO_ISSUE_LABEL);
-            expectedPoIssueLabelLocator.click();
+            page.locator(QUOTATION_REQUIRED_BY).click();
+            page.locator(DAYS_OF_MONTH).last().click();
+            page.locator(EXPECTED_PO_ISSUE_LABEL).click();
         } catch (Exception exception) {
             logger.error("Exception in Quotation Required By Function: {}", exception.getMessage());
         }
@@ -359,11 +330,10 @@ public class Create implements IPrCreate {
             Locator todayOption;
             if(purchaseType.equalsIgnoreCase("catalog")){
                 expectedPoIssueField = page.locator(EXPECTED_PO_ISSUE_CATALOG);
-                todayOption = page.locator(DAYS_OF_NEXT_MONTH).first();
             } else {
                 expectedPoIssueField = page.locator(EXPECTED_PO_ISSUE_NON_CATALOG);
-                todayOption = page.locator(DAYS_OF_NEXT_MONTH).first();
             }
+            todayOption = page.locator(DAYS_OF_NEXT_MONTH).first();
             expectedPoIssueField.click();
             todayOption.click();
         } catch (Exception exception) {
@@ -377,11 +347,10 @@ public class Create implements IPrCreate {
             Locator todayOption;
             if(purchaseType.equalsIgnoreCase("catalog")){
                 expectedDeliveryField = page.locator(EXPECTED_DELIVERY_CATALOG);
-                todayOption = page.locator(DAYS_OF_MONTH).last();
             } else {
                 expectedDeliveryField = page.locator(EXPECTED_DELIVERY_NON_CATALOG);
-                todayOption = page.locator(DAYS_OF_MONTH).last();
             }
+            todayOption = page.locator(DAYS_OF_MONTH).last();
             expectedDeliveryField.click();
             todayOption.click();
         } catch (Exception exception) {
@@ -394,8 +363,7 @@ public class Create implements IPrCreate {
             String compliance = jsonNode.get("requisition").get("rohsCompliance").asText();
 
             if (compliance.equalsIgnoreCase("no")) {
-                Locator rohsComplianceLocator = page.locator(ROHS_COMPLIANCE);
-                rohsComplianceLocator.click();
+                page.locator(ROHS_COMPLIANCE).click();
             }
         } catch (Exception exception) {
             logger.error("Exception in RoHS Compliance Function: {}", exception.getMessage());
@@ -427,18 +395,13 @@ public class Create implements IPrCreate {
         try {
             String currency = jsonNode.get("requisition").get("oiAndTpCurrency").asText();
 
-            Locator oiAndTpCurrencyLocator = page.locator(OI_AND_TP_CURRENCY);
-            oiAndTpCurrencyLocator.click();
+            page.locator(OI_AND_TP_CURRENCY).click();
+            page.locator(OI_AND_TP_CURRENCY_SEARCH).fill(currency);
 
-            Locator oiAndTpCurremcySearchLocator = page.locator(OI_AND_TP_CURRENCY_SEARCH);
-            oiAndTpCurremcySearchLocator.fill(currency);
+            String currencySelect = getOiAndTpCurrency(currency);
+            page.locator(currencySelect).click();
 
-            String currencySelect = getLocator(currency);
-            Locator currencySelectLocator = page.locator(currencySelect);
-            currencySelectLocator.click();
-
-            Locator oiAndTpCurrencyLabelLocator = page.locator(OI_AND_TP_CURRENCY_LABEL);
-            oiAndTpCurrencyLabelLocator.click();
+            page.locator(OI_AND_TP_CURRENCY_LABEL).click();
 
         } catch (Exception exception) {
             logger.error("Exception in OI/TP Currency Function: {}", exception.getMessage());
@@ -448,13 +411,10 @@ public class Create implements IPrCreate {
     public void orderIntake(String type){
         try {
             String orderIntake = jsonNode.get("requisition").get("orderIntake").asText();
-            if(type.equals("PS")) {
-                Locator orderIntakeLocator = page.locator(ORDER_INTAKE);
-                orderIntakeLocator.fill(orderIntake);
-            } else {
-                Locator salesOrderIntakeLocator = page.locator(SALES_ORDER_INTAKE);
-                salesOrderIntakeLocator.fill(orderIntake);
-            }
+            if(type.equals("PS"))
+                page.locator(ORDER_INTAKE).fill(orderIntake);
+            else
+                page.locator(SALES_ORDER_INTAKE).fill(orderIntake);
         } catch (Exception exception) {
             logger.error("Exception in Order Intake Function: {}", exception.getMessage());
         }
@@ -464,13 +424,10 @@ public class Create implements IPrCreate {
         try {
             if (purchaseType.equalsIgnoreCase("NonCatalog")) {
                 String targetPrice = jsonNode.get("requisition").get("targetPrice").asText();
-                if(type.equalsIgnoreCase("PS")) {
-                    Locator targetPriceLocator = page.locator(TARGET_PRICE);
-                    targetPriceLocator.fill(targetPrice);
-                } else {
-                    Locator salesTargetPriceLocator = page.locator(SALES_TARGET_PRICE);
-                    salesTargetPriceLocator.fill(targetPrice);
-                }
+                if(type.equalsIgnoreCase("PS"))
+                    page.locator(TARGET_PRICE).fill(targetPrice);
+                else
+                    page.locator(SALES_TARGET_PRICE).fill(targetPrice);
             }
         } catch (Exception exception) {
             logger.error("Exception in Target Price Function: {}", exception.getMessage());
@@ -478,11 +435,28 @@ public class Create implements IPrCreate {
     }
 
     public void addLineRequisitionItemsNonCatalog() {
-        try {
-            String idValue;
-            List<String> inputTypes = new ArrayList<>();
-            String[] itemNames = jsonNode.get("requisition").get("items").asText().split(",");
-            String[] quantities = jsonNode.get("requisition").get("quantityList").asText().split(",");
+        boolean itemImport = jsonNode.get("requisition").get("itemImport").asBoolean();
+        if(itemImport) {
+            try {
+                Locator importPopUpButton = page.locator(ITEM_IMPORT_POPUP);
+                importPopUpButton.click();
+
+                Locator itemFile = page.locator(CHOOSE_FILE);
+                String filePath = jsonNode.get("configSettings").get("nonCatalogItemImportFilePath").asText();
+                itemFile.setInputFiles(Paths.get(filePath));
+
+                Locator uploadButton = page.locator(UPLOAD_BUTTON);
+                uploadButton.click();
+            } catch (Exception exception) {
+                logger.error("Exception in Non Catalog Requisition Items Function: {}", exception.getMessage());
+            }
+        }
+        else{
+            try {
+                String idValue;
+                List<String> inputTypes = new ArrayList<>();
+                String[] itemNames = jsonNode.get("requisition").get("items").asText().split(",");
+                String[] quantities = jsonNode.get("requisition").get("quantityList").asText().split(",");
 
             Locator addLineItemButton = page.locator(ADD_LINE_ITEM_BUTTON);
             addLineItemButton.click();
@@ -501,7 +475,7 @@ public class Create implements IPrCreate {
                 JsonNode itemSpecificationsObject = objectMapper.readTree(itemSpecificationResponse.body());
                 idValue = itemSpecificationsObject.get(0).get("id").asText();
 
-                Locator itemNameLocator = page.locator(getLocator(itemNames[i]));
+                Locator itemNameLocator = page.locator(getItem(itemNames[i]));
                 itemNameLocator.first().click();
 
                 APIResponse getItemSpecifications = page.request().fetch(appUrl + "/api/Items/Spefications?itemId=" + idValue);
@@ -516,33 +490,37 @@ public class Create implements IPrCreate {
                     }
 
                     for(String inputType : inputTypes){
-                        if(inputType.equals("Text")){
-                            List<Locator> textFields = page.locator(ITEM_SPECIFICATIONS_TEXT_FIELD_LOCATORS).all();
-                            for(Locator textField : textFields){
-                                String idLocator = textField.getAttribute("id");
-                                Locator textFieldLocator = page.locator("#" + idLocator);
-                                if(textFieldLocator.isEnabled()){
-                                    textFieldLocator.fill("2000");
+                        switch (inputType) {
+                            case "Text" -> {
+                                List<Locator> textFields = page.locator(ITEM_SPECIFICATIONS_TEXT_FIELD_LOCATORS).all();
+                                for (Locator textField : textFields) {
+                                    String idLocator = textField.getAttribute("id");
+                                    Locator textFieldLocator = page.locator("#" + idLocator);
+                                    if (textFieldLocator.isEnabled()) {
+                                        textFieldLocator.fill("2000");
+                                    }
                                 }
                             }
-                        } else if(inputType.equals("Selection")){
-                            List<Locator> selectionFields = page.locator(ITEM_SPECIFICATIONS_SELECTION_FIELD_LOCATORS).all();
-                            for(Locator selectionField : selectionFields){
-                                String idLocator = selectionField.getAttribute("id");
-                                Locator selectionFieldLocator = page.locator("#" + idLocator);
-                                if(selectionFieldLocator.isEnabled()){
-                                    selectionFieldLocator.click();
-                                    Locator itemSpecificationLocator = page.locator(ITEM_SPECIFICATIONS_SELECTION_FIELD_RESULT_LOCATOR);
-                                    itemSpecificationLocator.click();
+                            case "Selection" -> {
+                                List<Locator> selectionFields = page.locator(ITEM_SPECIFICATIONS_SELECTION_FIELD_LOCATORS).all();
+                                for (Locator selectionField : selectionFields) {
+                                    String idLocator = selectionField.getAttribute("id");
+                                    Locator selectionFieldLocator = page.locator("#" + idLocator);
+                                    if (selectionFieldLocator.isEnabled()) {
+                                        selectionFieldLocator.click();
+                                        Locator itemSpecificationLocator = page.locator(ITEM_SPECIFICATIONS_SELECTION_FIELD_RESULT_LOCATOR);
+                                        itemSpecificationLocator.click();
+                                    }
                                 }
                             }
-                        } else if(inputType.equals("CheckBox")){
-                            List<Locator> checkBoxFields = page.locator(ITEM_SPECIFICATIONS_CHECKBOX_FIELD_LOCATORS).all();
-                            for(Locator checkBoxField : checkBoxFields){
-                                String idLocator = checkBoxField.getAttribute("id");
-                                Locator checkBoxFieldLocator = page.locator("#" + idLocator);
-                                if(checkBoxFieldLocator.isEnabled()){
-                                    checkBoxFieldLocator.click();
+                            case "CheckBox" -> {
+                                List<Locator> checkBoxFields = page.locator(ITEM_SPECIFICATIONS_CHECKBOX_FIELD_LOCATORS).all();
+                                for (Locator checkBoxField : checkBoxFields) {
+                                    String idLocator = checkBoxField.getAttribute("id");
+                                    Locator checkBoxFieldLocator = page.locator("#" + idLocator);
+                                    if (checkBoxFieldLocator.isEnabled()) {
+                                        checkBoxFieldLocator.click();
+                                    }
                                 }
                             }
                         }
@@ -559,21 +537,22 @@ public class Create implements IPrCreate {
                 Locator shippingPointSearchField = page.locator(SHIPPING_POINT_SEARCH_FIELD);
                 shippingPointSearchField.fill(shippingPoint);
 
-                String shippingPointOptionLocator = getLocator(shippingPoint);
+                String shippingPointOptionLocator = getShippingPoint(shippingPoint);
                 Locator shippingPointOptionSelect = page.locator(shippingPointOptionLocator);
                 shippingPointOptionSelect.last().click();
 
                 Locator addItemButtonLocator = page.locator(ADD_ITEM_BUTTON);
                 addItemButtonLocator.click();
 
-                if(i < itemNames.length - 1) {
-                    addLineItemButton.click();
-                } else {
-                    break;
+                    if (i < itemNames.length - 1) {
+                        addLineItemButton.click();
+                    } else {
+                        break;
+                    }
                 }
+            } catch (Exception exception) {
+                logger.error("Exception in Non-Catalog Requisition Items IMPORT Function: {}", exception.getMessage());
             }
-        } catch (Exception exception) {
-            logger.error("Exception in Non-Catalog Requisition Items Function: {}", exception.getMessage());
         }
     }
 
@@ -591,7 +570,7 @@ public class Create implements IPrCreate {
             Locator vendorSearchLocator = page.locator(VENDOR_SEARCH);
             vendorSearchLocator.fill(vendorNameValue);
 
-            String vendorOptionLocator = getLocator(vendorNameValue);
+            String vendorOptionLocator = getVendor(vendorNameValue);
             Locator vendorOptionSelectLocator = page.locator(vendorOptionLocator);
             vendorOptionSelectLocator.click();
 
@@ -625,7 +604,7 @@ public class Create implements IPrCreate {
                     Locator rateContractSearchLocator = page.locator(RATE_CONTRACT_SEARCH);
                     rateContractSearchLocator.fill(rateContractValue);
 
-                    String rateContractOptionLocator = getLocator(rateContractValue);
+                    String rateContractOptionLocator = getRateContract(rateContractValue);
                     Locator rateContractOptionSelectLocator = page.locator(rateContractOptionLocator);
                     rateContractOptionSelectLocator.click();
 
@@ -655,7 +634,7 @@ public class Create implements IPrCreate {
             Locator buyerManagerSearch = page.locator(BUYER_MANAGER_SEARCH);
             buyerManagerSearch.fill(buyerManagerName);
 
-            String buyerManagerLocator = getLocator(buyerManagerName);
+            String buyerManagerLocator = getBuyerManager(buyerManagerName);
             Locator buyerManagerSelectLocator = page.locator(buyerManagerLocator);
             buyerManagerSelectLocator.click();
         } catch (Exception exception) {
@@ -672,7 +651,7 @@ public class Create implements IPrCreate {
             Locator projectManagerSearch = page.locator(PROJECT_MANAGER_SEARCH);
             projectManagerSearch.fill(projectManagerName);
 
-            String projectManagerLocator = getLocator(projectManagerName);
+            String projectManagerLocator = getProjectManager(projectManagerName);
             Locator projectManagerSelectLocator = page.locator(projectManagerLocator);
             projectManagerSelectLocator.click();
         } catch (Exception exception) {
@@ -706,11 +685,28 @@ public class Create implements IPrCreate {
     }
 
     public void addLineRequisitionItemsCatalog(List<String> rateContractItems) {
-        Locator addLineItemButton;
-        Locator addItemButton;
-        try {
-            addLineItemButton = page.locator(ADD_LINE_ITEM_BUTTON);
-            addLineItemButton.click();
+        boolean itemImport = jsonNode.get("requisition").get("itemImport").asBoolean();
+        if(itemImport){
+            try {
+                Locator importPopUpButton = page.locator(ITEM_IMPORT_POPUP);
+                importPopUpButton.click();
+
+                Locator itemFile = page.locator(CHOOSE_FILE);
+                String filePath = jsonNode.get("configSettings").get("catalogItemImportFilePath").asText();
+                itemFile.setInputFiles(Paths.get(filePath));
+
+                Locator uploadButton = page.locator(UPLOAD_BUTTON);
+                uploadButton.click();
+            } catch (Exception exception) {
+                logger.error("Exception in Catalog Requisition Items IMPORT Function: {}", exception.getMessage());
+            }
+        }
+        else {
+            Locator addLineItemButton;
+            Locator addItemButton;
+            try {
+                addLineItemButton = page.locator(ADD_LINE_ITEM_BUTTON);
+                addLineItemButton.click();
 
             for(int i = 0; i < rateContractItems.size(); i++){
                 Locator itemDropDown = page.locator(CATALOG_ITEMS_DROPDOWN);
@@ -719,7 +715,7 @@ public class Create implements IPrCreate {
                 Locator itemSearch = page.locator(ITEM_SEARCH);
                 itemSearch.fill(rateContractItems.get(i));
 
-                String itemDropDownOptionSelect = getLocator(rateContractItems.get(i));
+                String itemDropDownOptionSelect = getItem(rateContractItems.get(i));
                 Locator itemSelect = page.locator(itemDropDownOptionSelect);
                 itemSelect.click();
 
@@ -733,21 +729,22 @@ public class Create implements IPrCreate {
                 Locator shippingPointSearch = page.locator(SHIPPING_POINT_SEARCH_FIELD);
                 shippingPointSearch.fill(shippingPoint);
 
-                String shippingPointOptionLocator = getLocator(shippingPoint);
+                String shippingPointOptionLocator = getShippingPoint(shippingPoint);
                 Locator shippingPointOptionSelect = page.locator(shippingPointOptionLocator);
                 shippingPointOptionSelect.last().click();
 
-                addItemButton = page.locator(ADD_ITEM_BUTTON);
-                addItemButton.click();
+                    addItemButton = page.locator(ADD_ITEM_BUTTON);
+                    addItemButton.click();
 
-                if(i < rateContractItems.size() - 1) {
-                    addLineItemButton.click();
-                } else {
-                    break;
+                    if (i < rateContractItems.size() - 1) {
+                        addLineItemButton.click();
+                    } else {
+                        break;
+                    }
                 }
+            } catch (Exception exception) {
+                logger.error("Exception in Catalog Requisition Items Function: {}", exception.getMessage());
             }
-        } catch (Exception exception) {
-            logger.error("Exception in Catalog Requisition Items Function: {}", exception.getMessage());
         }
     }
 
@@ -764,8 +761,8 @@ public class Create implements IPrCreate {
     public void attachments(){
         try {
             String[] requisitionAttachmentsTypes = jsonNode.get("requisition").get("requisitionAttachmentsTypes").asText().split(",");
-            String internalFilePath = jsonNode.get("configSettings").get("internalFilePath").asText();
-            String externalFilePath = jsonNode.get("configSettings").get("externalFilePath").asText();
+            String internalFilePath = jsonNode.get("configSettings").get("internalAttachmentFilePath").asText();
+            String externalFilePath = jsonNode.get("configSettings").get("externalAttachmentFilePath").asText();
 
             Locator attachmentsButton = page.locator(ATTACHMENTS);
             attachmentsButton.click();
