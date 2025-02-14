@@ -762,8 +762,8 @@ public class Create implements IPrCreate {
     public void attachments(){
         try {
             String[] requisitionAttachmentsTypes = jsonNode.get("requisition").get("requisitionAttachmentsTypes").asText().split(",");
-            String internalFilePath = jsonNode.get("configSettings").get("internalFilePath").asText();
-            String externalFilePath = jsonNode.get("configSettings").get("externalFilePath").asText();
+            String internalFilePath = jsonNode.get("configSettings").get("internalAttachmentFilePath").asText();
+            String externalFilePath = jsonNode.get("configSettings").get("externalAttachmentFilePath").asText();
 
             Locator attachmentsButton = page.locator(ATTACHMENTS);
             attachmentsButton.click();

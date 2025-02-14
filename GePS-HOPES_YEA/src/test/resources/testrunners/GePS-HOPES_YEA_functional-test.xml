@@ -23,20 +23,20 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="PS Catalog Test Context">-->
-<!--        <parameter name="type" value="PS"/>-->
-<!--        <parameter name="purchaseType" value="Catalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.context.CatalogTestContext"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-
-    <test name="PS Non-Catalog Test Context">
+    <test name="PS Catalog Test Context">
         <parameter name="type" value="PS"/>
-        <parameter name="purchaseType" value="NonCatalog"/>
+        <parameter name="purchaseType" value="Catalog"/>
         <classes>
-            <class name="com.source.context.NonCatalogTestContext"/>
+            <class name="com.source.context.CatalogTestContext"/>
         </classes>
     </test>
+
+<!--    <test name="PS Non-Catalog Test Context">-->
+<!--        <parameter name="type" value="PS"/>-->
+<!--        <parameter name="purchaseType" value="NonCatalog"/>-->
+<!--        <classes>-->
+<!--            <class name="com.source.context.NonCatalogTestContext"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
 </suite>
