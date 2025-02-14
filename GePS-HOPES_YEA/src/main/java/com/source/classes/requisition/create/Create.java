@@ -30,9 +30,6 @@ public class Create implements IPrCreate {
     double randomNumber;
     String appUrl;
 
-    private Create(){
-    }
-
 //TODO Constructor
     public Create(PlaywrightFactory playwrightFactory, ObjectMapper objectMapper, Playwright playwright, ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
         this.logger = LoggerUtil.getLogger(Create.class);
@@ -333,11 +330,10 @@ public class Create implements IPrCreate {
             Locator todayOption;
             if(purchaseType.equalsIgnoreCase("catalog")){
                 expectedPoIssueField = page.locator(EXPECTED_PO_ISSUE_CATALOG);
-                todayOption = page.locator(DAYS_OF_NEXT_MONTH).first();
             } else {
                 expectedPoIssueField = page.locator(EXPECTED_PO_ISSUE_NON_CATALOG);
-                todayOption = page.locator(DAYS_OF_NEXT_MONTH).first();
             }
+            todayOption = page.locator(DAYS_OF_NEXT_MONTH).first();
             expectedPoIssueField.click();
             todayOption.click();
         } catch (Exception exception) {
@@ -351,11 +347,10 @@ public class Create implements IPrCreate {
             Locator todayOption;
             if(purchaseType.equalsIgnoreCase("catalog")){
                 expectedDeliveryField = page.locator(EXPECTED_DELIVERY_CATALOG);
-                todayOption = page.locator(DAYS_OF_MONTH).last();
             } else {
                 expectedDeliveryField = page.locator(EXPECTED_DELIVERY_NON_CATALOG);
-                todayOption = page.locator(DAYS_OF_MONTH).last();
             }
+            todayOption = page.locator(DAYS_OF_MONTH).last();
             expectedDeliveryField.click();
             todayOption.click();
         } catch (Exception exception) {
@@ -440,7 +435,7 @@ public class Create implements IPrCreate {
     }
 
     public void addLineRequisitionItemsNonCatalog() {
-        Boolean itemImport = jsonNode.get("requisition").get("itemImport").asBoolean();
+        boolean itemImport = jsonNode.get("requisition").get("itemImport").asBoolean();
         if(itemImport) {
             try {
                 Locator importPopUpButton = page.locator(ITEM_IMPORT_POPUP);
@@ -495,33 +490,37 @@ public class Create implements IPrCreate {
                     }
 
                     for(String inputType : inputTypes){
-                        if(inputType.equals("Text")){
-                            List<Locator> textFields = page.locator(ITEM_SPECIFICATIONS_TEXT_FIELD_LOCATORS).all();
-                            for(Locator textField : textFields){
-                                String idLocator = textField.getAttribute("id");
-                                Locator textFieldLocator = page.locator("#" + idLocator);
-                                if(textFieldLocator.isEnabled()){
-                                    textFieldLocator.fill("2000");
+                        switch (inputType) {
+                            case "Text" -> {
+                                List<Locator> textFields = page.locator(ITEM_SPECIFICATIONS_TEXT_FIELD_LOCATORS).all();
+                                for (Locator textField : textFields) {
+                                    String idLocator = textField.getAttribute("id");
+                                    Locator textFieldLocator = page.locator("#" + idLocator);
+                                    if (textFieldLocator.isEnabled()) {
+                                        textFieldLocator.fill("2000");
+                                    }
                                 }
                             }
-                        } else if(inputType.equals("Selection")){
-                            List<Locator> selectionFields = page.locator(ITEM_SPECIFICATIONS_SELECTION_FIELD_LOCATORS).all();
-                            for(Locator selectionField : selectionFields){
-                                String idLocator = selectionField.getAttribute("id");
-                                Locator selectionFieldLocator = page.locator("#" + idLocator);
-                                if(selectionFieldLocator.isEnabled()){
-                                    selectionFieldLocator.click();
-                                    Locator itemSpecificationLocator = page.locator(ITEM_SPECIFICATIONS_SELECTION_FIELD_RESULT_LOCATOR);
-                                    itemSpecificationLocator.click();
+                            case "Selection" -> {
+                                List<Locator> selectionFields = page.locator(ITEM_SPECIFICATIONS_SELECTION_FIELD_LOCATORS).all();
+                                for (Locator selectionField : selectionFields) {
+                                    String idLocator = selectionField.getAttribute("id");
+                                    Locator selectionFieldLocator = page.locator("#" + idLocator);
+                                    if (selectionFieldLocator.isEnabled()) {
+                                        selectionFieldLocator.click();
+                                        Locator itemSpecificationLocator = page.locator(ITEM_SPECIFICATIONS_SELECTION_FIELD_RESULT_LOCATOR);
+                                        itemSpecificationLocator.click();
+                                    }
                                 }
                             }
-                        } else if(inputType.equals("CheckBox")){
-                            List<Locator> checkBoxFields = page.locator(ITEM_SPECIFICATIONS_CHECKBOX_FIELD_LOCATORS).all();
-                            for(Locator checkBoxField : checkBoxFields){
-                                String idLocator = checkBoxField.getAttribute("id");
-                                Locator checkBoxFieldLocator = page.locator("#" + idLocator);
-                                if(checkBoxFieldLocator.isEnabled()){
-                                    checkBoxFieldLocator.click();
+                            case "CheckBox" -> {
+                                List<Locator> checkBoxFields = page.locator(ITEM_SPECIFICATIONS_CHECKBOX_FIELD_LOCATORS).all();
+                                for (Locator checkBoxField : checkBoxFields) {
+                                    String idLocator = checkBoxField.getAttribute("id");
+                                    Locator checkBoxFieldLocator = page.locator("#" + idLocator);
+                                    if (checkBoxFieldLocator.isEnabled()) {
+                                        checkBoxFieldLocator.click();
+                                    }
                                 }
                             }
                         }
@@ -552,7 +551,7 @@ public class Create implements IPrCreate {
                     }
                 }
             } catch (Exception exception) {
-                logger.error("Exception in Non-Catalog Requisition Items Function: {}", exception.getMessage());
+                logger.error("Exception in Non-Catalog Requisition Items IMPORT Function: {}", exception.getMessage());
             }
         }
     }
@@ -686,7 +685,7 @@ public class Create implements IPrCreate {
     }
 
     public void addLineRequisitionItemsCatalog(List<String> rateContractItems) {
-        Boolean itemImport = jsonNode.get("requisition").get("itemImport").asBoolean();
+        boolean itemImport = jsonNode.get("requisition").get("itemImport").asBoolean();
         if(itemImport){
             try {
                 Locator importPopUpButton = page.locator(ITEM_IMPORT_POPUP);
@@ -699,7 +698,7 @@ public class Create implements IPrCreate {
                 Locator uploadButton = page.locator(UPLOAD_BUTTON);
                 uploadButton.click();
             } catch (Exception exception) {
-                logger.error("Exception in Catalog Requisition Items Function: {}", exception.getMessage());
+                logger.error("Exception in Catalog Requisition Items IMPORT Function: {}", exception.getMessage());
             }
         }
         else {
