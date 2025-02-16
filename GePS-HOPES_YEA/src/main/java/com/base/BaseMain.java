@@ -20,9 +20,11 @@ import com.source.interfaces.requisitions.*;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
+import java.io.FileWriter;
 
 public class BaseMain {
 
+    protected FileWriter fileWriter;
     protected Logger logger;
     protected ObjectMapper objectMapper;
     protected JsonNode jsonNode;

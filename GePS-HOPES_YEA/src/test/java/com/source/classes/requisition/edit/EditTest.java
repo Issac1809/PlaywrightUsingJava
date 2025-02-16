@@ -7,16 +7,16 @@ import org.testng.annotations.Test;
 public class EditTest extends BaseTest {
 
     @Test
-    @Parameters({"purchaseType"})
+    @Parameters({"type", "purchaseType"})
     public void edit(){
         try {
             String purchaseType = "";
-            int status = iPrEdit.edit(purchaseType);
-            if(status == 200) {
-                Assert.assertEquals(200, status, "Requisition Edit was not successful");
-            }
+            String type = "";
+            int status = iPrEdit.edit(type, purchaseType);
+            Assert.assertEquals(200, status, "Requisition Edit was not successful");
         } catch (Exception exception) {
-            logger.error("Error in Requisition Edit Test Function: " + exception.getMessage());
+            logger.error("Error in Requisition Edit Test Function: {}", exception.getMessage());
+            Assert.fail("Error in Requisition Edit Test Function: " + exception.getMessage());
         }
     }
 }

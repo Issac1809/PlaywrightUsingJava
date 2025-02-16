@@ -19,18 +19,18 @@ public class CatalogTestContext extends BaseTest {
         }
     }
 
-//    @Test(priority = 2)
-//    @Parameters({"purchaseType"})
-//    public void editRequisition(String purchaseType){
-//        try {
-//            int status = iPrEdit.edit(purchaseType);
-//
-//            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
-//        } catch (Exception error) {
-//            logger.error("Error in Edit Requisition Context Function for Catalog Type: " + error.getMessage());
-//            Assert.fail("Error in Edit Requisition Context Function for Catalog Type: " + error.getMessage());
-//        }
-//    }
+    @Test(priority = 2)
+    @Parameters({"type", "purchaseType"})
+    public void editRequisition(String type, String purchaseType){
+        try {
+            int status = iPrEdit.edit(type, purchaseType);
+
+            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
+        } catch (Exception error) {
+            logger.error("Error in Edit Requisition Context Function for Catalog Type: {}", error.getMessage());
+            Assert.fail("Error in Edit Requisition Context Function for Catalog Type: " + error.getMessage());
+        }
+    }
 //
 //    @Test(priority = 3)
 //    @Parameters({"purchaseType"})

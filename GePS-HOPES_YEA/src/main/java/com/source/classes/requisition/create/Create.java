@@ -84,7 +84,15 @@ public class Create implements IPrCreate {
             Locator titleLocator = page.locator(TITLE);
             titleLocator.fill(title);
 
-            playwrightFactory.savePropertiesIntoJsonFile("requisition", "title", title);
+            String getType = "";
+
+            if(type.equalsIgnoreCase("PS")) {
+                getType = purchaseType.equalsIgnoreCase("catalog") ? "psCatalogTitle" : "psNonCatalogTitle";
+            } else {
+                getType = purchaseType.equalsIgnoreCase("Sales") ? "salesCatalogTitle" : "salesNonCatalogTitle";
+            }
+
+            playwrightFactory.savePropertiesIntoJsonFile("requisition", getType, title);
         } catch (Exception exception) {
             logger.error("Exception in Title Function: {}", exception.getMessage());
         }
@@ -272,6 +280,7 @@ public class Create implements IPrCreate {
             } else {
                 Locator salesPriceValidity = page.locator(SALES_PRICE_VALIDITY);
                 salesPriceValidity.click();
+            }
 
                 Locator priceValiditySearch = page.locator(PRICE_VALIDITY_SEARCH);
                 priceValiditySearch.fill(priceValidity);
@@ -279,7 +288,6 @@ public class Create implements IPrCreate {
                 String priceValiditySelector = getLocator(priceValidity);
                 Locator priceValiditySelect = page.locator(priceValiditySelector);
                 priceValiditySelect.click();
-            }
         } catch (Exception exception) {
             logger.error("Exception in Price Validity Function: {}", exception.getMessage());
         }

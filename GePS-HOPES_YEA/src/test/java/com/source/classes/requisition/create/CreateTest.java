@@ -13,11 +13,10 @@ public class CreateTest extends BaseTest {
             String purchaseType = "";
             String type = "";
             int status = iPrType.processRequisitionType(type, purchaseType);
-            if(status == 200){
-                Assert.assertEquals(200, status, "Requisition Create was not Successful");
-            }
+            Assert.assertEquals(200, status, "Requisition Create was not Successful");
         } catch (Exception exception) {
             logger.error("Error in Requisition Create Test Function: {}", exception.getMessage());
+            Assert.fail("Error in Requisition Create Test Function: " + exception.getMessage());
         }
     }
 }

@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.microsoft.playwright.*;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
+import java.io.FileWriter;
 import java.nio.file.Paths;
 import java.util.Base64;
 
 public class PlaywrightFactory {
 
+    FileWriter fileWriter;
     ObjectMapper objectMapper;
     JsonNode jsonNode;
     static Logger logger;
@@ -87,6 +89,11 @@ public class PlaywrightFactory {
             if (jsonNode.has(parentKey) && jsonNode.get(parentKey).isObject()) {
                 ObjectNode parentNode = (ObjectNode) jsonNode.get(parentKey);
                 parentNode.put(attributeKey, attributeValue);
+
+//TODO try is used to close the file writer or the json file will be empty
+                try (FileWriter fileWriter = new FileWriter("./src/test/resources/config/test-data.json")) {
+                    objectMapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, jsonNode);
+                }
             } else {
                 logger.warn("Parent key '{}' not found or not an object in JSON", parentKey);
             }

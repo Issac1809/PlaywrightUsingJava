@@ -23,9 +23,11 @@ import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import java.io.File;
+import java.io.FileWriter;
 
 public class BaseTest {
 
+    protected FileWriter fileWriter;
     protected Logger logger;
     protected ObjectMapper objectMapper;
     protected JsonNode jsonNode;

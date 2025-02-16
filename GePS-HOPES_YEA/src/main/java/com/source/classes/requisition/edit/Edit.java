@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -31,20 +32,30 @@ public class Edit implements IPrEdit {
         this.logger = LoggerUtil.getLogger(Edit.class);
     }
 
-    public int edit(String purchaseType) {
+    public int edit(String type, String purchaseType) {
         int status = 0;
         try {
-        String requesterEmailId = jsonNode.get("requisition").get("requesterEmail").asText();
-        String title = jsonNode.get("requisition").get("title").asText();
+        String requesterEmailId = jsonNode.get("mailIds").get("requesterEmail").asText();
+
+        String getTitle;
+        if(type.equalsIgnoreCase("PS")){
+            getTitle = purchaseType.equalsIgnoreCase("Catalog") ? "psCatalogTitle" : "psNonCatalogTitle";
+        } else {
+            getTitle = purchaseType.equalsIgnoreCase("Catalog") ? "salesCatalogTitle" : "salesNonCatalogTitle";
+        }
+
+        String title = jsonNode.get("requisition").get(getTitle).asText();
 
         iLogin.performLogin(requesterEmailId);
 
-        String getTitle = getTitle(title);
-        Locator titleLocator = page.locator(getTitle);
+        String getTitleLocator = getTitle(title);
+        Locator titleLocator = page.locator(getTitleLocator);
         titleLocator.first().click();
 
         Locator editButtonLocator = page.locator(EDIT_BUTTON);
         editButtonLocator.click();
+
+        page.waitForLoadState(LoadState.NETWORKIDLE);
 
         Locator updateButtonLocator = page.locator(UPDATE_BUTTON);
         updateButtonLocator.click();
