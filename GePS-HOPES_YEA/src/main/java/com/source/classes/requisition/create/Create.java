@@ -89,7 +89,7 @@ public class Create implements IPrCreate {
             if(type.equalsIgnoreCase("PS")) {
                 getType = purchaseType.equalsIgnoreCase("catalog") ? "psCatalogTitle" : "psNonCatalogTitle";
             } else {
-                getType = purchaseType.equalsIgnoreCase("Sales") ? "salesCatalogTitle" : "salesNonCatalogTitle";
+                getType = purchaseType.equalsIgnoreCase("catalog") ? "salesCatalogTitle" : "salesNonCatalogTitle";
             }
 
             playwrightFactory.savePropertiesIntoJsonFile("requisition", getType, title);

@@ -1,6 +1,7 @@
 package com.source.classes.login;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.*;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +35,8 @@ public class Login implements ILogin {
 
             APIResponse apiResponse = page.request().fetch(appUrl + "/api/users/current");
             status = apiResponse.status();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
         } catch (Exception exception) {
             logger.error("Error in Perform Login Function: {}", exception.getMessage());
         }

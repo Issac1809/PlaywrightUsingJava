@@ -24,10 +24,10 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-Automation",
-    "psCatalogTitle" : "PS-Automation-CATALOG-225.0",
-    "psNonCatalogTitle" : "PS-Automation-NONCATALOG-634.0",
-    "salesCatalogTitle" : "",
-    "salesNonCatalogTitle" : "SALES-Automation-NONCATALOG-645.0",
+    "psCatalogTitle" : "PS-Automation-CATALOG-951.0",
+    "psNonCatalogTitle" : "PS-Automation-NONCATALOG-243.0",
+    "salesCatalogTitle" : "SALES-Automation-CATALOG-151.0",
+    "salesNonCatalogTitle" : "SALES-Automation-NONCATALOG-914.0",
     "shipToYokogawa" : "no",
     "companyName" : "Yokogawa Engineering Asia Pte Ltd",
     "businessUnit" : "CMM-Central Materials Management",
@@ -99,7 +99,7 @@
     "workOrderReferenceId" : ""
   },
   "configSettings" : {
-    "browserName" : "chrome",
+    "browserName" : "edge",
     "runHeadless" : false,
     "appUrl" : "https://geps_hopes_yea.cormsquare.com",
     "loginPassword" : "Admin@123",

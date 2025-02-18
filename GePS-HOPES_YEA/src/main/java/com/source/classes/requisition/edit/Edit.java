@@ -19,6 +19,7 @@ public class Edit implements IPrEdit {
     private ILogout iLogout;
     private JsonNode jsonNode;
     private Page page;
+    private String appUrl;
 
     private Edit(){
     }
@@ -30,6 +31,7 @@ public class Edit implements IPrEdit {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(Edit.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
     public int edit(String type, String purchaseType) {
@@ -63,11 +65,12 @@ public class Edit implements IPrEdit {
         Locator yesButtonLocator = page.locator(YES);
         yesButtonLocator.click();
 
-        APIResponse updateResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/Requisitions", RequestOptions.create());
+        APIResponse updateResponse = page.request().fetch(appUrl + "/api/Requisitions", RequestOptions.create());
         status = updateResponse.status();
 
         iLogout.performLogout();
-        } catch (Exception exception) {
+        }
+        catch (Exception exception) {
             logger.error("Error in Requisition Edit Function: {}", exception.getMessage());
         }
         return status;
