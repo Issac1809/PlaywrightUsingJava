@@ -11,6 +11,7 @@ import com.source.interfaces.requisitions.IPrEdit;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import static com.constants.requisitions.LPrEdit.*;
+import static com.utils.getUtils.getTransactionTitle;
 
 public class Edit implements IPrEdit {
 
@@ -39,19 +40,10 @@ public class Edit implements IPrEdit {
         try {
         String requesterEmailId = jsonNode.get("mailIds").get("requesterEmail").asText();
 
-        String getTitle;
-        if(type.equalsIgnoreCase("PS")){
-            getTitle = purchaseType.equalsIgnoreCase("Catalog") ? "psCatalogTitle" : "psNonCatalogTitle";
-        } else {
-            getTitle = purchaseType.equalsIgnoreCase("Catalog") ? "salesCatalogTitle" : "salesNonCatalogTitle";
-        }
-
-        String title = jsonNode.get("requisition").get(getTitle).asText();
-
         iLogin.performLogin(requesterEmailId);
 
-        String getTitleLocator = getTitle(title);
-        Locator titleLocator = page.locator(getTitleLocator);
+        String title = getTransactionTitle(type, purchaseType);
+        Locator titleLocator = page.locator(title);
         titleLocator.first().click();
 
         Locator editButtonLocator = page.locator(EDIT_BUTTON);

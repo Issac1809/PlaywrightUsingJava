@@ -9,11 +9,76 @@
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
 <tr><th colspan="8">GePS-HOPES_YEA PR - Invoice Functional Test Suite</th></tr>
-<tr><td><a href="#t0">Sales Non-Catalog Test Context</a></td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">29,182</td><td></td><td></td></tr>
+<tr><td><a href="#t0">PS Catalog Test Context</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num attn">3</td><td class="num">31,655</td><td></td><td></td></tr>
+<tr class="stripe"><td><a href="#t1">PS Non-Catalog Test Context</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num attn">2</td><td class="num">22,183</td><td></td><td></td></tr>
+<tr><td><a href="#t2">Sales Catalog Test Context</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num attn">3</td><td class="num">17,655</td><td></td><td></td></tr>
+<tr class="stripe"><td><a href="#t3">Sales Non-Catalog Test Context</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num attn">2</td><td class="num">14,321</td><td></td><td></td></tr>
+<tr><th>Total</th><th class="num">0</th><th class="num">0</th><th class="num">0</th><th class="num attn">10</th><th class="num">85,814</th><th colspan="2"></th></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">GePS-HOPES_YEA PR - Invoice Functional Test Suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Sales Non-Catalog Test Context &#8212; passed</th></tr><tr class="passedeven"><td rowspan="2">com.source.context.NonCatalogTestContext</td><td><a href="#m0">createRequisition</a></td><td rowspan="1">1739882158819</td><td rowspan="1">10636</td></tr><tr class="passedeven"><td><a href="#m1">editRequisition</a></td><td rowspan="1">1739882169459</td><td rowspan="1">4236</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">GePS-HOPES_YEA PR - Invoice Functional Test Suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">PS Catalog Test Context &#8212; failed</th></tr><tr class="failedeven"><td rowspan="3">com.source.context.CatalogTestContext</td><td><a href="#m0">createRequisition</a></td><td rowspan="1">1739970150796</td><td rowspan="1">20045</td></tr><tr class="failedeven"><td><a href="#m1">editRequisition</a></td><td rowspan="1">1739970170848</td><td rowspan="1">3189</td></tr><tr class="failedeven"><td><a href="#m2">requisitionSendForApproval</a></td><td rowspan="1">1739970174039</td><td rowspan="1">14</td></tr></tbody>
+<tbody id="t1"><tr><th colspan="4">PS Non-Catalog Test Context &#8212; failed</th></tr><tr class="failedeven"><td rowspan="2">com.source.context.NonCatalogTestContext</td><td><a href="#m3">createRequisition</a></td><td rowspan="1">1739970175726</td><td rowspan="1">20493</td></tr><tr class="failedeven"><td><a href="#m4">editRequisition</a></td><td rowspan="1">1739970196224</td><td rowspan="1">5</td></tr></tbody>
+<tbody id="t2"><tr><th colspan="4">Sales Catalog Test Context &#8212; failed</th></tr><tr class="failedeven"><td rowspan="3">com.source.context.CatalogTestContext</td><td><a href="#m5">createRequisition</a></td><td rowspan="1">1739970197852</td><td rowspan="1">15891</td></tr><tr class="failedeven"><td><a href="#m6">editRequisition</a></td><td rowspan="1">1739970213745</td><td rowspan="1">11</td></tr><tr class="failedeven"><td><a href="#m7">requisitionSendForApproval</a></td><td rowspan="1">1739970213759</td><td rowspan="1">4</td></tr></tbody>
+<tbody id="t3"><tr><th colspan="4">Sales Non-Catalog Test Context &#8212; failed</th></tr><tr class="failedeven"><td rowspan="2">com.source.context.NonCatalogTestContext</td><td><a href="#m8">createRequisition</a></td><td rowspan="1">1739970215512</td><td rowspan="1">12680</td></tr><tr class="failedeven"><td><a href="#m9">editRequisition</a></td><td rowspan="1">1739970228194</td><td rowspan="1">26</td></tr></tbody>
 </table>
-<h2>Sales Non-Catalog Test Context</h2><h3 id="m0">com.source.context.NonCatalogTestContext#createRequisition</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>Sales</td><td>NonCatalog</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m1">com.source.context.NonCatalogTestContext#editRequisition</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>Sales</td><td>NonCatalog</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>PS Catalog Test Context</h2><h3 id="m0">com.source.context.CatalogTestContext#createRequisition</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>PS</td><td>Catalog</td></tr><tr><th colspan="2">Exception</th></tr><tr><td colspan="2"><div class="stacktrace">java.lang.AssertionError: API call was not successful; Status Code: 0 expected [0] but found [200]
+	at com.source.context.CatalogTestContext.createRequisition(CatalogTestContext.java:15)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:65)
+	at com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:105)
+... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m1">com.source.context.CatalogTestContext#editRequisition</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>PS</td><td>Catalog</td></tr><tr><th colspan="2">Exception</th></tr><tr><td colspan="2"><div class="stacktrace">java.lang.AssertionError: API call was not successful; Status Code: 0 expected [0] but found [200]
+	at com.source.context.CatalogTestContext.editRequisition(CatalogTestContext.java:28)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:65)
+	at com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:105)
+... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m2">com.source.context.CatalogTestContext#requisitionSendForApproval</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>PS</td><td>Catalog</td></tr><tr><th colspan="2">Exception</th></tr><tr><td colspan="2"><div class="stacktrace">java.lang.AssertionError: API call was not successful; Status Code: 0 expected [0] but found [200]
+	at com.source.context.CatalogTestContext.requisitionSendForApproval(CatalogTestContext.java:41)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:65)
+	at com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:105)
+... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>PS Non-Catalog Test Context</h2><h3 id="m3">com.source.context.NonCatalogTestContext#createRequisition</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>PS</td><td>NonCatalog</td></tr><tr><th colspan="2">Exception</th></tr><tr><td colspan="2"><div class="stacktrace">java.lang.AssertionError: API call was not successful; Status Code: 0 expected [0] but found [200]
+	at com.source.context.NonCatalogTestContext.createRequisition(NonCatalogTestContext.java:15)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:65)
+	at com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:105)
+... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m4">com.source.context.NonCatalogTestContext#editRequisition</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>PS</td><td>NonCatalog</td></tr><tr><th colspan="2">Exception</th></tr><tr><td colspan="2"><div class="stacktrace">java.lang.AssertionError: API call was not successful; Status Code: 0 expected [0] but found [200]
+	at com.source.context.NonCatalogTestContext.editRequisition(NonCatalogTestContext.java:28)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:65)
+	at com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:105)
+... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>Sales Catalog Test Context</h2><h3 id="m5">com.source.context.CatalogTestContext#createRequisition</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>Sales</td><td>Catalog</td></tr><tr><th colspan="2">Exception</th></tr><tr><td colspan="2"><div class="stacktrace">java.lang.AssertionError: API call was not successful; Status Code: 0 expected [0] but found [200]
+	at com.source.context.CatalogTestContext.createRequisition(CatalogTestContext.java:15)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:65)
+	at com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:105)
+... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m6">com.source.context.CatalogTestContext#editRequisition</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>Sales</td><td>Catalog</td></tr><tr><th colspan="2">Exception</th></tr><tr><td colspan="2"><div class="stacktrace">java.lang.AssertionError: API call was not successful; Status Code: 0 expected [0] but found [200]
+	at com.source.context.CatalogTestContext.editRequisition(CatalogTestContext.java:28)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:65)
+	at com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:105)
+... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m7">com.source.context.CatalogTestContext#requisitionSendForApproval</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>Sales</td><td>Catalog</td></tr><tr><th colspan="2">Exception</th></tr><tr><td colspan="2"><div class="stacktrace">java.lang.AssertionError: API call was not successful; Status Code: 0 expected [0] but found [200]
+	at com.source.context.CatalogTestContext.requisitionSendForApproval(CatalogTestContext.java:41)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:65)
+	at com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:105)
+... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>Sales Non-Catalog Test Context</h2><h3 id="m8">com.source.context.NonCatalogTestContext#createRequisition</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>Sales</td><td>NonCatalog</td></tr><tr><th colspan="2">Exception</th></tr><tr><td colspan="2"><div class="stacktrace">java.lang.AssertionError: API call was not successful; Status Code: 0 expected [0] but found [200]
+	at com.source.context.NonCatalogTestContext.createRequisition(NonCatalogTestContext.java:15)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:65)
+	at com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:105)
+... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m9">com.source.context.NonCatalogTestContext#editRequisition</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>Sales</td><td>NonCatalog</td></tr><tr><th colspan="2">Exception</th></tr><tr><td colspan="2"><div class="stacktrace">java.lang.AssertionError: API call was not successful; Status Code: 0 expected [0] but found [200]
+	at com.source.context.NonCatalogTestContext.editRequisition(NonCatalogTestContext.java:28)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:65)
+	at com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:105)
+... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>
