@@ -39,7 +39,7 @@ public class SendForApproval implements IPrSendForApproval {
         this.logger = LoggerUtil.getLogger(SendForApproval.class);
     }
 
-    public int sendForApproval(String purchaseType) {
+    public int sendForApproval(String type, String purchaseType) {
         int approvalStatus = 0;
         List<String> approvers = new ArrayList<>();
 
