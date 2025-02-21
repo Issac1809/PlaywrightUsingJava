@@ -13,7 +13,9 @@ import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
+
 import static com.constants.requisitions.LPrSendForApproval.*;
+import static com.utils.getUtils.getTransactionTitle;
 
 public class SendForApproval implements IPrSendForApproval {
 
@@ -24,6 +26,7 @@ public class SendForApproval implements IPrSendForApproval {
     private JsonNode jsonNode;
     private ILogin iLogin;
     private ILogout iLogout;
+    private String appUrl;
 
     private SendForApproval() {
     }
@@ -37,6 +40,7 @@ public class SendForApproval implements IPrSendForApproval {
         this.iLogin = iLogin;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(SendForApproval.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
     public int sendForApproval(String type, String purchaseType) {
@@ -44,13 +48,13 @@ public class SendForApproval implements IPrSendForApproval {
         List<String> approvers = new ArrayList<>();
 
         try {
-        String requesterMailId = jsonNode.get("requisition").get("requesterEmail").asText();
-        String title = jsonNode.get("requisition").get("title").asText();
+        String requesterMailId = jsonNode.get("mailIds").get("requesterEmail").asText();
 
         iLogin.performLogin(requesterMailId);
 
-        String getTitle = getTitle(title);
-        Locator titleLocator = page.locator(getTitle);
+        String title = getTransactionTitle(type, purchaseType);
+        String getTitleLocator = getTitle(title);
+        Locator titleLocator = page.locator(getTitleLocator);
         titleLocator.first().click();
 
         String url = page.url();
@@ -59,7 +63,7 @@ public class SendForApproval implements IPrSendForApproval {
 
         playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionUid", getUid);
 
-        APIResponse approvalResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/Requisitions/" + getUid, RequestOptions.create());
+        APIResponse approvalResponse = page.request().fetch(appUrl + "/api/Requisitions/" + getUid, RequestOptions.create());
         JsonNode getApproversJson = objectMapper.readTree(approvalResponse.body());
         int requisitionId = getApproversJson.get("requisitionId").asInt();
 
@@ -69,25 +73,25 @@ public class SendForApproval implements IPrSendForApproval {
         Locator yesButtonLocator = page.locator(YES);
         yesButtonLocator.click();
 
-        APIResponse approverResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/Approvals?entityId=" + requisitionId + "&approvalTypeEnum=Requisition", RequestOptions.create());
+        APIResponse approverResponse = page.request().fetch( appUrl + "/api/Approvals?entityId=" + requisitionId + "&approvalTypeEnum=Requisition", RequestOptions.create());
         JsonNode approversJson = objectMapper.readTree(approverResponse.body());
         approvalStatus = approverResponse.status();
 
-            if(approversJson.has("approvers")) {
-                JsonNode approversArray = approversJson.get("approvers");
-                for(JsonNode approver : approversArray){
-                    if(approver.has("email")){
-                        String finalApprover = approver.get("email").asText();
-                        approvers.add(finalApprover);
-                    }
+        if(approversJson.has("approvers")) {
+            JsonNode approversArray = approversJson.get("approvers");
+            for(JsonNode approver : approversArray){
+                if(approver.has("email")){
+                    String finalApprover = approver.get("email").asText();
+                    approvers.add(finalApprover);
                 }
             }
+        }
 
-            if(!approvers.isEmpty()){
-                for (String approver : approvers) {
-                    playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionApprovers", approver);
-                }
+        if(!approvers.isEmpty()){
+            for (String approver : approvers) {
+                playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionApprovers", approver);
             }
+        }
 
             iLogout.performLogout();
         } catch (Exception exception) {

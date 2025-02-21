@@ -24,10 +24,10 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-Automation",
-    "psCatalogTitle" : "PS-Automation-CATALOG-225.0",
-    "psNonCatalogTitle" : "PS-Automation-NONCATALOG-634.0",
-    "salesCatalogTitle" : "",
-    "salesNonCatalogTitle" : "SALES-Automation-NONCATALOG-645.0",
+    "psCatalogTitle" : "PS-Automation-CATALOG-688.0",
+    "psNonCatalogTitle" : "PS-Automation-NONCATALOG-993.0",
+    "salesCatalogTitle" : "SALES-Automation-CATALOG-233.0",
+    "salesNonCatalogTitle" : "SALES-Automation-NONCATALOG-406.0",
     "shipToYokogawa" : "no",
     "companyName" : "Yokogawa Engineering Asia Pte Ltd",
     "businessUnit" : "CMM-Central Materials Management",
@@ -53,12 +53,12 @@
     "rateContract" : "Alpha's second Rate-Contract",
     "tcasComplianceApplicable" : "yes",
     "tcasQuestionNumber" : "4",
-    "requisitionStatus" : "Approved",
+    "requisitionStatus" : "Draft",
     "requisitionNotes" : "Requisition Notes and Attachments",
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "ac377b81-a8fb-48ff-bb2b-464a46b66e7a",
+    "requisitionUid" : "05c8be27-c54e-4e45-b368-22262d0fbe3c",
     "itemImport" : "true"
   },
   "requestForQuotation" : {
@@ -99,7 +99,7 @@
     "workOrderReferenceId" : ""
   },
   "configSettings" : {
-    "browserName" : "chrome",
+    "browserName" : "edge",
     "runHeadless" : false,
     "appUrl" : "https://geps_hopes_yea.cormsquare.com",
     "loginPassword" : "Admin@123",

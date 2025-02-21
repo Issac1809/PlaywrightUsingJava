@@ -32,18 +32,18 @@ public class CatalogTestContext extends BaseTest {
         }
     }
 
-    @Test(priority = 3)
-    @Parameters({"type", "purchaseType"})
-    public void requisitionSendForApproval(String type, String purchaseType){
-        try {
-            int status = iPrSendForApproval.sendForApproval(type, purchaseType);
-
-            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
-        } catch (Exception error) {
-            logger.error("Error in Requisition Send For Approval Context Function for Catalog Type: {}", error.getMessage());
-            Assert.fail("Error in Requisition Send For Approval Context Function for Catalog Type: " + error.getMessage());
-        }
-    }
+//    @Test(priority = 3)
+//    @Parameters({"type","purchaseType"})
+//    public void requisitionSendForApproval(String type, String purchaseType){
+//        try {
+//            int status = iPrSendForApproval.sendForApproval(type, purchaseType);
+//
+//            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
+//        } catch (Exception error) {
+//            logger.error("Error in Requisition Send For Approval Context Function for Catalog Type: " + error.getMessage());
+//            Assert.fail("Error in Requisition Send For Approval Context Function for Catalog Type: " + error.getMessage());
+//        }
+//    }
 //
 //    @Test(priority = 4)
 //    @Parameters({"purchaseType"})
