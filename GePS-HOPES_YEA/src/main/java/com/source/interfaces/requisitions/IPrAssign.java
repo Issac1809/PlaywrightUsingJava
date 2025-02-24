@@ -1,6 +1,5 @@
 package com.source.interfaces.requisitions;
 
 public interface IPrAssign {
-    void buyerManagerLogin();
-    void buyerManagerAssign();
+    void buyerManagerAssign(String type, String purchaseType);
 }

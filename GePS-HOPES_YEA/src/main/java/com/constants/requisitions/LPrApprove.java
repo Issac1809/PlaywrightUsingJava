@@ -10,7 +10,7 @@ public class LPrApprove {
     private LPrApprove(){
     }
 
-    public static String getApproveButton(String title){
+    public static String getTitle(String title){
         String getTitle = "//*[contains(text(), '" + title + "')]";
         return  getTitle;
     }

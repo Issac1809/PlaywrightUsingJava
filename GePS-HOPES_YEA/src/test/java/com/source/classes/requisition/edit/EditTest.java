@@ -15,8 +15,8 @@ public class EditTest extends BaseTest {
             int status = iPrEdit.edit(type, purchaseType);
             Assert.assertEquals(200, status, "Requisition Edit was not successful");
         } catch (Exception exception) {
-            logger.error("Error in Requisition Edit Test Function: {}", exception.getMessage());
-            Assert.fail("Error in Requisition Edit Test Function: " + exception.getMessage());
+            logger.error("Exception in Requisition Edit Test Function: {}", exception.getMessage());
+            Assert.fail("Exception in Requisition Edit Test Function: " + exception.getMessage());
         }
     }
 }

@@ -1,5 +1,5 @@
 package com.source.interfaces.requisitions;
 
 public interface IPrApprove {
-    int approve();
+    int approve(String type, String purchaseType);
 }

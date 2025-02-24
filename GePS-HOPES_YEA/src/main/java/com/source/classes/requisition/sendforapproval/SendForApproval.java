@@ -13,9 +13,8 @@ import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.constants.requisitions.LPrSendForApproval.*;
-import static com.utils.getUtils.getTransactionTitle;
+import static com.utils.GetTitleUtil.getTransactionTitle;
 
 public class SendForApproval implements IPrSendForApproval {
 
@@ -53,8 +52,7 @@ public class SendForApproval implements IPrSendForApproval {
         iLogin.performLogin(requesterMailId);
 
         String title = getTransactionTitle(type, purchaseType);
-        String getTitleLocator = getTitle(title);
-        Locator titleLocator = page.locator(getTitleLocator);
+        Locator titleLocator = page.locator(getTitle(title));
         titleLocator.first().click();
 
         String url = page.url();
@@ -95,7 +93,7 @@ public class SendForApproval implements IPrSendForApproval {
 
             iLogout.performLogout();
         } catch (Exception exception) {
-            logger.error("Error in Requisition Send For Approval Function: {}", exception.getMessage());
+            logger.error("Exception in Requisition Send For Approval Function: {}", exception.getMessage());
         }
         return approvalStatus;
     }

@@ -23,9 +23,9 @@
   },
   "requisition" : {
     "purchaseType" : "Catalog",
-    "orderTitle" : "-Automation",
-    "psCatalogTitle" : "PS-Automation-CATALOG-688.0",
-    "psNonCatalogTitle" : "PS-Automation-NONCATALOG-993.0",
+    "orderTitle" : "-AUTOMATION",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-525.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-329.0",
     "salesCatalogTitle" : "SALES-Automation-CATALOG-233.0",
     "salesNonCatalogTitle" : "SALES-Automation-NONCATALOG-406.0",
     "shipToYokogawa" : "no",
@@ -58,7 +58,7 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "05c8be27-c54e-4e45-b368-22262d0fbe3c",
+    "requisitionUid" : "7222f83b-b996-4ca6-a08b-06ea9cfc3469",
     "itemImport" : "true"
   },
   "requestForQuotation" : {

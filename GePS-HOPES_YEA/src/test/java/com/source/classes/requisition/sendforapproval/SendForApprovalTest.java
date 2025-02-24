@@ -13,10 +13,10 @@ public class SendForApprovalTest extends BaseTest {
             String purchaseType = "";
             String type = "";
             int status = iPrSendForApproval.sendForApproval(type, purchaseType);
-
-            Assert.assertEquals(200, status, "API Call was not successful");
+            Assert.assertEquals(200, status, "Requisition Send For Approval was not successful");
         } catch (Exception exception) {
-            logger.error("Error in Send For Approval Test Function: " + exception.getMessage());
+            logger.error("Exception in Send For Approval Test Function: {}", exception.getMessage());
+            Assert.fail("Exception in Requisition Edit Test Function: " + exception.getMessage());
         }
     }
 }

@@ -11,6 +11,7 @@ import com.source.interfaces.requisitions.IPrApprove;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import static com.constants.requisitions.LPrApprove.*;
+import static com.utils.GetTitleUtil.getTransactionTitle;
 
 public class Approve implements IPrApprove {
 
@@ -34,20 +35,19 @@ public class Approve implements IPrApprove {
         this.logger = LoggerUtil.getLogger(Approve.class);
     }
 
-    public int approve() {
+    public int approve(String type, String purchaseType) {
         int status = 0;
         try {
             String requisitionStatus = "";
             String[] approvers = jsonNode.get("requisition").get("requisitionApprovers").asText().split(",");
             String uid = jsonNode.get("requisition").get("requisitionUid").asText();
-            String title = jsonNode.get("requisition").get("orderTitle").asText();
             String remarks = jsonNode.get("commonRemarks").get("approveRemarks").asText();
 
             for(String approver : approvers) {
                 iLogin.performLogin(approver);
 
-                String transactionLocator = getApproveButton(title);
-                Locator transaction = page.locator(transactionLocator);
+                String title = getTransactionTitle(type, purchaseType);
+                Locator transaction = page.locator(getTitle(title));
                 transaction.first().click();
 
                 Locator approveButton = page.locator(APPROVE);
@@ -74,7 +74,7 @@ public class Approve implements IPrApprove {
                 }
             }
         } catch (Exception exception) {
-            logger.error("Error in Requisition Approve Function: {}", exception.getMessage());
+            logger.error("Exception in Requisition Approve Function: {}", exception.getMessage());
         }
         return status;
     }

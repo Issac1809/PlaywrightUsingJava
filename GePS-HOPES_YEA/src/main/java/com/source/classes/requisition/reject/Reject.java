@@ -10,6 +10,7 @@ import com.source.interfaces.requisitions.IPrReject;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import static com.constants.requisitions.LPrReject.*;
+import static com.utils.GetTitleUtil.getTransactionTitle;
 
 public class Reject implements IPrReject {
 
@@ -31,19 +32,18 @@ public class Reject implements IPrReject {
         this.logger = LoggerUtil.getLogger(Reject.class);
     }
 
-    public int reject(String purchaseType) {
+    public int reject(String type, String purchaseType) {
         int rejectStatus = 0;
         try {
             String[] approvers = jsonNode.get("requisition").get("requisitionApprovers").asText().split(",");
             String uid = jsonNode.get("requisition").get("requisitionUid").asText();
-            String title = jsonNode.get("requisition").get("title").asText();
             String remarks = jsonNode.get("commonRemarks").get("rejectRemarks").asText();
 
             for(String approver : approvers){
                 iLogin.performLogin(approver);
 
-                String getTitle = getTitle(title);
-                Locator titleLocator = page.locator(getTitle);
+                String getTitleFromUtil = getTransactionTitle(type, purchaseType);
+                Locator titleLocator = page.locator(getTitle(getTitleFromUtil));
                 titleLocator.first().click();
 
                 Locator rejectButtonLocator = page.locator(REJECT_BUTTON);
@@ -62,7 +62,7 @@ public class Reject implements IPrReject {
 
             iLogout.performLogout();
         } catch (Exception exception) {
-            logger.error("Error in Requisition Reject Function: {}", exception.getMessage());
+            logger.error("Exception in Requisition Reject Function: {}", exception.getMessage());
         }
         return rejectStatus;
     }

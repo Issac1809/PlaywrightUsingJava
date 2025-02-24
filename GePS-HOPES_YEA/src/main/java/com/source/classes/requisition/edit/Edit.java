@@ -11,7 +11,7 @@ import com.source.interfaces.requisitions.IPrEdit;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import static com.constants.requisitions.LPrEdit.*;
-import static com.utils.getUtils.getTransactionTitle;
+import static com.utils.GetTitleUtil.getTransactionTitle;
 
 public class Edit implements IPrEdit {
 
@@ -43,7 +43,7 @@ public class Edit implements IPrEdit {
         iLogin.performLogin(requesterEmailId);
 
         String title = getTransactionTitle(type, purchaseType);
-        Locator titleLocator = page.locator(title);
+        Locator titleLocator = page.locator(getTitle(title));
         titleLocator.first().click();
 
         Locator editButtonLocator = page.locator(EDIT_BUTTON);
@@ -63,7 +63,7 @@ public class Edit implements IPrEdit {
         iLogout.performLogout();
         }
         catch (Exception exception) {
-            logger.error("Error in Requisition Edit Function: {}", exception.getMessage());
+            logger.error("Exception in Requisition Edit Function: {}", exception.getMessage());
         }
         return status;
     }

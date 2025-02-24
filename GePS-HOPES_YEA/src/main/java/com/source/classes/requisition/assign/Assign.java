@@ -8,6 +8,7 @@ import com.source.interfaces.requisitions.IPrAssign;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import static com.constants.requisitions.LPrAssign.*;
+import static com.utils.GetTitleUtil.getTransactionTitle;
 
 public class Assign implements IPrAssign {
 
@@ -30,23 +31,17 @@ public class Assign implements IPrAssign {
         this.logger = LoggerUtil.getLogger(Assign.class);
     }
 
-    public void buyerManagerLogin() {
+    public void buyerManagerAssign(String type, String purchaseType) {
         try {
-            String buyerManager = jsonNode.get("mailIds").get("buyerManagerEmail").asText();
-            iLogin.performLogin(buyerManager);
-        } catch (Exception exception) {
-            logger.error("Error in Requisition Buyer Manager Login Function: {}", exception.getMessage());
-        }
-    }
-
-    public void buyerManagerAssign() {
-        try {
-            String title = jsonNode.get("requisition").get("orderTitle").asText();
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
-            String getTitle = getTitle(title);
+            String buyerManagerMailId = jsonNode.get("mailIds").get("buyerManagerEmail").asText();
+
+            iLogin.performLogin(buyerManagerMailId);
+
+            String getTitle = getTransactionTitle(type, purchaseType);
             String getBuyerMailId = getBuyerMailId(buyerMailId);
 
-            Locator titleLocator = page.locator(getTitle);
+            Locator titleLocator = page.locator(getTitle(getTitle));
             titleLocator.first().click();
 
             Locator assignUser = page.locator(ASSIGN_USER);

@@ -18,19 +18,19 @@ import com.source.classes.requisition.type.PurchaseRequisitionTypeHandler;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requisitions.*;
+import com.utils.GetTitleUtil;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import java.io.File;
-import java.io.FileWriter;
 
 public class BaseTest {
 
-    protected FileWriter fileWriter;
     protected Logger logger;
     protected ObjectMapper objectMapper;
     protected JsonNode jsonNode;
+    protected GetTitleUtil getTitleUtil;
     protected Playwright playwright;
     protected PlaywrightFactory playwrightFactory;
     protected Page page;
@@ -58,6 +58,7 @@ public class BaseTest {
             jsonNode = objectMapper.readTree(new File("./src/test/resources/config/test-data.json"));
             playwrightFactory = new PlaywrightFactory(objectMapper, jsonNode);
             page = playwrightFactory.initializePage(jsonNode);
+            getTitleUtil = new GetTitleUtil(jsonNode, logger);
 
 //TODO Requisition
             iLogin = new Login(jsonNode, page);
