@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -21,6 +22,7 @@ public class Approve implements IPrApprove {
     private ILogout iLogout;
     private JsonNode jsonNode;
     private Page page;
+    private String appUrl;
 
     private Approve(){
     }
@@ -33,6 +35,7 @@ public class Approve implements IPrApprove {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(Approve.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
     public int approve(String type, String purchaseType) {
@@ -58,8 +61,9 @@ public class Approve implements IPrApprove {
 
                 Locator submitButtonLocator = page.locator(SUBMIT_BUTTON);
                 submitButtonLocator.click();
+                page.waitForLoadState(LoadState.NETWORKIDLE);
 
-                APIResponse statusResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/Requisitions/" + uid, RequestOptions.create());
+                APIResponse statusResponse = page.request().fetch(appUrl + "/api/Requisitions/" + uid, RequestOptions.create());
                 status = statusResponse.status();
                 JsonNode responseJson = objectMapper.readTree(statusResponse.body());
 

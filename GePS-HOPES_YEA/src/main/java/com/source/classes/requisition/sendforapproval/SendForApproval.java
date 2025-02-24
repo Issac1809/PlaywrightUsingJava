@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -70,10 +71,12 @@ public class SendForApproval implements IPrSendForApproval {
 
         Locator yesButtonLocator = page.locator(YES);
         yesButtonLocator.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
 
         APIResponse approverResponse = page.request().fetch( appUrl + "/api/Approvals?entityId=" + requisitionId + "&approvalTypeEnum=Requisition", RequestOptions.create());
         JsonNode approversJson = objectMapper.readTree(approverResponse.body());
         approvalStatus = approverResponse.status();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
 
         if(approversJson.has("approvers")) {
             JsonNode approversArray = approversJson.get("approvers");

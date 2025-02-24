@@ -20,7 +20,6 @@ public class Logout implements ILogout {
 
     public void performLogout() {
         try {
-            page.waitForLoadState(LoadState.NETWORKIDLE);
             Locator loginAvatarLocator = page.locator(LOGIN_AVATAR);
             loginAvatarLocator.click();
 

@@ -24,9 +24,9 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-525.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-329.0",
-    "salesCatalogTitle" : "SALES-Automation-CATALOG-233.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-240.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-378.0",
+    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-507.0",
     "salesNonCatalogTitle" : "SALES-Automation-NONCATALOG-406.0",
     "shipToYokogawa" : "no",
     "companyName" : "Yokogawa Engineering Asia Pte Ltd",
@@ -58,7 +58,7 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "7222f83b-b996-4ca6-a08b-06ea9cfc3469",
+    "requisitionUid" : "19315cba-452c-4daf-b25b-6f985f9c2bf8",
     "itemImport" : "true"
   },
   "requestForQuotation" : {

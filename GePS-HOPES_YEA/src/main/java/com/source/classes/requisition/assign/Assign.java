@@ -1,7 +1,10 @@
 package com.source.classes.requisition.assign;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requisitions.IPrAssign;
@@ -17,6 +20,7 @@ public class Assign implements IPrAssign {
     private ILogin iLogin;
     private ILogout iLogout;
     private Logger logger;
+    private String appUrl;
 
 //TODO Constructor    
     private Assign(){
@@ -29,12 +33,15 @@ public class Assign implements IPrAssign {
         this.iLogin = iLogin;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(Assign.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void buyerManagerAssign(String type, String purchaseType) {
+    public int buyerManagerAssign(String type, String purchaseType) {
+        int assignStatus = 0;
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             String buyerManagerMailId = jsonNode.get("mailIds").get("buyerManagerEmail").asText();
+            String uid = jsonNode.get("requisition").get("requisitionUid").asText();
 
             iLogin.performLogin(buyerManagerMailId);
 
@@ -58,10 +65,16 @@ public class Assign implements IPrAssign {
 
             Locator saveUser = page.locator(SAVE_USER);
             saveUser.click();
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            APIResponse rejectResponse = page.request().fetch(appUrl + "/api/Requisitions/" + uid, RequestOptions.create());
+            assignStatus = rejectResponse.status();
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Error in Requisition Buyer Manager Assign Function: {}", exception.getMessage());
         }
+            return assignStatus;
     }
 }

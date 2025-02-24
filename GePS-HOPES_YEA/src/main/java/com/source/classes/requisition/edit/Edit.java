@@ -56,9 +56,11 @@ public class Edit implements IPrEdit {
 
         Locator yesButtonLocator = page.locator(YES);
         yesButtonLocator.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
 
         APIResponse updateResponse = page.request().fetch(appUrl + "/api/Requisitions", RequestOptions.create());
         status = updateResponse.status();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
 
         iLogout.performLogout();
         }
