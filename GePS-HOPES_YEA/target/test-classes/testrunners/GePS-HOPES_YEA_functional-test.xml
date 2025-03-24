@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="GePS-HOPES_YEA PR - Invoice Functional Test Suite" >
+<suite name="GePS-HOPES_YEA PR - Invoice Functional Test Suite" parallel="tests" thread-count="1" verbose="10"  >
 
-<!--       parallel="tests" thread-count="4" verbose="1">-->
+<!--       >-->
 
     <listeners>
         <listener class-name="org.testng.reporters.EmailableReporter2" />

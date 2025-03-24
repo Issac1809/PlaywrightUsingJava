@@ -24,8 +24,8 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-240.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-378.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-292.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-884.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-507.0",
     "salesNonCatalogTitle" : "SALES-Automation-NONCATALOG-406.0",
     "shipToYokogawa" : "no",
@@ -58,14 +58,17 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "19315cba-452c-4daf-b25b-6f985f9c2bf8",
+    "requisitionUid" : "d90324fe-54c7-4d35-beaf-4136f05fca85",
     "itemImport" : "true"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
+    "salesRequestForQuotationUid" : "",
+    "psRequestForQuotationUid" : "",
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",
+    "rate" : 200,
     "leadTimeDays" : 10,
     "makeDescription" : "Make - 1",
     "modelDescription" : "Model - 1",
@@ -107,6 +110,8 @@
     "externalAttachmentFilePath" : "documents/External Requisition Attachments.xlsx",
     "tcasFilePath" : "documents/TCAS_File.xlsx",
     "catalogItemImportFilePath" : "documents/Catalog_Item_Import.xlsx",
-    "nonCatalogItemImportFilePath" : "documents/NonCatalog_Item_Import.xlsx"
+    "nonCatalogItemImportFilePath" : "documents/NonCatalog_Item_Import.xlsx",
+    "technicalAttachmentFilePath" : "documents/Technical Documents.xlsx",
+    "commercialAttachmentFilePath" : "documents/Commercial Documents.xlsx"
   }
 }

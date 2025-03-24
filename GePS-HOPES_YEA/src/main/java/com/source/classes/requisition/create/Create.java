@@ -16,8 +16,6 @@ import org.apache.logging.log4j.Logger;
 import java.nio.file.Paths;
 import java.util.*;
 import static com.constants.requisitions.LPrCreate.*;
-import static com.constants.requisitions.LPrEdit.getTitle;
-import static com.utils.GetTitleUtil.getTransactionTitle;
 
 public class Create implements IPrCreate {
 
@@ -78,7 +76,7 @@ public class Create implements IPrCreate {
         }
     }
 
-    public void title(String type, String purchaseType) {
+    public synchronized void title(String type, String purchaseType) {
         try {
             String getTitle = jsonNode.get("requisition").get("orderTitle").asText();
             randomNumber = Math.round(Math.random() * 1000);

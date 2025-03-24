@@ -7,6 +7,7 @@ public class GetTitleUtil {
     static Logger logger;
     static JsonNode jsonNode;
 
+//TODO Constructor
     private GetTitleUtil(){
     }
 
@@ -28,6 +29,23 @@ public class GetTitleUtil {
             title = jsonNode.get("requisition").get(jsonTitleKey).asText();
         } catch (Exception exception) {
             logger.error("Exception Initializing Get Transaction Title Function: {}", exception.getMessage());
+        }
+        return title;
+    }
+
+    public static String getRFQTransactionTitle(String type) {
+        String title = "";
+        try {
+            String jsonTitleKey;
+            if(type.equalsIgnoreCase("PS")){
+                jsonTitleKey = jsonNode.get("requisition").get("psNonCatalogTitle").asText();
+            } else {
+                jsonTitleKey = jsonNode.get("requisition").get("salesNonCatalogTitle").asText();
+            }
+
+            title = jsonNode.get("requisition").get(jsonTitleKey).asText();
+        } catch (Exception exception) {
+            logger.error("Exception Initializing Get RFQ Transaction Title Function: {}", exception.getMessage());
         }
         return title;
     }

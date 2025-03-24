@@ -24,9 +24,9 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-122.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-670.0",
-    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-78.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-292.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-884.0",
+    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-507.0",
     "salesNonCatalogTitle" : "SALES-Automation-NONCATALOG-406.0",
     "shipToYokogawa" : "no",
     "companyName" : "Yokogawa Engineering Asia Pte Ltd",
@@ -58,11 +58,13 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "1b807c68-5bcc-48f6-b9e0-526372edf177",
+    "requisitionUid" : "d90324fe-54c7-4d35-beaf-4136f05fca85",
     "itemImport" : "true"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
+    "salesRequestForQuotationUid" : "",
+    "psRequestForQuotationUid" : "",
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",

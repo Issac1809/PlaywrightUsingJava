@@ -1,5 +1,16 @@
 package com.base;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.source.classes.requestforquotations.commercialevaluation.CommercialEvaluation;
+import com.source.classes.requestforquotations.create.RfqCreate;
+import com.source.classes.requestforquotations.edit.RfqEdit;
+import com.source.classes.requestforquotations.quote.Quote;
+import com.source.classes.requestforquotations.readyforevaluation.ReadyForEvaluation;
+import com.source.classes.requestforquotations.regret.QuotationRegret;
+import com.source.classes.requestforquotations.requote.Requote;
+import com.source.classes.requestforquotations.suspend.RfqSuspend;
+import com.source.classes.requestforquotations.technicalevaluation.TechnicalEvaluationApprove;
+import com.source.classes.requestforquotations.technicalevaluation.TechnicalEvaluationCreate;
+import com.source.classes.requestforquotations.technicalevaluation.TechnicalEvaluationReject;
 import com.source.classes.requisition.create.Create;
 import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +28,7 @@ import com.source.classes.requisition.suspend.BuyerSuspend;
 import com.source.classes.requisition.type.PurchaseRequisitionTypeHandler;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
+import com.source.interfaces.requestforquotation.*;
 import com.source.interfaces.requisitions.*;
 import com.utils.GetTitleUtil;
 import com.utils.LoggerUtil;
@@ -45,6 +57,17 @@ public class BaseTest {
     protected IPrBuyerManagerSuspend iPrBuyerManagerSuspend;
     protected IPrAssign iPrAssign;
     protected IPrBuyerSuspend iPrBuyerSuspend;
+    protected IRfqCreate iRfqCreate;
+    protected IRfqEdit iRfqEdit;
+    protected IRfqSuspend iRfqSuspend;
+    protected IQuoRegret iQuoRegret;
+    protected IQuoSubmit iQuoSubmit;
+    protected IQuoRequote iQuoRequote;
+    protected IReadyForEvalutation iReadyForEvalutation;
+    protected ITeCreate iTeCreate;
+    protected ITeReject iTeReject;
+    protected ITeApprove iTeApprove;
+    protected ICeCreate iCeCreate;
 
 //TODO Constructor
     public BaseTest() {
@@ -72,6 +95,19 @@ public class BaseTest {
             iPrAssign = new Assign(iLogin, jsonNode, page, iLogout);
             iPrBuyerManagerSuspend = new BuyerManagerSuspend(iLogin, jsonNode, page, iLogout, iPrEdit);
             iPrBuyerSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout);
+
+//TODO Request For Quotation
+            iRfqCreate = new RfqCreate(iLogin, jsonNode, page, iLogout);
+            iRfqEdit = new RfqEdit(iLogin, jsonNode, page, iLogout);
+            iRfqSuspend = new RfqSuspend(iLogin, jsonNode, page, iLogout, iRfqEdit, iPrEdit, iPrSendForApproval, iPrApprove, iPrAssign, iRfqCreate);
+            iQuoSubmit = new Quote(iLogin, jsonNode, page, iLogout);
+            iQuoRegret = new QuotationRegret(iQuoSubmit, iLogin, jsonNode, page, iLogout);
+            iQuoRequote = new Requote(iLogin, jsonNode, page, iLogout);
+            iReadyForEvalutation = new ReadyForEvaluation(iLogin, jsonNode, page, iLogout);
+            iTeCreate = new TechnicalEvaluationCreate(iLogin, jsonNode, page, iLogout);
+            iTeReject = new TechnicalEvaluationReject(iLogin, jsonNode, page, iLogout, iTeCreate);
+            iTeApprove = new TechnicalEvaluationApprove(iLogin, jsonNode, page, iLogout, iTeCreate);
+            iCeCreate = new CommercialEvaluation(iLogin, jsonNode, page, iLogout);
         } catch (Exception exception) {
             logger.error("Error Initializing SetUp Function: {}", exception.getMessage());
         }
