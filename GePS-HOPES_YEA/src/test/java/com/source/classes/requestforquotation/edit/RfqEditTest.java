@@ -1,15 +1,20 @@
 package com.source.classes.requestforquotation.edit;
-import com.poc.base.BaseTest;
+import com.base.BaseTest;
+import org.testng.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class RfqEditTest extends BaseTest {
 
     @Test
+    @Parameters({"type"})
     public void edit() {
         try {
-            iRfqEdit.rfqEditMethod();
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
+            String type = "";
+            iRfqEdit.rfqEditMethod(type);
+        } catch (Exception exception) {
+            logger.error("Exception in RFQ Edit Test Function: {}", exception.getMessage());
+            Assert.fail("Exception in RFQ Edit Test Function: " + exception.getMessage());
         }
     }
 }

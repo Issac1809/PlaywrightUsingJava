@@ -1,15 +1,20 @@
 package com.source.classes.requestforquotation.requote;
-import com.poc.base.BaseTest;
+import com.base.BaseTest;
+import org.testng.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class RequoteTest extends BaseTest {
 
     @Test
-    public void QuotationRequoteTestMethod() {
+    @Parameters({"type"})
+    public void requote() {
         try {
-            iQuoRequote.requote();
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
+            String type = "";
+            iQuoRequote.requote(type);
+        } catch (Exception exception) {
+            logger.error("Exception in Quotation Requote Test Function: {}", exception.getMessage());
+            Assert.fail("Exception in Quotation Requote Test Function: " + exception.getMessage());
         }
     }
 }

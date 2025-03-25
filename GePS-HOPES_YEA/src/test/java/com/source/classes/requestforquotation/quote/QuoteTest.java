@@ -1,14 +1,18 @@
 package com.source.classes.requestforquotation.quote;
 import com.base.BaseTest;
+import org.testng.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class QuoteTest extends BaseTest {
 
     @Test
+    @Parameters({"type"})
     public void quote() {
         try {
-            iQuoSubmit.inviteRegisteredVendor(String type, String purchaseType);
-            iQuoSubmit.vendorLogin(String type, String purchaseType);
+            String type = "";
+            iQuoSubmit.inviteRegisteredVendor(type);
+            iQuoSubmit.vendorLogin(type);
             iQuoSubmit.liquidatedDamages();
             iQuoSubmit.rohsCompliance();
             iQuoSubmit.warrantyRequirements();
@@ -16,8 +20,9 @@ public class QuoteTest extends BaseTest {
             iQuoSubmit.gst();
             iQuoSubmit.quotationAttachments();
             iQuoSubmit.quotationSubmitButton();
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
+        } catch (Exception exception) {
+            logger.error("Exception in Quotation Submit Test Function: {}", exception.getMessage());
+            Assert.fail("Exception in Quotation Submit Test Function: " + exception.getMessage());
         }
     }
 }
