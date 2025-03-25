@@ -22,6 +22,9 @@
     <maven-compiler-version>3.13.0</maven-compiler-version>
     <maven-surefire-plugin>3.2.5</maven-surefire-plugin>
     <jackson-api-version>2.18.2</jackson-api-version>
+    <commons-net-version>3.11.1</commons-net-version>
+    <poi-ooxml-version>5.4.0</poi-ooxml-version>
+    <httpclient5-version>5.4.2</httpclient5-version>
   </properties>
 
   <dependencies>
@@ -63,12 +66,26 @@
       <version>${jackson-api-version}</version>
     </dependency>
 
+    <!-- FTP Client / Connect to the Server -->
     <dependency>
       <groupId>commons-net</groupId>
       <artifactId>commons-net</artifactId>
-      <version>3.11.1</version>
+      <version>${commons-net-version}</version>
     </dependency>
 
+    <!-- MSA Excel Processing -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>${poi-ooxml-version}</version>
+    </dependency>
+
+    <!-- HTTP Client for API Calls -->
+    <dependency>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
+      <version>${httpclient5-version}</version>
+    </dependency>
 
   </dependencies>
 

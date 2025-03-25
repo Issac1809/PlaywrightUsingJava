@@ -1,0 +1,14 @@
+{
+  "msa" : {
+    "ftpHost" : "152.67.16.70",
+    "ftpPort" : 21,
+    "ftpUser" : "rpauser",
+    "ftpPassword" : "1234",
+    "remoteGepsToHopesFilePath" : "/YEA_RPA/1.GePS-HOPES",
+    "localGepsToHopesFilePath" : "C:\\My_Personal_Folder\\GePS-Testing\\GePS-HOPES_YEA\\src\\main\\java\\com\\utils\\rpa\\GePSToHopes\\",
+    "remoteHopesToGepsPath" : "/YEA_RPA/5.HOPES-GePS",
+    "remotePOFilePath" : "/YEA_RPA/4.PO",
+    "readPORAPIUrl" : "https://geps_hopes_yea.cormsquare.com/api/PurchaseOrderRequests/ReadPORStatus/",
+    "generatePOAPIUrl" : "https://geps_hopes_yea.cormsquare.com/api/PurchaseOrderRequests/GeneratePO/"
+  }
+}
