@@ -94,7 +94,7 @@ public class CatalogTestContext extends BaseTest {
 
     @Test(priority = 7)
     @Parameters({"type", "purchaseType"})
-    public void requisitionAAssign(String type, String purchaseType){
+    public void requisitionAssign(String type, String purchaseType){
         try {
             int status = iPrAssign.buyerManagerAssign(type, purchaseType);
             Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
