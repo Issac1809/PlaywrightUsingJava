@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.utils.LoggerUtil;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
 
@@ -19,7 +20,7 @@ public class MSA_Flow {
         try {
             FTPClient ftpClient = new FTPClient();
             ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(new File("./src/test/resources/config/msa-config.json"));
+            JsonNode jsonNode = objectMapper.readTree(new File("C:\\My_Personal_Folder\\GePS-Testing\\GePS-HOPES_YEA\\src\\test\\resources\\config\\msa-config.json"));
             String ftpHost = jsonNode.get("msa").get("ftpHost").asText();
             int ftpPort = jsonNode.get("msa").get("ftpPort").asInt();
             String ftpUser = jsonNode.get("msa").get("ftpUser").asText();
@@ -34,10 +35,10 @@ public class MSA_Flow {
 
 //TODO Step 1: Connect to FTP and Download File
             MSA_FTPHelper msaFtpHelper = new MSA_FTPHelper(ftpClient);
-            msaFtpHelper.downloadFile(ftpHost, ftpPort, ftpUser, ftpPassword, remoteGepsToHopesFilePath, localGepsToHopesFilePath);
+            String filePath = msaFtpHelper.downloadFile(ftpHost, ftpPort, ftpUser, ftpPassword, remoteGepsToHopesFilePath, localGepsToHopesFilePath);
 
 //TODO Step 2: Update the Excel File
-            MSA_ExcelHelper.updateExcel(localGepsToHopesFilePath, 1, 1, "Updated Value");
+            MSA_ExcelHelper.updateExcel(filePath);
 
 //TODO Step 3: Upload the Updated File
             msaFtpHelper.uploadFile(localGepsToHopesFilePath, remoteHopesToGepsPath);

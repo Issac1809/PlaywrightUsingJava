@@ -68,6 +68,7 @@
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",
+    "rate" : 200,
     "leadTimeDays" : 10,
     "makeDescription" : "Make - 1",
     "modelDescription" : "Model - 1",
@@ -109,6 +110,8 @@
     "externalAttachmentFilePath" : "documents/External Requisition Attachments.xlsx",
     "tcasFilePath" : "documents/TCAS_File.xlsx",
     "catalogItemImportFilePath" : "documents/Catalog_Item_Import.xlsx",
-    "nonCatalogItemImportFilePath" : "documents/NonCatalog_Item_Import.xlsx"
+    "nonCatalogItemImportFilePath" : "documents/NonCatalog_Item_Import.xlsx",
+    "technicalAttachmentFilePath" : "documents/Technical Documents.xlsx",
+    "commercialAttachmentFilePath" : "documents/Commercial Documents.xlsx"
   }
 }

@@ -22,22 +22,28 @@ public class MSA_FTPHelper {
         this.logger = LoggerUtil.getLogger(MSA_FTPHelper.class);
     }
 
-    public void downloadFile(String server, int port, String user, String password, String remotePath, String localPath){
+    public String downloadFile(String server, int port, String user, String password, String remotePath, String localPath) {
+        File localFile = null;
         try {
             ftpClient.connect(server, port);
             ftpClient.login(user, password);
-            ftpClient.enterLocalPassiveMode();
+            ftpClient.enterLocalActiveMode();
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
             File localDir = new File(localPath);
-            File localFile = new File(localDir, new File(remotePath + "/240024POR01442_PT1_GePS-HOPES_R0.xls").getName());
-            System.out.println(localFile.getName());
-            System.out.println(localFile.getAbsolutePath());
-            FileOutputStream fileOutputStream = new FileOutputStream(localFile);
-            ftpClient.retrieveFile(remotePath, fileOutputStream);
+            if (!localDir.exists() && !localDir.mkdirs());
+
+            String fileName = "2Q0024POR01799_PT1_SCM-YGS_R0.xls";
+            String remoteFilePath = remotePath + "/" + fileName;
+            localFile = new File(localDir, fileName);
+
+            try (FileOutputStream fileOutputStream = new FileOutputStream(localFile)) {
+                ftpClient.retrieveFile(remoteFilePath, fileOutputStream);
+            }
         } catch (IOException exception) {
             logger.error("Exception in downloading file function: {}", exception.getMessage());
         }
+        return localFile.getAbsolutePath();
     }
 
     public void uploadFile(String localPath, String remotePath) {
