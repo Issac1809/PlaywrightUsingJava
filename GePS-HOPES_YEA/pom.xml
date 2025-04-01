@@ -25,6 +25,7 @@
     <commons-net-version>3.11.1</commons-net-version>
     <poi-ooxml-version>5.4.0</poi-ooxml-version>
     <httpclient5-version>5.4.2</httpclient5-version>
+    <pdfbox-version>2.0.29</pdfbox-version> <!--TODO Don't upgrade the version. Will cause an issue with the load() function -->
   </properties>
 
   <dependencies>
@@ -85,6 +86,13 @@
       <groupId>org.apache.httpcomponents.client5</groupId>
       <artifactId>httpclient5</artifactId>
       <version>${httpclient5-version}</version>
+    </dependency>
+
+    <!-- PDF Box to update the Name -->
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>pdfbox</artifactId>
+      <version>${pdfbox-version}</version>
     </dependency>
 
   </dependencies>

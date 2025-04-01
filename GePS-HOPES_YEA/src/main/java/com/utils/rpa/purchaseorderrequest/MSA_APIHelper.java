@@ -1,30 +1,30 @@
 package com.utils.rpa.purchaseorderrequest;
 import com.utils.LoggerUtil;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.Logger;
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class MSA_APIHelper {
 
     Logger logger;
 
 //TODO Constructor
-    public MSA_APIHelper() {
+    public MSA_APIHelper(Logger logger) {
         this.logger = LoggerUtil.getLogger(MSA_APIHelper.class);
     }
 
-    public static void updateStatus(String apiUrl) {
+    public void updateStatus(String apiUrl) {
         try {
-            CloseableHttpClient client = HttpClients.createDefault();
-            HttpGet get = new HttpGet(apiUrl);
-            get.setHeader("Content-Type", "application/json");
-
-            String response = EntityUtils.toString(client.execute(get).getEntity());
-        } catch (IOException exception) {
-            exception.printStackTrace();
+            HttpClient httpClient = HttpClient.newHttpClient();
+            HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(apiUrl)).GET().build();
+            HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            System.out.println("Response Status Code: " + httpResponse.statusCode());
+            System.out.println("Response Body: " + httpResponse.body());
+        } catch (IOException | InterruptedException exception) {
+            throw new RuntimeException(exception);
         }
     }
 }
