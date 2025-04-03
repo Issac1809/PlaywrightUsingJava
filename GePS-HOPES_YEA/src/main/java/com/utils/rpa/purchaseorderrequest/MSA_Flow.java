@@ -47,9 +47,9 @@ public class MSA_Flow {
             msaFtpHelper.connectionEstablishAndUploadFiles(ftpHost, ftpPort, ftpUser, ftpPassword, localPoFilePath, localExcelFilePath, poNumber, remotePOFilePathPO, remoteHopesToGepsPathXLS);
 
 //TODO Step 5: Call API to Update Status
-            MSA_APIHelper msaApiHelper = new MSA_APIHelper(logger);
-            msaApiHelper.updateStatus(readPORAPIUrl);
-            msaApiHelper.updateStatus(generatePOAPIUrl);
+//            MSA_APIHelper msaApiHelper = new MSA_APIHelper(logger);
+//            msaApiHelper.updateStatus(readPORAPIUrl);
+//            msaApiHelper.updateStatus(generatePOAPIUrl);
 
 //TODO Step 6: Close FTP Connection
 //            msaFtpHelper.closeConnection();
