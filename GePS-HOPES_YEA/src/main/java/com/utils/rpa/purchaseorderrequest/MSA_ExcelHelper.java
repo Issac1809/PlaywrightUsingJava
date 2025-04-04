@@ -8,15 +8,15 @@ import java.io.*;
 
 public class MSA_ExcelHelper {
 
-    private static final Logger logger = LoggerUtil.getLogger(MSA_ExcelHelper.class);
-    static int randomNumber;
+    Logger logger;
+    int randomNumber;
 
 //TODO Constructor
-//    public MSA_ExcelHelper() {
-//        this.logger = LoggerUtil.getLogger(MSA_ExcelHelper.class);
-//    }
+    public MSA_ExcelHelper() {
+        this.logger = LoggerUtil.getLogger(MSA_ExcelHelper.class);
+    }
 
-    public static int updateExcel(String filePath) {
+    public int updateExcel(String filePath) {
         Workbook workbook;
         try {
             try(FileInputStream fileInputStream = new FileInputStream(filePath)){
@@ -56,7 +56,7 @@ public class MSA_ExcelHelper {
         return randomNumber;
     }
 
-    public static void updateCell(Sheet sheet, int rowNum, int colNum, String newValue) {
+    public void updateCell(Sheet sheet, int rowNum, int colNum, String newValue) {
         try {
             Row row = sheet.getRow(rowNum);
             Cell cell = row.getCell(colNum);

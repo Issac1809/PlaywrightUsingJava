@@ -1,4 +1,4 @@
-package com.utils.rpa.purchaseorderrequest;
+package com.utils.rpa.salesordersync;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.Browser;
@@ -6,16 +6,17 @@ import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.utils.LoggerUtil;
+import com.utils.rpa.purchaseorderrequest.*;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
 
-public class MSA_Flow {
+public class PR_List_Flow {
 
     static Logger logger;
 
-//TODO Constructor
-    public MSA_Flow() {
+    //TODO Constructor
+    public PR_List_Flow() {
         this.logger = LoggerUtil.getLogger(MSA_Flow.class);
     }
 
@@ -31,18 +32,17 @@ public class MSA_Flow {
             int ftpPort = jsonNode.get("msa").get("ftpPort").asInt();
             String ftpUser = jsonNode.get("msa").get("ftpUser").asText();
             String ftpPassword = jsonNode.get("msa").get("ftpPassword").asText();
-            String remoteGepsToHopesFilePath = jsonNode.get("msa").get("remoteGepsToHopesFilePath").asText();
             String localPath = jsonNode.get("msa").get("localPath").asText();
-            String remoteHopesToGepsPathXLS = jsonNode.get("msa").get("remoteHopesToGepsPath").asText();
-            String remotePOFilePathPO = jsonNode.get("msa").get("remotePOFilePath").asText();
-            String readPORAPIUrl = jsonNode.get("msa").get("readPORAPIUrl").asText();
-            String generatePOAPIUrl = jsonNode.get("msa").get("generatePOAPIUrl").asText();
+            String remoteBwFolderPath = jsonNode.get("msa").get("remoteBwFolderPath").asText();
+            String remoteBwFilePath = jsonNode.get("msa").get("remotePOFilePath").asText();
+            String readPRListFileForCatalog = jsonNode.get("msa").get("readPRListFileForCatalog").asText();
+            String readPRListFileForNonCatalog = jsonNode.get("msa").get("readPRListFileForNonCatalog").asText();
 
 
 //TODO Step 1: Connect to FTP and Download File
-            MSA_FTPHelper msaFtpHelper = new MSA_FTPHelper(ftpClient);
-            msaFtpHelper.connectionEstablish(ftpHost, ftpPort, ftpUser, ftpPassword);
-            String localExcelFilePath = msaFtpHelper.downloadFile(remoteGepsToHopesFilePath, localPath);
+            PR_List_FTPHelper prListFtpHelper = new PR_List_FTPHelper(ftpClient);
+            prListFtpHelper.connectionEstablish(ftpHost, ftpPort, ftpUser, ftpPassword);
+            String localExcelFilePath = prListFtpHelper.downloadFile(remoteBwFolderPath, localPath);
 
 //TODO Step 2: Update the Excel File
             MSA_ExcelHelper msaExcelHelper = new MSA_ExcelHelper();
@@ -53,12 +53,12 @@ public class MSA_Flow {
             String localPoFilePath = msaPoPdfHelper.poPdfFileNameUpdate(poNumber, localPath);
 
 //TODO Step 4: Upload the Updated File
-            msaFtpHelper.connectionEstablishAndUploadFiles(ftpHost, ftpPort, ftpUser, ftpPassword, localPoFilePath, localExcelFilePath, poNumber, remotePOFilePathPO, remoteHopesToGepsPathXLS);
+            prListFtpHelper.connectionEstablishAndUploadFiles(ftpHost, ftpPort, ftpUser, ftpPassword, localPoFilePath, localExcelFilePath, poNumber, remotePOFilePathPO, remoteHopesToGepsPathXLS);
 
 //TODO Step 5: Call API to Update Status
             MSA_APIHelper msaApiHelper = new MSA_APIHelper(page);
-            msaApiHelper.updateStatus(readPORAPIUrl);
-            msaApiHelper.updateStatus(generatePOAPIUrl);
+            msaApiHelper.updateStatus(readPRListFileForCatalog);
+            msaApiHelper.updateStatus(readPRListFileForNonCatalog);
         } catch (Exception exception) {
             logger.error("Exception in MSA File Automation Flow Function: {}", exception.getMessage());
         }

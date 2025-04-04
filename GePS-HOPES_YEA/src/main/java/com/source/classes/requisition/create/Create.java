@@ -601,7 +601,7 @@ public class Create implements IPrCreate {
             Locator vendorLocator = page.locator(VENDOR);
             vendorLocator.click();
 
-            APIResponse vendorApiResponse = page.request().fetch(appUrl + "/api/Vendors/GetAllVendorsByKeyword/1882?keyword=" + vendorNameValue, RequestOptions.create());
+            APIResponse vendorApiResponse = page.request().fetch(appUrl + "/api/Vendors/GetAllVendorsByKeyword/1?keyword=" + vendorNameValue, RequestOptions.create());
             JsonNode vendorJson = objectMapper.readTree(vendorApiResponse.body());
             JsonNode vendorIdJson = vendorJson.get(0);
             int vendorId = vendorIdJson.get("id").asInt();

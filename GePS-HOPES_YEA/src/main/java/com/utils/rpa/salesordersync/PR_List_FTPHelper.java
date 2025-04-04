@@ -1,11 +1,14 @@
-package com.utils.rpa.purchaseorderrequest;
+package com.utils.rpa.salesordersync;
 import com.utils.LoggerUtil;
+import com.utils.rpa.purchaseorderrequest.*;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.logging.log4j.Logger;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
-public class MSA_FTPHelper {
+public class PR_List_FTPHelper {
 
     FTPClient ftpClient;
     Logger logger;
@@ -14,10 +17,10 @@ public class MSA_FTPHelper {
     File excelLocalFile;
 
 //TODO Constructor
-    private MSA_FTPHelper() {
+    private PR_List_FTPHelper() {
     }
 
-    public MSA_FTPHelper(FTPClient ftpClient){
+    public PR_List_FTPHelper(FTPClient ftpClient){
         this.ftpClient = ftpClient;
         this.logger = LoggerUtil.getLogger(MSA_FTPHelper.class);
     }
@@ -38,7 +41,7 @@ public class MSA_FTPHelper {
             File localDir = new File(localPath);
             if (!localDir.exists() && !localDir.mkdirs());
 
-            excelFileName = "240024POR01457_PT1_GePS-HOPES_R0.xls";
+            excelFileName = "PR list for original ID.xls";
             excelRemoteFilePath = remotePath + excelFileName;
             excelLocalFile = new File(localDir, excelFileName);
 
