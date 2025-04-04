@@ -31,7 +31,8 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
 
             if(type.equalsIgnoreCase("Sales")){
                 iPrCreate.company();
-                iPrCreate.businessUnit();
+                iPrCreate.departmentPic();
+                iPrCreate.buyerManager();
                 iPrCreate.salesReferenceId();
             } else {
                 List<String> getWbsJson = iPrCreate.project();
@@ -46,6 +47,8 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                     iPrCreate.shippingMode(purchaseType);
                     iPrCreate.expectedPOIssue(purchaseType);
                     iPrCreate.expectedDelivery(purchaseType);
+                    if(type.equalsIgnoreCase("sales")){
+                    }
                     if(type.equalsIgnoreCase("PS")) {
                         iPrCreate.buyerManager();
                         iPrCreate.projectManager();

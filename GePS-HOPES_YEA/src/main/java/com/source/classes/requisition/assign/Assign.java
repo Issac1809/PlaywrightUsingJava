@@ -1,8 +1,11 @@
 package com.source.classes.requisition.assign;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
@@ -10,30 +13,38 @@ import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requisitions.IPrAssign;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.constants.requisitions.LPrAssign.*;
 import static com.utils.GetTitleUtil.getTransactionTitle;
 
 public class Assign implements IPrAssign {
 
+    private PlaywrightFactory playwrightFactory;
     private JsonNode jsonNode;
     private Page page;
     private ILogin iLogin;
     private ILogout iLogout;
     private Logger logger;
     private String appUrl;
+    private ObjectMapper objectMapper;
 
 //TODO Constructor    
     private Assign(){
     }
 
 //TODO Constructor
-    public Assign(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
+    public Assign(PlaywrightFactory playwrightFactory,ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout, ObjectMapper objectMapper){
+        this.playwrightFactory = playwrightFactory;
         this.jsonNode = jsonNode;
         this.page = page;
         this.iLogin = iLogin;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(Assign.class);
         this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
+        this.objectMapper = objectMapper;
     }
 
     public int buyerManagerAssign(String type, String purchaseType) {
@@ -63,12 +74,37 @@ public class Assign implements IPrAssign {
             Locator buyerManager = page.locator(getBuyerMailId);
             buyerManager.first().click();
 
-            Locator saveUser = page.locator(SAVE_USER);
-            saveUser.click();
-            page.waitForLoadState(LoadState.NETWORKIDLE);
+            String assign = "";
+            if(type.equalsIgnoreCase("sales")){
+                assign = SAVE_USER_SALES;
+            }
+            else if (type.equalsIgnoreCase("ps")){
+                assign = SAVE_USER;
+            }
 
-            APIResponse rejectResponse = page.request().fetch(appUrl + "/api/Requisitions/" + uid, RequestOptions.create());
-            assignStatus = rejectResponse.status();
+            Locator saveUser = page.locator(assign);
+
+            String reqType = type.equalsIgnoreCase("PS") ? "/api/Requisitions/" : "/api/RequisitionsSales/";
+
+            Response assignResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                    saveUser::click
+            );
+
+            JsonNode requisitionJson = objectMapper.readTree(assignResponse.body());
+
+            int itemsCount = 0;
+
+            if(requisitionJson.has("requisitionItems")) {
+                JsonNode itemsArray = requisitionJson.get("requisitionItems");
+                for(JsonNode item : itemsArray){
+                    itemsCount++;
+                }
+            }
+
+            playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionItemCount", String.valueOf(itemsCount));
+
+            assignStatus = assignResponse.status();
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
             iLogout.performLogout();

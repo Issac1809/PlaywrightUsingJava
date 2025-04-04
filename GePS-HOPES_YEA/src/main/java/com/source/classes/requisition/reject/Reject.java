@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
@@ -56,9 +57,14 @@ public class Reject implements IPrReject {
             rejectRemarksLocator.fill(remarks + " " + "by" + " " + approver1);
 
             Locator yesButtonLocator = page.locator(SUBMIT_BUTTON);
-            yesButtonLocator.click();
 
-            APIResponse rejectResponse = page.request().fetch(appUrl + "/api/Requisitions/" + uid, RequestOptions.create());
+            String reqType = type.equalsIgnoreCase("Sales") ? "RequisitionsSales/" : "Requisitions/";
+
+            String finalReqType = reqType;
+            Response rejectResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/" + finalReqType) && response.status() == 200,
+                    yesButtonLocator::click
+            );
             rejectStatus = rejectResponse.status();
 
             iLogout.performLogout();

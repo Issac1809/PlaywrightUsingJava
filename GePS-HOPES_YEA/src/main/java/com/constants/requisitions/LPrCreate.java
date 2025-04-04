@@ -12,6 +12,8 @@ public class LPrCreate {
     public static final String SALES_REFERENCE_ID = "#crmReference";
     public static final String PROJECT = "#select2-projectId-container";
     public static final String PROJECT_SEARCH = ".select2-search__field";
+    public static final String DEPT_PIC = "#select2-departmentPicId-container";
+    public static final String DEPT_PIC_SEARCH = ".select2-search__field";
     public static final String WBS = "#select2-wbsId-container";
     public static final String WBS_SEARCH = ".select2-search__field";
     public static final String VENDOR = "#select2-vendorId-container";

@@ -4,11 +4,11 @@
     "ftpPort" : 21,
     "ftpUser" : "rpauser",
     "ftpPassword" : "1234",
-    "remoteGepsToHopesFilePath" : "/YEA_RPA/1.GePS-HOPES",
+    "remoteGepsToHopesFilePath" : "/YEA_RPA/1.GePS-HOPES/",
     "localPath" : "D:\\MSA Files",
-    "remoteHopesToGepsPath" : "/YEA_RPA/5.HOPES-GePS",
-    "remotePoPath" : "/YEA_RPA/4.PO",
-    "remotePOFilePath" : "/YEA_RPA/4.PO",
+    "remoteHopesToGepsPath" : "/YEA_RPA/5.HOPES-GePS/",
+    "remotePoPath" : "/YEA_RPA/4.PO/",
+    "remotePOFilePath" : "/YEA_RPA/4.PO/",
     "readPORAPIUrl" : "https://geps_hopes_yea.cormsquare.com/api/PurchaseOrderRequests/ReadPORStatus/",
     "generatePOAPIUrl" : "https://geps_hopes_yea.cormsquare.com/api/PurchaseOrderRequests/GeneratePO/"
   }
