@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
@@ -60,10 +61,15 @@ public class Approve implements IPrApprove {
                 approveRemarksLocator.fill(remarks + " " + "by" + " " + approver);
 
                 Locator submitButtonLocator = page.locator(SUBMIT_BUTTON);
-                submitButtonLocator.click();
-                page.waitForLoadState(LoadState.NETWORKIDLE);
 
-                APIResponse statusResponse = page.request().fetch(appUrl + "/api/Requisitions/" + uid, RequestOptions.create());
+
+                String reqType = type.equalsIgnoreCase("PS") ? "/api/Requisitions/" : "/api/RequisitionsSales/";
+
+                Response statusResponse = page.waitForResponse(
+                        response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                        submitButtonLocator::click
+                );
+
                 status = statusResponse.status();
                 JsonNode responseJson = objectMapper.readTree(statusResponse.body());
 

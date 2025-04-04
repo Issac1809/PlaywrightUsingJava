@@ -2,10 +2,7 @@ package com.source.classes.requisition.create;
 import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.microsoft.playwright.APIResponse;
-import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
@@ -142,6 +139,24 @@ public class Create implements IPrCreate {
             logger.error("Exception in Project Function: {}", exception.getMessage());
         }
         return wbsValues;
+    }
+
+    public void departmentPic(){
+        try {
+            String departmentPic = jsonNode.get("requisition").get("departmentPic").asText();
+
+            Locator departmentPicLocator = page.locator(DEPT_PIC);
+            departmentPicLocator.click();
+
+            Locator departmentPicSearch = page.locator(DEPT_PIC_SEARCH);
+            departmentPicSearch.fill(departmentPic);
+
+            String departmentPicSelectLocator = getLocator(departmentPic);
+            Locator departmentPicSelect = page.locator(departmentPicSelectLocator);
+            departmentPicSelect.click();
+        } catch (Exception exception) {
+            logger.error("Exception in Department PIC Function: {}", exception.getMessage());
+        }
     }
 
     public void wbs(List<String> wbs) {
@@ -834,25 +849,14 @@ public class Create implements IPrCreate {
             createDraftButton.click();
 
             Locator yesButton = page.locator(YES);
-            yesButton.click();
 
-            if(type.equalsIgnoreCase("PS")) {
-                page.waitForURL("**/POC_Details?uid=*", new Page.WaitForURLOptions().setTimeout(10000));
-            } else {
-                page.waitForURL("**/Sales_Details?uid=*", new Page.WaitForURLOptions().setTimeout(10000));
-            }
+            String reqType = type.equalsIgnoreCase("PS") ? "/api/Requisitions/" : "/api/RequisitionsSales/";
 
-            String url = page.url();
-            String[] uid = url.split("=");
-            String finalUid = uid[1];
+            Response statusResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                    yesButton::click
+            );
 
-            String api;
-            if(type.equalsIgnoreCase("PS"))
-                api = appUrl + "/api/Requisitions/" + finalUid;
-            else
-                api = appUrl + "/api/RequisitionsOthers/" + finalUid;
-
-            APIResponse statusResponse = page.request().fetch(api, RequestOptions.create());
             JsonNode response = objectMapper.readTree(statusResponse.body());
 
             String requisitionStatus = "";

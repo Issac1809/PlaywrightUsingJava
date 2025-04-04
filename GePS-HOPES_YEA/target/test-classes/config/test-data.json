@@ -24,8 +24,8 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-950.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-6.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-292.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-884.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-507.0",
     "salesNonCatalogTitle" : "SALES-Automation-NONCATALOG-406.0",
     "shipToYokogawa" : "no",
@@ -58,7 +58,7 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "5513e061-1501-465d-bef6-005bd77594d4",
+    "requisitionUid" : "d90324fe-54c7-4d35-beaf-4136f05fca85",
     "itemImport" : "true"
   },
   "requestForQuotation" : {
@@ -102,7 +102,7 @@
     "workOrderReferenceId" : ""
   },
   "configSettings" : {
-    "browserName" : "chrome",
+    "browserName" : "edge",
     "runHeadless" : false,
     "appUrl" : "https://geps_hopes_yea.cormsquare.com",
     "loginPassword" : "Admin@123",

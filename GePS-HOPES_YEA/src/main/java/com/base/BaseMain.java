@@ -84,7 +84,7 @@ public class BaseMain {
             iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, jsonNode, page, iLogout);
             iPrReject = new Reject(iLogin, jsonNode, page, iLogout);
             iPrApprove = new Approve(objectMapper, iLogin, jsonNode, page, iLogout);
-            iPrAssign = new Assign(iLogin, jsonNode, page, iLogout);
+            iPrAssign = new Assign(playwrightFactory, iLogin, jsonNode, page, iLogout, objectMapper);
             iPrSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout);
 
 //TODO Request For Quotation

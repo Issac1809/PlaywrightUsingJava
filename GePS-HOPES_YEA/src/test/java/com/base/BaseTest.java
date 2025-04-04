@@ -92,7 +92,7 @@ public class BaseTest {
             iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, jsonNode, page, iLogout);
             iPrReject = new Reject(iLogin, jsonNode, page, iLogout);
             iPrApprove = new Approve(objectMapper, iLogin, jsonNode, page, iLogout);
-            iPrAssign = new Assign(iLogin, jsonNode, page, iLogout);
+            iPrAssign = new Assign(playwrightFactory, iLogin, jsonNode, page, iLogout, objectMapper);
             iPrBuyerManagerSuspend = new BuyerManagerSuspend(iLogin, jsonNode, page, iLogout, iPrEdit);
             iPrBuyerSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout);
 

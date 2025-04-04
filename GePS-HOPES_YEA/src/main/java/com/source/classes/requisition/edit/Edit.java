@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
@@ -55,10 +56,12 @@ public class Edit implements IPrEdit {
         updateButtonLocator.click();
 
         Locator yesButtonLocator = page.locator(YES);
-        yesButtonLocator.click();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
 
-        APIResponse updateResponse = page.request().fetch(appUrl + "/api/Requisitions", RequestOptions.create());
+        Response updateResponse = page.waitForResponse(
+                response -> response.url().startsWith(appUrl + "/api/Requisitions") && response.status() == 200,
+                yesButtonLocator::click
+        );
+
         status = updateResponse.status();
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
