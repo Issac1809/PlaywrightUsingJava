@@ -93,16 +93,17 @@ public class Assign implements IPrAssign {
 
             JsonNode requisitionJson = objectMapper.readTree(assignResponse.body());
 
+
             int itemsCount = 0;
-
-            if(requisitionJson.has("requisitionItems")) {
-                JsonNode itemsArray = requisitionJson.get("requisitionItems");
-                for(JsonNode item : itemsArray){
-                    itemsCount++;
+            if(type.equalsIgnoreCase("sales")) {
+                if (requisitionJson.has("requisitionItems")) {
+                    JsonNode itemsArray = requisitionJson.get("requisitionItems");
+                    for (JsonNode item : itemsArray) {
+                        itemsCount++;
+                    }
                 }
+                playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionItemCount", String.valueOf(itemsCount));
             }
-
-            playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionItemCount", String.valueOf(itemsCount));
 
             assignStatus = assignResponse.status();
             page.waitForLoadState(LoadState.NETWORKIDLE);
