@@ -9,6 +9,9 @@
     "remoteHopesToGepsPath" : "/YEA_RPA/5.HOPES-GePS/",
     "remotePoPath" : "/YEA_RPA/4.PO/",
     "remotePOFilePath" : "/YEA_RPA/4.PO/",
+    "remoteBwFolderPath" : "/YEA_RPA/BW/",
+    "readPRListFileForCatalog" : "https://geps_hopes_yea.cormsquare.com/api/PurchaseOrderRequests/ReadPRListForCatalog/",
+    "readPRListFileForNonCatalog" : "https://geps_hopes_yea.cormsquare.com/api/PurchaseOrderRequests/ReadPRListForNonCatalog/",
     "readPORAPIUrl" : "https://geps_hopes_yea.cormsquare.com/api/PurchaseOrderRequests/ReadPORStatus/",
     "generatePOAPIUrl" : "https://geps_hopes_yea.cormsquare.com/api/PurchaseOrderRequests/GeneratePO/"
   }

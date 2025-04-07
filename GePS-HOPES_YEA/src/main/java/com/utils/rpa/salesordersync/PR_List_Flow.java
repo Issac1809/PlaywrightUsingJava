@@ -53,7 +53,7 @@ public class PR_List_Flow {
             String localPoFilePath = msaPoPdfHelper.poPdfFileNameUpdate(poNumber, localPath);
 
 //TODO Step 4: Upload the Updated File
-            prListFtpHelper.connectionEstablishAndUploadFiles(ftpHost, ftpPort, ftpUser, ftpPassword, localPoFilePath, localExcelFilePath, poNumber, remotePOFilePathPO, remoteHopesToGepsPathXLS);
+//            prListFtpHelper.connectionEstablishAndUploadFiles(ftpHost, ftpPort, ftpUser, ftpPassword, localPoFilePath, localExcelFilePath, poNumber, remotePOFilePathPO, remoteHopesToGepsPathXLS);
 
 //TODO Step 5: Call API to Update Status
             MSA_APIHelper msaApiHelper = new MSA_APIHelper(page);
