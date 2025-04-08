@@ -1,7 +1,7 @@
-package com.poc.interfaces.purchaseorderrequests;
+package com.source.interfaces.purchaseorderrequests;
 import java.util.List;
 
 public interface IPorApprove {
 
-    void approverLogin(List<String> approvers);
+    void approverLogin(String type, String purchaseType, List<String> approvers);
 }

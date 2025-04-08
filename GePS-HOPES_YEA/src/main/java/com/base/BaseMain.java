@@ -6,6 +6,13 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.source.classes.login.Login;
 import com.source.classes.logout.Logout;
+import com.source.classes.purchaseorderrequests.create.PorCreate;
+import com.source.classes.purchaseorderrequests.edit.PorEdit;
+import com.source.classes.purchaseorderrequests.reject.PorReject;
+import com.source.classes.purchaseorderrequests.approve.PorApprove;
+import com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApproval;
+import com.source.classes.purchaseorderrequests.approvalandapprove.PorSendForApprovalAndApprove;
+import com.source.classes.purchaseorderrequests.suspend.PorSuspend;
 import com.source.classes.requestforquotations.commercialevaluation.CommercialEvaluation;
 import com.source.classes.requestforquotations.create.RfqCreate;
 import com.source.classes.requestforquotations.edit.RfqEdit;
@@ -27,7 +34,8 @@ import com.source.classes.requisition.suspend.BuyerSuspend;
 import com.source.classes.requisition.type.PurchaseRequisitionTypeHandler;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
-import com.source.interfaces.requestforquotation.*;
+import com.source.interfaces.purchaseorderrequests.*;
+import com.source.interfaces.requestforquotations.*;
 import com.source.interfaces.requisitions.*;
 import com.utils.GetTitleUtil;
 import com.utils.LoggerUtil;
@@ -64,6 +72,13 @@ public class BaseMain {
     protected ITeApprove iTeApprove;
     protected ITeReject iTeReject;
     protected ICeCreate iCeCreate;
+    protected IPorCreate iPorCreate;
+    protected IPorEdit iPorEdit;
+    protected IPorSuspend iPorSuspend;
+    protected IPorSendForApproval iPorSendForApproval;
+    protected IPorReject iPorReject;
+    protected IPorSendForApprovalAndApprove iPorSendForApprovalAndApprove;
+    protected IPorApprove iPorApprove;
 
 //TODO Constructor
     public BaseMain(){
@@ -99,6 +114,15 @@ public class BaseMain {
             iTeReject = new TechnicalEvaluationReject(iLogin, jsonNode, page, iLogout, iTeCreate);
             iTeApprove = new TechnicalEvaluationApprove(iLogin, jsonNode, page, iLogout, iTeCreate);
             iCeCreate = new CommercialEvaluation(iLogin, jsonNode, page, iLogout);
+
+//TODO Purchase Order Requests
+            iPorCreate = new PorCreate(iLogin, jsonNode, page, iLogout);
+            iPorEdit = new PorEdit(iLogin, jsonNode, page, iLogout);
+            iPorSuspend = new PorSuspend(iLogin, jsonNode, page, iLogout, iPorEdit, iCeCreate, iPorCreate);
+            iPorSendForApproval = new PorSendForApproval(iLogin, jsonNode, page, iLogout);
+            iPorReject = new PorReject(iLogin, jsonNode, page, iLogout, iPorEdit, iPorSendForApproval);
+            iPorSendForApprovalAndApprove = new PorSendForApprovalAndApprove(iPorApprove, iPorSendForApproval);
+            iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout);
 
         } catch (Exception exception) {
             logger.error("Error Initializing BaseMain Constructor: {}", exception.getMessage());

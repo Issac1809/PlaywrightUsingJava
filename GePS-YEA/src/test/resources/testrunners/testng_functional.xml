@@ -131,7 +131,7 @@
 
     <test name="YEA Purchase Order Request Create Page Test">
         <classes>
-            <class name="com.poc.classes.purchaseorderrequest.create.PorCreateTest" />
+            <class name="com.poc.classes.purchaseorderrequest.create.CreateTest" />
         </classes>
     </test>
 
@@ -143,7 +143,7 @@
 
     <test name="YEA Purchase Order Request Suspend Edit Page Test">
         <classes>
-            <class name="com.poc.classes.purchaseorderrequest.suspend.PorSuspendPorEditTest" />
+            <class name="com.poc.classes.purchaseorderrequest.suspend.SuspendEditTest" />
         </classes>
     </test>
 
@@ -155,13 +155,13 @@
 
     <test name="YEA Purchase Order Request Reject Page Test">
         <classes>
-            <class name="com.poc.classes.purchaseorderrequest.reject.PorRejectTest" />
+            <class name="com.poc.classes.purchaseorderrequest.reject.RejectTest" />
         </classes>
     </test>
 
     <test name="YEA Purchase Order Request Approve Page Test">
         <classes>
-            <class name="com.poc.classes.purchaseorderrequest.approvalandapprove.PorSendForApprovalAndApproveTest" />
+            <class name="com.poc.classes.purchaseorderrequest.approvalandapprove.SendForApprovalAndApproveTest" />
         </classes>
     </test>
 

@@ -6,6 +6,7 @@
     "ftpPassword" : "1234",
     "remoteGepsToHopesFilePath" : "/YEA_RPA/1.GePS-HOPES/",
     "localPath" : "D:\\MSA Files",
+    "localSoFilePath" : "D:\\MSA Files\\SalesOrders_Details.xlsx",
     "remoteHopesToGepsPath" : "/YEA_RPA/5.HOPES-GePS/",
     "remotePoPath" : "/YEA_RPA/4.PO/",
     "remotePOFilePath" : "/YEA_RPA/4.PO/",

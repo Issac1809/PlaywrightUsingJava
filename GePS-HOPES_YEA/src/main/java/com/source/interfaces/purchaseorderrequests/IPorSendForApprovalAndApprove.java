@@ -1,6 +1,6 @@
-package com.poc.interfaces.purchaseorderrequests;
+package com.source.interfaces.purchaseorderrequests;
 
 public interface IPorSendForApprovalAndApprove {
 
-    void approvalAndApprove();
+    void approvalAndApprove(String type, String purchaseType);
 }

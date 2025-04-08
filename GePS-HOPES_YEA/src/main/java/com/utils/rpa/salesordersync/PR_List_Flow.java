@@ -15,9 +15,9 @@ public class PR_List_Flow {
 
     static Logger logger;
 
-    //TODO Constructor
+//TODO Constructor
     public PR_List_Flow() {
-        this.logger = LoggerUtil.getLogger(MSA_Flow.class);
+        this.logger = LoggerUtil.getLogger(PR_List_Flow.class);
     }
 
     public static void main(String[] args) {
@@ -33,24 +33,29 @@ public class PR_List_Flow {
             String ftpUser = jsonNode.get("msa").get("ftpUser").asText();
             String ftpPassword = jsonNode.get("msa").get("ftpPassword").asText();
             String localPath = jsonNode.get("msa").get("localPath").asText();
+            String localSoFilePath = jsonNode.get("msa").get("localSoFilePath").asText();
             String remoteBwFolderPath = jsonNode.get("msa").get("remoteBwFolderPath").asText();
+            int itemCount = jsonNode.get("requisition").get("requisitionItemCount").asInt();
             String remoteBwFilePath = jsonNode.get("msa").get("remotePOFilePath").asText();
             String readPRListFileForCatalog = jsonNode.get("msa").get("readPRListFileForCatalog").asText();
             String readPRListFileForNonCatalog = jsonNode.get("msa").get("readPRListFileForNonCatalog").asText();
 
 
 //TODO Step 1: Connect to FTP and Download File
-            PR_List_FTPHelper prListFtpHelper = new PR_List_FTPHelper(ftpClient);
-            prListFtpHelper.connectionEstablish(ftpHost, ftpPort, ftpUser, ftpPassword);
-            String localExcelFilePath = prListFtpHelper.downloadFile(remoteBwFolderPath, localPath);
+//            PR_List_FTPHelper prListFtpHelper = new PR_List_FTPHelper(ftpClient);
+//            prListFtpHelper.connectionEstablish(ftpHost, ftpPort, ftpUser, ftpPassword);
+//            String localExcelFilePath = prListFtpHelper.downloadFile(remoteBwFolderPath, localPath);
+
+//TODO Step 2: Create SO File
+            PR_List_ExcelHelper prListExcelHelper = new PR_List_ExcelHelper();
+            prListExcelHelper.createSOFile(itemCount, localSoFilePath);
 
 //TODO Step 2: Update the Excel File
-            MSA_ExcelHelper msaExcelHelper = new MSA_ExcelHelper();
-            int poNumber = msaExcelHelper.updateExcel(localExcelFilePath);
+//            int poNumber = prListExcelHelper.updateExcel(localExcelFilePath);
 
 //TODO Step 3: Update the PO PDF File
             MSA_PO_PDF_Helper msaPoPdfHelper = new MSA_PO_PDF_Helper();
-            String localPoFilePath = msaPoPdfHelper.poPdfFileNameUpdate(poNumber, localPath);
+//            String localPoFilePath = msaPoPdfHelper.poPdfFileNameUpdate(poNumber, localPath);
 
 //TODO Step 4: Upload the Updated File
 //            prListFtpHelper.connectionEstablishAndUploadFiles(ftpHost, ftpPort, ftpUser, ftpPassword, localPoFilePath, localExcelFilePath, poNumber, remotePOFilePathPO, remoteHopesToGepsPathXLS);

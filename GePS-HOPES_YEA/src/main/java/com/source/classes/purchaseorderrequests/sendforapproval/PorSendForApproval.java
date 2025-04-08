@@ -1,18 +1,21 @@
-package com.poc.classes.purchaseorderrequest.sendforapproval;
+package com.source.classes.purchaseorderrequests.sendforapproval;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.poc.interfaces.login.ILogin;
-import com.poc.interfaces.logout.ILogout;
-import com.poc.interfaces.purchaseorderrequests.IPorSendForApproval;
+import com.source.interfaces.login.ILogin;
+import com.source.interfaces.logout.ILogout;
+import com.source.interfaces.purchaseorderrequests.IPorSendForApproval;
+import com.utils.LoggerUtil;
+import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import static com.constants.purchaseorderrequests.LPorSendForApproval.*;
-import static com.factory.PlaywrightFactory.waitForLocator;
+import static com.utils.GetTitleUtil.getTransactionTitle;
 
 public class PorSendForApproval implements IPorSendForApproval {
 
-    Properties properties;
+    Logger logger;
+    JsonNode jsonNode;
     Page page;
     ILogin iLogin;
     ILogout iLogout;
@@ -21,14 +24,15 @@ public class PorSendForApproval implements IPorSendForApproval {
     }
 
 //TODO Constructor
-    public PorSendForApproval(ILogin iLogin, Properties properties, Page page, ILogout iLogout) {
+    public PorSendForApproval(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout) {
         this.iLogin = iLogin;
-        this.properties = properties;
+        this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
+        this.logger = LoggerUtil.getLogger(PorSendForApproval.class);
     }
 
-    public List<String> getApprovers() {
+    public List<String> getApprovers(String type, String purchaseType) {
         List<String> matchingApprovers = null;
         try {
             String cormsquareMailId = "@cormsquare.com";
@@ -36,50 +40,41 @@ public class PorSendForApproval implements IPorSendForApproval {
             String yokogawaId = "@yokogawa.com";
             String userDesignation = "PR Approver Group";
 
-            String buyerMailId = properties.getProperty("Buyer");
+            String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             iLogin.performLogin(buyerMailId);
 
             Locator porNavigationBarLocator = page.locator(POR_NAVIGATION_BAR);
-            waitForLocator(porNavigationBarLocator);
             porNavigationBarLocator.click();
 
-            String title = properties.getProperty("Title");
+            String title = getTransactionTitle(type, purchaseType);
             Locator titleLocator = page.locator(getTitle(title));
-            waitForLocator(titleLocator);
             titleLocator.first().click();
 
             Locator sendForApprovalButtonLocator = page.locator(SEND_FOR_APPROVAL__BUTTON);
-            waitForLocator(sendForApprovalButtonLocator);
             sendForApprovalButtonLocator.click();
 
             Locator approvalPopupLocator = page.locator(APPROVAL_POP_UP);
-            waitForLocator(approvalPopupLocator);
 
             matchingApprovers = new ArrayList<>();
-            if (approvalPopupLocator.first().isEnabled() && approvalPopupLocator.first().isVisible() || !approvalPopupLocator.first().isHidden()) {
+            if(approvalPopupLocator.first().isEnabled() && approvalPopupLocator.first().isVisible() || !approvalPopupLocator.first().isHidden()) {
 //TODO CFO
-                String cfoMailId = properties.getProperty("cfo");
+                String cfoMailId = jsonNode.get("mailIds").get("cfoEmail").asText();
                 Locator cfoDropdownLocator = page.locator(CFO_DROPDOWN_LOCATOR);
-                waitForLocator(cfoDropdownLocator);
                 if (cfoDropdownLocator.isVisible()) {
                     cfoDropdownLocator.click();
                     Locator cfoIdLocator = page.locator(getCfoId(cfoMailId));
-                    waitForLocator(cfoIdLocator);
                     cfoIdLocator.click();
                 }
 //TODO President/Director (Corporate)
-                String presidentMailId = properties.getProperty("PresidentDirectorCorporate");
+                String presidentMailId = jsonNode.get("mailIds").get("presidentDirectorCorporateEmail").asText();
                 Locator presidentDropdownLocator = page.locator(PRESIDENT_DROPDOWN_LOCATOR);
-                waitForLocator(presidentDropdownLocator);
                 if (presidentDropdownLocator.isVisible()) {
                     presidentDropdownLocator.click();
                     Locator presidentIdLocator = page.locator(getPresidentId(presidentMailId));
-                    waitForLocator(presidentIdLocator);
                     presidentIdLocator.click();
                 }
 //TODO Submit
                 Locator submitButtonLocator = page.locator(SUBMIT_BUTTON);
-                waitForLocator(submitButtonLocator);
                 submitButtonLocator.click();
 
                 List<String> approversList = page.locator(APPROVERS_LIST).allTextContents();
@@ -113,8 +108,8 @@ public class PorSendForApproval implements IPorSendForApproval {
                 iLogout.performLogout();
                 return matchingApprovers;
             }
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
+        } catch (Exception exception) {
+            logger.error("Exception in POR Send For Approval function: {}", exception.getMessage());
         }
         return matchingApprovers;
     }

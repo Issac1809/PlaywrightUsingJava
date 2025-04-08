@@ -1,6 +1,5 @@
 package com.utils.rpa.salesordersync;
 import com.utils.LoggerUtil;
-import com.utils.rpa.purchaseorderrequest.*;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +21,7 @@ public class PR_List_FTPHelper {
 
     public PR_List_FTPHelper(FTPClient ftpClient){
         this.ftpClient = ftpClient;
-        this.logger = LoggerUtil.getLogger(MSA_FTPHelper.class);
+        this.logger = LoggerUtil.getLogger(PR_List_FTPHelper.class);
     }
 
     public void connectionEstablish(String server, int port, String user, String password){
@@ -49,7 +48,7 @@ public class PR_List_FTPHelper {
                 ftpClient.retrieveFile(excelRemoteFilePath, fileOutputStream);
             }
         } catch (Exception exception) {
-            logger.error("Exception in downloading file function: {}", exception.getMessage());
+            logger.error("Exception in downloading BW file function: {}", exception.getMessage());
         }
         closeConnection();
         return excelLocalFile.getAbsolutePath();

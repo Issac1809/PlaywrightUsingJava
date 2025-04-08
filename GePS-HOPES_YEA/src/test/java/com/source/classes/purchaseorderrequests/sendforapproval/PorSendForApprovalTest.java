@@ -1,16 +1,21 @@
-package com.poc.classes.purchaseorderrequest.sendforapproval;
-import com.poc.base.BaseTest;
+package com.source.classes.purchaseorderrequests.sendforapproval;
+import com.base.BaseTest;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import java.util.List;
 
 public class PorSendForApprovalTest extends BaseTest {
 
     @Test
+    @Parameters({"type", "purchaseType"})
     public void sendForApproval() {
         try {
-            List<String> getApprovers = iPorSendForApproval.getApprovers();
+            String type = "";
+            String purchaseType = "";
+
+            List<String> getApprovers = iPorSendForApproval.getApprovers(type, purchaseType);
         } catch (Exception exception) {
-            System.out.println("What is the Error: " + exception.getMessage());
+            logger.error("Exception in POR Send For Approval Test Function: {}", exception.getMessage());
         }
     }
 }

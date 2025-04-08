@@ -17,7 +17,7 @@ public class MSA_ExcelHelper {
     }
 
     public int updateExcel(String filePath) {
-        Workbook workbook;
+        Workbook workbook = null;
         try {
             try(FileInputStream fileInputStream = new FileInputStream(filePath)){
                 if (filePath.endsWith(".xls")) {
@@ -50,6 +50,7 @@ public class MSA_ExcelHelper {
             try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
                 workbook.write(fileOutputStream);
             }
+            workbook.close();
         } catch (IOException exception) {
             logger.error("Exception in update excel function: {}", exception.getMessage());
         }

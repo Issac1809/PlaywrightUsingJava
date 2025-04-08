@@ -1,6 +1,6 @@
-package com.poc.interfaces.purchaseorderrequests;
+package com.source.interfaces.purchaseorderrequests;
 
 public interface IPorEdit {
 
-    void porEdit();
+    void porEdit(String type, String purchaseType);
 }

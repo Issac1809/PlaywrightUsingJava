@@ -1,11 +1,14 @@
-package com.poc.classes.purchaseorderrequest.approvalandapprove;
-import com.poc.interfaces.purchaseorderrequests.IPorApprove;
-import com.poc.interfaces.purchaseorderrequests.IPorSendForApproval;
-import com.poc.interfaces.purchaseorderrequests.IPorSendForApprovalAndApprove;
+package com.source.classes.purchaseorderrequests.approvalandapprove;
+import com.source.interfaces.purchaseorderrequests.IPorApprove;
+import com.source.interfaces.purchaseorderrequests.IPorSendForApproval;
+import com.source.interfaces.purchaseorderrequests.IPorSendForApprovalAndApprove;
+import com.utils.LoggerUtil;
+import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 public class PorSendForApprovalAndApprove implements IPorSendForApprovalAndApprove {
 
+    Logger logger;
     IPorApprove iPorApprove;
     IPorSendForApproval iPorSendForApproval;
 
@@ -16,14 +19,15 @@ public class PorSendForApprovalAndApprove implements IPorSendForApprovalAndAppro
     public PorSendForApprovalAndApprove(IPorApprove iPorApprove, IPorSendForApproval iPorSendForApproval){
         this.iPorApprove = iPorApprove;
         this.iPorSendForApproval = iPorSendForApproval;
+        this.logger = LoggerUtil.getLogger(PorSendForApprovalAndApprove.class);
     }
 
-    public void approvalAndApprove(){
+    public void approvalAndApprove(String type, String purchaseType){
         try {
-        List<String> approversList = iPorSendForApproval.getApprovers();
-        iPorApprove.approverLogin(approversList);
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
+        List<String> approversList = iPorSendForApproval.getApprovers(type, purchaseType);
+        iPorApprove.approverLogin(type, purchaseType, approversList);
+        } catch (Exception exception) {
+            logger.error("Exception in POR Approval And Approve function: {}", exception.getMessage());
         }
     }
 }

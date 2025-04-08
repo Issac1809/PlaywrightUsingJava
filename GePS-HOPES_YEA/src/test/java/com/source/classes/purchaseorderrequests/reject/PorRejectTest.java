@@ -1,15 +1,20 @@
-package com.poc.classes.purchaseorderrequest.reject;
-import com.poc.base.BaseTest;
+package com.source.classes.purchaseorderrequests.reject;
+import com.base.BaseTest;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class PorRejectTest extends BaseTest {
 
     @Test
+    @Parameters({"type", "purchaseType"})
     public void reject() {
         try {
-            iPorReject.porReject();
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
+            String type = "";
+            String purchaseType = "";
+
+            iPorReject.porReject(type, purchaseType);
+        } catch (Exception exception) {
+            logger.error("Exception in POR Reject Test Function: {}", exception.getMessage());
         }
     }
 }

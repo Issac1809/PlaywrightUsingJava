@@ -130,7 +130,7 @@
 
     <test name="YEA NonCatalog Purchase Order Request Create Page Test">
         <classes>
-            <class name="com.poc.classes.purchaseorderrequest.create.PorCreateTest" />
+            <class name="com.poc.classes.purchaseorderrequest.create.CreateTest" />
         </classes>
     </test>
 
@@ -138,7 +138,7 @@
 
     <test name="YEA NonCatalog Purchase Order Approval Page Test">
         <classes>
-            <class name="com.poc.classes.purchaseorderrequest.sendforapproval.PorSendForApprovalTest" />
+            <class name="com.poc.classes.purchaseorderrequest.sendforapproval.SendForApprovalTest" />
         </classes>
     </test>
 

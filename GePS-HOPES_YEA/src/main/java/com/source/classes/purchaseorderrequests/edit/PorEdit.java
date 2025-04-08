@@ -1,16 +1,19 @@
-package com.poc.classes.purchaseorderrequest.edit;
+package com.source.classes.purchaseorderrequests.edit;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.poc.interfaces.login.ILogin;
-import com.poc.interfaces.logout.ILogout;
-import com.poc.interfaces.purchaseorderrequests.IPorEdit;
-import java.util.Properties;
+import com.source.interfaces.purchaseorderrequests.IPorEdit;
+import com.source.interfaces.login.ILogin;
+import com.source.interfaces.logout.ILogout;
+import com.utils.LoggerUtil;
+import org.apache.logging.log4j.Logger;
 import static com.constants.purchaseorderrequests.LPorEdit.*;
-import static com.factory.PlaywrightFactory.waitForLocator;
+import static com.utils.GetTitleUtil.getTransactionTitle;
 
 public class PorEdit implements IPorEdit {
 
-    Properties properties;
+    Logger logger;
+    JsonNode jsonNode;
     Page page;
     ILogin iLogin;
     ILogout iLogout;
@@ -19,46 +22,41 @@ public class PorEdit implements IPorEdit {
     }
 
 //TODO Constructor
-    public PorEdit(ILogin iLogin, Properties properties, Page page, ILogout iLogout){
+    public PorEdit(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
         this.iLogin = iLogin;
-        this.properties = properties;
+        this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
+        this.logger = LoggerUtil.getLogger(PorEdit.class);
     }
 
-    public void porEdit() {
+    public void porEdit(String type, String purchaseType) {
         try {
-        String buyerMailId = properties.getProperty("Buyer");
-        iLogin.performLogin(buyerMailId);
+            String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
+            iLogin.performLogin(buyerMailId);
 
-        Locator porNavigationBarLocator = page.locator(POR_NAVIGATION_BAR);
-        waitForLocator(porNavigationBarLocator);
-        porNavigationBarLocator.click();
+            Locator porNavigationBarLocator = page.locator(POR_NAVIGATION_BAR);
+            porNavigationBarLocator.click();
 
-        String title = properties.getProperty("Title");
-        Locator titleLocator = page.locator(getTitle(title));
-        waitForLocator(titleLocator);
-        titleLocator.first().click();
+            String title = getTransactionTitle(type, purchaseType);
+            Locator titleLocator = page.locator(getTitle(title));
+            titleLocator.first().click();
 
-        Locator editButtonLocator = page.locator(EDIT_BUTTON);
-        waitForLocator(editButtonLocator);
-        editButtonLocator.click();
+            Locator editButtonLocator = page.locator(EDIT_BUTTON);
+            editButtonLocator.click();
 
-        Locator updateButtonLocator = page.locator(UPDATE_BUTTON);
-        waitForLocator(updateButtonLocator);
-        updateButtonLocator.click();
+            Locator updateButtonLocator = page.locator(UPDATE_BUTTON);
+            updateButtonLocator.click();
 
-        Locator remarksInputLocator = page.locator(REMARKS_INPUT);
-        waitForLocator(remarksInputLocator);
-        remarksInputLocator.fill("Updated");
+            Locator remarksInputLocator = page.locator(REMARKS_INPUT);
+            remarksInputLocator.fill("Updated");
 
-        Locator acceptLocator = page.locator(YES);
-        waitForLocator(acceptLocator);
-        acceptLocator.click();
+            Locator acceptLocator = page.locator(YES);
+            acceptLocator.click();
 
-        iLogout.performLogout();
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
+            iLogout.performLogout();
+        } catch (Exception exception) {
+            logger.error("Exception in POR Edit function: {}", exception.getMessage());
         }
     }
 }

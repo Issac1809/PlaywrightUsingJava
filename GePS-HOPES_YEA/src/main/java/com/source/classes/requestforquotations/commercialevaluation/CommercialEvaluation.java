@@ -7,7 +7,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
-import com.source.interfaces.requestforquotation.ICeCreate;
+import com.source.interfaces.requestforquotations.ICeCreate;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import static com.constants.requestforquotations.LCeCreate.*;

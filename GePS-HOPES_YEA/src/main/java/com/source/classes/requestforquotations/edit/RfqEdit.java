@@ -4,7 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
-import com.source.interfaces.requestforquotation.IRfqEdit;
+import com.source.interfaces.requestforquotations.IRfqEdit;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import static com.constants.requestforquotations.LRfqEdit.*;

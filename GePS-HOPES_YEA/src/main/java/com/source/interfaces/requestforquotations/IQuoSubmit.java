@@ -1,4 +1,4 @@
-package com.source.interfaces.requestforquotation;
+package com.source.interfaces.requestforquotations;
 
 public interface IQuoSubmit {
     void inviteRegisteredVendor(String type);

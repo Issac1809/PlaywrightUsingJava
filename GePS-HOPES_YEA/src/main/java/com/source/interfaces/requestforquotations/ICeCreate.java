@@ -1,4 +1,4 @@
-package com.source.interfaces.requestforquotation;
+package com.source.interfaces.requestforquotations;
 
 public interface ICeCreate {
     int commercialEvaluationButton(String type);
