@@ -1,7 +1,10 @@
 package com.source.classes.requestforquotations.regret;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.microsoft.playwright.*;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requestforquotations.IQuoRegret;
@@ -20,6 +23,7 @@ public class QuotationRegret implements IQuoRegret {
     IQuoSubmit iQuoSubmit;
     JsonNode jsonNode;
     Page page;
+    private String appUrl;
 
     private QuotationRegret(){
     }
@@ -32,9 +36,11 @@ public class QuotationRegret implements IQuoRegret {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(QuotationRegret.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void regret(String type){
+    public int regret(String type){
+        int status = 0;
         try {
         iQuoSubmit.inviteRegisteredVendor(type);
 
@@ -52,11 +58,19 @@ public class QuotationRegret implements IQuoRegret {
         remarksLocator.fill(REMARKS);
 
         Locator acceptLocator = page.locator(ACCEPT_REMARKS_POP_UP);
-        acceptLocator.click();
+
+        String reqType = type.equalsIgnoreCase("PS") ? "/api/VP/RequestForQuotations/" : "/api/VP/RequestForQuotationsSales/";
+
+        Response regretResponse = page.waitForResponse(
+                response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                acceptLocator::click
+        );
+        status = regretResponse.status();
 
         iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Quotation Regret Function: {}", exception.getMessage());
         }
+        return status;
     }
 }

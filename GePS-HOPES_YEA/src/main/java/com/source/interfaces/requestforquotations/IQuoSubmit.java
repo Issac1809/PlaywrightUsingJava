@@ -9,5 +9,5 @@ public interface IQuoSubmit {
     void quotationItems();
     void gst();
     void quotationAttachments();
-    void quotationSubmitButton();
+    int quotationSubmitButton(String type);
 }

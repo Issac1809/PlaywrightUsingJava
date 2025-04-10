@@ -1,7 +1,10 @@
 package com.source.classes.requestforquotations.edit;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requestforquotations.IRfqEdit;
@@ -18,6 +21,8 @@ public class RfqEdit implements IRfqEdit {
     ILogout iLogout;
     JsonNode jsonNode;
     Page page;
+    private String appUrl;
+
 
     private RfqEdit(){
     }
@@ -29,9 +34,11 @@ public class RfqEdit implements IRfqEdit {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(RfqEdit.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void rfqEditMethod(String type) {
+    public int rfqEditMethod(String type) {
+        int status = 0;
         try {
         String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
         iLogin.performLogin(buyerMailId);
@@ -45,6 +52,7 @@ public class RfqEdit implements IRfqEdit {
 
         Locator editButtonLocator = page.locator(EDIT_BUTTON);
         editButtonLocator.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
 
         Locator updateButtonLocator = page.locator(UPDATE_BUTTON);
         updateButtonLocator.click();
@@ -53,11 +61,20 @@ public class RfqEdit implements IRfqEdit {
         remarksLocator.fill(REMARKS);
 
         Locator acceptLocator = page.locator(ACCEPT_REMARKS_POP_UP);
-        acceptLocator.click();
+//        acceptLocator.click();
+
+        String reqType = type.equalsIgnoreCase("PS") ? "/api/RequestForQuotations/" : "/api/RequestForQuotationsOthers/";
+
+        Response editResponse = page.waitForResponse(
+                response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                acceptLocator::click
+        );
+        status = editResponse.status();
 
         iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in RFQ Edit Function: {}", exception.getMessage());
         }
+        return status;
     }
 }

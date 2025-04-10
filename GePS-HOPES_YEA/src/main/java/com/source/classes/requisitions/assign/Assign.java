@@ -1,4 +1,4 @@
-package com.source.classes.requisition.assign;
+package com.source.classes.requisitions.assign;
 import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

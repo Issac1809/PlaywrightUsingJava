@@ -1,4 +1,4 @@
-package com.source.classes.requisition.suspend;
+package com.source.classes.requisitions.suspend;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;

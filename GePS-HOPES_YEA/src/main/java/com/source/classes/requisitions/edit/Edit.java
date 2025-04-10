@@ -1,4 +1,4 @@
-package com.source.classes.requisition.edit;
+package com.source.classes.requisitions.edit;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
@@ -57,12 +57,15 @@ public class Edit implements IPrEdit {
 
         Locator yesButtonLocator = page.locator(YES);
 
+        String reqType = type.equalsIgnoreCase("PS") ? "/api/Requisitions/" : "/api/RequisitionsSales/";
+
         Response updateResponse = page.waitForResponse(
-                response -> response.url().startsWith(appUrl + "/api/Requisitions") && response.status() == 200,
+                response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
                 yesButtonLocator::click
         );
 
         status = updateResponse.status();
+
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
         iLogout.performLogout();

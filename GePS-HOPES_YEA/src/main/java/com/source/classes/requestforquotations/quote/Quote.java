@@ -2,6 +2,7 @@ package com.source.classes.requestforquotations.quote;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requestforquotations.IQuoSubmit;
@@ -20,6 +21,7 @@ public class Quote implements IQuoSubmit {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    private String appUrl;
 
     private Quote(){
     }
@@ -31,6 +33,7 @@ public class Quote implements IQuoSubmit {
         this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
     public void inviteRegisteredVendor(String type){
@@ -51,7 +54,7 @@ public class Quote implements IQuoSubmit {
             Locator vendorSearchFieldLocator = page.locator(VENDOR_SEARCH_FIELD);
             vendorSearchFieldLocator.click();
 
-            String vendorId = jsonNode.get("mailIds").get("vendorEmail").asText();
+            String vendorId = jsonNode.get("requisition").get("vendorName").asText();
             Locator vendorSearchLocator = page.locator(VENDOR_SEARCH);
             vendorSearchLocator.fill(vendorId);
 
@@ -62,7 +65,13 @@ public class Quote implements IQuoSubmit {
             inviteVendorButtonLocator.click();
 
             Locator vendorEmailPopUpLocator = page.locator(VENDOR_EMAIL_POP_UP);
-            vendorEmailPopUpLocator.click();
+
+            String reqType = type.equalsIgnoreCase("PS") ? "/api/RequestForQuotations/" : "/api/RequestForQuotationsOthers/";
+
+            Response suspendResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                    vendorEmailPopUpLocator::click
+            );
 
         iLogout.performLogout();
         } catch (Exception exception) {
@@ -158,7 +167,7 @@ public class Quote implements IQuoSubmit {
         String notes = jsonNode.get("requestForQuotation").get("quotationNotes").asText();
 
         List<String> itemSerialNumbers = page.locator(RFQ_ITEM_LIST).allTextContents();
-        for(int i = 0; i < itemSerialNumbers.size(); i++){
+        for(int i = 1; i <= itemSerialNumbers.size(); i++){
 
             Locator hsCodeLocator = page.locator(HS_CODE + i);
             hsCodeLocator.fill(hsCode);
@@ -237,7 +246,8 @@ public class Quote implements IQuoSubmit {
         }
     }
 
-    public void quotationSubmitButton(){
+    public int quotationSubmitButton(String type){
+        int status = 0;
         try {
             Locator createButtonLocator = page.locator(CREATE_BUTTON);
             createButtonLocator.click();
@@ -245,9 +255,18 @@ public class Quote implements IQuoSubmit {
             Locator acceptLocator = page.locator(ACCEPT_BUTTON_LOCATOR);
             acceptLocator.click();
 
+            String reqType = type.equalsIgnoreCase("PS") ? "/api/VP/RequestForQuotations/" : "/api/VP/RequestForQuotationsSales/";
+
+            Response regretResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                    acceptLocator::click
+            );
+            status = regretResponse.status();
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Quotation Submit Button Function: {}", exception.getMessage());
         }
+        return status;
     }
 }

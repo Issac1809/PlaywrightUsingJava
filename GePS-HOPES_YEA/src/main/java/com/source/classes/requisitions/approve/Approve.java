@@ -1,4 +1,4 @@
-package com.source.classes.requisition.approve;
+package com.source.classes.requisitions.approve;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.APIResponse;

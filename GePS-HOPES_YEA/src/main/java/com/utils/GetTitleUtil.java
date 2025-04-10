@@ -43,7 +43,7 @@ public class GetTitleUtil {
                 jsonTitleKey = jsonNode.get("requisition").get("salesNonCatalogTitle").asText();
             }
 
-            title = jsonNode.get("requisition").get(jsonTitleKey).asText();
+            title = jsonTitleKey;
         } catch (Exception exception) {
             logger.error("Exception Initializing Get RFQ Transaction Title Function: {}", exception.getMessage());
         }

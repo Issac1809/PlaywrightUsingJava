@@ -1,4 +1,4 @@
-package com.source.classes.requisition.type;
+package com.source.classes.requisitions.type;
 import com.source.interfaces.requisitions.IPrCreate;
 import com.source.interfaces.requisitions.IPrType;
 import com.utils.LoggerUtil;

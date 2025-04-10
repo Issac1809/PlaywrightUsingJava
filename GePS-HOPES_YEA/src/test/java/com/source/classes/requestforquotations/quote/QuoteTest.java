@@ -1,4 +1,4 @@
-package com.source.classes.requestforquotation.quote;
+package com.source.classes.requestforquotations.quote;
 import com.base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
@@ -19,7 +19,7 @@ public class QuoteTest extends BaseTest {
             iQuoSubmit.quotationItems();
             iQuoSubmit.gst();
             iQuoSubmit.quotationAttachments();
-            iQuoSubmit.quotationSubmitButton();
+            iQuoSubmit.quotationSubmitButton(type);
         } catch (Exception exception) {
             logger.error("Exception in Quotation Submit Test Function: {}", exception.getMessage());
             Assert.fail("Exception in Quotation Submit Test Function: " + exception.getMessage());

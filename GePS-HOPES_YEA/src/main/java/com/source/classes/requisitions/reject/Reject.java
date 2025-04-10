@@ -1,4 +1,4 @@
-package com.source.classes.requisition.reject;
+package com.source.classes.requisitions.reject;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
@@ -58,11 +58,10 @@ public class Reject implements IPrReject {
 
             Locator yesButtonLocator = page.locator(SUBMIT_BUTTON);
 
-            String reqType = type.equalsIgnoreCase("Sales") ? "RequisitionsSales/" : "Requisitions/";
+            String reqType = type.equalsIgnoreCase("PS") ? "/api/Requisitions/" : "/api/RequisitionsSales/";
 
-            String finalReqType = reqType;
             Response rejectResponse = page.waitForResponse(
-                    response -> response.url().startsWith(appUrl + "/api/" + finalReqType) && response.status() == 200,
+                    response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
                     yesButtonLocator::click
             );
             rejectStatus = rejectResponse.status();

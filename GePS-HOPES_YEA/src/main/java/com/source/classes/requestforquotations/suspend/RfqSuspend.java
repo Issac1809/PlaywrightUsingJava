@@ -2,6 +2,7 @@ package com.source.classes.requestforquotations.suspend;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requestforquotations.IRfqCreate;
@@ -28,6 +29,7 @@ public class RfqSuspend implements IRfqSuspend {
     IPrApprove iPrApprove;
     IPrAssign iPrAssign;
     IRfqCreate iRfqCreate;
+    private String appUrl;
 
     private RfqSuspend(){
     }
@@ -45,9 +47,11 @@ public class RfqSuspend implements IRfqSuspend {
         this.iPrApprove = iPrApprove;
         this.iPrAssign = iPrAssign;
         this.iRfqCreate = iRfqCreate;
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void suspendRfqEdit(String type) {
+    public int suspendRfqEdit(String type) {
+        int status = 0;
         try {
         String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
         iLogin.performLogin(buyerMailId);
@@ -66,7 +70,14 @@ public class RfqSuspend implements IRfqSuspend {
         remarksInputLocator.fill("Suspended");
 
         Locator acceptLocator = page.locator(YES);
-        acceptLocator.click();
+
+        String reqType = type.equalsIgnoreCase("PS") ? "/api/RequestForQuotations/" : "/api/RequestForQuotationsOthers/";
+
+        Response suspendResponse = page.waitForResponse(
+                response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                acceptLocator::click
+        );
+        status = suspendResponse.status();
 
         iLogout.performLogout();
 
@@ -74,9 +85,11 @@ public class RfqSuspend implements IRfqSuspend {
         } catch (Exception exception) {
             logger.error("Exception in Suspend RFQ Edit Function: {}", exception.getMessage());
         }
+        return status;
     }
 
-    public void suspendPREdit(String type, String purchaseType) {
+    public int suspendPREdit(String type, String purchaseType) {
+        int status = 0;
         try {
         String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
         iLogin.performLogin(buyerMailId);
@@ -95,7 +108,14 @@ public class RfqSuspend implements IRfqSuspend {
         remarksInputLocator.fill("Suspended");
 
         Locator acceptLocator = page.locator(YES);
-        acceptLocator.click();
+
+        String reqType = type.equalsIgnoreCase("PS") ? "/api/RequestForQuotations/" : "/api/RequestForQuotationsOthers/";
+
+        Response suspendResponse = page.waitForResponse(
+                response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                acceptLocator::click
+        );
+        status = suspendResponse.status();
 
         iLogout.performLogout();
 
@@ -107,5 +127,6 @@ public class RfqSuspend implements IRfqSuspend {
         } catch (Exception exception) {
             logger.error("Exception in Suspend RFQ and PR Edit Function: {}", exception.getMessage());
         }
+        return status;
     }
 }

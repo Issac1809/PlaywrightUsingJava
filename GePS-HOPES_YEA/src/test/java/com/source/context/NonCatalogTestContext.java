@@ -1,6 +1,7 @@
 package com.source.context;
 import com.base.BaseTest;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -104,85 +105,86 @@ public class NonCatalogTestContext extends BaseTest {
         }
     }
 
-//    @Test(priority = 8)
-//    @Parameters({"type"})
-//    public void requestForQuotationCreate(String type){
-//        try {
-//            int status = iRfqCreate.buyerRfqCreate(type);
-//            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
-//        } catch (Exception exception) {
-//            logger.error("Exception in Request For Quotation Create Function for Non-Catalog Type: {}", exception.getMessage());
-//            Assert.fail("Exception in Request For Quotation Create Function for Non-Catalog Type: " + exception.getMessage());
-//        }
-//    }
-//
-//    @Test(priority = 9)
-//    @Parameters({"type"})
-//    public void requestForQuotationEdit(String type){
-//        try {
-//            int status = iRfqEdit.rfqEditMethod(type);
-//            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
-//        } catch (Exception exception) {
-//            logger.error("Exception in Request For Quotation Edit Function for Non-Catalog Type: {}", exception.getMessage());
-//            Assert.fail("Exception in Request For Quotation Edit Function for Non-Catalog Type: " + exception.getMessage());
-//        }
-//    }
-//
-//    @Test(priority = 10)
-//    @Parameters({"type"})
-//    public void requestForQuotationSuspendRFQEdit(String type){
-//        try {
-//            int status = iRfqSuspend.suspendRfqEdit(type);
-//            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
-//        } catch (Exception exception) {
-//            logger.error("Exception in Request For Quotation Suspend RFQ Edit Function for Non-Catalog Type: {}", exception.getMessage());
-//            Assert.fail("Exception in Request For Quotation Suspend RFQ Edit Function for Non-Catalog Type: " + exception.getMessage());
-//        }
-//    }
-//
-//    @Test(priority = 11)
-//    @Parameters({"type", "purchaseType"})
-//    public void requestForQuotationSuspendPREdit(String type, String purchaseType){
-//        try {
-//            int status = iRfqSuspend.suspendPREdit(type, purchaseType);
-//            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
-//        } catch (Exception exception) {
-//            logger.error("Exception in Request For Quotation Suspend PR Edit Function for Non-Catalog Type: {}", exception.getMessage());
-//            Assert.fail("Exception in Request For Quotation Suspend PR Edit Function for Non-Catalog Type: " + exception.getMessage());
-//        }
-//    }
-//
-//    @Test(priority = 12)
-//    @Parameters({"type"})
-//    public void quotationRegret(String type){
-//        try {
-//            int status = iQuoRegret.regret(type);
-//            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
-//        } catch (Exception exception) {
-//            logger.error("Exception in Quotation Regret Function for Non-Catalog Type: {}", exception.getMessage());
-//            Assert.fail("Exception in Quotation Regret Function for Non-Catalog Type: " + exception.getMessage());
-//        }
-//    }
-//
-//    @Test(priority = 13)
-//    @Parameters({"type"})
-//    public void quotationSubmit(String type){
-//        try {
-//            iQuoSubmit.inviteRegisteredVendor(type);
-//            iQuoSubmit.vendorLogin(type);
-//            iQuoSubmit.liquidatedDamages();
-//            iQuoSubmit.rohsCompliance();
-//            iQuoSubmit.warrantyRequirements();
-//            iQuoSubmit.quotationItems();
-//            iQuoSubmit.gst();
-//            iQuoSubmit.quotationAttachments();
-//            int status = iQuoSubmit.quotationSubmitButton();
-//            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
-//        } catch (Exception exception) {
-//            logger.error("Exception in Quotation Submit Function for Non-Catalog Type: {}", exception.getMessage());
-//            Assert.fail("Exception in Quotation Submit Function for Non-Catalog Type: " + exception.getMessage());
-//        }
-//    }
+    @Test(priority = 8)
+    @Parameters({"type"})
+    public void requestForQuotationCreate(String type){
+        try {
+            int status = iRfqCreate.buyerRfqCreate(type);
+            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
+        } catch (Exception exception) {
+            logger.error("Exception in Request For Quotation Create Function for Non-Catalog Type: {}", exception.getMessage());
+            Assert.fail("Exception in Request For Quotation Create Function for Non-Catalog Type: " + exception.getMessage());
+        }
+    }
+
+    @Test(priority = 9)
+    @Parameters({"type"})
+    public void requestForQuotationEdit(String type){
+        try {
+            int status = iRfqEdit.rfqEditMethod(type);
+            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
+        } catch (Exception exception) {
+            logger.error("Exception in Request For Quotation Edit Function for Non-Catalog Type: {}", exception.getMessage());
+            Assert.fail("Exception in Request For Quotation Edit Function for Non-Catalog Type: " + exception.getMessage());
+        }
+    }
+
+    @Test(priority = 10)
+    @Parameters({"type"})
+    public void requestForQuotationSuspendRFQEdit(String type){
+        try {
+            int status = iRfqSuspend.suspendRfqEdit(type);
+            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
+        } catch (Exception exception) {
+            logger.error("Exception in Request For Quotation Suspend RFQ Edit Function for Non-Catalog Type: {}", exception.getMessage());
+            Assert.fail("Exception in Request For Quotation Suspend RFQ Edit Function for Non-Catalog Type: " + exception.getMessage());
+        }
+    }
+
+    @Test(priority = 11)
+    @Parameters({"type", "purchaseType"})
+    public void requestForQuotationSuspendPREdit(String type, String purchaseType){
+        try {
+            int status = iRfqSuspend.suspendPREdit(type, purchaseType);
+            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
+        } catch (Exception exception) {
+            logger.error("Exception in Request For Quotation Suspend PR Edit Function for Non-Catalog Type: {}", exception.getMessage());
+            Assert.fail("Exception in Request For Quotation Suspend PR Edit Function for Non-Catalog Type: " + exception.getMessage());
+        }
+    }
+
+
+    @Test(priority = 12)
+    @Parameters({"type"})
+    public void quotationRegret(String type){
+        try {
+            int status = iQuoRegret.regret(type);
+            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
+        } catch (Exception exception) {
+            logger.error("Exception in Quotation Regret Function for Non-Catalog Type: {}", exception.getMessage());
+            Assert.fail("Exception in Quotation Regret Function for Non-Catalog Type: " + exception.getMessage());
+        }
+    }
+
+    @Test(priority = 13)
+    @Parameters({"type"})
+    public void quotationSubmit(String type){
+        try {
+            iQuoSubmit.inviteRegisteredVendor(type);
+            iQuoSubmit.vendorLogin(type);
+            iQuoSubmit.liquidatedDamages();
+            iQuoSubmit.rohsCompliance();
+            iQuoSubmit.warrantyRequirements();
+            iQuoSubmit.quotationItems();
+            iQuoSubmit.gst();
+            iQuoSubmit.quotationAttachments();
+            int status = iQuoSubmit.quotationSubmitButton(type);
+            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
+        } catch (Exception exception) {
+            logger.error("Exception in Quotation Submit Function for Non-Catalog Type: {}", exception.getMessage());
+            Assert.fail("Exception in Quotation Submit Function for Non-Catalog Type: " + exception.getMessage());
+        }
+    }
 //
 //    @Test(priority = 14)
 //    @Parameters({"type"})

@@ -1,4 +1,4 @@
-package com.source.classes.requisition.sendforapproval;
+package com.source.classes.requisitions.sendforapproval;
 import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -63,18 +63,21 @@ public class SendForApproval implements IPrSendForApproval {
 
         playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionUid", getUid);
 
-        String reqType = type.equalsIgnoreCase("Sales") ? "RequisitionsSales/" : "Requisitions/";
+//        String reqType = type.equalsIgnoreCase("Sales") ? "RequisitionsSales/" : "Requisitions/";
 
-        APIResponse approvalResponse = page.request().fetch(appUrl + "/api/" + reqType + getUid, RequestOptions.create());JsonNode getApproversJson = objectMapper.readTree(approvalResponse.body());
-        int requisitionId = getApproversJson.get("requisitionId").asInt();
+//        APIResponse approvalResponse = page.request().fetch(appUrl + "/api/" + reqType + getUid, RequestOptions.create());
+//        JsonNode getApproversJson = objectMapper.readTree(approvalResponse.body());
+//        int requisitionId = getApproversJson.get("requisitionId").asInt();
 
         Locator sendForApprovalButtonLocator = page.locator(SEND_FOR_APPROVAL_BUTTON);
         sendForApprovalButtonLocator.click();
 
         Locator yesButtonLocator = page.locator(YES);
 
+        String reqType = type.equalsIgnoreCase("PS") ? "/api/Requisitions/" : "/api/RequisitionsSales/";
+
         Response approverResponse = page.waitForResponse(
-                response -> response.url().startsWith(appUrl + "/api/Approvals?entityId=") && response.status() == 200,
+                response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
                 yesButtonLocator::click
         );
 
