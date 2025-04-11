@@ -153,7 +153,6 @@ public class NonCatalogTestContext extends BaseTest {
         }
     }
 
-
     @Test(priority = 12)
     @Parameters({"type"})
     public void quotationRegret(String type){
