@@ -24,10 +24,11 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-292.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-884.0",
+    "psCatalogTitle" : "PS-AUTOMATION-NONCATALOG-148.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-776.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-507.0",
-    "salesNonCatalogTitle" : "SALES-Automation-NONCATALOG-406.0",
+    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-921.0",
+    "departmentPic" : "requester@cormsquare.com",
     "shipToYokogawa" : "no",
     "companyName" : "Yokogawa Engineering Asia Pte Ltd",
     "businessUnit" : "CMM-Central Materials Management",
@@ -56,16 +57,16 @@
     "requisitionStatus" : "Draft",
     "requisitionNotes" : "Requisition Notes and Attachments",
     "requisitionFileType" : "Internal",
-    "requisitionApprovers" : "projectmanager@cormsquare.com",
+    "requisitionApprovers" : "requester@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "d90324fe-54c7-4d35-beaf-4136f05fca85",
+    "requisitionUid" : "0f978a06-51c0-4d03-b2b5-668f532b28e6",
     "itemImport" : "true",
-    "requisitionItemCount" : ""
+    "requisitionItemCount" : "3",
+    "salesTransactionNumber" : ""
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
-    "salesRequestForQuotationUid" : "",
-    "psRequestForQuotationUid" : "",
+    "requestForQuotationUid" : "",
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",
@@ -101,6 +102,10 @@
     "sourceCountry" : "India",
     "destinationCountry" : "India",
     "workOrderReferenceId" : ""
+  },
+  "invoices" : {
+    "vendorReferenceId" : "",
+    "invoiceReferenceId" : ""
   },
   "configSettings" : {
     "browserName" : "edge",

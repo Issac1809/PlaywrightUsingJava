@@ -185,7 +185,7 @@ public class NonCatalogTestContext extends BaseTest {
             Assert.fail("Exception in Quotation Submit Function for Non-Catalog Type: " + exception.getMessage());
         }
     }
-//
+
 //    @Test(priority = 14)
 //    @Parameters({"type"})
 //    public void quotationRequote(String type){

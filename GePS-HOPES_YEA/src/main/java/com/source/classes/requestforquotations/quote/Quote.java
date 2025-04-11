@@ -205,7 +205,7 @@ public class Quote implements IQuoSubmit {
 
     public void gst(){
         try {
-            String gst = jsonNode.get("mailIds").get("gstPercentage").asText();
+            String gst = jsonNode.get("requestForQuotation").get("gstPercentage").asText();
             Locator gstLocator = page.locator(GST);
             gstLocator.fill(gst);
         } catch (Exception error) {
@@ -215,8 +215,8 @@ public class Quote implements IQuoSubmit {
 
     public void quotationAttachments() {
         try {
-            String technicalAttachmentFilePath = jsonNode.get("requestForQuotation").get("technicalAttachmentFilePath").asText();
-            String commercialAttachmentFilePath = jsonNode.get("requestForQuotation").get("commercialAttachmentFilePath").asText();
+            String technicalAttachmentFilePath = jsonNode.get("configSettings").get("technicalAttachmentFilePath").asText();
+            String commercialAttachmentFilePath = jsonNode.get("configSettings").get("commercialAttachmentFilePath").asText();
 
             uploadAttachments(technicalAttachmentFilePath, "Technical");
             uploadAttachments(commercialAttachmentFilePath, "Commercial");
@@ -253,15 +253,14 @@ public class Quote implements IQuoSubmit {
             createButtonLocator.click();
 
             Locator acceptLocator = page.locator(ACCEPT_BUTTON_LOCATOR);
-            acceptLocator.click();
 
-            String reqType = type.equalsIgnoreCase("PS") ? "/api/VP/RequestForQuotations/" : "/api/VP/RequestForQuotationsSales/";
+            String reqType = type.equalsIgnoreCase("PS") ? "/api/Vp/Quotation/" : "/api/Vp/QuotationSales/";
 
-            Response regretResponse = page.waitForResponse(
+            Response submitResponse = page.waitForResponse(
                     response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
                     acceptLocator::click
             );
-            status = regretResponse.status();
+            status = submitResponse.status();
 
             iLogout.performLogout();
         } catch (Exception exception) {
