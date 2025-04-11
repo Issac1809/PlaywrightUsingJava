@@ -13,6 +13,7 @@ import com.source.classes.purchaseorderrequests.approve.PorApprove;
 import com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApproval;
 import com.source.classes.purchaseorderrequests.approvalandapprove.PorSendForApprovalAndApprove;
 import com.source.classes.purchaseorderrequests.suspend.PorSuspend;
+import com.source.classes.purchaseorders.SendForVendor;
 import com.source.classes.requestforquotations.commercialevaluation.CommercialEvaluation;
 import com.source.classes.requestforquotations.create.RfqCreate;
 import com.source.classes.requestforquotations.edit.RfqEdit;
@@ -35,16 +36,19 @@ import com.source.classes.requisitions.type.PurchaseRequisitionTypeHandler;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.purchaseorderrequests.*;
+import com.source.interfaces.purchaseorders.IPoSendForVendor;
 import com.source.interfaces.requestforquotations.*;
 import com.source.interfaces.requisitions.*;
 import com.utils.GetTitleUtil;
 import com.utils.LoggerUtil;
+import com.utils.ToastrUtil;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
 
 public class BaseMain {
 
     protected Logger logger;
+    protected ToastrUtil toastrUtil;
     protected ObjectMapper objectMapper;
     protected JsonNode jsonNode;
     protected GetTitleUtil getTitleUtil;
@@ -79,6 +83,7 @@ public class BaseMain {
     protected IPorReject iPorReject;
     protected IPorSendForApprovalAndApprove iPorSendForApprovalAndApprove;
     protected IPorApprove iPorApprove;
+    protected IPoSendForVendor iPoSendForVendor;
 
 //TODO Constructor
     public BaseMain(){
@@ -88,6 +93,7 @@ public class BaseMain {
             jsonNode = objectMapper.readTree(new File("./src/test/resources/config/test-data.json"));
             playwrightFactory = new PlaywrightFactory(objectMapper, jsonNode);
             page = playwrightFactory.initializePage(jsonNode);
+            toastrUtil = new ToastrUtil(page);
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
 
 //TODO Requisition
@@ -123,6 +129,9 @@ public class BaseMain {
             iPorReject = new PorReject(iLogin, jsonNode, page, iLogout, iPorEdit, iPorSendForApproval);
             iPorSendForApprovalAndApprove = new PorSendForApprovalAndApprove(iPorApprove, iPorSendForApproval);
             iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout);
+
+//TODO Purchase Orders
+            iPoSendForVendor = new SendForVendor(iLogin, jsonNode, page, iLogout);
 
         } catch (Exception exception) {
             logger.error("Error Initializing BaseMain Constructor: {}", exception.getMessage());

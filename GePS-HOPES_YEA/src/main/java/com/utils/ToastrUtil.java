@@ -4,18 +4,18 @@ import java.util.concurrent.*;
 
 public class ToastrUtil {
 
-    private final Page page;
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    private ScheduledFuture<?> toastrTask;
-    private boolean messageCaptured = false;
+    static Page page;
+    static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+    static ScheduledFuture<?> toastrTask;
+    static boolean messageCaptured = false;
 
 //TODO Constructor
     public ToastrUtil(Page page) {
         this.page = page;
     }
 
-    public void startMonitoring() {
-        toastrTask = scheduler.scheduleAtFixedRate(() -> {
+    public static void startMonitoring() {
+        toastrTask = scheduledExecutorService.scheduleAtFixedRate(() -> {
             try {
                 if (!messageCaptured && page.isVisible(".toast-message")) {
                     String toastrMessage = page.textContent(".toast-message");
@@ -32,10 +32,10 @@ public class ToastrUtil {
         }, 0, 1, TimeUnit.MILLISECONDS);
     }
 
-    public void stopMonitoring() {
+    public static void stopMonitoring() {
         if (toastrTask != null) {
             toastrTask.cancel(true);
         }
-        scheduler.shutdown();
+        scheduledExecutorService.shutdown();
     }
 }

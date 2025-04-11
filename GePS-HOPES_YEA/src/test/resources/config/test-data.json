@@ -81,6 +81,11 @@
     "gstPercentage" : 8
   },
   "purchaseOrderRequests" : {
+    "advancePaymentFlag" : true,
+    "advancePaymentPercentage" : "10",
+    "creditPeriodInDays" : "3",
+    "milestonePaymentFlag" : true,
+    "milestoneCount" : "",
     "taxCode" : "PZ-Zero Rated Purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes"
   },

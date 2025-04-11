@@ -7,6 +7,7 @@ import com.source.classes.purchaseorderrequests.edit.PorEdit;
 import com.source.classes.purchaseorderrequests.reject.PorReject;
 import com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApproval;
 import com.source.classes.purchaseorderrequests.suspend.PorSuspend;
+import com.source.classes.purchaseorders.SendForVendor;
 import com.source.classes.requestforquotations.commercialevaluation.CommercialEvaluation;
 import com.source.classes.requestforquotations.create.RfqCreate;
 import com.source.classes.requestforquotations.edit.RfqEdit;
@@ -36,6 +37,7 @@ import com.source.classes.requisitions.type.PurchaseRequisitionTypeHandler;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.purchaseorderrequests.*;
+import com.source.interfaces.purchaseorders.IPoSendForVendor;
 import com.source.interfaces.requestforquotations.*;
 import com.source.interfaces.requisitions.*;
 import com.utils.GetTitleUtil;
@@ -49,7 +51,7 @@ import java.io.File;
 public class BaseTest {
 
     protected Logger logger;
-    protected static ToastrUtil toastrUtil;
+    protected ToastrUtil toastrUtil;
     protected ObjectMapper objectMapper;
     protected JsonNode jsonNode;
     protected GetTitleUtil getTitleUtil;
@@ -85,7 +87,7 @@ public class BaseTest {
     protected IPorReject iPorReject;
     protected IPorSendForApprovalAndApprove iPorSendForApprovalAndApprove;
     protected IPorApprove iPorApprove;
-
+    protected IPoSendForVendor iPoSendForVendor;
 
 //TODO Constructor
     public BaseTest() {
@@ -99,8 +101,7 @@ public class BaseTest {
             jsonNode = objectMapper.readTree(new File("./src/test/resources/config/test-data.json"));
             playwrightFactory = new PlaywrightFactory(objectMapper, jsonNode);
             page = playwrightFactory.initializePage(jsonNode);
-//            toastrUtil = new ToastrUtil(page);
-//            toastrUtil.startMonitoring();
+            toastrUtil = new ToastrUtil(page);
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
 
 //TODO Requisition
@@ -137,6 +138,9 @@ public class BaseTest {
             iPorReject = new PorReject(iLogin, jsonNode, page, iLogout, iPorEdit, iPorSendForApproval);
             iPorSendForApprovalAndApprove = new PorSendForApprovalAndApprove(iPorApprove, iPorSendForApproval);
             iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout);
+
+//TODO Purchase Orders
+            iPoSendForVendor = new SendForVendor(iLogin, jsonNode, page, iLogout);
         } catch (Exception exception) {
             logger.error("Error Initializing SetUp Function: {}", exception.getMessage());
         }

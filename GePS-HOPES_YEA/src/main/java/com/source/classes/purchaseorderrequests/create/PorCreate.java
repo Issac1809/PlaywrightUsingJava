@@ -99,6 +99,16 @@ public class PorCreate implements IPorCreate {
 
             Locator porCreateButtonLocator = page.locator(POR_CREATE_BUTTON);
             porCreateButtonLocator.first().click();
+
+            boolean advancePaymentFlag = jsonNode.get("purchaseOrderRequests").get("advancePaymentFlag").asBoolean();
+            boolean milestonePaymentFlag = jsonNode.get("purchaseOrderRequests").get("milestonePaymentFlag").asBoolean();
+
+            if(advancePaymentFlag || milestonePaymentFlag){
+                advanceAndMilestonePayments(advancePaymentFlag, milestonePaymentFlag);
+            }
+
+            Locator submitButtonLocator1 = page.locator(SUBMIT_MILESTONE_PAYMENT_BUTTON);
+            submitButtonLocator1.click();
         } catch (Exception exception) {
             logger.error("Exception in POR Create For Catalog Type Function: {}", exception.getMessage());
         }
@@ -184,13 +194,99 @@ public class PorCreate implements IPorCreate {
                     titleLocator1.first().click();
 
                     //Convert SM to OM
+
+                    iLogout.performLogout();
+
+                    iLogin.performLogin(buyerMailId);
+
+                    Locator rfqNavigationBarLocator2 = page.locator(RFQ_NAVIGATION_BAR);
+                    rfqNavigationBarLocator2.click();
+
+                    String title2 = getRFQTransactionTitle(type);
+                    Locator titleLocator2 = page.locator(LPorCreate.getTitle(title2));
+                    titleLocator2.first().click();
                 }
             }
 
-        Locator porCreateButtonLocator = page.locator(POR_CREATE_BUTTON);
-        porCreateButtonLocator.first().click();
+            Locator porCreateButtonLocator = page.locator(POR_CREATE_BUTTON);
+            porCreateButtonLocator.first().click();
+
+            boolean advancePaymentFlag = jsonNode.get("purchaseOrderRequests").get("advancePaymentFlag").asBoolean();
+            boolean milestonePaymentFlag = jsonNode.get("purchaseOrderRequests").get("milestonePaymentFlag").asBoolean();
+
+            if(advancePaymentFlag || milestonePaymentFlag){
+                advanceAndMilestonePayments(advancePaymentFlag, milestonePaymentFlag);
+            }
         } catch (Exception exception) {
             logger.error("Exception in POR Create For Non-Catalog Type Function: {}", exception.getMessage());
+        }
+    }
+
+    public void advanceAndMilestonePayments(boolean advancePaymentFlag, boolean milestonePaymentFlag) {
+        try {
+            String advancePaymentPercentage = jsonNode.get("purchaseOrderRequests").get("advancePaymentPercentage").asText();
+            String creditPeriodInDays = jsonNode.get("purchaseOrderRequests").get("creditPeriodInDays").asText();
+
+            if(advancePaymentFlag){
+                //TODO Advance Payment
+                Locator advancePaymentButtonLocator = page.locator(ADVANCE_PAYMENT_BUTTON);
+                advancePaymentButtonLocator.click();
+
+                Locator advancePaymentNameLocator = page.locator(ADVANCE_PAYMENT_NAME);
+                advancePaymentNameLocator.fill("Advance Payment - 1");
+
+                Locator advancePaymentPercentageLocator = page.locator(ADVANCE_PAYMENT_PERCENTAGE);
+                advancePaymentPercentageLocator.fill(advancePaymentPercentage);
+
+                Locator advancePaymentCreditPeriodInDaysLocator = page.locator(ADVANCE_PAYMENT_CREDIT_PERIOD_IN_DAYS);
+                advancePaymentCreditPeriodInDaysLocator.clear();
+                advancePaymentCreditPeriodInDaysLocator.fill(creditPeriodInDays);
+
+                Locator submitButtonLocator = page.locator(SUBMIT_ADVANCE_PAYMENT_BUTTON);
+                submitButtonLocator.click();
+
+                //TODO Milestone Payment
+                Locator milestoneButtonLocator = page.locator(MILESTONE_PAYMENT_BUTTON);
+                milestoneButtonLocator.click();
+
+                int milestoneCount = jsonNode.get("purchaseOrderRequests").get("milestonePaymentCount").asInt();
+                int reminder = 100 % milestoneCount;
+                int percentage = 100 / milestoneCount;
+
+                for(int i = 1; i <= milestoneCount; i++){
+                    Locator milestonePaymentNameLocator = page.locator(MILESTONE_PAYMENT_NAME);
+                    milestonePaymentNameLocator.fill("Milestone - " + i);
+
+                    Locator milestonePaymentPercentageLocator = page.locator(MILESTONE_PAYMENT_PERCENTAGE);
+                    if(i == milestoneCount){
+                        milestonePaymentPercentageLocator.fill(String.valueOf(percentage + reminder));
+                    } else {
+                        milestonePaymentPercentageLocator.fill(String.valueOf(percentage));
+                    }
+                }
+            } else if (milestonePaymentFlag) {
+                //TODO Milestone Payment
+                Locator milestoneButtonLocator = page.locator(MILESTONE_PAYMENT_BUTTON);
+                milestoneButtonLocator.click();
+
+                int milestoneCount = jsonNode.get("purchaseOrderRequests").get("milestonePaymentCount").asInt();
+                int reminder = 100 % milestoneCount;
+                int percentage = 100 / milestoneCount;
+
+                for(int i = 1; i <= milestoneCount; i++){
+                    Locator amilestonePaymentNameLocator = page.locator(MILESTONE_PAYMENT_NAME);
+                    amilestonePaymentNameLocator.fill("Milestone-" + i);
+
+                    Locator milestonePaymentPercentageLocator = page.locator(MILESTONE_PAYMENT_PERCENTAGE);
+                    if(i == milestoneCount){
+                        milestonePaymentPercentageLocator.fill(String.valueOf(percentage + reminder));
+                    } else {
+                        milestonePaymentPercentageLocator.fill(String.valueOf(percentage));
+                    }
+                }
+            }
+        } catch (Exception exception) {
+            logger.error("Exception in Advance and Milestone Payments Function: {}", exception.getMessage());
         }
     }
 

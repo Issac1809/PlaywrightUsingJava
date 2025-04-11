@@ -18,22 +18,18 @@ public class LPorApprove {
     }
 
     public static String getTitle(String title){
-        String title1 = "//span[contains(text(), '"+ title +"')]";
-        return title1;
+        return "//span[contains(text(), '"+ title +"')]";
     }
 
     public static String getGroupB(String groupB){
-        String groupB1 = "//li[contains(text(), '"+ groupB +"')]";
-        return groupB1;
+        return "//li[contains(text(), '"+ groupB +"')]";
     }
 
     public static String getGroupC(String groupC){
-        String groupC1 = "//li[contains(text(), '"+ groupC +"')]";
-        return groupC1;
+        return "//li[contains(text(), '"+ groupC +"')]";
     }
 
     public static String getGroupD(String groupD){
-        String groupD1 = "//li[contains(text(), '"+ groupD +"')]";
-        return groupD1;
+        return "//li[contains(text(), '"+ groupD +"')]";
     }
 }

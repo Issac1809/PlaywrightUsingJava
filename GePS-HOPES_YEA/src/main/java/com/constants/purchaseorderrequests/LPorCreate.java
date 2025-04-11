@@ -17,6 +17,15 @@ public class LPorCreate {
     public static final String TAX_CODE = "-- Select Tax Codes --";
     public static final String POR_NOTES = "#notes";
     public static final String CREATE_BUTTON = "#btnCreate";
+    public static final String ADVANCE_PAYMENT_BUTTON = "#addAdvancePayment";
+    public static final String ADVANCE_PAYMENT_NAME = "#advancePaymentName";
+    public static final String ADVANCE_PAYMENT_PERCENTAGE = "#percentage1";
+    public static final String ADVANCE_PAYMENT_CREDIT_PERIOD_IN_DAYS = "#percentage1";
+    public static final String SUBMIT_ADVANCE_PAYMENT_BUTTON = "#saveAdvancePayment";
+    public static final String MILESTONE_PAYMENT_BUTTON = "#addEditMileStone";
+    public static final String MILESTONE_PAYMENT_NAME = "#description";
+    public static final String MILESTONE_PAYMENT_PERCENTAGE = "#percentage";
+    public static final String SUBMIT_MILESTONE_PAYMENT_BUTTON = "#saveMileStone";
     public static final String YES = "//button[contains(text(),'Yes')]";
 
 //TODO Constructor

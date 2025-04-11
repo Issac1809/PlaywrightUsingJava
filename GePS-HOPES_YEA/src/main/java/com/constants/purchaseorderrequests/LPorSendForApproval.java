@@ -16,17 +16,14 @@ public class LPorSendForApproval {
     }
 
     public static String getTitle(String title){
-        String title1 = "//span[contains(text(), '"+ title +"')]";
-        return title1;
+        return "//span[contains(text(), '"+ title +"')]";
     }
 
     public static String getCfoId(String id){
-        String cfoId = "//span[contains(text(), '"+ id +"')]";
-        return cfoId;
+        return "//span[contains(text(), '"+ id +"')]";
     }
 
     public static String getPresidentId(String id){
-        String presidentId = "//li[contains(text(), '" + id + "')]";
-        return presidentId;
+        return "//li[contains(text(), '" + id + "')]";
     }
 }
