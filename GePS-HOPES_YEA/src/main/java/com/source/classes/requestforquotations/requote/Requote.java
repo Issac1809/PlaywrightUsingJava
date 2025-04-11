@@ -2,6 +2,7 @@ package com.source.classes.requestforquotations.requote;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requestforquotations.IQuoRequote;
@@ -18,6 +19,7 @@ public class Requote implements IQuoRequote {
     JsonNode jsonNode;
     Page page;
     ILogout iLogout;
+    private String appUrl;
 
     private Requote(){
     }
@@ -29,9 +31,11 @@ public class Requote implements IQuoRequote {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(Requote.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void requote(String type){
+    public int requote(String type){
+        int status = 0;
         try {
         String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
         iLogin.performLogin(buyerMailId);
@@ -67,11 +71,19 @@ public class Requote implements IQuoRequote {
         updateButtonLocator.click();
 
         Locator acceptLocator1 = page.locator(ACCEPT_REMARKS_POP_UP);
-        acceptLocator1.click();
+
+        String reqType = type.equalsIgnoreCase("PS") ? "/api/Vp/Quotation/" : "/api/Vp/QuotationSales/";
+
+        Response submitResponse = page.waitForResponse(
+                response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                acceptLocator::click
+        );
+        status = submitResponse.status();
 
         iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Requote Function: {}", exception.getMessage());
         }
+        return status;
     }
 }

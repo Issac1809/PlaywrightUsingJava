@@ -15,10 +15,13 @@
     "remotePOFilePath" : "/YEA_RPA/4.PO/",
     "remoteIvDownloadFilePath" : "/YEA_RPA/8.GRIV_GePS-HOPES/",
     "remoteIvUploadFilePath" : "/YEA_RPA/9.GRIV_HOPES-GePS/",
+    "remoteOaDownloadFilePath" : "/YEA_RPA/23.OA_GePS-HOPES/",
+    "remoteOaUploadFilePath" : "/YEA_RPA/24.OA_HOPES-GePS/",
     "readPRListFileForCatalog" : "https://geps_hopes_yea.cormsquare.com/api/PurchaseOrderRequests/ReadPRListForCatalog/",
     "readPRListFileForNonCatalog" : "https://geps_hopes_yea.cormsquare.com/api/PurchaseOrderRequests/ReadPRListForNonCatalog/",
     "readPORAPIUrl" : "https://geps_hopes_yea.cormsquare.com/api/PurchaseOrderRequests/ReadPORStatus/",
     "generatePOAPIUrl" : "https://geps_hopes_yea.cormsquare.com/api/PurchaseOrderRequests/GeneratePO/",
+    "readOrderScheduleUrl" : "https://geps_hopes_yea.cormsquare.com/api/OrderSchedules/ReadOrderScheduleStatus/",
     "readIvNumberUrl" : "https://geps_hopes_yea.cormsquare.com/api/PurchaseOrderRequests/ReadIVNumber/"
   }
 }

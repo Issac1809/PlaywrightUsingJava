@@ -185,42 +185,42 @@ public class NonCatalogTestContext extends BaseTest {
         }
     }
 
-//    @Test(priority = 14)
-//    @Parameters({"type"})
-//    public void quotationRequote(String type){
-//        try {
-//            int status = iQuoRequote.requote(type);
-//            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
-//        } catch (Exception exception) {
-//            logger.error("Exception in Quotation Requote Function for Non-Catalog Type: {}", exception.getMessage());
-//            Assert.fail("Exception in Quotation Requote Function for Non-Catalog Type: " + exception.getMessage());
-//        }
-//    }
-//
-//    @Test(priority = 15)
-//    @Parameters({"type"})
-//    public void readyForEvaluation(String type){
-//        try {
-//            int status = iReadyForEvalutation.readyForEvaluationButton(type);
-//            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
-//        } catch (Exception exception) {
-//            logger.error("Exception in Ready For Evaluation Function for Non-Catalog Type: {}", exception.getMessage());
-//            Assert.fail("Exception in Ready For Evaluation Function for Non-Catalog Type: " + exception.getMessage());
-//        }
-//    }
-//
-//    @Test(priority = 16)
-//    @Parameters({"type"})
-//    public void technicalEvaluationCreate(String type){
-//        try {
-//            int status = iTeCreate.technicalEvaluationCreate(type);
-//            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
-//        } catch (Exception exception) {
-//            logger.error("Exception in Technical Evaluation Create Function for Non-Catalog Type: {}", exception.getMessage());
-//            Assert.fail("Exception in Technical Evaluation Create Function for Non-Catalog Type: " + exception.getMessage());
-//        }
-//    }
-//
+    @Test(priority = 14)
+    @Parameters({"type"})
+    public void quotationRequote(String type){
+        try {
+            int status = iQuoRequote.requote(type);
+            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
+        } catch (Exception exception) {
+            logger.error("Exception in Quotation Requote Function for Non-Catalog Type: {}", exception.getMessage());
+            Assert.fail("Exception in Quotation Requote Function for Non-Catalog Type: " + exception.getMessage());
+        }
+    }
+
+    @Test(priority = 15)
+    @Parameters({"type"})
+    public void readyForEvaluation(String type){
+        try {
+            int status = iReadyForEvalutation.readyForEvaluationButton(type);
+            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
+        } catch (Exception exception) {
+            logger.error("Exception in Ready For Evaluation Function for Non-Catalog Type: {}", exception.getMessage());
+            Assert.fail("Exception in Ready For Evaluation Function for Non-Catalog Type: " + exception.getMessage());
+        }
+    }
+
+    @Test(priority = 16)
+    @Parameters({"type"})
+    public void technicalEvaluationCreate(String type){
+        try {
+            int status = iTeCreate.technicalEvaluationCreate(type);
+            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
+        } catch (Exception exception) {
+            logger.error("Exception in Technical Evaluation Create Function for Non-Catalog Type: {}", exception.getMessage());
+            Assert.fail("Exception in Technical Evaluation Create Function for Non-Catalog Type: " + exception.getMessage());
+        }
+    }
+
 //    @Test(priority = 17)
 //    @Parameters({"type"})
 //    public void technicalEvaluationReject(String type){
@@ -232,7 +232,7 @@ public class NonCatalogTestContext extends BaseTest {
 //            Assert.fail("Exception in Technical Evaluation Reject Function for Non-Catalog Type: " + exception.getMessage());
 //        }
 //    }
-//
+
 //    @Test(priority = 18)
 //    @Parameters({"type"})
 //    public void technicalEvaluationApprove(String type){

@@ -109,16 +109,16 @@
     "invoiceReferenceId" : ""
   },
   "configSettings" : {
-    "browserName" : "edge",
-    "runHeadless" : false,
-    "appUrl" : "https://geps_hopes_yea.cormsquare.com",
-    "loginPassword" : "Admin@123",
-    "internalAttachmentFilePath" : "documents/Internal Requisition Attachments.xlsx",
-    "externalAttachmentFilePath" : "documents/External Requisition Attachments.xlsx",
-    "tcasFilePath" : "documents/TCAS_File.xlsx",
-    "catalogItemImportFilePath" : "documents/Catalog_Item_Import.xlsx",
-    "nonCatalogItemImportFilePath" : "documents/NonCatalog_Item_Import.xlsx",
-    "technicalAttachmentFilePath" : "documents/Technical Documents.xlsx",
-    "commercialAttachmentFilePath" : "documents/Commercial Documents.xlsx"
+    "browserName": "edge",
+    "runHeadless": false,
+    "appUrl": "https://geps_hopes_yea.cormsquare.com",
+    "loginPassword": "Admin@123",
+    "internalAttachmentFilePath": "documents/Internal Requisition Attachments.xlsx",
+    "externalAttachmentFilePath": "documents/External Requisition Attachments.xlsx",
+    "tcasFilePath": "documents/TCAS_File.xlsx",
+    "catalogItemImportFilePath": "documents/Catalog_Item_Import.xlsx",
+    "nonCatalogItemImportFilePath": "documents/NonCatalog_Item_Import.xlsx",
+    "technicalAttachmentFilePath": "documents/Technical Documents.xlsx",
+    "commercialAttachmentFilePath": "documents/Commercial Documents.xlsx"
   }
 }

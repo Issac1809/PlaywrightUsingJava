@@ -25,9 +25,9 @@
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
     "psCatalogTitle" : "PS-AUTOMATION-NONCATALOG-148.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-776.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-67.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-507.0",
-    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-921.0",
+    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-29.0",
     "departmentPic" : "requester@cormsquare.com",
     "shipToYokogawa" : "no",
     "companyName" : "Yokogawa Engineering Asia Pte Ltd",
@@ -59,7 +59,7 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "requester@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "0f978a06-51c0-4d03-b2b5-668f532b28e6",
+    "requisitionUid" : "8141c0bb-9238-4199-9a4d-5b9e4fefda12",
     "itemImport" : "true",
     "requisitionItemCount" : "3",
     "salesTransactionNumber" : ""
@@ -87,6 +87,7 @@
   },
   "purchaseOrders" : {
     "poReferenceId" : "240024PO00289",
+    "poRevisionNumber" : "",
     "poValue" : 9000,
     "unitRate" : 200
   },
@@ -108,16 +109,16 @@
     "invoiceReferenceId" : ""
   },
   "configSettings" : {
-    "browserName" : "edge",
-    "runHeadless" : false,
-    "appUrl" : "https://geps_hopes_yea.cormsquare.com",
-    "loginPassword" : "Admin@123",
-    "internalAttachmentFilePath" : "documents/Internal Requisition Attachments.xlsx",
-    "externalAttachmentFilePath" : "documents/External Requisition Attachments.xlsx",
-    "tcasFilePath" : "documents/TCAS_File.xlsx",
-    "catalogItemImportFilePath" : "documents/Catalog_Item_Import.xlsx",
-    "nonCatalogItemImportFilePath" : "documents/NonCatalog_Item_Import.xlsx",
-    "technicalAttachmentFilePath" : "documents/Technical Documents.xlsx",
-    "commercialAttachmentFilePath" : "documents/Commercial Documents.xlsx"
+    "browserName": "edge",
+    "runHeadless": false,
+    "appUrl": "https://geps_hopes_yea.cormsquare.com",
+    "loginPassword": "Admin@123",
+    "internalAttachmentFilePath": "documents/Internal Requisition Attachments.xlsx",
+    "externalAttachmentFilePath": "documents/External Requisition Attachments.xlsx",
+    "tcasFilePath": "documents/TCAS_File.xlsx",
+    "catalogItemImportFilePath": "documents/Catalog_Item_Import.xlsx",
+    "nonCatalogItemImportFilePath": "documents/NonCatalog_Item_Import.xlsx",
+    "technicalAttachmentFilePath": "documents/Technical Documents.xlsx",
+    "commercialAttachmentFilePath": "documents/Commercial Documents.xlsx"
   }
 }
