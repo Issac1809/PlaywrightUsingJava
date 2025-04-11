@@ -60,12 +60,12 @@
     "requisitionAttachmentsTypes" : "internal,external",
     "requisitionUid" : "d90324fe-54c7-4d35-beaf-4136f05fca85",
     "itemImport" : "true",
-    "requisitionItemCount" : ""
+    "requisitionItemCount" : "1",
+    "salesTransactionNumber" : ""
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
-    "salesRequestForQuotationUid" : "",
-    "psRequestForQuotationUid" : "",
+    "requestForQuotationUid" : "",
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",
@@ -101,6 +101,10 @@
     "sourceCountry" : "India",
     "destinationCountry" : "India",
     "workOrderReferenceId" : ""
+  },
+    "invoices" : {
+      "vendorReferenceId" : "",
+      "invoiceReferenceId" : ""
   },
   "configSettings" : {
     "browserName" : "edge",

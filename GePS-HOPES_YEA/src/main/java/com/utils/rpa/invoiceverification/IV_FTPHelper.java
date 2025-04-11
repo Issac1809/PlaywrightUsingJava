@@ -1,4 +1,4 @@
-package com.utils.rpa.salesordersync;
+package com.utils.rpa.invoiceverification;
 import com.utils.LoggerUtil;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-public class PR_List_FTPHelper {
+public class IV_FTPHelper {
 
     FTPClient ftpClient;
     Logger logger;
@@ -16,12 +16,12 @@ public class PR_List_FTPHelper {
     File excelLocalFile;
 
 //TODO Constructor
-    private PR_List_FTPHelper() {
+    private IV_FTPHelper() {
     }
 
-    public PR_List_FTPHelper(FTPClient ftpClient){
+    public IV_FTPHelper(FTPClient ftpClient){
         this.ftpClient = ftpClient;
-        this.logger = LoggerUtil.getLogger(PR_List_FTPHelper.class);
+        this.logger = LoggerUtil.getLogger(IV_FTPHelper.class);
     }
 
     public void connectionEstablish(String server, int port, String user, String password){
@@ -35,12 +35,13 @@ public class PR_List_FTPHelper {
         }
     }
 
-    public String downloadPrListFile(String remotePath, String localPath) {
+    public String downloadIvFile(String remotePath, String localPath, String vendorReferenceId, String poReferenceId, String invoiceReferenceId) {
         try {
             File localDir = new File(localPath);
             if (!localDir.exists() && !localDir.mkdirs());
 
-            excelFileName = "PR list for original ID.xls";
+            String companyCode = poReferenceId.substring(0, 4); //TODO Extracts the first 4 characters
+            excelFileName = "IV_" + vendorReferenceId + "_" + poReferenceId + "_" + invoiceReferenceId + "_" + companyCode + "_GePS-HOPES.xls";
             excelRemoteFilePath = remotePath + excelFileName;
             excelLocalFile = new File(localDir, excelFileName);
 
@@ -54,34 +55,23 @@ public class PR_List_FTPHelper {
         return excelLocalFile.getAbsolutePath();
     }
 
-    public void connectionEstablishAndUploadFiles(String server, int port, String user, String password, String localSoFilePath, String remoteSoFolderPath, String localPrListFilePath, String remotePrListFilePath) {
+    public void connectionEstablishAndUploadFiles(String server, int port, String user, String password, String localIvFilePath, String remoteIvFolderPath) {
         try {
             connectionEstablish(server, port, user, password);
 
-//TODO SO File Upload
-            uploadSoFile(localSoFilePath, remoteSoFolderPath);
-
-//TODO PR List File Upload
-            uploadPrListFile(localPrListFilePath, remotePrListFilePath);
+//TODO IV File Upload
+            uploadIvFile(localIvFilePath, remoteIvFolderPath);
         } catch (Exception exception) {
             logger.error("Exception in call upload file function: {}", exception.getMessage());
         }
         closeConnection();
     }
 
-    public void uploadSoFile(String localSoFilePath, String remoteSoFolderPath) {
+    public void uploadIvFile(String localIvFilePath, String remoteIvFolderPath) {
         try {
-            ftpClient.storeFile(remoteSoFolderPath, new FileInputStream(localSoFilePath));
+            ftpClient.storeFile(remoteIvFolderPath, new FileInputStream(localIvFilePath));
         } catch (Exception exception) {
-            logger.error("Exception in upload SO File function: {}", exception.getMessage());
-        }
-    }
-
-    public void uploadPrListFile(String localPrListFilePath, String remotePrListFilePath) {
-        try {
-            ftpClient.storeFile(remotePrListFilePath, new FileInputStream(localPrListFilePath));
-        } catch (Exception exception) {
-            logger.error("Exception in upload PR List File function: {}", exception.getMessage());
+            logger.error("Exception in upload IV File function: {}", exception.getMessage());
         }
     }
 
