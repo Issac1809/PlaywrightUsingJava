@@ -87,6 +87,7 @@
   },
   "purchaseOrders" : {
     "poReferenceId" : "240024PO00289",
+    "poRevisionNumber" : "",
     "poValue" : 9000,
     "unitRate" : 200
   },
