@@ -24,10 +24,11 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-292.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-884.0",
+    "psCatalogTitle" : "PS-AUTOMATION-NONCATALOG-148.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-67.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-507.0",
-    "salesNonCatalogTitle" : "SALES-Automation-NONCATALOG-406.0",
+    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-29.0",
+    "departmentPic" : "requester@cormsquare.com",
     "shipToYokogawa" : "no",
     "companyName" : "Yokogawa Engineering Asia Pte Ltd",
     "businessUnit" : "CMM-Central Materials Management",
@@ -56,11 +57,11 @@
     "requisitionStatus" : "Draft",
     "requisitionNotes" : "Requisition Notes and Attachments",
     "requisitionFileType" : "Internal",
-    "requisitionApprovers" : "projectmanager@cormsquare.com",
+    "requisitionApprovers" : "requester@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "d90324fe-54c7-4d35-beaf-4136f05fca85",
+    "requisitionUid" : "8141c0bb-9238-4199-9a4d-5b9e4fefda12",
     "itemImport" : "true",
-    "requisitionItemCount" : "1",
+    "requisitionItemCount" : "3",
     "salesTransactionNumber" : ""
   },
   "requestForQuotation" : {
@@ -108,21 +109,21 @@
     "destinationCountry" : "India",
     "workOrderReferenceId" : ""
   },
-    "invoices" : {
-      "vendorReferenceId" : "",
-      "invoiceReferenceId" : ""
+  "invoices" : {
+    "vendorReferenceId" : "",
+    "invoiceReferenceId" : ""
   },
   "configSettings" : {
-    "browserName" : "edge",
-    "runHeadless" : false,
-    "appUrl" : "https://geps_hopes_yea.cormsquare.com",
-    "loginPassword" : "Admin@123",
-    "internalAttachmentFilePath" : "documents/Internal Requisition Attachments.xlsx",
-    "externalAttachmentFilePath" : "documents/External Requisition Attachments.xlsx",
-    "tcasFilePath" : "documents/TCAS_File.xlsx",
-    "catalogItemImportFilePath" : "documents/Catalog_Item_Import.xlsx",
-    "nonCatalogItemImportFilePath" : "documents/NonCatalog_Item_Import.xlsx",
-    "technicalAttachmentFilePath" : "documents/Technical Documents.xlsx",
-    "commercialAttachmentFilePath" : "documents/Commercial Documents.xlsx"
+    "browserName": "edge",
+    "runHeadless": false,
+    "appUrl": "https://geps_hopes_yea.cormsquare.com",
+    "loginPassword": "Admin@123",
+    "internalAttachmentFilePath": "documents/Internal Requisition Attachments.xlsx",
+    "externalAttachmentFilePath": "documents/External Requisition Attachments.xlsx",
+    "tcasFilePath": "documents/TCAS_File.xlsx",
+    "catalogItemImportFilePath": "documents/Catalog_Item_Import.xlsx",
+    "nonCatalogItemImportFilePath": "documents/NonCatalog_Item_Import.xlsx",
+    "technicalAttachmentFilePath": "documents/Technical Documents.xlsx",
+    "commercialAttachmentFilePath": "documents/Commercial Documents.xlsx"
   }
 }

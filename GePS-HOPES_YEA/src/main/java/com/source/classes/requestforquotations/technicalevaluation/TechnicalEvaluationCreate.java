@@ -2,6 +2,7 @@ package com.source.classes.requestforquotations.technicalevaluation;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requestforquotations.ITeCreate;
@@ -18,6 +19,7 @@ public class TechnicalEvaluationCreate implements ITeCreate  {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    private String appUrl;
 
     private TechnicalEvaluationCreate(){
     }
@@ -29,9 +31,11 @@ public class TechnicalEvaluationCreate implements ITeCreate  {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(TechnicalEvaluationCreate.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void technicalEvaluationCreate(String type) {
+    public int technicalEvaluationCreate(String type) {
+        int status = 0;
         try {
             String requesterMailId = jsonNode.get("mailIds").get("requesterEmail").asText();
             iLogin.performLogin(requesterMailId);
@@ -61,7 +65,7 @@ public class TechnicalEvaluationCreate implements ITeCreate  {
             Locator teApproverSelectLocator = page.locator(APPROVER_SELECT);
             teApproverSelectLocator.first().click();
 
-            String teApprover = jsonNode.get("mailIds").get("requesterMailId").asText();
+            String teApprover = jsonNode.get("mailIds").get("requesterEmail").asText();
             Locator teApproverSearchLocator = page.locator(SEARCH_FIELD);
             teApproverSearchLocator.fill(teApprover);
 
@@ -72,11 +76,17 @@ public class TechnicalEvaluationCreate implements ITeCreate  {
             saveApproverLocator.click();
 
             Locator acceptLocator = page.locator(YES);
-            acceptLocator.click();
+
+            Response submitResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/TechnicalEvaluations/") && response.status() == 200,
+                    acceptLocator::click
+            );
+            status = submitResponse.status();
 
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Technical Evaluation Create Function: {}", exception.getMessage());
         }
+        return status;
     }
 }

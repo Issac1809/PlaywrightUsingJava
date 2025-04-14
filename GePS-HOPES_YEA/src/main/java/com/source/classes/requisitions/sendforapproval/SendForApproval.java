@@ -63,11 +63,6 @@ public class SendForApproval implements IPrSendForApproval {
 
         playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionUid", getUid);
 
-//        String reqType = type.equalsIgnoreCase("Sales") ? "RequisitionsSales/" : "Requisitions/";
-
-//        APIResponse approvalResponse = page.request().fetch(appUrl + "/api/" + reqType + getUid, RequestOptions.create());
-//        JsonNode getApproversJson = objectMapper.readTree(approvalResponse.body());
-//        int requisitionId = getApproversJson.get("requisitionId").asInt();
 
         Locator sendForApprovalButtonLocator = page.locator(SEND_FOR_APPROVAL_BUTTON);
         sendForApprovalButtonLocator.click();
@@ -76,13 +71,18 @@ public class SendForApproval implements IPrSendForApproval {
 
         String reqType = type.equalsIgnoreCase("PS") ? "/api/Requisitions/" : "/api/RequisitionsSales/";
 
-        Response approverResponse = page.waitForResponse(
+        Response sendResponse = page.waitForResponse(
                 response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
                 yesButtonLocator::click
         );
+        approvalStatus = sendResponse.status();
 
-        JsonNode approversJson = objectMapper.readTree(approverResponse.body());
-        approvalStatus = approverResponse.status();
+        APIResponse requisitionResponse = page.request().fetch(appUrl + reqType + getUid, RequestOptions.create());
+        JsonNode requisitionJson = objectMapper.readTree(requisitionResponse.body());
+        int requisitionId = requisitionJson.get("requisitionId").asInt();
+
+        APIResponse approversResponse = page.request().fetch(appUrl + "/api/Approvals?entityId=" + requisitionId + "&approvalTypeEnum=Requisition", RequestOptions.create());
+        JsonNode approversJson = objectMapper.readTree(approversResponse.body());
 
         if(approversJson.has("approvers")) {
             JsonNode approversArray = approversJson.get("approvers");
