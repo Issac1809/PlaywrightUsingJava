@@ -98,6 +98,8 @@
   },
   "dispatchNotes" : {
     "dispatchNoteReferenceId" : "",
+    "sourceCountry" : "India",
+    "destinationCountry" : "India",
     "packageType" : "Drum",
     "grossWeightKg" : 20,
     "netWeightKg" : 35,

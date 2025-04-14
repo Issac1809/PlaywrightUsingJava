@@ -26,8 +26,8 @@
     "orderTitle" : "-AUTOMATION",
     "psCatalogTitle" : "PS-AUTOMATION-CATALOG-169.0",
     "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-661.0",
-    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-160.0",
-    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-832.0",
+    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-276.0",
+    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-22.0",
     "departmentPic" : "requester@cormsquare.com",
     "shipToYokogawa" : "no",
     "companyName" : "Yokogawa Engineering Asia Pte Ltd",
@@ -59,14 +59,14 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "requester@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "8e21cd95-4ecb-4041-893f-c8d0ace4be9e",
+    "requisitionUid" : "f09de010-dd14-4214-a06a-096cae2a3cca",
     "itemImport" : "true",
     "requisitionItemCount" : "3",
-    "salesTransactionNumber" : "240025TRN02937"
+    "salesTransactionNumber" : "240025TRN02939"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
-    "requestForQuotationUid" : "de4828fa-a427-4cef-933a-b972dbe7e484",
+    "requestForQuotationUid" : "62079029-0658-4bc2-8748-60661d783dc6",
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",
@@ -98,6 +98,8 @@
   },
   "dispatchNotes" : {
     "dispatchNoteReferenceId" : "",
+    "sourceCountry" : "India",
+    "destinationCountry" : "India",
     "packageType" : "Drum",
     "grossWeightKg" : 20,
     "netWeightKg" : 35,

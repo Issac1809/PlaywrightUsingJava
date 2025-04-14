@@ -4,6 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import com.source.classes.dispatchnotes.assign.DnAssign;
+import com.source.classes.dispatchnotes.cancel.DnCancel;
+import com.source.classes.dispatchnotes.create.DnCreate;
+import com.source.classes.dispatchnotes.dnreturn.DnReturn;
+import com.source.classes.dispatchnotes.edit.DnEdit;
 import com.source.classes.inspections.assign.InsAssign;
 import com.source.classes.inspections.create.InsCreate;
 import com.source.classes.inspections.fail.InsFail;
@@ -40,6 +45,7 @@ import com.source.classes.requisitions.reject.Reject;
 import com.source.classes.requisitions.sendforapproval.SendForApproval;
 import com.source.classes.requisitions.suspend.BuyerSuspend;
 import com.source.classes.requisitions.type.PurchaseRequisitionTypeHandler;
+import com.source.interfaces.dispatchnotes.*;
 import com.source.interfaces.inspections.IInsAssign;
 import com.source.interfaces.inspections.IInsCreate;
 import com.source.interfaces.inspections.IInsFail;
@@ -107,6 +113,11 @@ public class BaseMain {
     protected IInsReadyForInspection iInsReadyForInspection;
     protected IInsFail iInsFail;
     protected IInsAssign iInsAssign;
+    protected IDnCreate iDnCreate;
+    protected IDnEdit iDnEdit;
+    protected IDnReturn iDnReturn;
+    protected IDnAssign iDnAssign;
+    protected IDnCancel iDnCancel;
 
 //TODO Constructor
     public BaseMain(){
@@ -168,7 +179,12 @@ public class BaseMain {
             iInsFail = new InsFail(iLogin, jsonNode, page, iLogout, iInsReadyForInspection);
             iInsAssign = new InsAssign(iLogin, jsonNode, page, iLogout);
 
-
+//TODO Dispatch Notes
+            iDnCreate = new DnCreate(iLogin, jsonNode, page, iLogout);
+            iDnEdit = new DnEdit(iLogin, jsonNode, page, iLogout);
+            iDnAssign = new DnAssign(iLogin, jsonNode, page, iLogout, playwrightFactory);
+            iDnReturn = new DnReturn(iLogin, jsonNode, page, iLogout, iDnEdit);
+            iDnCancel = new DnCancel(iLogin, jsonNode, page, iLogout, iDnCreate);
         } catch (Exception exception) {
             logger.error("Error Initializing BaseMain Constructor: {}", exception.getMessage());
         }
