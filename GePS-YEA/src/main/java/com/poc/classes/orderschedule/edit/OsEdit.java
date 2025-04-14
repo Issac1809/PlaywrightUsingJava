@@ -6,7 +6,7 @@ import com.poc.interfaces.logout.ILogout;
 import com.poc.interfaces.orderschedule.IOsEdit;
 import java.util.List;
 import java.util.Properties;
-import static com.constants.orderschedule.LOsEdit.*;
+import static com.constants.orderschedules.LOsEdit.*;
 import static com.factory.PlaywrightFactory.waitForLocator;
 
 public class OsEdit implements IOsEdit {

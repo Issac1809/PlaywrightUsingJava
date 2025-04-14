@@ -6,7 +6,7 @@ import com.poc.interfaces.logout.ILogout;
 import com.poc.interfaces.orderschedule.IOsApprove;
 import java.util.List;
 import java.util.Properties;
-import static com.constants.orderschedule.LOsApprove.*;
+import static com.constants.orderschedules.LOsApprove.*;
 import static com.factory.PlaywrightFactory.*;
 
 public class OsApprove implements IOsApprove {

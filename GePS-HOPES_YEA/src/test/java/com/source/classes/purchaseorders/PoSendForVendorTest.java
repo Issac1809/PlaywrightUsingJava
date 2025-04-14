@@ -1,4 +1,4 @@
-package com.source.classes.purchaseorder;
+package com.source.classes.purchaseorders;
 import com.base.BaseTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;

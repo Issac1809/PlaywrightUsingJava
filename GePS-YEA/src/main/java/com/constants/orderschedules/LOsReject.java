@@ -1,16 +1,15 @@
-package com.constants.orderschedule;
+package com.constants.orderschedules;
 
-public class LOsApprove {
+public class LOsReject {
 
     public static final String PO_NAVIGATION_BAR = "//*[contains(text(), 'Purchase Orders')]";
-    public static final String LIST_CONTAINER = "#listContainer tr td";
-    public static final String DETAILS_BUTTON = ".btn-link";
     public static final String VIEW_ORDER_SCHEDULE__BUTTON = "#BtnToApproveOS";
-    public static final String APPROVE_BUTTON = "#btnApprove";
+    public static final String REJECT_BUTTON = "#btnReject";
+    public static final String REMARKS_INPUT = ".bootbox-input";
     public static final String ACCEPT_BUTTON = ".bootbox-accept";
 
- //TODO Constructor
-    private LOsApprove(){
+//TODO Constructor
+    private LOsReject(){
     }
 
     public static String getTitle(String title){

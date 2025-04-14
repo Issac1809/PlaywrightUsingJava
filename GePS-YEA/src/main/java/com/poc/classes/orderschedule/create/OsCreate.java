@@ -6,7 +6,7 @@ import com.poc.interfaces.login.ILogin;
 import com.poc.interfaces.logout.ILogout;
 import com.poc.interfaces.orderschedule.IOsCreate;
 import java.util.Properties;
-import static com.constants.orderschedule.LOsCreate.*;
+import static com.constants.orderschedules.LOsCreate.*;
 import static com.constants.purchaseorders.LPoCreate.getTitle;
 import static com.factory.PlaywrightFactory.waitForLocator;
 

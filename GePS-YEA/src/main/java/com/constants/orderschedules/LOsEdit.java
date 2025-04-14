@@ -1,4 +1,4 @@
-package com.constants.orderschedule;
+package com.constants.orderschedules;
 
 public class LOsEdit {
 

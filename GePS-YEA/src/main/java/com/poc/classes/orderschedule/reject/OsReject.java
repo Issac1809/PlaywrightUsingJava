@@ -5,7 +5,7 @@ import com.poc.interfaces.login.ILogin;
 import com.poc.interfaces.logout.ILogout;
 import com.poc.interfaces.orderschedule.IOsReject;
 import java.util.Properties;
-import static com.constants.orderschedule.LOsReject.*;
+import static com.constants.orderschedules.LOsReject.*;
 import static com.factory.PlaywrightFactory.waitForLocator;
 
 public class OsReject implements IOsReject {

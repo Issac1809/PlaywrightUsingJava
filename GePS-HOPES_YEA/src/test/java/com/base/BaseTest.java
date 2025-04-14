@@ -1,5 +1,8 @@
 package com.base;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.source.classes.orderschedules.approve.OsApprove;
+import com.source.classes.orderschedules.create.OsCreate;
+import com.source.classes.orderschedules.edit.OsEdit;
 import com.source.classes.purchaseorderrequests.approvalandapprove.PorSendForApprovalAndApprove;
 import com.source.classes.purchaseorderrequests.approve.PorApprove;
 import com.source.classes.purchaseorderrequests.create.PorCreate;
@@ -36,6 +39,10 @@ import com.source.classes.requisitions.suspend.BuyerSuspend;
 import com.source.classes.requisitions.type.PurchaseRequisitionTypeHandler;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
+import com.source.interfaces.orderschedules.IOsApprove;
+import com.source.interfaces.orderschedules.IOsCreate;
+import com.source.interfaces.orderschedules.IOsEdit;
+import com.source.interfaces.orderschedules.IOsReject;
 import com.source.interfaces.purchaseorderrequests.*;
 import com.source.interfaces.purchaseorders.IPoSendForVendor;
 import com.source.interfaces.requestforquotations.*;
@@ -88,6 +95,10 @@ public class BaseTest {
     protected IPorSendForApprovalAndApprove iPorSendForApprovalAndApprove;
     protected IPorApprove iPorApprove;
     protected IPoSendForVendor iPoSendForVendor;
+    protected IOsCreate iOsCreate;
+    protected IOsEdit iOsEdit;
+    protected IOsReject iOsReject;
+    protected IOsApprove iOsApprove;
 
 //TODO Constructor
     public BaseTest() {
@@ -141,6 +152,12 @@ public class BaseTest {
 
 //TODO Purchase Orders
             iPoSendForVendor = new SendForVendor(iLogin, jsonNode, page, iLogout);
+
+//TODO Order Schedules
+            iOsCreate = new OsCreate(iLogin, jsonNode, page, iLogout, playwrightFactory);
+            iOsEdit = new OsEdit(iLogin, jsonNode, page, iLogout);
+            iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout);
+            iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout);
         } catch (Exception exception) {
             logger.error("Error Initializing SetUp Function: {}", exception.getMessage());
         }
