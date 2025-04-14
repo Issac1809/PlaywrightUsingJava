@@ -10,8 +10,6 @@ public class OsEditTest extends BaseTest {
             iOsEdit.edit();
         } catch (Exception exception) {
             logger.error("Exception in OS Edit Test Function: {}", exception.getMessage());
-            System.out.println("NA");
-            System.out.println("NA1");
         }
     }
 }
