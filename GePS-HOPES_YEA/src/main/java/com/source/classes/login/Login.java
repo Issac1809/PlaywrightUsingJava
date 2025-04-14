@@ -37,10 +37,6 @@ public class Login implements ILogin {
             status = apiResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
-
-            System.out.println("Issacs changes");
-
-            System.out.println("Deepaks changes");
         } catch (Exception exception) {
             logger.error("Error in Perform Login Function: {}", exception.getMessage());
         }
