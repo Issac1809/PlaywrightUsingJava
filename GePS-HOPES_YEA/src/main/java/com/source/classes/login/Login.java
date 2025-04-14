@@ -23,6 +23,7 @@ public class Login implements ILogin {
         logger = LoggerUtil.getLogger(Login.class);
     }
 
+
     public int performLogin(String emailId) {
         int status = 0;
         try {
@@ -37,6 +38,9 @@ public class Login implements ILogin {
             status = apiResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            System.out.println("ISSAGAY");
+
         } catch (Exception exception) {
             logger.error("Error in Perform Login Function: {}", exception.getMessage());
         }
