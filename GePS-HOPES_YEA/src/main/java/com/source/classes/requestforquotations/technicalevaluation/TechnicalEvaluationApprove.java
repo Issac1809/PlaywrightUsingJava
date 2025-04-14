@@ -2,14 +2,16 @@ package com.source.classes.requestforquotations.technicalevaluation;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requestforquotations.ITeApprove;
 import com.source.interfaces.requestforquotations.ITeCreate;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-import static com.constants.requestforquotations.LTeCreate.*;
-import static com.constants.requestforquotations.LTeReject.REMARKS_INPUT_LOCATOR;
+
+import static com.constants.requestforquotations.LTeApprove.*;
+import static com.utils.GetTitleUtil.getRFQTransactionTitle;
 
 public class TechnicalEvaluationApprove implements ITeApprove {
 
@@ -19,7 +21,7 @@ public class TechnicalEvaluationApprove implements ITeApprove {
     ILogin iLogin;
     ILogout iLogout;
     ITeCreate iTeCreate;
-
+    private String appUrl;
 
     private TechnicalEvaluationApprove(){
     }
@@ -32,11 +34,23 @@ public class TechnicalEvaluationApprove implements ITeApprove {
         this.iLogout = iLogout;
         this.iTeCreate = iTeCreate;
         this.logger = LoggerUtil.getLogger(TechnicalEvaluationApprove.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void technicalEvaluationApprove(String type) {
+    public int technicalEvaluationApprove(String type) {
+        int status = 0;
         try {
         iTeCreate.technicalEvaluationCreate(type);
+
+        String requesterMailId = jsonNode.get("mailIds").get("requesterEmail").asText();
+        iLogin.performLogin(requesterMailId);
+
+        Locator myApprovalsButtonLocator = page.locator(MY_APPROVALS);
+        myApprovalsButtonLocator.click();
+
+        String title = getRFQTransactionTitle(type);
+        Locator titleLocator = page.locator(getTitle(title));
+        titleLocator.first().click();
 
         Locator approveButtonLocator = page.locator(APPROVE_BUTTON);
         approveButtonLocator.click();
@@ -45,11 +59,17 @@ public class TechnicalEvaluationApprove implements ITeApprove {
         remarksInputLocator.fill("TE Approved");
 
         Locator acceptLocator = page.locator(YES);
-        acceptLocator.click();
+
+        Response submitResponse = page.waitForResponse(
+                response -> response.url().startsWith(appUrl + "/api/TechnicalEvaluations/") && response.status() == 200,
+                acceptLocator::click
+        );
+        status = submitResponse.status();
 
         iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Technical Evaluation Approve Function: {}", exception.getMessage());
         }
+        return status;
     }
 }

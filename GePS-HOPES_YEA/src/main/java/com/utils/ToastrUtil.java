@@ -29,7 +29,7 @@ public class ToastrUtil {
                     exception.printStackTrace();
                 }
             }
-        }, 0, 1, TimeUnit.MILLISECONDS);
+        }, 0, 100, TimeUnit.MILLISECONDS);
     }
 
     public static void stopMonitoring() {

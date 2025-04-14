@@ -12,6 +12,7 @@ public class LTeCreate {
     public static final String SAVE_APPROVER = "#saveApproverAssign";
     public static final String YES = ".bootbox-accept";
     public static final String APPROVE_BUTTON = "#btnApprove";
+    public static final String MY_APPROVALS = "//span[contains(text(), 'My Approvals')]";
 
 
 //TODO Constructor

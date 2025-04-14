@@ -868,6 +868,22 @@ public class Create implements IPrCreate {
 
             status = statusResponse.status();
 
+
+            //getUID
+            String url = page.url();
+            String[] urlArray = url.split("=");
+            String getUid = urlArray[1];
+            playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionUid", getUid);
+
+            //Save Transaction number
+            if (type.equalsIgnoreCase("sales"))
+            {
+                APIResponse projectResponse = page.request().fetch(appUrl + "/api/RequisitionsSales/" + getUid, RequestOptions.create());
+                JsonNode projectCodeJson = objectMapper.readTree(projectResponse.body());
+                String salesTransactionNumber = projectCodeJson.get("transactionId").asText();
+                playwrightFactory.savePropertiesIntoJsonFile("requisition", "salesTransactionNumber", salesTransactionNumber);
+            }
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Requisition Create Function: {}", exception.getMessage());

@@ -2,13 +2,16 @@ package com.source.classes.requestforquotations.technicalevaluation;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requestforquotations.ITeCreate;
 import com.source.interfaces.requestforquotations.ITeReject;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
+
 import static com.constants.requestforquotations.LTeReject.*;
+import static com.utils.GetTitleUtil.getRFQTransactionTitle;
 
 public class TechnicalEvaluationReject implements ITeReject {
 
@@ -18,6 +21,7 @@ public class TechnicalEvaluationReject implements ITeReject {
     Page page;
     ILogout iLogout;
     ITeCreate iTeCreate;
+    private String appUrl;
 
     private TechnicalEvaluationReject(){
     }
@@ -30,11 +34,23 @@ public class TechnicalEvaluationReject implements ITeReject {
         this.iLogout = iLogout;
         this.iTeCreate = iTeCreate;
         this.logger = LoggerUtil.getLogger(TechnicalEvaluationReject.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void technicalEvaluationReject(String type){
+    public int technicalEvaluationReject(String type){
+        int status = 0;
         try {
-        iTeCreate.technicalEvaluationCreate(type);
+//        iTeCreate.technicalEvaluationCreate(type);
+
+        String requesterMailId = jsonNode.get("mailIds").get("requesterEmail").asText();
+        iLogin.performLogin(requesterMailId);
+
+        Locator myApprovalsButtonLocator = page.locator(MY_APPROVALS);
+        myApprovalsButtonLocator.click();
+
+        String title = getRFQTransactionTitle(type);
+        Locator titleLocator = page.locator(getTitle(title));
+        titleLocator.first().click();
 
         Locator rejectButtonLocator = page.locator(REJECT_BUTTON);
         rejectButtonLocator.click();
@@ -43,11 +59,17 @@ public class TechnicalEvaluationReject implements ITeReject {
         remarksInputLocator.fill("TE Rejected");
 
         Locator acceptLocator = page.locator(YES);
-        acceptLocator.click();
+
+        Response submitResponse = page.waitForResponse(
+                response -> response.url().startsWith(appUrl + "/api/TechnicalEvaluations/") && response.status() == 200,
+                acceptLocator::click
+        );
+        status = submitResponse.status();
 
         iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Technical Evaluation Reject Function: {}", exception.getMessage());
         }
+        return status;
     }
 }
