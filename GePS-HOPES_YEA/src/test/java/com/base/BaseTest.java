@@ -1,5 +1,9 @@
 package com.base;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.source.classes.inspections.assign.InsAssign;
+import com.source.classes.inspections.create.InsCreate;
+import com.source.classes.inspections.fail.InsFail;
+import com.source.classes.inspections.readyforinspection.InsReadyForInspection;
 import com.source.classes.orderschedules.approve.OsApprove;
 import com.source.classes.orderschedules.create.OsCreate;
 import com.source.classes.orderschedules.edit.OsEdit;
@@ -37,6 +41,10 @@ import com.source.classes.requisitions.sendforapproval.SendForApproval;
 import com.source.classes.requisitions.suspend.BuyerManagerSuspend;
 import com.source.classes.requisitions.suspend.BuyerSuspend;
 import com.source.classes.requisitions.type.PurchaseRequisitionTypeHandler;
+import com.source.interfaces.inspections.IInsAssign;
+import com.source.interfaces.inspections.IInsCreate;
+import com.source.interfaces.inspections.IInsFail;
+import com.source.interfaces.inspections.IInsReadyForInspection;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.orderschedules.IOsApprove;
@@ -99,6 +107,10 @@ public class BaseTest {
     protected IOsEdit iOsEdit;
     protected IOsReject iOsReject;
     protected IOsApprove iOsApprove;
+    protected IInsCreate iInsCreate;
+    protected IInsReadyForInspection iInsReadyForInspection;
+    protected IInsFail iInsFail;
+    protected IInsAssign iInsAssign;
 
 //TODO Constructor
     public BaseTest() {
@@ -158,6 +170,12 @@ public class BaseTest {
             iOsEdit = new OsEdit(iLogin, jsonNode, page, iLogout);
             iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout);
             iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout);
+
+//TODO Inspections
+            iInsReadyForInspection = new InsReadyForInspection(iLogin, jsonNode, page, iLogout);
+            iInsCreate = new InsCreate(iLogin, jsonNode, page, iLogout);
+            iInsFail = new InsFail(iLogin, jsonNode, page, iLogout, iInsReadyForInspection);
+            iInsAssign = new InsAssign(iLogin, jsonNode, page, iLogout);
         } catch (Exception exception) {
             logger.error("Error Initializing SetUp Function: {}", exception.getMessage());
         }
@@ -166,7 +184,6 @@ public class BaseTest {
     @AfterClass
     public void tearDown() {
         try {
-//            toastrUtil.stopMonitoring();
             page.context().browser().close();
         } catch (Exception exception) {
             logger.error("Error Initializing Tear Down Function: {}", exception.getMessage());

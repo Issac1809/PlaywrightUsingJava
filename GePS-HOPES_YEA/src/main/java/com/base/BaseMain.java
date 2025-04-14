@@ -4,6 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import com.source.classes.inspections.assign.InsAssign;
+import com.source.classes.inspections.create.InsCreate;
+import com.source.classes.inspections.fail.InsFail;
+import com.source.classes.inspections.readyforinspection.InsReadyForInspection;
 import com.source.classes.login.Login;
 import com.source.classes.logout.Logout;
 import com.source.classes.orderschedules.approve.OsApprove;
@@ -36,6 +40,10 @@ import com.source.classes.requisitions.reject.Reject;
 import com.source.classes.requisitions.sendforapproval.SendForApproval;
 import com.source.classes.requisitions.suspend.BuyerSuspend;
 import com.source.classes.requisitions.type.PurchaseRequisitionTypeHandler;
+import com.source.interfaces.inspections.IInsAssign;
+import com.source.interfaces.inspections.IInsCreate;
+import com.source.interfaces.inspections.IInsFail;
+import com.source.interfaces.inspections.IInsReadyForInspection;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.orderschedules.IOsApprove;
@@ -95,6 +103,10 @@ public class BaseMain {
     protected IOsEdit iOsEdit;
     protected IOsReject iOsReject;
     protected IOsApprove iOsApprove;
+    protected IInsCreate iInsCreate;
+    protected IInsReadyForInspection iInsReadyForInspection;
+    protected IInsFail iInsFail;
+    protected IInsAssign iInsAssign;
 
 //TODO Constructor
     public BaseMain(){
@@ -149,6 +161,12 @@ public class BaseMain {
             iOsEdit = new OsEdit(iLogin, jsonNode, page, iLogout);
             iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout);
             iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout);
+
+//TODO Inspections
+            iInsReadyForInspection = new InsReadyForInspection(iLogin, jsonNode, page, iLogout);
+            iInsCreate = new InsCreate(iLogin, jsonNode, page, iLogout);
+            iInsFail = new InsFail(iLogin, jsonNode, page, iLogout, iInsReadyForInspection);
+            iInsAssign = new InsAssign(iLogin, jsonNode, page, iLogout);
 
 
         } catch (Exception exception) {
