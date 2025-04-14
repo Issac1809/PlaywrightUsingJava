@@ -24,10 +24,10 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-NONCATALOG-148.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-67.0",
-    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-507.0",
-    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-29.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-169.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-661.0",
+    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-160.0",
+    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-832.0",
     "departmentPic" : "requester@cormsquare.com",
     "shipToYokogawa" : "no",
     "companyName" : "Yokogawa Engineering Asia Pte Ltd",
@@ -59,14 +59,14 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "requester@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "8141c0bb-9238-4199-9a4d-5b9e4fefda12",
+    "requisitionUid" : "8e21cd95-4ecb-4041-893f-c8d0ace4be9e",
     "itemImport" : "true",
     "requisitionItemCount" : "3",
-    "salesTransactionNumber" : ""
+    "salesTransactionNumber" : "240025TRN02937"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
-    "requestForQuotationUid" : "",
+    "requestForQuotationUid" : "de4828fa-a427-4cef-933a-b972dbe7e484",
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",
@@ -82,6 +82,11 @@
     "gstPercentage" : 8
   },
   "purchaseOrderRequests" : {
+    "advancePaymentFlag" : true,
+    "advancePaymentPercentage" : "10",
+    "creditPeriodInDays" : "3",
+    "milestonePaymentFlag" : true,
+    "milestoneCount" : "",
     "taxCode" : "PZ-Zero Rated Purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes"
   },
@@ -109,16 +114,16 @@
     "invoiceReferenceId" : ""
   },
   "configSettings" : {
-    "browserName": "edge",
-    "runHeadless": false,
-    "appUrl": "https://geps_hopes_yea.cormsquare.com",
-    "loginPassword": "Admin@123",
-    "internalAttachmentFilePath": "documents/Internal Requisition Attachments.xlsx",
-    "externalAttachmentFilePath": "documents/External Requisition Attachments.xlsx",
-    "tcasFilePath": "documents/TCAS_File.xlsx",
-    "catalogItemImportFilePath": "documents/Catalog_Item_Import.xlsx",
-    "nonCatalogItemImportFilePath": "documents/NonCatalog_Item_Import.xlsx",
-    "technicalAttachmentFilePath": "documents/Technical Documents.xlsx",
-    "commercialAttachmentFilePath": "documents/Commercial Documents.xlsx"
+    "browserName" : "edge",
+    "runHeadless" : false,
+    "appUrl" : "https://geps_hopes_yea.cormsquare.com",
+    "loginPassword" : "Admin@123",
+    "internalAttachmentFilePath" : "documents/Internal Requisition Attachments.xlsx",
+    "externalAttachmentFilePath" : "documents/External Requisition Attachments.xlsx",
+    "tcasFilePath" : "documents/TCAS_File.xlsx",
+    "catalogItemImportFilePath" : "documents/Catalog_Item_Import.xlsx",
+    "nonCatalogItemImportFilePath" : "documents/NonCatalog_Item_Import.xlsx",
+    "technicalAttachmentFilePath" : "documents/Technical Documents.xlsx",
+    "commercialAttachmentFilePath" : "documents/Commercial Documents.xlsx"
   }
 }

@@ -129,7 +129,7 @@ public class BaseTest {
             iPrBuyerSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout);
 
 //TODO Request For Quotation
-            iRfqCreate = new RfqCreate(iLogin, jsonNode, page, iLogout);
+            iRfqCreate = new RfqCreate(iLogin, jsonNode, page, iLogout, playwrightFactory);
             iRfqEdit = new RfqEdit(iLogin, jsonNode, page, iLogout);
             iRfqSuspend = new RfqSuspend(iLogin, jsonNode, page, iLogout, iRfqEdit, iPrEdit, iPrSendForApproval, iPrApprove, iPrAssign, iRfqCreate);
             iQuoSubmit = new Quote(iLogin, jsonNode, page, iLogout);

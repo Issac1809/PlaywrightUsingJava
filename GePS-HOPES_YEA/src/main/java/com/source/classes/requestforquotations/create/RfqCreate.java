@@ -1,8 +1,10 @@
 package com.source.classes.requestforquotations.create;
 import com.constants.requestforquotations.LCeCreate;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
@@ -21,18 +23,20 @@ public class RfqCreate implements IRfqCreate {
     ILogin iLogin;
     ILogout iLogout;
     private String appUrl;
+    PlaywrightFactory playwrightFactory;
 
     private RfqCreate(){
     }
 
 //TODO Constructor
-    public RfqCreate(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
+    public RfqCreate(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout, PlaywrightFactory playwrightFactory){
         this.iLogin = iLogin;
         this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(RfqCreate.class);
         this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
+        this.playwrightFactory = playwrightFactory;
     }
 
     public int buyerRfqCreate(String type) {
@@ -65,6 +69,11 @@ public class RfqCreate implements IRfqCreate {
             );
 
             status = createResponse.status();
+
+            String url = page.url();
+            String[] urlArray = url.split("=");
+            String getUid = urlArray[1];
+            playwrightFactory.savePropertiesIntoJsonFile("requestForQuotation", "requestForQuotationUid", getUid);
 
             iLogout.performLogout();
         } catch (Exception exception) {
