@@ -221,39 +221,39 @@ public class NonCatalogTestContext extends BaseTest {
         }
     }
 
-//    @Test(priority = 17)
-//    @Parameters({"type"})
-//    public void technicalEvaluationReject(String type){
-//        try {
-//            int status = iTeReject.technicalEvaluationReject(type);
-//            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
-//        } catch (Exception exception) {
-//            logger.error("Exception in Technical Evaluation Reject Function for Non-Catalog Type: {}", exception.getMessage());
-//            Assert.fail("Exception in Technical Evaluation Reject Function for Non-Catalog Type: " + exception.getMessage());
-//        }
-//    }
+    @Test(priority = 17)
+    @Parameters({"type"})
+    public void technicalEvaluationReject(String type){
+        try {
+            int status = iTeReject.technicalEvaluationReject(type);
+            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
+        } catch (Exception exception) {
+            logger.error("Exception in Technical Evaluation Reject Function for Non-Catalog Type: {}", exception.getMessage());
+            Assert.fail("Exception in Technical Evaluation Reject Function for Non-Catalog Type: " + exception.getMessage());
+        }
+    }
 
-//    @Test(priority = 18)
-//    @Parameters({"type"})
-//    public void technicalEvaluationApprove(String type){
-//        try {
-//            int status = iTeApprove.technicalEvaluationApprove(type);
-//            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
-//        } catch (Exception exception) {
-//            logger.error("Exception in Technical Evaluation Approve Function for Non-Catalog Type: {}", exception.getMessage());
-//            Assert.fail("Exception in Technical Evaluation Approve Function for Non-Catalog Type: " + exception.getMessage());
-//        }
-//    }
-//
-//    @Test(priority = 19)
-//    @Parameters({"type"})
-//    public void commercialEvaluationCreate(String type){
-//        try {
-//            int status = iCeCreate.commercialEvaluationButton(type);
-//            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
-//        } catch (Exception exception) {
-//            logger.error("Exception in Commercial Evaluation Create Function for Non-Catalog Type: {}", exception.getMessage());
-//            Assert.fail("Exception in Commercial Evaluation Create Function for Non-Catalog Type: " + exception.getMessage());
-//        }
-//    }
+    @Test(priority = 18)
+    @Parameters({"type"})
+    public void technicalEvaluationApprove(String type){
+        try {
+            int status = iTeApprove.technicalEvaluationApprove(type);
+            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
+        } catch (Exception exception) {
+            logger.error("Exception in Technical Evaluation Approve Function for Non-Catalog Type: {}", exception.getMessage());
+            Assert.fail("Exception in Technical Evaluation Approve Function for Non-Catalog Type: " + exception.getMessage());
+        }
+    }
+
+    @Test(priority = 19)
+    @Parameters({"type"})
+    public void commercialEvaluationCreate(String type){
+        try {
+            int status = iCeCreate.commercialEvaluationButton(type);
+            Assert.assertEquals(200, status, "API call was not successful; Status Code: " + status);
+        } catch (Exception exception) {
+            logger.error("Exception in Commercial Evaluation Create Function for Non-Catalog Type: {}", exception.getMessage());
+            Assert.fail("Exception in Commercial Evaluation Create Function for Non-Catalog Type: " + exception.getMessage());
+        }
+    }
 }

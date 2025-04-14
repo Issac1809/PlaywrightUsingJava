@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -20,6 +21,7 @@ public class CommercialEvaluation implements ICeCreate {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    private String appUrl;
 
     private CommercialEvaluation(){
     }
@@ -31,13 +33,14 @@ public class CommercialEvaluation implements ICeCreate {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(CommercialEvaluation.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
     public int commercialEvaluationButton(String type){
         int status = 0;
         try {
             String buyerEmailId = jsonNode.get("mailIds").get("buyerEmail").asText();
-            String uid = jsonNode.get("requisition").get("requestForQuotationUid").asText();
+//            String uid = jsonNode.get("requisition").get("requestForQuotationUid").asText();
 
             iLogin.performLogin(buyerEmailId);
 
@@ -59,9 +62,11 @@ public class CommercialEvaluation implements ICeCreate {
             submitButtonLocator.click();
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
-            acceptButtonLocator.click();
 
-            APIResponse updateResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/VP/RequestForQuotations/all/" + uid, RequestOptions.create());
+            Response updateResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/VP/RequestForQuotations/all/") && response.status() == 200,
+                    acceptButtonLocator::click
+            );
             status = updateResponse.status();
 
             iLogout.performLogout();

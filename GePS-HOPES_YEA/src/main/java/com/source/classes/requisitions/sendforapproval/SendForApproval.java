@@ -63,7 +63,6 @@ public class SendForApproval implements IPrSendForApproval {
 
         playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionUid", getUid);
 
-
         Locator sendForApprovalButtonLocator = page.locator(SEND_FOR_APPROVAL_BUTTON);
         sendForApprovalButtonLocator.click();
 
