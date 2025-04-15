@@ -9,28 +9,50 @@ import com.source.classes.inspections.assign.InsAssign;
 import com.source.classes.inspections.create.InsCreate;
 import com.source.classes.inspections.fail.InsFail;
 import com.source.classes.inspections.readyforinspection.InsReadyForInspection;
+import com.source.classes.login.LoginTest;
 import com.source.classes.orderschedules.approve.OsApprove;
 import com.source.classes.orderschedules.create.OsCreate;
 import com.source.classes.orderschedules.edit.OsEdit;
 import com.source.classes.purchaseorderrequests.approvalandapprove.PorSendForApprovalAndApprove;
+import com.source.classes.purchaseorderrequests.approvalandapprove.PorSendForApprovalAndApproveTest;
 import com.source.classes.purchaseorderrequests.approve.PorApprove;
 import com.source.classes.purchaseorderrequests.create.PorCreate;
+import com.source.classes.purchaseorderrequests.create.PorCreateTest;
 import com.source.classes.purchaseorderrequests.edit.PorEdit;
+import com.source.classes.purchaseorderrequests.edit.PorEditTest;
 import com.source.classes.purchaseorderrequests.reject.PorReject;
+import com.source.classes.purchaseorderrequests.reject.PorRejectTest;
 import com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApproval;
+import com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApprovalTest;
 import com.source.classes.purchaseorderrequests.suspend.PorSuspend;
+import com.source.classes.purchaseorderrequests.suspend.SuspendEditTest;
 import com.source.classes.purchaseorders.SendForVendor;
 import com.source.classes.requestforquotations.commercialevaluation.CommercialEvaluation;
+import com.source.classes.requestforquotations.commercialevaluation.CommercialEvaluationTest;
 import com.source.classes.requestforquotations.create.RfqCreate;
+import com.source.classes.requestforquotations.create.RfqCreateTest;
 import com.source.classes.requestforquotations.edit.RfqEdit;
+import com.source.classes.requestforquotations.edit.RfqEditTest;
 import com.source.classes.requestforquotations.quote.Quote;
+import com.source.classes.requestforquotations.quote.QuoteTest;
 import com.source.classes.requestforquotations.readyforevaluation.ReadyForEvaluation;
+import com.source.classes.requestforquotations.readyforevaluation.ReadyForEvaluationTest;
 import com.source.classes.requestforquotations.regret.QuotationRegret;
+import com.source.classes.requestforquotations.regret.RegretTest;
 import com.source.classes.requestforquotations.requote.Requote;
+import com.source.classes.requestforquotations.requote.RequoteTest;
 import com.source.classes.requestforquotations.suspend.RfqSuspend;
-import com.source.classes.requestforquotations.technicalevaluation.TechnicalEvaluationApprove;
-import com.source.classes.requestforquotations.technicalevaluation.TechnicalEvaluationCreate;
-import com.source.classes.requestforquotations.technicalevaluation.TechnicalEvaluationReject;
+import com.source.classes.requestforquotations.suspend.RfqSuspendPrEditTest;
+import com.source.classes.requestforquotations.suspend.RfqSuspendRfqEditTest;
+import com.source.classes.requestforquotations.technicalevaluation.*;
+import com.source.classes.requisitions.approve.ApproveTest;
+import com.source.classes.requisitions.assign.AssignTest;
+import com.source.classes.requisitions.create.CreateTest;
+import com.source.classes.requisitions.edit.EditTest;
+import com.source.classes.requisitions.reject.RejectTest;
+import com.source.classes.requisitions.sendforapproval.SendForApprovalTest;
+import com.source.classes.requisitions.suspend.BuyerManagerSuspendTest;
+import com.source.classes.requisitions.suspend.BuyerSuspendTest;
 import com.source.classes.requisitions.create.Create;
 import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -67,6 +89,8 @@ import com.utils.ToastrUtil;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
+
 import java.io.File;
 
 public class BaseTest {
@@ -76,11 +100,12 @@ public class BaseTest {
     protected ObjectMapper objectMapper;
     protected JsonNode jsonNode;
     protected GetTitleUtil getTitleUtil;
-    protected Playwright playwright;
     protected PlaywrightFactory playwrightFactory;
     protected Page page;
     protected ILogin iLogin;
     protected ILogout iLogout;
+    protected LoginTest loginTest;
+    protected CreateTest createTest;
     protected IPrType iPrType;
     protected IPrCreate iPrCreate;
     protected IPrEdit iPrEdit;
@@ -123,6 +148,48 @@ public class BaseTest {
     protected IDnAssign iDnAssign;
     protected IDnCancel iDnCancel;
 
+
+    protected EditTest editTest;
+    protected SendForApprovalTest sendForApprovalTest;
+    protected RejectTest rejectTest;
+    protected ApproveTest approveTest;
+    protected BuyerManagerSuspendTest buyerManagerSuspendTest;
+    protected BuyerSuspendTest buyerSuspendTest;
+    protected AssignTest assignTest;
+    protected RfqCreateTest rfqCreateTest;
+    protected RfqEditTest rfqEditTest;
+    protected RfqSuspendPrEditTest rfqSuspendPrEditTest;
+    protected RfqSuspendRfqEditTest rfqSuspendRfqEditTestMethod;
+    protected RegretTest regretTest;
+    protected QuoteTest quoteTest;
+    protected RequoteTest requoteTest;
+    protected ReadyForEvaluationTest readyForEvaluationTest;
+    protected TechnicalEvaluationCreateTest technicalEvaluationCreateTest;
+    protected TechnicalEvaluationRejectTest technicalEvaluationRejectTest;
+    protected TechnicalEvaluationApproveTest technicalEvaluationApproveTest;
+    protected CommercialEvaluationTest commercialEvaluationTest;
+    protected PorCreateTest porCreateTest;
+    protected SuspendEditTest suspendEditTest;
+    protected PorEditTest porEditTest;
+    protected PorSendForApprovalTest porSendForApprovalTest;
+    protected PorRejectTest porRejectTest;
+    protected PorSendForApprovalAndApproveTest porSendForApprovalAndApproveTest;
+//    protected IPorApprove iPorApprove;
+//    protected IPoSendForVendor iPoSendForVendor;
+//    protected IOsCreate iOsCreate;
+//    protected IOsEdit iOsEdit;
+//    protected IOsReject iOsReject;
+//    protected IOsApprove iOsApprove;
+//    protected IInsCreate iInsCreate;
+//    protected IInsReadyForInspection iInsReadyForInspection;
+//    protected IInsFail iInsFail;
+//    protected IInsAssign iInsAssign;
+//    protected IDnCreate iDnCreate;
+//    protected IDnEdit iDnEdit;
+//    protected IDnReturn iDnReturn;
+//    protected IDnAssign iDnAssign;
+//    protected IDnCancel iDnCancel;
+
 //TODO Constructor
     public BaseTest() {
     }
@@ -139,10 +206,21 @@ public class BaseTest {
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
 
 //TODO Requisition
-            iLogin = new Login(jsonNode, page);
             iLogout = new Logout(page);
-            iPrCreate = new Create(playwrightFactory, objectMapper, playwright, iLogin, jsonNode, page, iLogout);
+            iLogin = new Login(jsonNode, page);
+            loginTest = new LoginTest();
+            iPrCreate = new Create(playwrightFactory, objectMapper, iLogin, jsonNode, page, iLogout);
             iPrType = new PurchaseRequisitionTypeHandler(iPrCreate);
+            createTest = new CreateTest();
+
+            editTest = new EditTest();
+            sendForApprovalTest = new SendForApprovalTest();
+            rejectTest = new RejectTest();
+            approveTest = new ApproveTest();
+            buyerManagerSuspendTest = new BuyerManagerSuspendTest();
+            buyerSuspendTest = new BuyerSuspendTest();
+            assignTest = new AssignTest();
+
             iPrEdit = new Edit(iLogin, jsonNode, page, iLogout);
             iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, jsonNode, page, iLogout);
             iPrReject = new Reject(iLogin, jsonNode, page, iLogout);
@@ -151,7 +229,22 @@ public class BaseTest {
             iPrBuyerManagerSuspend = new BuyerManagerSuspend(iLogin, jsonNode, page, iLogout, iPrEdit);
             iPrBuyerSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout);
 
+
+
 //TODO Request For Quotation
+            rfqCreateTest = new RfqCreateTest();
+            rfqEditTest = new RfqEditTest();
+            rfqSuspendPrEditTest = new RfqSuspendPrEditTest();
+            rfqSuspendRfqEditTestMethod = new RfqSuspendRfqEditTest();
+            regretTest = new RegretTest();
+            quoteTest = new QuoteTest();
+            requoteTest = new RequoteTest();
+            readyForEvaluationTest = new ReadyForEvaluationTest();
+            technicalEvaluationCreateTest = new TechnicalEvaluationCreateTest();
+            technicalEvaluationRejectTest = new TechnicalEvaluationRejectTest();
+            technicalEvaluationApproveTest = new TechnicalEvaluationApproveTest();
+            commercialEvaluationTest = new CommercialEvaluationTest();
+
             iRfqCreate = new RfqCreate(iLogin, jsonNode, page, iLogout, playwrightFactory);
             iRfqEdit = new RfqEdit(iLogin, jsonNode, page, iLogout);
             iRfqSuspend = new RfqSuspend(iLogin, jsonNode, page, iLogout, iRfqEdit, iPrEdit, iPrSendForApproval, iPrApprove, iPrAssign, iRfqCreate);
@@ -164,7 +257,16 @@ public class BaseTest {
             iTeApprove = new TechnicalEvaluationApprove(iLogin, jsonNode, page, iLogout, iTeCreate);
             iCeCreate = new CommercialEvaluation(iLogin, jsonNode, page, iLogout);
 
+
+
 //TODO Purchase Order Requests
+            porCreateTest = new PorCreateTest();
+            suspendEditTest = new SuspendEditTest();
+            porEditTest = new PorEditTest();
+            porSendForApprovalTest = new PorSendForApprovalTest();
+            porRejectTest = new PorRejectTest();
+            porSendForApprovalAndApproveTest = new PorSendForApprovalAndApproveTest();
+
             iPorCreate = new PorCreate(iLogin, jsonNode, page, iLogout);
             iPorEdit = new PorEdit(iLogin, jsonNode, page, iLogout);
             iPorSuspend = new PorSuspend(iLogin, jsonNode, page, iLogout, iPorEdit, iCeCreate, iPorCreate);
@@ -172,6 +274,8 @@ public class BaseTest {
             iPorReject = new PorReject(iLogin, jsonNode, page, iLogout, iPorEdit, iPorSendForApproval);
             iPorSendForApprovalAndApprove = new PorSendForApprovalAndApprove(iPorApprove, iPorSendForApproval);
             iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout);
+
+
 
 //TODO Purchase Orders
             iPoSendForVendor = new SendForVendor(iLogin, jsonNode, page, iLogout);
@@ -194,6 +298,7 @@ public class BaseTest {
             iDnAssign = new DnAssign(iLogin, jsonNode, page, iLogout, playwrightFactory);
             iDnReturn = new DnReturn(iLogin, jsonNode, page, iLogout, iDnEdit);
             iDnCancel = new DnCancel(iLogin, jsonNode, page, iLogout, iDnCreate);
+
         } catch (Exception exception) {
             logger.error("Error Initializing SetUp Function: {}", exception.getMessage());
         }

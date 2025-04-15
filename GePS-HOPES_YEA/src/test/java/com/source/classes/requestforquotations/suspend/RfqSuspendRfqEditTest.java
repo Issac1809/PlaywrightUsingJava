@@ -1,4 +1,4 @@
-package com.source.classes.requestforquotation.suspend;
+package com.source.classes.requestforquotations.suspend;
 import com.base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;

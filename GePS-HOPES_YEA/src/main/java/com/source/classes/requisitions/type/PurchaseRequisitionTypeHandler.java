@@ -16,8 +16,8 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
 
 //TODO Constructor
     public PurchaseRequisitionTypeHandler(IPrCreate iPrCreate){
-        this.logger = LoggerUtil.getLogger(PurchaseRequisitionTypeHandler.class);
         this.iPrCreate = iPrCreate;
+        this.logger = LoggerUtil.getLogger(PurchaseRequisitionTypeHandler.class);
     }
 
     public int processRequisitionType(String type, String purchaseType) {

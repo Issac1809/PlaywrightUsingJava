@@ -1,4 +1,4 @@
-package com.source.classes.requisition.reject;
+package com.source.classes.requisitions.reject;
 import com.base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;

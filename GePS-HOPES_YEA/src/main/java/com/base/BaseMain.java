@@ -133,7 +133,7 @@ public class BaseMain {
 //TODO Requisition
             iLogin = new Login(jsonNode, page);
             iLogout = new Logout(page);
-            iPrCreate = new Create(playwrightFactory, objectMapper, playwright, iLogin, jsonNode, page, iLogout);
+            iPrCreate = new Create(playwrightFactory, objectMapper, iLogin, jsonNode, page, iLogout);
             iPrType = new PurchaseRequisitionTypeHandler(iPrCreate);
             iPrEdit = new Edit(iLogin, jsonNode, page, iLogout);
             iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, jsonNode, page, iLogout);

@@ -12,9 +12,15 @@ public class PorCreateTest extends BaseTest {
             String type = "";
             String purchaseType = "";
 
-            iPorCreate.porCreateButtonForCatalog(type, purchaseType);
-            iPorCreate.porCreateButtonForNonCatalog(type);
-            iPorCreate.justification();
+            if (type.equalsIgnoreCase("Catalog")) {
+                type = "Catalog";
+                iPorCreate.porCreateButtonForCatalog(type, purchaseType);
+            } else if (type.equalsIgnoreCase("NonCatalog")) {
+                type = "Non-Catalog";
+                iPorCreate.porCreateButtonForNonCatalog(type);
+            } else {
+                throw new IllegalArgumentException("Invalid type: " + type);
+            }
             iPorCreate.taxCode();
             iPorCreate.porNotes();
             iPorCreate.createButton(type);

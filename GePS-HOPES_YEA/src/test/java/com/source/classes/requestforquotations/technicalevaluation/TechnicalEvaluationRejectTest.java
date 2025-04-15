@@ -1,4 +1,4 @@
-package com.source.classes.requestforquotation.technicalevaluation;
+package com.source.classes.requestforquotations.technicalevaluation;
 import com.base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;

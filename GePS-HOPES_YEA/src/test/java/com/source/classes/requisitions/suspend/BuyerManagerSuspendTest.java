@@ -1,4 +1,4 @@
-package com.source.classes.requisition.suspend;
+package com.source.classes.requisitions.suspend;
 import com.base.BaseTest;
 import org.testng.annotations.Test;
 

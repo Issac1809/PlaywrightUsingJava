@@ -1,4 +1,4 @@
-package com.source.classes.requestforquotation.regret;
+package com.source.classes.requestforquotations.regret;
 import com.base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;

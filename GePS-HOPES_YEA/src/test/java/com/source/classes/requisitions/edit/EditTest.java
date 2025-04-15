@@ -1,4 +1,4 @@
-package com.source.classes.requisition.edit;//package com.classes.requisition.edit;
+package com.source.classes.requisitions.edit;//package com.classes.requisition.edit;
 import com.base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
