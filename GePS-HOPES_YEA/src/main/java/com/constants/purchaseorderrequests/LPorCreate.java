@@ -12,7 +12,7 @@ public class LPorCreate {
     public static final String QUANTITY_MISMATCH_POPUP = "//h5[contains(text(), 'mismatch')]";
     public static final String SUBMIT_BUTTON = "//button[contains(text(), 'Submit')]";
     public static final String RFQ_NAVIGATION_BAR = "//*[contains(text(), 'Request For Quotations')]";
-    public static final String POR_CREATE_BUTTON = "//a[contains(text(),' Create POR ')]";
+    public static final String POR_CREATE_BUTTON = "//button[contains(text(),'Create POR')]";
     public static final String BELOW_5L = "#below5L";
     public static final String TAX_CODE = "-- Select Tax Codes --";
     public static final String POR_NOTES = "#notes";
@@ -22,7 +22,7 @@ public class LPorCreate {
     public static final String ADVANCE_PAYMENT_PERCENTAGE = "#percentage1";
     public static final String ADVANCE_PAYMENT_CREDIT_PERIOD_IN_DAYS = "#percentage1";
     public static final String SUBMIT_ADVANCE_PAYMENT_BUTTON = "#saveAdvancePayment";
-    public static final String MILESTONE_PAYMENT_BUTTON = "#addEditMileStone";
+    public static final String MILESTONE_PAYMENT_BUTTON = "#addMileStone";
     public static final String MILESTONE_PAYMENT_NAME = "#description";
     public static final String MILESTONE_PAYMENT_PERCENTAGE = "#percentage";
     public static final String SUBMIT_MILESTONE_PAYMENT_BUTTON = "#saveMileStone";

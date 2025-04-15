@@ -24,7 +24,7 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-169.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-930.0",
     "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-661.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-276.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-22.0",
@@ -57,9 +57,9 @@
     "requisitionStatus" : "Draft",
     "requisitionNotes" : "Requisition Notes and Attachments",
     "requisitionFileType" : "Internal",
-    "requisitionApprovers" : "requester@cormsquare.com",
+    "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "f09de010-dd14-4214-a06a-096cae2a3cca",
+    "requisitionUid" : "7bc473ad-7c79-44ee-ad99-9c37f7f694e1",
     "itemImport" : "true",
     "requisitionItemCount" : "3",
     "salesTransactionNumber" : "240025TRN02939"
@@ -86,6 +86,7 @@
     "advancePaymentPercentage" : "10",
     "creditPeriodInDays" : "3",
     "milestonePaymentFlag" : true,
+    "milestonePaymentCount" : 3,
     "milestoneCount" : "",
     "taxCode" : "PZ-Zero Rated Purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes"

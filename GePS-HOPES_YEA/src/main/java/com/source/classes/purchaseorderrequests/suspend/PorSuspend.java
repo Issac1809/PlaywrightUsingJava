@@ -87,7 +87,7 @@ public class PorSuspend implements IPorSuspend {
             }
             iPorCreate.taxCode();
             iPorCreate.porNotes();
-            iPorCreate.porCreate();
+            iPorCreate.createButton(type);
         } catch (Exception exception) {
             logger.error("Exception in POR Suspend RFQ or PR Edit function: {}", exception.getMessage());
         }

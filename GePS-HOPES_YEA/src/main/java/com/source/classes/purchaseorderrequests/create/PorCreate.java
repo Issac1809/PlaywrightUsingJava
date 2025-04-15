@@ -5,6 +5,7 @@ import com.constants.requisitions.LPrEdit;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.source.interfaces.purchaseorderrequests.IPorCreate;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -22,10 +23,13 @@ public class PorCreate implements IPorCreate {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    private String appUrl;
 
 //TODO Constructor
     private PorCreate(){
     }
+
+    private int status=0;
 
     public PorCreate(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
         this.iLogin = iLogin;
@@ -33,6 +37,7 @@ public class PorCreate implements IPorCreate {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(PorCreate.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
     public void porCreateButtonForCatalog(String type, String purchaseType) {
@@ -107,8 +112,7 @@ public class PorCreate implements IPorCreate {
                 advanceAndMilestonePayments(advancePaymentFlag, milestonePaymentFlag);
             }
 
-            Locator submitButtonLocator1 = page.locator(SUBMIT_MILESTONE_PAYMENT_BUTTON);
-            submitButtonLocator1.click();
+
         } catch (Exception exception) {
             logger.error("Exception in POR Create For Catalog Type Function: {}", exception.getMessage());
         }
@@ -217,6 +221,7 @@ public class PorCreate implements IPorCreate {
             if(advancePaymentFlag || milestonePaymentFlag){
                 advanceAndMilestonePayments(advancePaymentFlag, milestonePaymentFlag);
             }
+
         } catch (Exception exception) {
             logger.error("Exception in POR Create For Non-Catalog Type Function: {}", exception.getMessage());
         }
@@ -246,14 +251,14 @@ public class PorCreate implements IPorCreate {
                 submitButtonLocator.click();
 
                 //TODO Milestone Payment
-                Locator milestoneButtonLocator = page.locator(MILESTONE_PAYMENT_BUTTON);
-                milestoneButtonLocator.click();
-
                 int milestoneCount = jsonNode.get("purchaseOrderRequests").get("milestonePaymentCount").asInt();
                 int reminder = 100 % milestoneCount;
                 int percentage = 100 / milestoneCount;
 
                 for(int i = 1; i <= milestoneCount; i++){
+                    Locator milestoneButtonLocator = page.locator(MILESTONE_PAYMENT_BUTTON);
+                    milestoneButtonLocator.click();
+
                     Locator milestonePaymentNameLocator = page.locator(MILESTONE_PAYMENT_NAME);
                     milestonePaymentNameLocator.fill("Milestone - " + i);
 
@@ -263,17 +268,18 @@ public class PorCreate implements IPorCreate {
                     } else {
                         milestonePaymentPercentageLocator.fill(String.valueOf(percentage));
                     }
+                    Locator submitButtonLocator1 = page.locator(SUBMIT_MILESTONE_PAYMENT_BUTTON);
+                    submitButtonLocator1.click();
                 }
             } else if (milestonePaymentFlag) {
                 //TODO Milestone Payment
-                Locator milestoneButtonLocator = page.locator(MILESTONE_PAYMENT_BUTTON);
-                milestoneButtonLocator.click();
-
                 int milestoneCount = jsonNode.get("purchaseOrderRequests").get("milestonePaymentCount").asInt();
                 int reminder = 100 % milestoneCount;
                 int percentage = 100 / milestoneCount;
 
                 for(int i = 1; i <= milestoneCount; i++){
+                    Locator milestoneButtonLocator = page.locator(MILESTONE_PAYMENT_BUTTON);
+                    milestoneButtonLocator.click();
                     Locator amilestonePaymentNameLocator = page.locator(MILESTONE_PAYMENT_NAME);
                     amilestonePaymentNameLocator.fill("Milestone-" + i);
 
@@ -283,6 +289,8 @@ public class PorCreate implements IPorCreate {
                     } else {
                         milestonePaymentPercentageLocator.fill(String.valueOf(percentage));
                     }
+                    Locator submitButtonLocator1 = page.locator(SUBMIT_MILESTONE_PAYMENT_BUTTON);
+                    submitButtonLocator1.click();
                 }
             }
         } catch (Exception exception) {
@@ -322,17 +330,42 @@ public class PorCreate implements IPorCreate {
         }
     }
 
-    public void porCreate(){
+    public void createButton(String type){
         try {
             Locator createButtonLocator = page.locator(CREATE_BUTTON);
             createButtonLocator.click();
 
             Locator yesButtonLocator = page.locator(YES);
-            yesButtonLocator.click();
+
+            String reqType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
+
+            Response createResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                    yesButtonLocator::click
+            );
+            status = createResponse.status();
 
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in POR Create Function: {}", exception.getMessage());
         }
     }
+
+    public int porCreate(String type, String purchaseType) {
+        try {
+            if (purchaseType.equalsIgnoreCase("Catalog")) {
+                porCreateButtonForCatalog(type, purchaseType);
+            } else if (purchaseType.equalsIgnoreCase("NonCatalog")) {
+                porCreateButtonForNonCatalog(type);
+                justification();
+            }
+            taxCode();
+            porNotes();
+            createButton(type);
+        }catch (Exception exception) {
+            logger.error("Exception in POR Create Function: {}", exception.getMessage());
+        }
+        return status;
+    }
+
 }
