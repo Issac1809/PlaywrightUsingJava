@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="GePS-HOPES_YEA SALES Catalog Test Cases" >
+
+    <test name="Requisition Create">
+        <parameter name="type" value="Sales"/>
+        <parameter name="purchaseType" value="Catalog"/>
+        <classes>
+            <class name="com.source.classes.requisitions.create.CreateTest"/>
+        </classes>
+    </test>
+
+
+</suite>

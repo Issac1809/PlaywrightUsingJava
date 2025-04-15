@@ -7,8 +7,9 @@ import org.testng.annotations.Test;
 public class CreateTest extends BaseTest {
 
     @Test
+    @Parameters({"type", "purchaseType"})
     public void create(String type, String purchaseType) {
-        try{
+        try {
             int status = iPrType.processRequisitionType(type, purchaseType);
             Assert.assertEquals(200, status, "Requisition Create was not Successful");
         } catch (Exception exception) {

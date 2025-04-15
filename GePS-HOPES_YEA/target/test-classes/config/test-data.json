@@ -24,8 +24,8 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-169.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-789.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-44.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-63.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-276.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-230.0",
     "departmentPic" : "requester@cormsquare.com",
@@ -59,7 +59,7 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "8f9b8d79-c10f-40b9-ac34-9a57ab6dff6e",
+    "requisitionUid" : "e4e7a32a-d37e-49ae-889a-55de2b59c0e3",
     "itemImport" : "true",
     "requisitionItemCount" : "3",
     "salesTransactionNumber" : "240025TRN02939"
