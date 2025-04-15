@@ -1,4 +1,4 @@
-package com.source.classes.requisition.sendforapproval;//package com.classes.requisition.sendforapproval;
+package com.source.classes.requisitions.sendforapproval;//package com.classes.requisition.sendforapproval;
 import com.base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;

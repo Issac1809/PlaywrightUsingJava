@@ -10,7 +10,6 @@ public class LoginTest extends BaseTest {
         try {
             String emailId = jsonNode.get("requisition").get("requesterEmail").asText();
             int statusCode = iLogin.performLogin(emailId);
-
             Assert.assertEquals(statusCode, 200, "Login was not Successful");
         } catch (Exception exception) {
             logger.error("Error in Login Test Function: {}", exception.getMessage());

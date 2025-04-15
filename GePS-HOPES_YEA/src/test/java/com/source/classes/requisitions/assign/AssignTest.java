@@ -1,4 +1,4 @@
-package com.source.classes.requisition.assign;
+package com.source.classes.requisitions.assign;
 import com.base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;

@@ -1,4 +1,4 @@
-package com.source.classes.requestforquotation.create;
+package com.source.classes.requestforquotations.create;
 import com.base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;

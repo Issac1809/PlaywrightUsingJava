@@ -19,7 +19,6 @@ public class Create implements IPrCreate {
     Logger logger;
     PlaywrightFactory playwrightFactory;
     ObjectMapper objectMapper;
-    Playwright playwright;
     Page page;
     ILogin iLogin;
     ILogout iLogout;
@@ -28,11 +27,10 @@ public class Create implements IPrCreate {
     String appUrl;
 
 //TODO Constructor
-    public Create(PlaywrightFactory playwrightFactory, ObjectMapper objectMapper, Playwright playwright, ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
+    public Create(PlaywrightFactory playwrightFactory, ObjectMapper objectMapper, ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
         this.logger = LoggerUtil.getLogger(Create.class);
         this.playwrightFactory = playwrightFactory;
         this.objectMapper = objectMapper;
-        this.playwright = playwright;
         this.page = page;
         this.jsonNode = jsonNode;
         this.iLogin = iLogin;

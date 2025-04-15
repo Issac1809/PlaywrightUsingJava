@@ -217,6 +217,9 @@ public class PorCreate implements IPorCreate {
             if(advancePaymentFlag || milestonePaymentFlag){
                 advanceAndMilestonePayments(advancePaymentFlag, milestonePaymentFlag);
             }
+
+            justification();
+
         } catch (Exception exception) {
             logger.error("Exception in POR Create For Non-Catalog Type Function: {}", exception.getMessage());
         }
@@ -335,4 +338,6 @@ public class PorCreate implements IPorCreate {
             logger.error("Exception in POR Create Function: {}", exception.getMessage());
         }
     }
+
+
 }

@@ -1,4 +1,4 @@
-package com.source.classes.requestforquotation.readyforevaluation;
+package com.source.classes.requestforquotations.readyforevaluation;
 import com.base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
