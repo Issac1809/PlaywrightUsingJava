@@ -23,7 +23,7 @@ public class PorCreateTest extends BaseTest {
             }
             iPorCreate.taxCode();
             iPorCreate.porNotes();
-            iPorCreate.porCreate();
+            iPorCreate.createButton(type);
         } catch (Exception exception) {
             logger.error("Exception in POR Create Test Function: {}", exception.getMessage());
         }

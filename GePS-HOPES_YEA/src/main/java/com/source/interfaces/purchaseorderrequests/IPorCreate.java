@@ -6,5 +6,6 @@ public interface IPorCreate {
     void justification();
     void taxCode();
     void porNotes();
-    void porCreate();
+    void createButton(String type);
+    int porCreate(String type, String purchaseType);
 }
