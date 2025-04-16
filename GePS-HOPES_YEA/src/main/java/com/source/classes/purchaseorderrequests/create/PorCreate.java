@@ -10,6 +10,7 @@ import com.source.interfaces.purchaseorderrequests.IPorCreate;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.utils.LoggerUtil;
+import com.utils.rpa.salesordersync.PR_List_Flow;
 import org.apache.logging.log4j.Logger;
 import static com.constants.purchaseorderrequests.LPorCreate.*;
 import static com.constants.requestforquotations.LQuoRequote.*;
@@ -20,6 +21,7 @@ public class PorCreate implements IPorCreate {
 
     Logger logger;
     JsonNode jsonNode;
+    PR_List_Flow prListFlow;
     Page page;
     ILogin iLogin;
     ILogout iLogout;
@@ -31,11 +33,12 @@ public class PorCreate implements IPorCreate {
 
     private int status=0;
 
-    public PorCreate(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
+    public PorCreate(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout, PR_List_Flow prListFlow){
         this.iLogin = iLogin;
         this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
+        this.prListFlow = prListFlow;
         this.logger = LoggerUtil.getLogger(PorCreate.class);
         this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
@@ -64,7 +67,7 @@ public class PorCreate implements IPorCreate {
                 String requesterMailId = jsonNode.get("mailIds").get("requesterEmail").asText();
                 iLogin.performLogin(requesterMailId);
 
-                //BW RPA Logic
+                prListFlow.prListFlow();
 
                 Locator convertSmToOmButtonLocator = page.locator(CONVERT_SM_TO_OM_BUTTON);
                 convertSmToOmButtonLocator.click();
@@ -93,8 +96,6 @@ public class PorCreate implements IPorCreate {
 
                     Locator submitButtonLocator = page.locator(LPorCreate.SUBMIT_BUTTON);
                     submitButtonLocator.click();
-
-                    //Convert SM To OM
 
                     iLogout.performLogout();
 
@@ -142,7 +143,7 @@ public class PorCreate implements IPorCreate {
                 String requesterMailId = jsonNode.get("mailIds").get("requesterEmail").asText();
                 iLogin.performLogin(requesterMailId);
 
-                //BW RPA Logic
+                prListFlow.prListFlow();
 
                 Locator convertSmToOmButtonLocator = page.locator(CONVERT_SM_TO_OM_BUTTON);
                 convertSmToOmButtonLocator.click();
@@ -196,8 +197,6 @@ public class PorCreate implements IPorCreate {
                     String title1 = getRFQTransactionTitle(type);
                     Locator titleLocator1 = page.locator(LPorCreate.getTitle(title1));
                     titleLocator1.first().click();
-
-                    //Convert SM to OM
 
                     iLogout.performLogout();
 

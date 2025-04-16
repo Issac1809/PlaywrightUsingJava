@@ -19,7 +19,7 @@ public class PR_List_Flow {
         this.logger = LoggerUtil.getLogger(PR_List_Flow.class);
     }
 
-    public static void main(String[] args) {
+    public void prListFlow() {
         try {
             Playwright playwright = Playwright.create();
             Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
