@@ -105,10 +105,12 @@
     "grossWeightKg" : 20,
     "netWeightKg" : 35,
     "totalChargeableWeightKg" : 200,
-    "volumeCm3" : 50
+    "volumeCm3" : 50,
+    "unitRate" : 300
   },
   "workOrders" : {
     "sourceCountry" : "India",
+    "priority" : "High",
     "destinationCountry" : "India",
     "workOrderReferenceId" : ""
   },

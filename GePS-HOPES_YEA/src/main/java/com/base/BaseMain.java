@@ -9,6 +9,9 @@ import com.source.classes.dispatchnotes.cancel.DnCancel;
 import com.source.classes.dispatchnotes.create.DnCreate;
 import com.source.classes.dispatchnotes.dnreturn.DnReturn;
 import com.source.classes.dispatchnotes.edit.DnEdit;
+import com.source.classes.freightforwarderrequests.invite.FfrInvite;
+import com.source.classes.freightforwarderrequests.quote.FfrQuote;
+import com.source.classes.freightforwarderrequests.requote.FfrRequote;
 import com.source.classes.inspections.assign.InsAssign;
 import com.source.classes.inspections.create.InsCreate;
 import com.source.classes.inspections.fail.InsFail;
@@ -18,6 +21,7 @@ import com.source.classes.logout.Logout;
 import com.source.classes.orderschedules.approve.OsApprove;
 import com.source.classes.orderschedules.create.OsCreate;
 import com.source.classes.orderschedules.edit.OsEdit;
+import com.source.classes.orderschedules.reject.OsReject;
 import com.source.classes.purchaseorderrequests.create.PorCreate;
 import com.source.classes.purchaseorderrequests.edit.PorEdit;
 import com.source.classes.purchaseorderrequests.reject.PorReject;
@@ -45,7 +49,12 @@ import com.source.classes.requisitions.reject.Reject;
 import com.source.classes.requisitions.sendforapproval.SendForApproval;
 import com.source.classes.requisitions.suspend.BuyerSuspend;
 import com.source.classes.requisitions.type.PurchaseRequisitionTypeHandler;
+import com.source.classes.workorder.create.WoCreate;
+import com.source.classes.workorder.trackerstatus.WoTrackerStatus;
 import com.source.interfaces.dispatchnotes.*;
+import com.source.interfaces.freightforwarderrequests.IFfrInvite;
+import com.source.interfaces.freightforwarderrequests.IFfrQuote;
+import com.source.interfaces.freightforwarderrequests.IFfrRequote;
 import com.source.interfaces.inspections.IInsAssign;
 import com.source.interfaces.inspections.IInsCreate;
 import com.source.interfaces.inspections.IInsFail;
@@ -60,9 +69,12 @@ import com.source.interfaces.purchaseorderrequests.*;
 import com.source.interfaces.purchaseorders.IPoSendForVendor;
 import com.source.interfaces.requestforquotations.*;
 import com.source.interfaces.requisitions.*;
+import com.source.interfaces.workorders.IWoCreate;
+import com.source.interfaces.workorders.IWoTrackerStatus;
 import com.utils.GetTitleUtil;
 import com.utils.LoggerUtil;
 import com.utils.ToastrUtil;
+import com.utils.rpa.salesordersync.PR_List_Flow;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
 
@@ -76,6 +88,7 @@ public class BaseMain {
     protected Playwright playwright;
     protected PlaywrightFactory playwrightFactory;
     protected Page page;
+    protected PR_List_Flow prListFlow;
     protected ILogin iLogin;
     protected ILogout iLogout;
     protected IPrType iPrType;
@@ -118,6 +131,11 @@ public class BaseMain {
     protected IDnReturn iDnReturn;
     protected IDnAssign iDnAssign;
     protected IDnCancel iDnCancel;
+    protected IFfrInvite iFfrInvite;
+    protected IFfrQuote iFfrQuote;
+    protected IFfrRequote iFfrRequote;
+    protected IWoCreate iWoCreate;
+    protected IWoTrackerStatus iWoTrackerStatus;
 
 //TODO Constructor
     public BaseMain(){
@@ -129,6 +147,7 @@ public class BaseMain {
             page = playwrightFactory.initializePage(jsonNode);
             toastrUtil = new ToastrUtil(page);
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
+            prListFlow = new PR_List_Flow();
 
 //TODO Requisition
             iLogin = new Login(jsonNode, page);
@@ -156,7 +175,7 @@ public class BaseMain {
             iCeCreate = new CommercialEvaluation(iLogin, jsonNode, page, iLogout);
 
 //TODO Purchase Order Requests
-            iPorCreate = new PorCreate(iLogin, jsonNode, page, iLogout);
+            iPorCreate = new PorCreate(iLogin, jsonNode, page, iLogout, prListFlow);
             iPorEdit = new PorEdit(iLogin, jsonNode, page, iLogout);
             iPorSuspend = new PorSuspend(iLogin, jsonNode, page, iLogout, iPorEdit, iCeCreate, iPorCreate);
             iPorSendForApproval = new PorSendForApproval(iLogin, jsonNode, page, iLogout);
@@ -170,7 +189,7 @@ public class BaseMain {
 //TODO Order Schedules
             iOsCreate = new OsCreate(iLogin, jsonNode, page, iLogout, playwrightFactory);
             iOsEdit = new OsEdit(iLogin, jsonNode, page, iLogout);
-            iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout);
+            iOsReject = new OsReject(iLogin, jsonNode, page, iLogout);
             iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout);
 
 //TODO Inspections
@@ -185,6 +204,15 @@ public class BaseMain {
             iDnAssign = new DnAssign(iLogin, jsonNode, page, iLogout, playwrightFactory);
             iDnReturn = new DnReturn(iLogin, jsonNode, page, iLogout, iDnEdit);
             iDnCancel = new DnCancel(iLogin, jsonNode, page, iLogout, iDnCreate);
+
+//TODO Freight Forwarder Requests
+            iFfrInvite = new FfrInvite(iLogin, jsonNode, page, iLogout);
+            iFfrQuote = new FfrQuote(iLogin, jsonNode, page, iLogout);
+            iFfrRequote = new FfrRequote(iLogin, jsonNode, iFfrQuote, iLogout, page);
+
+//TODO Work Orders
+            iWoCreate = new WoCreate(iLogin, jsonNode, page, iLogout);
+            iWoTrackerStatus = new WoTrackerStatus(iLogin, jsonNode, page, iLogout, playwrightFactory);
         } catch (Exception exception) {
             logger.error("Error Initializing BaseMain Constructor: {}", exception.getMessage());
         }
