@@ -113,4 +113,12 @@ public class PlaywrightFactory {
         }
         return base64Path;
     }
+
+    public void tearDown(Page page) {
+        try {
+            getPage().context().browser().close();
+        } catch (Exception exception) {
+            logger.error("Error in Tear Down Function: {}", exception.getMessage());
+        }
+    }
 }

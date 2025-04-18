@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import com.source.classes.currencyexchangerate.CurrencyExchangeRate;
 import com.source.classes.dispatchnotes.assign.DnAssign;
 import com.source.classes.dispatchnotes.cancel.DnCancel;
 import com.source.classes.dispatchnotes.create.DnCreate;
@@ -16,6 +17,30 @@ import com.source.classes.inspections.assign.InsAssign;
 import com.source.classes.inspections.create.InsCreate;
 import com.source.classes.inspections.fail.InsFail;
 import com.source.classes.inspections.readyforinspection.InsReadyForInspection;
+import com.source.classes.invoices.poinvoice.approve.InvApproval;
+import com.source.classes.invoices.poinvoice.cancel.InvCancel;
+import com.source.classes.invoices.poinvoice.checklist.InvChecklistAccept;
+import com.source.classes.invoices.poinvoice.checklist.InvChecklistReject;
+import com.source.classes.invoices.poinvoice.create.InvCreate;
+import com.source.classes.invoices.poinvoice.edit.InvEdit;
+import com.source.classes.invoices.poinvoice.hold.InvHold;
+import com.source.classes.invoices.poinvoice.invreturn.InvReturn;
+import com.source.classes.invoices.poinvoice.reject.InvReject;
+import com.source.classes.invoices.poinvoice.revert.InvRevert;
+import com.source.classes.invoices.poinvoice.sendforapproval.InvSendForApproval;
+import com.source.classes.invoices.poinvoice.verify.InvVerify;
+import com.source.classes.invoices.woinvoice.approve.WoInvApproval;
+import com.source.classes.invoices.woinvoice.cancel.WoInvCancel;
+import com.source.classes.invoices.woinvoice.checklist.WoInvChecklistAccept;
+import com.source.classes.invoices.woinvoice.checklist.WoInvChecklistReject;
+import com.source.classes.invoices.woinvoice.create.WoInvCreate;
+import com.source.classes.invoices.woinvoice.edit.WoInvEdit;
+import com.source.classes.invoices.woinvoice.hold.WoInvHold;
+import com.source.classes.invoices.woinvoice.invreturn.WoInvReturn;
+import com.source.classes.invoices.woinvoice.reject.WoInvReject;
+import com.source.classes.invoices.woinvoice.revert.WoInvRevert;
+import com.source.classes.invoices.woinvoice.sendforapproval.WoInvSendForApproval;
+import com.source.classes.invoices.woinvoice.verify.WoInvVerify;
 import com.source.classes.login.Login;
 import com.source.classes.logout.Logout;
 import com.source.classes.orderschedules.approve.OsApprove;
@@ -51,6 +76,7 @@ import com.source.classes.requisitions.suspend.BuyerSuspend;
 import com.source.classes.requisitions.type.PurchaseRequisitionTypeHandler;
 import com.source.classes.workorder.create.WoCreate;
 import com.source.classes.workorder.trackerstatus.WoTrackerStatus;
+import com.source.interfaces.currencyexchangerate.ICurrencyExchangeRate;
 import com.source.interfaces.dispatchnotes.*;
 import com.source.interfaces.freightforwarderrequests.IFfrInvite;
 import com.source.interfaces.freightforwarderrequests.IFfrQuote;
@@ -59,6 +85,8 @@ import com.source.interfaces.inspections.IInsAssign;
 import com.source.interfaces.inspections.IInsCreate;
 import com.source.interfaces.inspections.IInsFail;
 import com.source.interfaces.inspections.IInsReadyForInspection;
+import com.source.interfaces.invoices.poinvoices.*;
+import com.source.interfaces.invoices.woinvoices.*;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.orderschedules.IOsApprove;
@@ -88,6 +116,7 @@ public class BaseMain {
     protected Playwright playwright;
     protected PlaywrightFactory playwrightFactory;
     protected Page page;
+    protected ICurrencyExchangeRate iCurrencyExchangeRate;
     protected PR_List_Flow prListFlow;
     protected ILogin iLogin;
     protected ILogout iLogout;
@@ -136,6 +165,30 @@ public class BaseMain {
     protected IFfrRequote iFfrRequote;
     protected IWoCreate iWoCreate;
     protected IWoTrackerStatus iWoTrackerStatus;
+    protected IInvCreate iInvCreate;
+    protected IInvHold iInvHold;
+    protected IInvRevert iInvRevert;
+    protected IInvCancel iInvCancel;
+    protected IInvSendForApproval iInvSendForApproval;
+    protected IInvChecklistReject iInvChecklistReject;
+    protected IInvChecklistAccept iInvChecklistAccept;
+    protected IInvEdit iInvEdit;
+    protected IInvReturn iInvReturn;
+    protected IInvVerify iInvVerify;
+    protected IInvReject iInvReject;
+    protected IInvApproval iInvApproval;
+    protected IWoInvCreate iWoInvCreate;
+    protected IWoInvHold iWoInvHold;
+    protected IWoInvRevert iWoInvRevert;
+    protected IWoInvCancel iWoInvCancel;
+    protected IWoInvSendForApproval iWoInvSendForApproval;
+    protected IWoInvChecklistAccept iWoInvChecklistAccept;
+    protected IWoInvChecklistReject iWoInvChecklistReject;
+    protected IWoInvEdit iWoInvEdit;
+    protected IWoInvReturn iWoInvReturn;
+    protected IWoInvVerify iWoInvVerify;
+    protected IWoInvReject iWoInvReject;
+    protected IWoInvApproval iWoInvApproval;
 
 //TODO Constructor
     public BaseMain(){
@@ -213,6 +266,37 @@ public class BaseMain {
 //TODO Work Orders
             iWoCreate = new WoCreate(iLogin, jsonNode, page, iLogout);
             iWoTrackerStatus = new WoTrackerStatus(iLogin, jsonNode, page, iLogout, playwrightFactory);
+
+//TODO Currency Exchange Rate
+            iCurrencyExchangeRate = new CurrencyExchangeRate(playwrightFactory, iLogin, jsonNode, iLogout);
+
+//TODO Purchase Order Invoices
+            iInvCreate = new InvCreate(playwrightFactory, iLogin, jsonNode, page, iLogout, iCurrencyExchangeRate);
+            iInvCancel = new InvCancel(iLogin, jsonNode, page, iLogout, iInvCreate);
+            iInvHold = new InvHold(iLogin, jsonNode, page, iLogout);
+            iInvRevert = new InvRevert(iLogin, jsonNode, page, iLogout);
+            iInvChecklistAccept = new InvChecklistAccept(iLogin, jsonNode, page, iLogout);
+            iInvChecklistReject = new InvChecklistReject(iLogin, jsonNode, page, iLogout);
+            iInvSendForApproval = new InvSendForApproval(iLogin, jsonNode, page, iLogout);
+            iInvReturn = new InvReturn(iLogin, jsonNode, page, iLogout, iInvSendForApproval);
+            iInvVerify = new InvVerify(iLogin, jsonNode, page, iLogout);
+            iInvEdit = new InvEdit(iLogin, jsonNode, page, iLogout);
+            iInvReject = new InvReject(iLogin, jsonNode, page, iLogout, iInvSendForApproval);
+            iInvApproval = new InvApproval(iLogin, jsonNode, page, iLogout);
+
+//TODO Work Order Invoices
+            iWoInvCreate = new WoInvCreate(playwrightFactory, iLogin, jsonNode, page, iLogout, iCurrencyExchangeRate);
+            iWoInvCancel = new WoInvCancel(iLogin, jsonNode, page, iLogout, iWoInvCreate);
+            iWoInvHold = new WoInvHold(iLogin, jsonNode, page, iLogout);
+            iWoInvRevert = new WoInvRevert(iLogin, jsonNode, page, iLogout);
+            iWoInvChecklistAccept = new WoInvChecklistAccept(iLogin, jsonNode, page, iLogout);
+            iWoInvChecklistReject = new WoInvChecklistReject(iLogin, jsonNode, page, iLogout);
+            iWoInvSendForApproval = new WoInvSendForApproval(iLogin, jsonNode, page, iLogout);
+            iWoInvReturn = new WoInvReturn(iLogin, jsonNode, page, iLogout, iWoInvSendForApproval);
+            iWoInvVerify = new WoInvVerify(iLogin, jsonNode, page, iLogout);
+            iWoInvEdit = new WoInvEdit(iLogin, jsonNode, page, iLogout);
+            iWoInvReject = new WoInvReject(iLogin, jsonNode, page, iLogout, iWoInvSendForApproval);
+            iWoInvApproval = new WoInvApproval(iLogin, jsonNode, page, iLogout);
         } catch (Exception exception) {
             logger.error("Error Initializing BaseMain Constructor: {}", exception.getMessage());
         }
