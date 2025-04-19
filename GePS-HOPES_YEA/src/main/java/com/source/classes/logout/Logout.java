@@ -29,4 +29,17 @@ public class Logout implements ILogout {
             logger.error("Error in Perform Logout Function: {}", exception.getMessage());
         }
     }
+
+    //TODO This function is only used for currency Exchange Rate
+    public void performLogout(Page page) {
+        try {
+            Locator loginAvatarLocator = page.locator(LOGIN_AVATAR);
+            loginAvatarLocator.click();
+
+            Locator singOutLocator = page.locator(SIGN_OUT);
+            singOutLocator.click();
+        } catch (Exception exception) {
+            logger.error("Error in Perform Logout Function for Admin (Currency Exchange Rate): {}", exception.getMessage());
+        }
+    }
 }

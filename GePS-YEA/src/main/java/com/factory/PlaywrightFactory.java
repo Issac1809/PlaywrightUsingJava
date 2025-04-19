@@ -128,6 +128,4 @@ public class PlaywrightFactory {
             System.out.println("Error :" + error);
         }
     }
-
-
 }

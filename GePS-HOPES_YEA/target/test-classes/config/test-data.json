@@ -105,22 +105,27 @@
     "grossWeightKg" : 20,
     "netWeightKg" : 35,
     "totalChargeableWeightKg" : 200,
-    "volumeCm3" : 50
+    "volumeCm3" : 50,
+    "unitRate" : 300
   },
   "workOrders" : {
     "sourceCountry" : "India",
+    "priority" : "High",
     "destinationCountry" : "India",
     "workOrderReferenceId" : ""
   },
   "invoices" : {
     "vendorReferenceId" : "",
-    "invoiceReferenceId" : ""
+    "invoiceReferenceId" : "",
+    "poInvoiceNumber" : "INV-AUT-PO-",
+    "woInvoiceNumber" : "INV-AUT-WO-"
   },
   "configSettings" : {
     "browserName" : "edge",
     "runHeadless" : false,
     "appUrl" : "https://geps_hopes_yea.cormsquare.com",
     "loginPassword" : "Admin@123",
+    "currencyCode" : "",
     "internalAttachmentFilePath" : "documents/Internal Requisition Attachments.xlsx",
     "externalAttachmentFilePath" : "documents/External Requisition Attachments.xlsx",
     "tcasFilePath" : "documents/TCAS_File.xlsx",

@@ -1,5 +1,6 @@
 package com.base;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.source.classes.currencyexchangerate.CurrencyExchangeRate;
 import com.source.classes.dispatchnotes.assign.DnAssign;
 import com.source.classes.dispatchnotes.assign.DnAssignTest;
 import com.source.classes.dispatchnotes.cancel.DnCancel;
@@ -24,6 +25,54 @@ import com.source.classes.inspections.fail.InsFail;
 import com.source.classes.inspections.fail.InsFailTest;
 import com.source.classes.inspections.readyforinspection.InsReadyForInspection;
 import com.source.classes.inspections.readyforinspection.InsReadyForInspectionTest;
+import com.source.classes.invoices.poinvoice.approve.InvApproval;
+import com.source.classes.invoices.poinvoice.approve.PoInvApprovalTest;
+import com.source.classes.invoices.poinvoice.cancel.InvCancel;
+import com.source.classes.invoices.poinvoice.cancel.PoInvCancelTest;
+import com.source.classes.invoices.poinvoice.checklist.InvChecklistAccept;
+import com.source.classes.invoices.poinvoice.checklist.InvChecklistReject;
+import com.source.classes.invoices.poinvoice.checklist.PoInvChecklistAcceptTest;
+import com.source.classes.invoices.poinvoice.checklist.PoInvChecklistRejectTest;
+import com.source.classes.invoices.poinvoice.create.InvCreate;
+import com.source.classes.invoices.poinvoice.create.PoInvCreateTest;
+import com.source.classes.invoices.poinvoice.edit.InvEdit;
+import com.source.classes.invoices.poinvoice.edit.PoInvEditTest;
+import com.source.classes.invoices.poinvoice.hold.InvHold;
+import com.source.classes.invoices.poinvoice.hold.PoInvHoldTest;
+import com.source.classes.invoices.poinvoice.invreturn.InvReturn;
+import com.source.classes.invoices.poinvoice.invreturn.PoInvReturnTest;
+import com.source.classes.invoices.poinvoice.reject.InvReject;
+import com.source.classes.invoices.poinvoice.reject.PoInvRejectTest;
+import com.source.classes.invoices.poinvoice.revert.InvRevert;
+import com.source.classes.invoices.poinvoice.revert.PoInvRevertTest;
+import com.source.classes.invoices.poinvoice.sendforapproval.InvSendForApproval;
+import com.source.classes.invoices.poinvoice.sendforapproval.PoInvSendForApprovalTest;
+import com.source.classes.invoices.poinvoice.verify.InvVerify;
+import com.source.classes.invoices.poinvoice.verify.PoInvVerifyTest;
+import com.source.classes.invoices.woinvoice.approve.WoInvApproval;
+import com.source.classes.invoices.woinvoice.approve.WoInvApprovalTest;
+import com.source.classes.invoices.woinvoice.cancel.WoInvCancel;
+import com.source.classes.invoices.woinvoice.cancel.WoInvCancelTest;
+import com.source.classes.invoices.woinvoice.checklist.WoInvChecklistAccept;
+import com.source.classes.invoices.woinvoice.checklist.WoInvChecklistAcceptTest;
+import com.source.classes.invoices.woinvoice.checklist.WoInvChecklistReject;
+import com.source.classes.invoices.woinvoice.checklist.WoInvChecklistRejectTest;
+import com.source.classes.invoices.woinvoice.create.WoInvCreate;
+import com.source.classes.invoices.woinvoice.create.WoInvCreateTest;
+import com.source.classes.invoices.woinvoice.edit.WoInvEdit;
+import com.source.classes.invoices.woinvoice.edit.WoInvEditTest;
+import com.source.classes.invoices.woinvoice.hold.WoInvHold;
+import com.source.classes.invoices.woinvoice.hold.WoInvHoldTest;
+import com.source.classes.invoices.woinvoice.invreturn.WoInvReturn;
+import com.source.classes.invoices.woinvoice.invreturn.WoInvReturnTest;
+import com.source.classes.invoices.woinvoice.reject.WoInvReject;
+import com.source.classes.invoices.woinvoice.reject.WoInvRejectTest;
+import com.source.classes.invoices.woinvoice.revert.WoInvRevert;
+import com.source.classes.invoices.woinvoice.revert.WoInvRevertTest;
+import com.source.classes.invoices.woinvoice.sendforapproval.WoInvSendForApproval;
+import com.source.classes.invoices.woinvoice.sendforapproval.WoInvSendForApprovalTest;
+import com.source.classes.invoices.woinvoice.verify.WoInvVerify;
+import com.source.classes.invoices.woinvoice.verify.WoInvVerifyTest;
 import com.source.classes.login.LoginTest;
 import com.source.classes.orderschedules.approval.OsApproveTest;
 import com.source.classes.orderschedules.approve.OsApprove;
@@ -31,6 +80,7 @@ import com.source.classes.orderschedules.create.OsCreate;
 import com.source.classes.orderschedules.create.OsCreateTest;
 import com.source.classes.orderschedules.edit.OsEdit;
 import com.source.classes.orderschedules.edit.OsEditTest;
+import com.source.classes.orderschedules.reject.OsReject;
 import com.source.classes.orderschedules.reject.OsRejectTest;
 import com.source.classes.purchaseorderrequests.approvalandapprove.PorSendForApprovalAndApprove;
 import com.source.classes.purchaseorderrequests.approvalandapprove.PorSendForApprovalAndApproveTest;
@@ -77,7 +127,6 @@ import com.source.classes.requisitions.create.Create;
 import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 import com.source.classes.login.Login;
 import com.source.classes.logout.Logout;
 import com.source.classes.requisitions.approve.Approve;
@@ -92,6 +141,7 @@ import com.source.classes.workorder.create.WoCreate;
 import com.source.classes.workorder.trackerstatus.WoTrackerStatus;
 import com.source.classes.workorders.create.WoCreateTest;
 import com.source.classes.workorders.trackerstatus.WoTrackerStatusTest;
+import com.source.interfaces.currencyexchangerate.ICurrencyExchangeRate;
 import com.source.interfaces.dispatchnotes.*;
 import com.source.interfaces.freightforwarderrequests.IFfrInvite;
 import com.source.interfaces.freightforwarderrequests.IFfrQuote;
@@ -100,6 +150,8 @@ import com.source.interfaces.inspections.IInsAssign;
 import com.source.interfaces.inspections.IInsCreate;
 import com.source.interfaces.inspections.IInsFail;
 import com.source.interfaces.inspections.IInsReadyForInspection;
+import com.source.interfaces.invoices.poinvoices.*;
+import com.source.interfaces.invoices.woinvoices.*;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.orderschedules.IOsApprove;
@@ -115,12 +167,11 @@ import com.source.interfaces.workorders.IWoTrackerStatus;
 import com.utils.GetTitleUtil;
 import com.utils.LoggerUtil;
 import com.utils.ToastrUtil;
+import com.utils.rpa.purchaseorderrequest.MSA_Flow;
 import com.utils.rpa.salesordersync.PR_List_Flow;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
-
 import java.io.File;
 
 public class BaseTest {
@@ -132,7 +183,9 @@ public class BaseTest {
     protected GetTitleUtil getTitleUtil;
     protected PlaywrightFactory playwrightFactory;
     protected Page page;
+    protected ICurrencyExchangeRate iCurrencyExchangeRate;
     protected PR_List_Flow prListFlow;
+    protected MSA_Flow msaFlow;
     protected LoginTest loginTest;
     protected ILogin iLogin;
     protected ILogout iLogout;
@@ -227,54 +280,54 @@ public class BaseTest {
     protected IWoCreate iWoCreate;
     protected WoTrackerStatusTest woTrackerStatusTest;
     protected IWoTrackerStatus iWoTrackerStatus;
-//    protected PoInvCreateTest poInvCreateTest;
-//    protected IInvCreate iInvCreate;
-//    protected PoInvHoldTest poInvHoldTest;
-//    protected IInvHold iInvHold;
-//    protected PoInvRevertTest poInvRevertTest;
-//    protected IInvRevert iInvRevert;
-//    protected PoInvCancelTest poInvCancelTest;
-//    protected IInvCancel iInvCancel;
-//    protected PoInvSendForApprovalTest poInvSendForApprovalTest;
-//    protected IInvSendForApproval iInvSendForApproval;
-//    protected PoInvChecklistRejectTest poInvChecklistRejectTest;
-//    protected IInvChecklistReject iInvChecklistReject;
-//    protected PoInvChecklistAcceptTest poInvChecklistAcceptTest;
-//    protected IInvChecklistAccept iInvChecklistAccept;
-//    protected PoInvEditTest poInvEditTest;
-//    protected IInvEdit iInvEdit;
-//    protected PoInvReturnTest poInvReturnTest;
-//    protected IInvReturn iInvReturn;
-//    protected PoInvVerifyTest poInvVerifyTest;
-//    protected IInvVerify iInvVerify;
-//    protected PoInvRejectTest poInvRejectTest;
-//    protected IInvReject iInvReject;
-//    protected PoInvApprovalTest poInvApprovalTest;
-//    protected IInvApproval iInvApproval;
-//    protected WoInvCreateTest woInvCreateTest;
-//    protected IWoInvCreate iWoInvCreate;
-//    protected WoInvHoldTest woInvHoldTest;
-//    protected IWoInvHold iWoInvHold;
-//    protected WoInvRevertTest woInvRevertTest;
-//    protected IWoInvRevert iWoInvRevert;
-//    protected WoInvCancelTest woInvCancelTest;
-//    protected IWoInvCancel iWoInvCancel;
-//    protected WoInvSendForApprovalTest woInvSendForApprovalTest;
-//    protected IWoInvSendForApproval iWoInvSendForApproval;
-//    protected WoInvChecklistAcceptTest woInvChecklistAcceptTest;
-//    protected IWoInvChecklistAccept iWoInvChecklistAccept;
-//    protected WoInvChecklistRejectTest woInvChecklistRejectTest;
-//    protected IWoInvChecklistReject iWoInvChecklistReject;
-//    protected WoInvEditTest woInvEditTest;
-//    protected IWoInvEdit iWoInvEdit;
-//    protected WoInvReturnTest woInvReturnTest;
-//    protected IWoInvReturn iWoInvReturn;
-//    protected WoInvVerifyTest woInvVerifyTest;
-//    protected IWoInvVerify iWoInvVerify;
-//    protected WoInvRejectTest woInvRejectTest;
-//    protected IWoInvReject iWoInvReject;
-//    protected WoInvApprovalTest woInvApprovalTest;
-//    protected IWoInvApproval iWoInvApproval;
+    protected PoInvCreateTest poInvCreateTest;
+    protected IInvCreate iInvCreate;
+    protected PoInvHoldTest poInvHoldTest;
+    protected IInvHold iInvHold;
+    protected PoInvRevertTest poInvRevertTest;
+    protected IInvRevert iInvRevert;
+    protected PoInvCancelTest poInvCancelTest;
+    protected IInvCancel iInvCancel;
+    protected PoInvSendForApprovalTest poInvSendForApprovalTest;
+    protected IInvSendForApproval iInvSendForApproval;
+    protected PoInvChecklistRejectTest poInvChecklistRejectTest;
+    protected IInvChecklistReject iInvChecklistReject;
+    protected PoInvChecklistAcceptTest poInvChecklistAcceptTest;
+    protected IInvChecklistAccept iInvChecklistAccept;
+    protected PoInvEditTest poInvEditTest;
+    protected IInvEdit iInvEdit;
+    protected PoInvReturnTest poInvReturnTest;
+    protected IInvReturn iInvReturn;
+    protected PoInvVerifyTest poInvVerifyTest;
+    protected IInvVerify iInvVerify;
+    protected PoInvRejectTest poInvRejectTest;
+    protected IInvReject iInvReject;
+    protected PoInvApprovalTest poInvApprovalTest;
+    protected IInvApproval iInvApproval;
+    protected WoInvCreateTest woInvCreateTest;
+    protected IWoInvCreate iWoInvCreate;
+    protected WoInvHoldTest woInvHoldTest;
+    protected IWoInvHold iWoInvHold;
+    protected WoInvRevertTest woInvRevertTest;
+    protected IWoInvRevert iWoInvRevert;
+    protected WoInvCancelTest woInvCancelTest;
+    protected IWoInvCancel iWoInvCancel;
+    protected WoInvSendForApprovalTest woInvSendForApprovalTest;
+    protected IWoInvSendForApproval iWoInvSendForApproval;
+    protected WoInvChecklistAcceptTest woInvChecklistAcceptTest;
+    protected IWoInvChecklistAccept iWoInvChecklistAccept;
+    protected WoInvChecklistRejectTest woInvChecklistRejectTest;
+    protected IWoInvChecklistReject iWoInvChecklistReject;
+    protected WoInvEditTest woInvEditTest;
+    protected IWoInvEdit iWoInvEdit;
+    protected WoInvReturnTest woInvReturnTest;
+    protected IWoInvReturn iWoInvReturn;
+    protected WoInvVerifyTest woInvVerifyTest;
+    protected IWoInvVerify iWoInvVerify;
+    protected WoInvRejectTest woInvRejectTest;
+    protected IWoInvReject iWoInvReject;
+    protected WoInvApprovalTest woInvApprovalTest;
+    protected IWoInvApproval iWoInvApproval;
 
 //TODO Constructor
     public BaseTest() {
@@ -290,104 +343,173 @@ public class BaseTest {
             page = playwrightFactory.initializePage(jsonNode);
             toastrUtil = new ToastrUtil(page);
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
+            prListFlow = new PR_List_Flow();
+            msaFlow = new MSA_Flow(page);
 
 //TODO Requisition
-            iLogout = new Logout(page);
             iLogin = new Login(jsonNode, page);
+            iLogout = new Logout(page);
             loginTest = new LoginTest();
             iPrCreate = new Create(playwrightFactory, objectMapper, iLogin, jsonNode, page, iLogout);
             iPrType = new PurchaseRequisitionTypeHandler(iPrCreate);
             createTest = new CreateTest();
-
-            editTest = new EditTest();
-            sendForApprovalTest = new SendForApprovalTest();
-            rejectTest = new RejectTest();
-            approveTest = new ApproveTest();
-            buyerManagerSuspendTest = new BuyerManagerSuspendTest();
-            buyerSuspendTest = new BuyerSuspendTest();
-            assignTest = new AssignTest();
-
-            iPrEdit = new Edit(iLogin, jsonNode, page, iLogout);
             iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, jsonNode, page, iLogout);
-            iPrReject = new Reject(iLogin, jsonNode, page, iLogout);
+            sendForApprovalTest = new SendForApprovalTest();
             iPrApprove = new Approve(objectMapper, iLogin, jsonNode, page, iLogout);
+            approveTest = new ApproveTest();
             iPrAssign = new Assign(playwrightFactory, iLogin, jsonNode, page, iLogout, objectMapper);
+            assignTest = new AssignTest();
+            iPrEdit = new Edit(iLogin, jsonNode, page, iLogout);
+            editTest = new EditTest();
+            iPrReject = new Reject(iLogin, jsonNode, page, iLogout);
+            rejectTest = new RejectTest();
             iPrBuyerManagerSuspend = new BuyerManagerSuspend(iLogin, jsonNode, page, iLogout, iPrEdit);
+            buyerManagerSuspendTest = new BuyerManagerSuspendTest();
             iPrBuyerSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout);
+            buyerSuspendTest = new BuyerSuspendTest();
 
 //TODO Request For Quotation
+            iRfqCreate = new RfqCreate(iLogin, jsonNode, page, iLogout, playwrightFactory);
             rfqCreateTest = new RfqCreateTest();
+            iRfqEdit = new RfqEdit(iLogin, jsonNode, page, iLogout);
             rfqEditTest = new RfqEditTest();
+            iRfqSuspend = new RfqSuspend(iLogin, jsonNode, page, iLogout, iRfqEdit, iPrEdit, iPrSendForApproval, iPrApprove, iPrAssign, iRfqCreate);
             rfqSuspendPrEditTest = new RfqSuspendPrEditTest();
             rfqSuspendRfqEditTest = new RfqSuspendRfqEditTest();
-            regretTest = new RegretTest();
+            iQuoSubmit = new Quote(iLogin, jsonNode, page, iLogout);
             quoteTest = new QuoteTest();
+            iQuoRegret = new QuotationRegret(iQuoSubmit, iLogin, jsonNode, page, iLogout);
+            regretTest = new RegretTest();
+            iQuoRequote = new Requote(iLogin, jsonNode, page, iLogout);
             requoteTest = new RequoteTest();
+            iReadyForEvalutation = new ReadyForEvaluation(iLogin, jsonNode, page, iLogout);
             readyForEvaluationTest = new ReadyForEvaluationTest();
+            iTeCreate = new TechnicalEvaluationCreate(iLogin, jsonNode, page, iLogout);
             technicalEvaluationCreateTest = new TechnicalEvaluationCreateTest();
+            iTeReject = new TechnicalEvaluationReject(iLogin, jsonNode, page, iLogout, iTeCreate);
             technicalEvaluationRejectTest = new TechnicalEvaluationRejectTest();
-            technicalEvaluationApproveTest = new TechnicalEvaluationApproveTest();
+            iCeCreate = new CommercialEvaluation(iLogin, jsonNode, page, iLogout);
             commercialEvaluationTest = new CommercialEvaluationTest();
 
-            iRfqCreate = new RfqCreate(iLogin, jsonNode, page, iLogout, playwrightFactory);
-            iRfqEdit = new RfqEdit(iLogin, jsonNode, page, iLogout);
-            iRfqSuspend = new RfqSuspend(iLogin, jsonNode, page, iLogout, iRfqEdit, iPrEdit, iPrSendForApproval, iPrApprove, iPrAssign, iRfqCreate);
-            iQuoSubmit = new Quote(iLogin, jsonNode, page, iLogout);
-            iQuoRegret = new QuotationRegret(iQuoSubmit, iLogin, jsonNode, page, iLogout);
-            iQuoRequote = new Requote(iLogin, jsonNode, page, iLogout);
-            iReadyForEvalutation = new ReadyForEvaluation(iLogin, jsonNode, page, iLogout);
-            iTeCreate = new TechnicalEvaluationCreate(iLogin, jsonNode, page, iLogout);
-            iTeReject = new TechnicalEvaluationReject(iLogin, jsonNode, page, iLogout, iTeCreate);
-            iTeApprove = new TechnicalEvaluationApprove(iLogin, jsonNode, page, iLogout, iTeCreate);
-            iCeCreate = new CommercialEvaluation(iLogin, jsonNode, page, iLogout);
-
-//TODO Purchase Order Requests
+//TODO Purchase Order Request
+            iPorCreate = new PorCreate(iLogin, jsonNode, page, iLogout, prListFlow);
             porCreateTest = new PorCreateTest();
-            suspendEditTest = new SuspendEditTest();
+            iPorEdit = new PorEdit(iLogin, jsonNode, page, iLogout);
             porEditTest = new PorEditTest();
+            iPorSuspend = new PorSuspend(iLogin, jsonNode, page, iLogout, iPorEdit, iCeCreate, iPorCreate);
+            suspendEditTest = new SuspendEditTest();
+            iPorSendForApproval = new PorSendForApproval(iLogin, jsonNode, page, iLogout);
             porSendForApprovalTest = new PorSendForApprovalTest();
+            iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout);
+            iPorReject = new PorReject(iLogin, jsonNode, page, iLogout, iPorEdit, iPorSendForApproval);
             porRejectTest = new PorRejectTest();
+            iPorSendForApprovalAndApprove = new PorSendForApprovalAndApprove(iPorApprove, iPorSendForApproval, msaFlow);
             porSendForApprovalAndApproveTest = new PorSendForApprovalAndApproveTest();
 
-            iPorCreate = new PorCreate(iLogin, jsonNode, page, iLogout, prListFlow);
-            iPorEdit = new PorEdit(iLogin, jsonNode, page, iLogout);
-            iPorSuspend = new PorSuspend(iLogin, jsonNode, page, iLogout, iPorEdit, iCeCreate, iPorCreate);
-            iPorSendForApproval = new PorSendForApproval(iLogin, jsonNode, page, iLogout);
-            iPorReject = new PorReject(iLogin, jsonNode, page, iLogout, iPorEdit, iPorSendForApproval);
-            iPorSendForApprovalAndApprove = new PorSendForApprovalAndApprove(iPorApprove, iPorSendForApproval);
-            iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout);
-
-//TODO Purchase Orders
+//TODO Purchase Order
             iPoSendForVendor = new SendForVendor(iLogin, jsonNode, page, iLogout);
+            poSendForVendorTest = new PoSendForVendorTest();
 
-//TODO Order Schedules
+//TODO Order Schedule
             iOsCreate = new OsCreate(iLogin, jsonNode, page, iLogout, playwrightFactory);
+            osCreateTest = new OsCreateTest();
             iOsEdit = new OsEdit(iLogin, jsonNode, page, iLogout);
+            osEditTest = new OsEditTest();
+            iOsReject = new OsReject(iLogin, jsonNode, page, iLogout);
+            osRejectTest = new OsRejectTest();
             iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout);
-            iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout);
+            osApproveTest = new OsApproveTest();
 
-//TODO Inspections
+//TODO Inspection
             iInsReadyForInspection = new InsReadyForInspection(iLogin, jsonNode, page, iLogout);
+            insReadyForInspectionTest = new InsReadyForInspectionTest();
             iInsCreate = new InsCreate(iLogin, jsonNode, page, iLogout);
-            iInsFail = new InsFail(iLogin, jsonNode, page, iLogout, iInsReadyForInspection);
+            insCreateTest = new InsCreateTest();
             iInsAssign = new InsAssign(iLogin, jsonNode, page, iLogout);
+            insAssignTest = new InsAssignTest();
+            iInsFail = new InsFail(iLogin, jsonNode, page, iLogout, iInsReadyForInspection);
+            insFailTest = new InsFailTest();
 
-//TODO Dispatch Notes
+//TODO Dispatch Note
             iDnCreate = new DnCreate(iLogin, jsonNode, page, iLogout);
+            dnCreateTest = new DnCreateTest();
             iDnEdit = new DnEdit(iLogin, jsonNode, page, iLogout);
-            iDnAssign = new DnAssign(iLogin, jsonNode, page, iLogout, playwrightFactory);
+            dnEditTest = new DnEditTest();
             iDnReturn = new DnReturn(iLogin, jsonNode, page, iLogout, iDnEdit);
+            dnReturnTest = new DnReturnTest();
             iDnCancel = new DnCancel(iLogin, jsonNode, page, iLogout, iDnCreate);
+            dnCancelTest = new DnCancelTest();
+            iDnAssign = new DnAssign(iLogin, jsonNode, page, iLogout, playwrightFactory);
+            dnAssignTest = new DnAssignTest();
 
-//TODO Freight Forwarder Requests
+//TODO Freight Forwarder Request
             iFfrInvite = new FfrInvite(iLogin, jsonNode, page, iLogout);
+            ffrInviteTest = new FfrInviteTest();
             iFfrQuote = new FfrQuote(iLogin, jsonNode, page, iLogout);
+            ffrQuoteTest = new FfrQuoteTest();
             iFfrRequote = new FfrRequote(iLogin, jsonNode, iFfrQuote, iLogout, page);
+            ffrRequoteTest = new FfrRequoteTest();
 
-//TODO Work Orders
+//TODO Work Order
             iWoCreate = new WoCreate(iLogin, jsonNode, page, iLogout);
+            woCreateTest = new WoCreateTest();
             iWoTrackerStatus = new WoTrackerStatus(iLogin, jsonNode, page, iLogout, playwrightFactory);
+            woTrackerStatusTest = new WoTrackerStatusTest();
 
+//TODO Currency Exchange Rate
+            iCurrencyExchangeRate = new CurrencyExchangeRate(playwrightFactory, iLogin, jsonNode, iLogout);
+
+//TODO Purchase Order Invoice
+            iInvCreate = new InvCreate(playwrightFactory, iLogin, jsonNode, page, iLogout, iCurrencyExchangeRate);
+            poInvCreateTest = new PoInvCreateTest();
+            iInvCancel = new InvCancel(iLogin, jsonNode, page, iLogout, iInvCreate);
+            poInvCancelTest = new PoInvCancelTest();
+            iInvHold = new InvHold(iLogin, jsonNode, page, iLogout);
+            poInvHoldTest = new PoInvHoldTest();
+            iInvRevert = new InvRevert(iLogin, jsonNode, page, iLogout);
+            poInvRevertTest = new PoInvRevertTest();
+            iInvChecklistAccept = new InvChecklistAccept(iLogin, jsonNode, page, iLogout);
+            poInvChecklistAcceptTest = new PoInvChecklistAcceptTest();
+            iInvChecklistReject = new InvChecklistReject(iLogin, jsonNode, page, iLogout);
+            poInvChecklistRejectTest = new PoInvChecklistRejectTest();
+            iInvSendForApproval = new InvSendForApproval(iLogin, jsonNode, page, iLogout);
+            poInvSendForApprovalTest = new PoInvSendForApprovalTest();
+            iInvReturn = new InvReturn(iLogin, jsonNode, page, iLogout, iInvSendForApproval);
+            poInvReturnTest = new PoInvReturnTest();
+            iInvVerify = new InvVerify(iLogin, jsonNode, page, iLogout);
+            poInvVerifyTest = new PoInvVerifyTest();
+            iInvEdit = new InvEdit(iLogin, jsonNode, page, iLogout);
+            poInvEditTest = new PoInvEditTest();
+            iInvReject = new InvReject(iLogin, jsonNode, page, iLogout, iInvSendForApproval);
+            poInvRejectTest = new PoInvRejectTest();
+            iInvApproval = new InvApproval(iLogin, jsonNode, page, iLogout);
+            poInvApprovalTest = new PoInvApprovalTest();
+
+//TODO Work Order Invoice
+            iWoInvCreate = new WoInvCreate(playwrightFactory, iLogin, jsonNode, page, iLogout, iCurrencyExchangeRate);
+            woInvCreateTest = new WoInvCreateTest();
+            iWoInvCancel = new WoInvCancel(iLogin, jsonNode, page, iLogout, iWoInvCreate);
+            woInvCancelTest = new WoInvCancelTest();
+            iWoInvHold = new WoInvHold(iLogin, jsonNode, page, iLogout);
+            woInvHoldTest = new WoInvHoldTest();
+            iWoInvRevert = new WoInvRevert(iLogin, jsonNode, page, iLogout);
+            woInvRevertTest = new WoInvRevertTest();
+            iWoInvChecklistAccept = new WoInvChecklistAccept(iLogin, jsonNode, page, iLogout);
+            woInvChecklistAcceptTest = new WoInvChecklistAcceptTest();
+            iWoInvChecklistReject = new WoInvChecklistReject(iLogin, jsonNode, page, iLogout);
+            woInvChecklistRejectTest = new WoInvChecklistRejectTest();
+            iWoInvSendForApproval = new WoInvSendForApproval(iLogin, jsonNode, page, iLogout);
+            woInvSendForApprovalTest = new WoInvSendForApprovalTest();
+            iWoInvReturn = new WoInvReturn(iLogin, jsonNode, page, iLogout, iWoInvSendForApproval);
+            woInvReturnTest = new WoInvReturnTest();
+            iWoInvVerify = new WoInvVerify(iLogin, jsonNode, page, iLogout);
+            woInvVerifyTest = new WoInvVerifyTest();
+            iWoInvEdit = new WoInvEdit(iLogin, jsonNode, page, iLogout);
+            woInvEditTest = new WoInvEditTest();
+            iWoInvReject = new WoInvReject(iLogin, jsonNode, page, iLogout, iWoInvSendForApproval);
+            woInvRejectTest = new WoInvRejectTest();
+            iWoInvApproval = new WoInvApproval(iLogin, jsonNode, page, iLogout);
+            woInvApprovalTest = new WoInvApprovalTest();
         } catch (Exception exception) {
             logger.error("Error Initializing SetUp Function: {}", exception.getMessage());
         }
