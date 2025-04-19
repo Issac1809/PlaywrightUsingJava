@@ -167,6 +167,7 @@ import com.source.interfaces.workorders.IWoTrackerStatus;
 import com.utils.GetTitleUtil;
 import com.utils.LoggerUtil;
 import com.utils.ToastrUtil;
+import com.utils.rpa.purchaseorderrequest.MSA_Flow;
 import com.utils.rpa.salesordersync.PR_List_Flow;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterClass;
@@ -184,6 +185,7 @@ public class BaseTest {
     protected Page page;
     protected ICurrencyExchangeRate iCurrencyExchangeRate;
     protected PR_List_Flow prListFlow;
+    protected MSA_Flow msaFlow;
     protected LoginTest loginTest;
     protected ILogin iLogin;
     protected ILogout iLogout;
@@ -341,6 +343,8 @@ public class BaseTest {
             page = playwrightFactory.initializePage(jsonNode);
             toastrUtil = new ToastrUtil(page);
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
+            prListFlow = new PR_List_Flow();
+            msaFlow = new MSA_Flow(page);
 
 //TODO Requisition
             iLogin = new Login(jsonNode, page);
@@ -399,7 +403,7 @@ public class BaseTest {
             iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout);
             iPorReject = new PorReject(iLogin, jsonNode, page, iLogout, iPorEdit, iPorSendForApproval);
             porRejectTest = new PorRejectTest();
-            iPorSendForApprovalAndApprove = new PorSendForApprovalAndApprove(iPorApprove, iPorSendForApproval);
+            iPorSendForApprovalAndApprove = new PorSendForApprovalAndApprove(iPorApprove, iPorSendForApproval, msaFlow);
             porSendForApprovalAndApproveTest = new PorSendForApprovalAndApproveTest();
 
 //TODO Purchase Order
