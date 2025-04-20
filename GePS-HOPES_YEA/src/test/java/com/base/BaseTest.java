@@ -369,7 +369,7 @@ public class BaseTest {
             buyerSuspendTest = new BuyerSuspendTest();
 
 //TODO Request For Quotation
-            iRfqCreate = new RfqCreate(iLogin, jsonNode, page, iLogout, playwrightFactory);
+            iRfqCreate = new RfqCreate(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper);
             rfqCreateTest = new RfqCreateTest();
             iRfqEdit = new RfqEdit(iLogin, jsonNode, page, iLogout);
             rfqEditTest = new RfqEditTest();
@@ -388,6 +388,8 @@ public class BaseTest {
             technicalEvaluationCreateTest = new TechnicalEvaluationCreateTest();
             iTeReject = new TechnicalEvaluationReject(iLogin, jsonNode, page, iLogout, iTeCreate);
             technicalEvaluationRejectTest = new TechnicalEvaluationRejectTest();
+            iTeApprove = new TechnicalEvaluationApprove(iLogin, jsonNode, page, iLogout, iTeCreate);
+            technicalEvaluationApproveTest = new TechnicalEvaluationApproveTest();
             iCeCreate = new CommercialEvaluation(iLogin, jsonNode, page, iLogout);
             commercialEvaluationTest = new CommercialEvaluationTest();
 

@@ -8,9 +8,8 @@ public class TechnicalEvaluationApproveTest extends BaseTest {
 
     @Test
     @Parameters({"type"})
-    public void TechnicalEvaluationApprove(){
+    public void TechnicalEvaluationApprove(String type){
         try {
-            String type = "";
             iTeApprove.technicalEvaluationApprove(type);
         } catch (Exception exception) {
             logger.error("Exception in Technical Evaluation Approve Test Function: {}", exception.getMessage());

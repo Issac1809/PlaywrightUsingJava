@@ -8,9 +8,8 @@ public class QuoteTest extends BaseTest {
 
     @Test
     @Parameters({"type"})
-    public void quote() {
+    public void quote(String type) {
         try {
-            String type = "";
             iQuoSubmit.inviteRegisteredVendor(type);
             iQuoSubmit.vendorLogin(type);
             iQuoSubmit.liquidatedDamages();

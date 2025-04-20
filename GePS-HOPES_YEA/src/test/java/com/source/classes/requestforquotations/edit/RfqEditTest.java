@@ -8,9 +8,8 @@ public class RfqEditTest extends BaseTest {
 
     @Test
     @Parameters({"type"})
-    public void edit() {
+    public void edit(String type) {
         try {
-            String type = "";
             iRfqEdit.rfqEditMethod(type);
         } catch (Exception exception) {
             logger.error("Exception in RFQ Edit Test Function: {}", exception.getMessage());
