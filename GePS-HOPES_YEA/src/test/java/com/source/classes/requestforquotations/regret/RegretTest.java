@@ -8,9 +8,8 @@ public class RegretTest extends BaseTest {
 
     @Test
     @Parameters({"type"})
-    public void regret(){
+    public void regret(String type){
         try {
-            String type = "";
             iQuoRegret.regret(type);
         } catch (Exception exception) {
             logger.error("Exception in Quotation Regret Test Function: {}", exception.getMessage());

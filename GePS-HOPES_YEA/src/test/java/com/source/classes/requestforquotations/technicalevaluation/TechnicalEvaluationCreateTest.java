@@ -8,9 +8,8 @@ public class TechnicalEvaluationCreateTest extends BaseTest {
 
     @Test
     @Parameters({"type"})
-    public void TechnicalEvaluationCreate(){
+    public void TechnicalEvaluationCreate(String type){
         try {
-            String type = "";
             iTeCreate.technicalEvaluationCreate(type);
         } catch (Exception exception) {
             logger.error("Exception in Technical Evaluation Create Test Function: {}", exception.getMessage());

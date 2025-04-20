@@ -8,10 +8,10 @@ public class TechnicalEvaluationRejectTest extends BaseTest {
 
     @Test
     @Parameters({"type"})
-    public void reject(){
+    public void reject(String type){
         try {
-            String type = "";
             iTeReject.technicalEvaluationReject(type);
+            iTeCreate.technicalEvaluationCreate(type);
         } catch (Exception exception) {
             logger.error("Exception in Technical Evaluation Reject Test Function: {}", exception.getMessage());
             Assert.fail("Exception in Technical Evaluation Reject Test Function: " + exception.getMessage());

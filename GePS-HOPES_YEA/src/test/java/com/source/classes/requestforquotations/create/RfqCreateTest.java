@@ -8,9 +8,8 @@ public class RfqCreateTest extends BaseTest {
 
     @Test
     @Parameters({"type"})
-    public void create() {
+    public void create(String type) {
         try {
-            String type = "";
             iRfqCreate.buyerRfqCreate(type);
         } catch (Exception exception) {
             logger.error("Exception in RFQ Create Test Function: {}", exception.getMessage());

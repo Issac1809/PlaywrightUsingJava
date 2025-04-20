@@ -40,8 +40,6 @@ public class TechnicalEvaluationApprove implements ITeApprove {
     public int technicalEvaluationApprove(String type) {
         int status = 0;
         try {
-        iTeCreate.technicalEvaluationCreate(type);
-
         String requesterMailId = jsonNode.get("mailIds").get("requesterEmail").asText();
         iLogin.performLogin(requesterMailId);
 

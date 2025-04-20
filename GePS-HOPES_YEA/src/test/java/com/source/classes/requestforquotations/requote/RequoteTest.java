@@ -8,9 +8,8 @@ public class RequoteTest extends BaseTest {
 
     @Test
     @Parameters({"type"})
-    public void requote() {
+    public void requote(String type) {
         try {
-            String type = "";
             iQuoRequote.requote(type);
         } catch (Exception exception) {
             logger.error("Exception in Quotation Requote Test Function: {}", exception.getMessage());

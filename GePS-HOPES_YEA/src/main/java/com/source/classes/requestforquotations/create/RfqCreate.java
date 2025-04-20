@@ -2,11 +2,10 @@ package com.source.classes.requestforquotations.create;
 import com.constants.requestforquotations.LCeCreate;
 import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
-import com.microsoft.playwright.Response;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requestforquotations.IRfqCreate;
@@ -24,12 +23,13 @@ public class RfqCreate implements IRfqCreate {
     ILogout iLogout;
     private String appUrl;
     PlaywrightFactory playwrightFactory;
+    ObjectMapper objectMapper;
 
     private RfqCreate(){
     }
 
 //TODO Constructor
-    public RfqCreate(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout, PlaywrightFactory playwrightFactory){
+    public RfqCreate(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout, PlaywrightFactory playwrightFactory, ObjectMapper objectMapper){
         this.iLogin = iLogin;
         this.jsonNode = jsonNode;
         this.page = page;
@@ -37,6 +37,7 @@ public class RfqCreate implements IRfqCreate {
         this.logger = LoggerUtil.getLogger(RfqCreate.class);
         this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
         this.playwrightFactory = playwrightFactory;
+        this.objectMapper = objectMapper;
     }
 
     public int buyerRfqCreate(String type) {
@@ -74,6 +75,15 @@ public class RfqCreate implements IRfqCreate {
             String[] urlArray = url.split("=");
             String getUid = urlArray[1];
             playwrightFactory.savePropertiesIntoJsonFile("requestForQuotation", "requestForQuotationUid", getUid);
+
+            //TODO Save Id for PR List
+            if (type.equalsIgnoreCase("sales"))
+            {
+                APIResponse apiResponse = page.request().fetch(appUrl + "/api/RequestForQuotationsOthers/" + getUid, RequestOptions.create());
+                JsonNode jsonNode1 = objectMapper.readTree(apiResponse.body());
+                String requestForQuotationId = jsonNode1.get("baseId").asText();
+                playwrightFactory.savePropertiesIntoJsonFile("requestForQuotation", "requestForQuotationId", requestForQuotationId);
+            }
 
             iLogout.performLogout();
         } catch (Exception exception) {

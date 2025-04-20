@@ -8,9 +8,8 @@ public class CommercialEvaluationTest extends BaseTest {
 
     @Test
     @Parameters({"type"})
-    public void ceCreate(){
+    public void ceCreate(String type){
         try {
-            String type = "";
             int status = iCeCreate.commercialEvaluationButton(type);
             Assert.assertEquals(200, status, "Commercial Evaluation Create was not successful");
         } catch (Exception exception) {

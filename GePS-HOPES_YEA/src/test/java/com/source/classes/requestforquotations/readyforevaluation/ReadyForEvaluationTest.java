@@ -8,9 +8,8 @@ public class ReadyForEvaluationTest extends BaseTest {
 
     @Test
     @Parameters({"type"})
-    public void readyForEvaluation(){
+    public void readyForEvaluation(String type){
         try {
-            String type = "";
             iReadyForEvalutation.readyForEvaluationButton(type);
         } catch (Exception exception) {
             logger.error("Exception in Ready For Evaluation Test Function: {}", exception.getMessage());

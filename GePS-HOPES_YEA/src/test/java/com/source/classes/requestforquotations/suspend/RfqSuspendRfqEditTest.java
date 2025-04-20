@@ -8,9 +8,8 @@ public class RfqSuspendRfqEditTest extends BaseTest {
 
     @Test
     @Parameters({"type"})
-    public void RfqSuspendRfqEditTestMethod() {
+    public void RfqSuspendRfqEditTestMethod(String type) {
         try {
-            String type = "";
             iRfqSuspend.suspendRfqEdit(type);
         } catch (Exception exception) {
             logger.error("Exception in RFQ Suspend and Edit Test Function: {}", exception.getMessage());

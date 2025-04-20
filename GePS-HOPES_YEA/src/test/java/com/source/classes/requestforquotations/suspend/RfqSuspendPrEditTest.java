@@ -8,10 +8,8 @@ public class RfqSuspendPrEditTest extends BaseTest {
 
     @Test
     @Parameters({"type", "purchaseType"})
-    public void RfqSuspendPrEdit() {
+    public void RfqSuspendPrEdit(String type, String purchaseType) {
         try {
-            String type = "";
-            String purchaseType = "";
             iRfqSuspend.suspendPREdit(type, purchaseType);
         } catch (Exception exception) {
             logger.error("Exception in RFQ Suspend PR Edit Test Function: {}", exception.getMessage());
