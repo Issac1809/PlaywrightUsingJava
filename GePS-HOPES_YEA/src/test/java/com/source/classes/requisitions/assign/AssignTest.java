@@ -8,10 +8,8 @@ public class AssignTest extends BaseTest {
 
     @Test
     @Parameters({"type", "purchaseType"})
-    public void assign() {
+    public void assign(String type, String purchaseType) {
         try {
-            String type = "";
-            String purchaseType = "";
             iPrAssign.buyerManagerAssign(type, purchaseType);
         } catch (Exception exception) {
             logger.error("Exception in Requisition Assign Test Function: {}", exception.getMessage());

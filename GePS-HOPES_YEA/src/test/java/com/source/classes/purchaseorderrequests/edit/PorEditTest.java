@@ -7,11 +7,8 @@ public class PorEditTest extends BaseTest {
 
     @Test
     @Parameters({"type", "purchaseType"})
-    public void edit() {
+    public void edit(String type, String purchaseType) {
         try {
-            String type = "";
-            String purchaseType = "";
-
             iPorEdit.porEdit(type, purchaseType);
         } catch (Exception exception) {
             logger.error("Exception in POR Edit Test Function: {}", exception.getMessage());

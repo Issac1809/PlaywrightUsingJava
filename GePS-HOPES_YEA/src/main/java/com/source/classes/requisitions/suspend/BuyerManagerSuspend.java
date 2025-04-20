@@ -9,6 +9,8 @@ import com.source.interfaces.requisitions.IPrEdit;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import static com.constants.requisitions.LPrBuyerManagerSuspend.*;
+import static com.constants.requisitions.LPrReject.getTitle;
+import static com.utils.GetTitleUtil.getTransactionTitle;
 
 public class BuyerManagerSuspend implements IPrBuyerManagerSuspend {
 
@@ -32,15 +34,15 @@ public class BuyerManagerSuspend implements IPrBuyerManagerSuspend {
         this.logger = LoggerUtil.getLogger(BuyerManagerSuspend.class);
     }
 
-    public void suspend() {
+    public void suspend(String type, String purchaseType) {
         try {
-            String buyerManagerMailId = jsonNode.get("mailIds").get("BuyerManager").asText();
-            String title = jsonNode.get("requisition").get("title").asText();
+            String buyerManagerMailId = jsonNode.get("mailIds").get("buyerManagerEmail").asText();
             String remarks = jsonNode.get("commonRemarks").get("suspendRemarks").asText();
 
             iLogin.performLogin(buyerManagerMailId);
 
-            Locator titleLocator = page.locator(getTitle(title));
+            String getTitleFromUtil = getTransactionTitle(type, purchaseType);
+            Locator titleLocator = page.locator(getTitle(getTitleFromUtil));
             titleLocator.first().click();
 
             Locator suspendButtonLocator = page.locator(SUSPEND_BUTTON);

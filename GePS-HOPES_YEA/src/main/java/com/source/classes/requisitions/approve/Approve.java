@@ -44,7 +44,6 @@ public class Approve implements IPrApprove {
         try {
             String requisitionStatus = "";
             String[] approvers = jsonNode.get("requisition").get("requisitionApprovers").asText().split(",");
-            String uid = jsonNode.get("requisition").get("requisitionUid").asText();
             String remarks = jsonNode.get("commonRemarks").get("approveRemarks").asText();
 
             for(String approver : approvers) {

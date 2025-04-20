@@ -8,10 +8,8 @@ public class ApproveTest extends BaseTest {
 
     @Test
     @Parameters({"type","purchaseType"})
-    public void approve(){
+    public void approve(String type, String purchaseType){
         try {
-            String purchaseType = "";
-            String type = "";
             int status = iPrApprove.approve(type, purchaseType);
             Assert.assertEquals(200, status, "Requisition Approve was not successful");
         } catch (Exception exception) {

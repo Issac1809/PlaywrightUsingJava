@@ -7,11 +7,8 @@ public class PorSendForApprovalAndApproveTest extends BaseTest {
 
     @Test
     @Parameters({"type", "purchaseType"})
-    public void approvalAndApprove(){
+    public void approvalAndApprove(String type, String purchaseType){
         try {
-            String type = "";
-            String purchaseType = "";
-
             iPorSendForApprovalAndApprove.approvalAndApprove(type, purchaseType);
         } catch (Exception exception) {
             logger.error("Exception in POR Send For Approval and Approve Test Function: {}", exception.getMessage());
