@@ -72,6 +72,7 @@ import com.source.classes.requisitions.create.Create;
 import com.source.classes.requisitions.edit.Edit;
 import com.source.classes.requisitions.reject.Reject;
 import com.source.classes.requisitions.sendforapproval.SendForApproval;
+import com.source.classes.requisitions.suspend.BuyerManagerSuspend;
 import com.source.classes.requisitions.suspend.BuyerSuspend;
 import com.source.classes.requisitions.type.PurchaseRequisitionTypeHandler;
 import com.source.classes.workorder.create.WoCreate;
@@ -128,8 +129,9 @@ public class BaseMain {
     protected IPrSendForApproval iPrSendForApproval;
     protected IPrReject iPrReject;
     protected IPrApprove iPrApprove;
+    protected IPrBuyerManagerSuspend iPrBuyerManagerSuspend;
     protected IPrAssign iPrAssign;
-    protected IPrBuyerSuspend iPrSuspend;
+    protected IPrBuyerSuspend iPrBuyerSuspend;
     protected IRfqCreate iRfqCreate;
     protected IRfqEdit iRfqEdit;
     protected IRfqSuspend iRfqSuspend;
@@ -214,8 +216,9 @@ public class BaseMain {
             iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, jsonNode, page, iLogout);
             iPrReject = new Reject(iLogin, jsonNode, page, iLogout);
             iPrApprove = new Approve(objectMapper, iLogin, jsonNode, page, iLogout);
+            iPrBuyerManagerSuspend = new BuyerManagerSuspend(iLogin, jsonNode, page, iLogout, iPrEdit);
             iPrAssign = new Assign(playwrightFactory, iLogin, jsonNode, page, iLogout, objectMapper);
-            iPrSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout);
+            iPrBuyerSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout);
 
 //TODO Request For Quotation
             iRfqCreate = new RfqCreate(iLogin, jsonNode, page, iLogout, playwrightFactory);

@@ -1,0 +1,47 @@
+pipeline {
+    agent { label 'linux' }
+
+    tools {
+        maven 'Maven'
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git credentialsId: 'github-credentials', url: 'https://github.com/CormSquare/GePS.git', branch: 'master'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh "mvn clean package"
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'target/*.jar', onlyIfSuccessful: true
+                }
+            }
+        }
+
+        stage('Regression Automation Test') {
+            when {
+                succeeded()
+            }
+            steps {
+                echo "Executing Regression Tests on Latest Build..."
+                sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml"
+            }
+        }
+
+        stage('Publish Test Report') {
+            steps {
+                publishHTML([allowMissing: false,
+                             alwaysLinkToLastBuild: true,
+                             keepAll: true,
+                             reportDir: 'target/surefire-reports',
+                             reportFiles: 'TestExecutionReport.html',
+                             reportName: 'HTML Extent Report'])
+            }
+        }
+    }
+}

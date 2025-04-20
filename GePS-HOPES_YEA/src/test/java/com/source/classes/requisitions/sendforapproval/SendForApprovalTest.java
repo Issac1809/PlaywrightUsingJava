@@ -8,10 +8,8 @@ public class SendForApprovalTest extends BaseTest {
 
     @Test
     @Parameters({"type","purchaseType"})
-    public void sendForApproval() {
+    public void sendForApproval(String type, String purchaseType) {
         try {
-            String purchaseType = "";
-            String type = "";
             int status = iPrSendForApproval.sendForApproval(type, purchaseType);
             Assert.assertEquals(200, status, "Requisition Send For Approval was not successful");
         } catch (Exception exception) {

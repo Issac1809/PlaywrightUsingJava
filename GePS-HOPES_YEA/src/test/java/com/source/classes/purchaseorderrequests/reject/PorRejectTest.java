@@ -7,11 +7,8 @@ public class PorRejectTest extends BaseTest {
 
     @Test
     @Parameters({"type", "purchaseType"})
-    public void reject() {
+    public void reject(String type, String purchaseType) {
         try {
-            String type = "";
-            String purchaseType = "";
-
             iPorReject.porReject(type, purchaseType);
         } catch (Exception exception) {
             logger.error("Exception in POR Reject Test Function: {}", exception.getMessage());

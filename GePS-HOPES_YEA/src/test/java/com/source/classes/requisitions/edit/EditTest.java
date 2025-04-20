@@ -8,10 +8,8 @@ public class EditTest extends BaseTest {
 
     @Test
     @Parameters({"type", "purchaseType"})
-    public void edit(){
+    public void edit(String type, String purchaseType){
         try {
-            String purchaseType = "";
-            String type = "";
             int status = iPrEdit.edit(type, purchaseType);
             Assert.assertEquals(200, status, "Requisition Edit was not successful");
         } catch (Exception exception) {

@@ -7,6 +7,8 @@ import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requisitions.IPrBuyerSuspend;
 import org.apache.logging.log4j.Logger;
 import static com.constants.requisitions.LPrBuyerSuspend.*;
+import static com.constants.requisitions.LPrReject.getTitle;
+import static com.utils.GetTitleUtil.getTransactionTitle;
 
 public class BuyerSuspend implements IPrBuyerSuspend {
 
@@ -27,28 +29,27 @@ public class BuyerSuspend implements IPrBuyerSuspend {
         this.iLogout = iLogout;
     }
 
-    public void suspend(){
+    public void suspend(String type, String purchaseType){
         try {
-        String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
-        String title = jsonNode.get("requisition").get("title").asText();
-        String remarks = jsonNode.get("commonRemarks").get("suspendRemarks").asText();
+            String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
+            String remarks = jsonNode.get("commonRemarks").get("suspendRemarks").asText();
 
-        iLogin.performLogin(buyerMailId);
+            iLogin.performLogin(buyerMailId);
 
-        String getTitle = getTitle(title);
-        Locator titleLocator = page.locator(getTitle);
-        titleLocator.first().click();
+            String getTitleFromUtil = getTransactionTitle(type, purchaseType);
+            Locator titleLocator = page.locator(getTitle(getTitleFromUtil));
+            titleLocator.first().click();
 
-        Locator suspendButtonLocator = page.locator(SUSPEND_BUTTON);
-        suspendButtonLocator.click();
+            Locator suspendButtonLocator = page.locator(SUSPEND_BUTTON);
+            suspendButtonLocator.click();
 
-        Locator remarksLocator = page.locator(REMARKS);
-        remarksLocator.fill(remarks + " " + "by" + " " + buyerMailId);
+            Locator remarksLocator = page.locator(REMARKS);
+            remarksLocator.fill(remarks + " " + "by" + " " + buyerMailId);
 
-        Locator yesButtonLocator = page.locator(YES);
-        yesButtonLocator.click();
+            Locator yesButtonLocator = page.locator(YES);
+            yesButtonLocator.click();
 
-        iLogout.performLogout();
+            iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Error in Requisition Buyer Suspend Function: {}", exception.getMessage());
         }

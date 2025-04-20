@@ -1,5 +1,5 @@
 package com.source.interfaces.requisitions;
 
 public interface IPrBuyerSuspend {
-    void suspend();
+    void suspend(String type, String purchaseType);
 }
