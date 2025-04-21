@@ -24,10 +24,10 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-887.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-661.0",
-    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-276.0",
-    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-22.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-757.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-662.0",
+    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-241.0",
+    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-229.0",
     "departmentPic" : "requester@cormsquare.com",
     "shipToYokogawa" : "no",
     "companyName" : "Yokogawa Engineering Asia Pte Ltd",
@@ -59,14 +59,14 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "0a6fb943-178a-4e47-a9ef-bea93be6cd4f",
+    "requisitionUid" : "d0436ee5-18cc-49ef-9b57-94ef5693ae81",
     "itemImport" : "true",
     "requisitionItemCount" : "3",
-    "salesTransactionNumber" : "240025TRN02939"
+    "salesTransactionNumber" : "240025TRN03019"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
-    "requestForQuotationUid" : "62079029-0658-4bc2-8748-60661d783dc6",
+    "requestForQuotationUid" : "6aa5a3ba-9557-4f68-aa1b-83df9b5cab29",
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",
@@ -79,7 +79,8 @@
     "quotationReferenceNumber" : "QUO-47329",
     "discount" : 20,
     "discountType" : "Percentage",
-    "gstPercentage" : 8
+    "gstPercentage" : 8,
+    "requestForQuotationId" : "3438"
   },
   "purchaseOrderRequests" : {
     "advancePaymentFlag" : true,
@@ -121,7 +122,7 @@
     "woInvoiceNumber" : "INV-AUT-WO-"
   },
   "configSettings" : {
-    "browserName" : "chrome",
+    "browserName" : "edge",
     "runHeadless" : false,
     "appUrl" : "https://geps_hopes_yea.cormsquare.com",
     "loginPassword" : "Admin@123",

@@ -2,6 +2,7 @@ package com.source.classes.requisitions.suspend;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requisitions.IPrBuyerManagerSuspend;
@@ -20,6 +21,7 @@ public class BuyerManagerSuspend implements IPrBuyerManagerSuspend {
     JsonNode jsonNode;
     Page page;
     IPrEdit iPrEdit;
+    private String appUrl;
 
     private BuyerManagerSuspend(){
     }
@@ -32,9 +34,11 @@ public class BuyerManagerSuspend implements IPrBuyerManagerSuspend {
         this.iLogout = iLogout;
         this.iPrEdit = iPrEdit;
         this.logger = LoggerUtil.getLogger(BuyerManagerSuspend.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void suspend(String type, String purchaseType) {
+    public int suspend(String type, String purchaseType) {
+        int status = 0;
         try {
             String buyerManagerMailId = jsonNode.get("mailIds").get("buyerManagerEmail").asText();
             String remarks = jsonNode.get("commonRemarks").get("suspendRemarks").asText();
@@ -52,11 +56,19 @@ public class BuyerManagerSuspend implements IPrBuyerManagerSuspend {
             remarksLocator.fill(remarks + " " + "by" + " " + buyerManagerMailId);
 
             Locator acceptLocator = page.locator(YES);
-            acceptLocator.click();
+
+            String reqType = type.equalsIgnoreCase("PS") ? "/api/Requisitions/" : "/api/RequisitionsSales/";
+
+            Response suspendResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                    acceptLocator::click
+            );
+            status = suspendResponse.status();
 
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Error in Requisition Buyer Manager Suspend Function: {}", exception.getMessage());
         }
+        return status;
     }
 }

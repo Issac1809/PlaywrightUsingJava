@@ -365,7 +365,7 @@ public class BaseTest {
             rejectTest = new RejectTest();
             iPrBuyerManagerSuspend = new BuyerManagerSuspend(iLogin, jsonNode, page, iLogout, iPrEdit);
             buyerManagerSuspendTest = new BuyerManagerSuspendTest();
-            iPrBuyerSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout);
+            iPrBuyerSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout, objectMapper);
             buyerSuspendTest = new BuyerSuspendTest();
 
 //TODO Request For Quotation
