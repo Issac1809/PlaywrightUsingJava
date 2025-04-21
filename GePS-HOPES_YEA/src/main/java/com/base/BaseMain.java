@@ -218,7 +218,7 @@ public class BaseMain {
             iPrApprove = new Approve(objectMapper, iLogin, jsonNode, page, iLogout);
             iPrBuyerManagerSuspend = new BuyerManagerSuspend(iLogin, jsonNode, page, iLogout, iPrEdit);
             iPrAssign = new Assign(playwrightFactory, iLogin, jsonNode, page, iLogout, objectMapper);
-            iPrBuyerSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout);
+            iPrBuyerSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout, objectMapper);
 
 //TODO Request For Quotation
             iRfqCreate = new RfqCreate(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper);

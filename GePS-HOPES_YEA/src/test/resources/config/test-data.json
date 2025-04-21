@@ -24,8 +24,8 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-966.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-306.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-645.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-662.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-241.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-229.0",
     "departmentPic" : "requester@cormsquare.com",
@@ -57,16 +57,16 @@
     "requisitionStatus" : "Draft",
     "requisitionNotes" : "Requisition Notes and Attachments",
     "requisitionFileType" : "Internal",
-    "requisitionApprovers" : "requester@cormsquare.com",
+    "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "a9fd2f8e-2a29-4928-9adc-0827590ff57e",
+    "requisitionUid" : "ac27176e-1d3c-4afe-80fa-9054021160bd",
     "itemImport" : "true",
     "requisitionItemCount" : "3",
     "salesTransactionNumber" : "240025TRN03019"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
-    "requestForQuotationUid" : "23136f06-a8a2-4ee7-a3d3-2bc5eafc0799",
+    "requestForQuotationUid" : "6aa5a3ba-9557-4f68-aa1b-83df9b5cab29",
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",
@@ -122,7 +122,7 @@
     "woInvoiceNumber" : "INV-AUT-WO-"
   },
   "configSettings" : {
-    "browserName" : "chrome",
+    "browserName" : "edge",
     "runHeadless" : false,
     "appUrl" : "https://geps_hopes_yea.cormsquare.com",
     "loginPassword" : "Admin@123",

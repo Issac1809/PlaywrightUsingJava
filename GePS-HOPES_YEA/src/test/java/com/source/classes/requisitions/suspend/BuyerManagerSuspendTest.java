@@ -1,5 +1,6 @@
 package com.source.classes.requisitions.suspend;
 import com.base.BaseTest;
+import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -9,7 +10,8 @@ public class BuyerManagerSuspendTest extends BaseTest {
     @Parameters({"type","purchaseType"})
     public void suspend(String type, String purchaseType) {
         try {
-            iPrBuyerManagerSuspend.suspend(type, purchaseType);
+            int status = iPrBuyerManagerSuspend.suspend(type, purchaseType);
+            Assert.assertEquals(200, status, "Requisition Suspend was not Successful");
             iPrEdit.edit(type, purchaseType);
             iPrSendForApproval.sendForApproval(type, purchaseType);
             iPrApprove.approve(type, purchaseType);
