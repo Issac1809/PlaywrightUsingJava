@@ -10,7 +10,8 @@ public class ReadyForEvaluationTest extends BaseTest {
     @Parameters({"type"})
     public void readyForEvaluation(String type){
         try {
-            iReadyForEvalutation.readyForEvaluationButton(type);
+            int status = iReadyForEvalutation.readyForEvaluationButton(type);
+            Assert.assertEquals(200, status, "Requisition Approve was not successful");
         } catch (Exception exception) {
             logger.error("Exception in Ready For Evaluation Test Function: {}", exception.getMessage());
             Assert.fail("Exception in Ready For Evaluation Test Function: " + exception.getMessage());

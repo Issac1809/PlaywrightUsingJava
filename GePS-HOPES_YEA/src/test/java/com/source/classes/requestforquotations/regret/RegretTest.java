@@ -10,7 +10,8 @@ public class RegretTest extends BaseTest {
     @Parameters({"type"})
     public void regret(String type){
         try {
-            iQuoRegret.regret(type);
+            int status = iQuoRegret.regret(type);
+            Assert.assertEquals(200, status, "Requisition Approve was not successful");
         } catch (Exception exception) {
             logger.error("Exception in Quotation Regret Test Function: {}", exception.getMessage());
             Assert.fail("Exception in Quotation Regret Test Function: " + exception.getMessage());

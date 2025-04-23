@@ -10,7 +10,8 @@ public class RequoteTest extends BaseTest {
     @Parameters({"type"})
     public void requote(String type) {
         try {
-            iQuoRequote.requote(type);
+            int status = iQuoRequote.requote(type);
+            Assert.assertEquals(200, status, "Requisition Approve was not successful");
         } catch (Exception exception) {
             logger.error("Exception in Quotation Requote Test Function: {}", exception.getMessage());
             Assert.fail("Exception in Quotation Requote Test Function: " + exception.getMessage());

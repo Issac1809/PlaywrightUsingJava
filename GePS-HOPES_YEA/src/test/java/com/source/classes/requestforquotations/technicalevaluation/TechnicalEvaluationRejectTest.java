@@ -11,7 +11,8 @@ public class TechnicalEvaluationRejectTest extends BaseTest {
     public void reject(String type){
         try {
             iTeReject.technicalEvaluationReject(type);
-            iTeCreate.technicalEvaluationCreate(type);
+            int status =iTeCreate.technicalEvaluationCreate(type);
+            Assert.assertEquals(200, status, "Requisition Approve was not successful");
         } catch (Exception exception) {
             logger.error("Exception in Technical Evaluation Reject Test Function: {}", exception.getMessage());
             Assert.fail("Exception in Technical Evaluation Reject Test Function: " + exception.getMessage());

@@ -10,7 +10,8 @@ public class RfqSuspendRfqEditTest extends BaseTest {
     @Parameters({"type"})
     public void RfqSuspendRfqEditTestMethod(String type) {
         try {
-            iRfqSuspend.suspendRfqEdit(type);
+            int status = iRfqSuspend.suspendRfqEdit(type);
+            Assert.assertEquals(200, status, "Requisition Approve was not successful");
         } catch (Exception exception) {
             logger.error("Exception in RFQ Suspend and Edit Test Function: {}", exception.getMessage());
             Assert.fail("Exception in RFQ Suspend and Edit Test Function: " + exception.getMessage());
