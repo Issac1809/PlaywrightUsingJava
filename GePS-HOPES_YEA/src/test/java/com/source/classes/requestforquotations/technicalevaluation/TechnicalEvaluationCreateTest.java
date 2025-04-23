@@ -10,7 +10,8 @@ public class TechnicalEvaluationCreateTest extends BaseTest {
     @Parameters({"type"})
     public void TechnicalEvaluationCreate(String type){
         try {
-            iTeCreate.technicalEvaluationCreate(type);
+            int status =iTeCreate.technicalEvaluationCreate(type);
+            Assert.assertEquals(200, status, "Requisition Approve was not successful");
         } catch (Exception exception) {
             logger.error("Exception in Technical Evaluation Create Test Function: {}", exception.getMessage());
             Assert.fail("Exception in Technical Evaluation Create Test Function: " + exception.getMessage());

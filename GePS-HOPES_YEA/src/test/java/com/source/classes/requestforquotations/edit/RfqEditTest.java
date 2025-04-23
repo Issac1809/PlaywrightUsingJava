@@ -10,7 +10,8 @@ public class RfqEditTest extends BaseTest {
     @Parameters({"type"})
     public void edit(String type) {
         try {
-            iRfqEdit.rfqEditMethod(type);
+            int status = iRfqEdit.rfqEditMethod(type);
+            Assert.assertEquals(200, status, "Requisition Approve was not successful");
         } catch (Exception exception) {
             logger.error("Exception in RFQ Edit Test Function: {}", exception.getMessage());
             Assert.fail("Exception in RFQ Edit Test Function: " + exception.getMessage());

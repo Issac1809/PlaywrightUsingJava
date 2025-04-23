@@ -10,7 +10,8 @@ public class RfqSuspendPrEditTest extends BaseTest {
     @Parameters({"type", "purchaseType"})
     public void RfqSuspendPrEdit(String type, String purchaseType) {
         try {
-            iRfqSuspend.suspendPREdit(type, purchaseType);
+            int status = iRfqSuspend.suspendPREdit(type, purchaseType);
+            Assert.assertEquals(200, status, "Requisition Approve was not successful");
         } catch (Exception exception) {
             logger.error("Exception in RFQ Suspend PR Edit Test Function: {}", exception.getMessage());
             Assert.fail("Exception in RFQ Suspend PR Edit Test Function: " + exception.getMessage());

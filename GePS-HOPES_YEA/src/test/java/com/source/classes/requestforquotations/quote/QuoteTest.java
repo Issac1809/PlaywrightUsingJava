@@ -18,7 +18,8 @@ public class QuoteTest extends BaseTest {
             iQuoSubmit.quotationItems();
             iQuoSubmit.gst();
             iQuoSubmit.quotationAttachments();
-            iQuoSubmit.quotationSubmitButton(type);
+            int status = iQuoSubmit.quotationSubmitButton(type);
+            Assert.assertEquals(200, status, "Requisition Approve was not successful");
         } catch (Exception exception) {
             logger.error("Exception in Quotation Submit Test Function: {}", exception.getMessage());
             Assert.fail("Exception in Quotation Submit Test Function: " + exception.getMessage());

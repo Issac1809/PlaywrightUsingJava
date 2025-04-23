@@ -10,7 +10,8 @@ public class RfqCreateTest extends BaseTest {
     @Parameters({"type"})
     public void create(String type) {
         try {
-            iRfqCreate.buyerRfqCreate(type);
+            int status = iRfqCreate.buyerRfqCreate(type);
+            Assert.assertEquals(200, status, "Requisition Approve was not successful");
         } catch (Exception exception) {
             logger.error("Exception in RFQ Create Test Function: {}", exception.getMessage());
             Assert.fail("Exception in RFQ Create Test Function: " + exception.getMessage());
