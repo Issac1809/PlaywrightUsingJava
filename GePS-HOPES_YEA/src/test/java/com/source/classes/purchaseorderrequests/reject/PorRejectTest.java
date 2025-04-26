@@ -10,6 +10,7 @@ public class PorRejectTest extends BaseTest {
     public void reject(String type, String purchaseType) {
         try {
             iPorReject.porReject(type, purchaseType);
+            iPorEdit.porEdit(type, purchaseType);
         } catch (Exception exception) {
             logger.error("Exception in POR Reject Test Function: {}", exception.getMessage());
         }

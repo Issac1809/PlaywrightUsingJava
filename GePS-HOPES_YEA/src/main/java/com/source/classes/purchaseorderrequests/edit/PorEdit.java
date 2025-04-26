@@ -2,6 +2,7 @@ package com.source.classes.purchaseorderrequests.edit;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.purchaseorderrequests.IPorEdit;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -44,6 +45,8 @@ public class PorEdit implements IPorEdit {
 
             Locator editButtonLocator = page.locator(EDIT_BUTTON);
             editButtonLocator.click();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             Locator updateButtonLocator = page.locator(UPDATE_BUTTON);
             updateButtonLocator.click();

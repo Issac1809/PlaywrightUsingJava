@@ -18,6 +18,7 @@ public class BuyerManagerSuspendTest extends BaseTest {
             iPrAssign.buyerManagerAssign(type, purchaseType);
         } catch (Exception exception) {
             logger.error("Exception in Requisition Buyer Manager Suspend Test Function: {}", exception.getMessage());
+            Assert.fail("Exception in Requisition Buyer Manager Suspend Test Function: " + exception.getMessage());
         }
     }
 }

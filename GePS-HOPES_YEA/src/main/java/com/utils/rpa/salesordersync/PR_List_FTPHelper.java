@@ -6,6 +6,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 public class PR_List_FTPHelper {
 
@@ -40,7 +42,7 @@ public class PR_List_FTPHelper {
             File localDir = new File(localPath);
             if (!localDir.exists() && !localDir.mkdirs());
 
-            excelFileName = "PR list for original ID.xls";
+            excelFileName = URLDecoder.decode("PR%20list%20for%20original%20ID.xls", StandardCharsets.UTF_8.name());
             excelRemoteFilePath = remotePath + excelFileName;
             excelLocalFile = new File(localDir, excelFileName);
 
@@ -62,7 +64,7 @@ public class PR_List_FTPHelper {
             uploadSoFile(localSoFilePath, remoteSoFolderPath);
 
 //TODO PR List File Upload
-            uploadPrListFile(localPrListFilePath, remotePrListFilePath);
+            uploadPrListFile(localPrListFilePath, remotePrListFilePath + excelFileName);
         } catch (Exception exception) {
             logger.error("Exception in call upload file function: {}", exception.getMessage());
         }

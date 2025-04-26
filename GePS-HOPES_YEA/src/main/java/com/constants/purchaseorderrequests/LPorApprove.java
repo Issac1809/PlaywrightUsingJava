@@ -6,7 +6,7 @@ public class LPorApprove {
     public static final String ADD_APPROVERS = "#btnAddApprovers";
     public static final String PROJECT_MANAGER_POP_UP = "//h3[contains(text(), 'Purchase Order Request Send For Approval')]";
     public static final String PROJECT_MANAGER_DROP_DOWN = "#select2-PMBId-container";
-    public static final String SEARCH_FIELD = "select2-search__field";
+    public static final String SEARCH_FIELD = ".select2-search__field";
     public static final String DEPARTMENT_MANAGER_DROP_DOWN = "#select2-departmentManagerId-container";
     public static final String DIVISION_MANAGER = "#select2-divisionManagerId-container";
     public static final String SAVE_APPROVAL_USERS = "#btnSendUserFromPM";

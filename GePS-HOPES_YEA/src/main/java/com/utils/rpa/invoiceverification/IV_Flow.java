@@ -1,10 +1,7 @@
 package com.utils.rpa.invoiceverification;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 import com.utils.LoggerUtil;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.logging.log4j.Logger;
@@ -12,18 +9,20 @@ import java.io.File;
 
 public class IV_Flow {
 
-    static Logger logger;
+    Logger logger;
+    Page page;
 
 //TODO Constructor
-    public IV_Flow() {
+    private IV_Flow(){
+    }
+
+    public IV_Flow(Page page) {
+        this.page = page;
         this.logger = LoggerUtil.getLogger(IV_Flow.class);
     }
 
-    public static void main(String[] args) {
+    public void ivFlow() {
         try {
-            Playwright playwright = Playwright.create();
-            Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
-            Page page = browser.newPage();
             FTPClient ftpClient = new FTPClient();
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(new File("C:\\My_Personal_Folder\\GePS-Testing\\GePS-HOPES_YEA\\src\\test\\resources\\config\\msa-config.json"));

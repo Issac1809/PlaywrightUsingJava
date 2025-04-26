@@ -5,20 +5,31 @@ pipeline {
         maven 'Maven'
     }
 
+    environment {
+        BRANCH = 'master'
+        CREDENTIALS_ID = 'github-credentials'
+        MAVEN_GOALS = 'clean package'
+        TEST_SUITE = 'src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml'
+    }
+
     stages {
         stage('Checkout Code') {
             steps {
-                git credentialsId: 'github-credentials', url: 'https://github.com/CormSquare/GePS.git', branch: 'master'
+                cleanWs() // Clean workspace before starting
+                git credentialsId: "${CREDENTIALS_ID}", url: 'https://github.com/CormSquare/GePS.git', branch: "${BRANCH}"
             }
         }
 
         stage('Build') {
             steps {
-                sh "mvn clean package"
+                sh "mvn ${MAVEN_GOALS}"
             }
             post {
                 success {
                     archiveArtifacts artifacts: 'target/*.jar', onlyIfSuccessful: true
+                }
+                failure {
+                    echo "Build failed. Please check the logs."
                 }
             }
         }
@@ -29,19 +40,45 @@ pipeline {
             }
             steps {
                 echo "Executing Regression Tests on Latest Build..."
-                sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml"
+                sh "mvn clean test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml' // Publish JUnit test results
+                }
+                failure {
+                    echo "Tests failed. Please check the test reports."
+                }
             }
         }
 
         stage('Publish Test Report') {
             steps {
-                publishHTML([allowMissing: false,
-                             alwaysLinkToLastBuild: true,
-                             keepAll: true,
-                             reportDir: 'target/surefire-reports',
-                             reportFiles: 'TestExecutionReport.html',
-                             reportName: 'HTML Extent Report'])
+                script {
+                    if (fileExists('target/surefire-reports/TestExecutionReport.html')) {
+                        publishHTML([allowMissing: false,
+                                     alwaysLinkToLastBuild: true,
+                                     keepAll: true,
+                                     reportDir: 'target/surefire-reports',
+                                     reportFiles: 'TestExecutionReport.html',
+                                     reportName: 'HTML Extent Report'])
+                    } else {
+                        echo "Test report not found. Skipping report publishing."
+                    }
+                }
             }
+        }
+    }
+
+    post {
+        always {
+            cleanWs() // Clean workspace after pipeline execution
+        }
+        failure {
+            echo "Pipeline failed. Please check the logs."
+        }
+        success {
+            echo "Pipeline executed successfully."
         }
     }
 }

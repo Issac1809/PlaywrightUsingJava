@@ -15,10 +15,17 @@ public class PR_List_APIHelper {
         this.logger = LoggerUtil.getLogger(PR_List_APIHelper.class);
     }
 
-    public void updateStatus(String apiUrl) {
+    public void syncSO(String apiUrl) {
         try {
-            page.request().fetch(apiUrl + "7808", RequestOptions.create());
-            page.close();
+            page.request().fetch(apiUrl, RequestOptions.create());
+        } catch (Exception exception) {
+            logger.error("Exception in Sync SO Function: {}", exception.getMessage());
+        }
+    }
+
+    public void updateStatus(String apiUrl, int id) {
+        try {
+            page.request().fetch(apiUrl + id, RequestOptions.create());
         } catch (Exception exception) {
             logger.error("Exception in Update Status Function: {}", exception.getMessage());
         }

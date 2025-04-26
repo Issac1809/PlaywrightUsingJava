@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.FileWriter;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.List;
 
 public class PlaywrightFactory {
 
@@ -89,6 +90,27 @@ public class PlaywrightFactory {
             if (jsonNode.has(parentKey) && jsonNode.get(parentKey).isObject()) {
                 ObjectNode parentNode = (ObjectNode) jsonNode.get(parentKey);
                 parentNode.put(attributeKey, attributeValue);
+
+//TODO try is used to close the file writer or the json file will be empty
+                try (FileWriter fileWriter = new FileWriter("./src/test/resources/config/test-data.json")) {
+                    objectMapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, jsonNode);
+                }
+            } else {
+                logger.warn("Parent key '{}' not found or not an object in JSON", parentKey);
+            }
+        } catch (Exception exception) {
+            logger.error("Error in Save Properties Into Json File Function: {}", exception.getMessage());
+        }
+    }
+
+    public void savePorApproversIntoJsonFile(String parentKey, String attributeKey, List<String> attributeValue) {
+        try {
+            if (jsonNode.has(parentKey) && jsonNode.get(parentKey).isObject()) {
+                ObjectNode parentNode = (ObjectNode) jsonNode.get(parentKey);
+
+                //TODO Convert List<String> to JsonNode
+                JsonNode listNode = objectMapper.valueToTree(attributeValue);
+                parentNode.set(attributeKey, listNode);
 
 //TODO try is used to close the file writer or the json file will be empty
                 try (FileWriter fileWriter = new FileWriter("./src/test/resources/config/test-data.json")) {

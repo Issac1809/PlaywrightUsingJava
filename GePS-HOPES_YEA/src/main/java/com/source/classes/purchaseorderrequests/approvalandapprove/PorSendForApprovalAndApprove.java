@@ -27,8 +27,8 @@ public class PorSendForApprovalAndApprove implements IPorSendForApprovalAndAppro
 
     public void approvalAndApprove(String type, String purchaseType){
         try {
-        List<String> approversList = iPorSendForApproval.getApprovers(type, purchaseType);
-        iPorApprove.approverLogin(type, purchaseType, approversList);
+//        List<String> approversList = iPorSendForApproval.getApprovers(type, purchaseType);
+//        iPorApprove.approverLogin(type, purchaseType, approversList);
         msaFlow.msaFlow();
         } catch (Exception exception) {
             logger.error("Exception in POR Approval And Approve function: {}", exception.getMessage());

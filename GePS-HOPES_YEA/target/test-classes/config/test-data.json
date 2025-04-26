@@ -11,7 +11,7 @@
     "prApproverGroupCEmail" : "departmentmanager@cormsquare.com",
     "prApproverGroupDEmail" : "businessunitmanager@cormsquare.com",
     "projectManagerEmail" : "projectmanager@cormsquare.com",
-    "presidentDirectorCorporateEmail" : "hazel@sharklasers.com",
+    "presidentDirectorCorporateEmail" : "Achyuth@sharklasers.com",
     "vendorEmail" : "alpha123@cormsquare.com"
   },
   "commonRemarks" : {
@@ -24,10 +24,10 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-757.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-662.0",
-    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-241.0",
-    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-229.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-335.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-717.0",
+    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-387.0",
+    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-663.0",
     "departmentPic" : "requester@cormsquare.com",
     "shipToYokogawa" : "no",
     "companyName" : "Yokogawa Engineering Asia Pte Ltd",
@@ -57,16 +57,17 @@
     "requisitionStatus" : "Draft",
     "requisitionNotes" : "Requisition Notes and Attachments",
     "requisitionFileType" : "Internal",
-    "requisitionApprovers" : "projectmanager@cormsquare.com",
+    "requisitionApprovers" : "requester@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "d0436ee5-18cc-49ef-9b57-94ef5693ae81",
+    "requisitionUid" : "4ac73053-75b8-40db-99f8-8f34577d9665",
     "itemImport" : "true",
     "requisitionItemCount" : "3",
-    "salesTransactionNumber" : "240025TRN03019"
+    "salesTransactionNumber" : "240025TRN03058",
+    "requisitionId" : "22240"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
-    "requestForQuotationUid" : "6aa5a3ba-9557-4f68-aa1b-83df9b5cab29",
+    "requestForQuotationUid" : "7fea56d7-555f-4012-b16f-a31226740b7d",
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",
@@ -80,17 +81,20 @@
     "discount" : 20,
     "discountType" : "Percentage",
     "gstPercentage" : 8,
-    "requestForQuotationId" : "3438"
+    "salesTransactionNumber" : "240025TRN03058",
+    "requestForQuotationId" : "3473"
   },
   "purchaseOrderRequests" : {
     "advancePaymentFlag" : true,
-    "advancePaymentPercentage" : "10",
-    "creditPeriodInDays" : "3",
+    "advancePaymentPercentage" : "30",
+    "creditPeriodInDays" : "10",
     "milestonePaymentFlag" : true,
-    "milestonePaymentCount" : 3,
-    "milestoneCount" : "",
+    "milestonePaymentCount" : 2,
     "taxCode" : "PZ-Zero Rated Purchase",
-    "purchaseOrderNotes" : "Purchase Order Request Notes"
+    "purchaseOrderNotes" : "Purchase Order Request Notes",
+    "purchaseOrderRequestUid" : "bcb25a89-0679-460f-b2a9-9cc481742fcf",
+    "purchaseOrderRequestId" : "8082",
+    "approvers" : "projectmanager@cormsquare.com"
   },
   "purchaseOrders" : {
     "poReferenceId" : "240024PO00289",
