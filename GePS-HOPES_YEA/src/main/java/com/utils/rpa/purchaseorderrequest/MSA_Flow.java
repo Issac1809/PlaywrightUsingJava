@@ -13,6 +13,9 @@ public class MSA_Flow {
     Page page;
 
 //TODO Constructor
+    private MSA_Flow() {
+    }
+
     public MSA_Flow(Page page) {
         this.page = page;
         this.logger = LoggerUtil.getLogger(MSA_Flow.class);

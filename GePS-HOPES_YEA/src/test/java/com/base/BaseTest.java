@@ -85,6 +85,7 @@ import com.source.classes.orderschedules.reject.OsRejectTest;
 import com.source.classes.purchaseorderrequests.approvalandapprove.PorSendForApprovalAndApprove;
 import com.source.classes.purchaseorderrequests.approvalandapprove.PorSendForApprovalAndApproveTest;
 import com.source.classes.purchaseorderrequests.approve.PorApprove;
+import com.source.classes.purchaseorderrequests.approve.PorApproveTest;
 import com.source.classes.purchaseorderrequests.create.PorCreate;
 import com.source.classes.purchaseorderrequests.create.PorCreateTest;
 import com.source.classes.purchaseorderrequests.edit.PorEdit;
@@ -167,6 +168,8 @@ import com.source.interfaces.workorders.IWoTrackerStatus;
 import com.utils.GetTitleUtil;
 import com.utils.LoggerUtil;
 import com.utils.ToastrUtil;
+import com.utils.rpa.invoiceverification.IV_Flow;
+import com.utils.rpa.orderacknowledgement.OA_Flow;
 import com.utils.rpa.purchaseorderrequest.MSA_Flow;
 import com.utils.rpa.salesordersync.PR_List_Flow;
 import org.apache.logging.log4j.Logger;
@@ -186,6 +189,8 @@ public class BaseTest {
     protected ICurrencyExchangeRate iCurrencyExchangeRate;
     protected PR_List_Flow prListFlow;
     protected MSA_Flow msaFlow;
+    protected OA_Flow oaFlow;
+    protected IV_Flow ivFlow;
     protected LoginTest loginTest;
     protected ILogin iLogin;
     protected ILogout iLogout;
@@ -239,6 +244,7 @@ public class BaseTest {
     protected IPorSendForApproval iPorSendForApproval;
     protected PorRejectTest porRejectTest;
     protected IPorReject iPorReject;
+    protected PorApproveTest porApproveTest;
     protected IPorApprove iPorApprove;
     protected PorSendForApprovalAndApproveTest porSendForApprovalAndApproveTest;
     protected IPorSendForApprovalAndApprove iPorSendForApprovalAndApprove;
@@ -343,8 +349,10 @@ public class BaseTest {
             page = playwrightFactory.initializePage(jsonNode);
             toastrUtil = new ToastrUtil(page);
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
-            prListFlow = new PR_List_Flow();
+            prListFlow = new PR_List_Flow(page);
             msaFlow = new MSA_Flow(page);
+            oaFlow = new OA_Flow(page);
+            ivFlow = new IV_Flow(page);
 
 //TODO Requisition
             iLogin = new Login(jsonNode, page);
@@ -394,15 +402,16 @@ public class BaseTest {
             commercialEvaluationTest = new CommercialEvaluationTest();
 
 //TODO Purchase Order Request
-            iPorCreate = new PorCreate(iLogin, jsonNode, page, iLogout, prListFlow);
+            iPorCreate = new PorCreate(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper, prListFlow);
             porCreateTest = new PorCreateTest();
             iPorEdit = new PorEdit(iLogin, jsonNode, page, iLogout);
             porEditTest = new PorEditTest();
-            iPorSuspend = new PorSuspend(iLogin, jsonNode, page, iLogout, iPorEdit, iCeCreate, iPorCreate);
+            iPorSuspend = new PorSuspend(iLogin, jsonNode, page, iLogout, iPrEdit, iPrSendForApproval, iPrApprove, iPrAssign, iPorCreate, iPorEdit, iCeCreate);
             suspendEditTest = new SuspendEditTest();
-            iPorSendForApproval = new PorSendForApproval(iLogin, jsonNode, page, iLogout);
+            iPorSendForApproval = new PorSendForApproval(iLogin, jsonNode, page, iLogout, objectMapper, playwrightFactory);
             porSendForApprovalTest = new PorSendForApprovalTest();
-            iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout);
+            iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper, iPorSendForApproval);
+            porApproveTest = new PorApproveTest();
             iPorReject = new PorReject(iLogin, jsonNode, page, iLogout, iPorEdit, iPorSendForApproval);
             porRejectTest = new PorRejectTest();
             iPorSendForApprovalAndApprove = new PorSendForApprovalAndApprove(iPorApprove, iPorSendForApproval, msaFlow);

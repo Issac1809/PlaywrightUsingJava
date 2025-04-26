@@ -876,10 +876,12 @@ public class Create implements IPrCreate {
             //Save Transaction number
             if (type.equalsIgnoreCase("sales"))
             {
-                APIResponse projectResponse = page.request().fetch(appUrl + "/api/RequisitionsSales/" + getUid, RequestOptions.create());
-                JsonNode projectCodeJson = objectMapper.readTree(projectResponse.body());
-                String salesTransactionNumber = projectCodeJson.get("transactionId").asText();
-                playwrightFactory.savePropertiesIntoJsonFile("requisition", "salesTransactionNumber", salesTransactionNumber);
+                APIResponse apiResponse = page.request().fetch(appUrl + "/api/RequisitionsSales/" + getUid, RequestOptions.create());
+                JsonNode jsonNode1 = objectMapper.readTree(apiResponse.body());
+                String requisitionId = jsonNode1.get("baseId").asText();
+                String transactionId = jsonNode1.get("transactionId").asText();
+                playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionId", requisitionId);
+                playwrightFactory.savePropertiesIntoJsonFile("requisition", "salesTransactionNumber", transactionId);
             }
 
             iLogout.performLogout();

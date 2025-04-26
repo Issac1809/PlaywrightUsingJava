@@ -9,6 +9,7 @@ public class SuspendEditTest extends BaseTest {
     @Parameters({"type", "purchaseType"})
     public void suspend(String type, String purchaseType) {
         try {
+            iPorSuspend.suspendPorEdit(type, purchaseType);
             iPorSuspend.suspendRfqOrPrEdit(type, purchaseType);
         } catch (Exception exception) {
             logger.error("Exception in Suspend Edit Test Function: {}", exception.getMessage());

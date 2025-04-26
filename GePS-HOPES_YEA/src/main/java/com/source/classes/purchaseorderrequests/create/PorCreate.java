@@ -2,10 +2,14 @@ package com.source.classes.purchaseorderrequests.create;
 import com.constants.purchaseorderrequests.LPorCreate;
 import com.constants.requestforquotations.LQuoRequote;
 import com.constants.requisitions.LPrEdit;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Response;
+import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.purchaseorderrequests.IPorCreate;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -20,24 +24,27 @@ import static com.utils.GetTitleUtil.*;
 public class PorCreate implements IPorCreate {
 
     Logger logger;
+    PlaywrightFactory playwrightFactory;
+    ObjectMapper objectMapper;
     JsonNode jsonNode;
     PR_List_Flow prListFlow;
     Page page;
     ILogin iLogin;
     ILogout iLogout;
-    private String appUrl;
+    String appUrl;
+    int status = 0;
 
 //TODO Constructor
     private PorCreate(){
     }
 
-    private int status=0;
-
-    public PorCreate(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout, PR_List_Flow prListFlow){
+    public PorCreate(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout, PlaywrightFactory playwrightFactory, ObjectMapper objectMapper, PR_List_Flow prListFlow){
         this.iLogin = iLogin;
         this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
+        this.objectMapper = objectMapper;
+        this.playwrightFactory = playwrightFactory;
         this.prListFlow = prListFlow;
         this.logger = LoggerUtil.getLogger(PorCreate.class);
         this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
@@ -62,12 +69,16 @@ public class PorCreate implements IPorCreate {
                 Locator yesButtonLocator = page.locator(YES_BUTTON);
                 yesButtonLocator.click();
 
+                prListFlow.prListFlow();
+
                 iLogout.performLogout();
 
                 String requesterMailId = jsonNode.get("mailIds").get("requesterEmail").asText();
                 iLogin.performLogin(requesterMailId);
 
-                prListFlow.prListFlow();
+                prNavigationBarLocator.click();
+
+                titleLocator.first().click();
 
                 Locator convertSmToOmButtonLocator = page.locator(CONVERT_SM_TO_OM_BUTTON);
                 convertSmToOmButtonLocator.click();
@@ -75,8 +86,8 @@ public class PorCreate implements IPorCreate {
                 Locator departmentPicDropDownLocator = page.locator(DEPARTMENT_PIC_DROP_DOWN);
                 departmentPicDropDownLocator.click();
 
-                Locator departmentPicSearchFieldLocator = page.locator(DEPARTMENT_PIC_SEARCH_FIELD);
-                departmentPicSearchFieldLocator.fill(requesterMailId);
+//                Locator departmentPicSearchFieldLocator = page.locator(DEPARTMENT_PIC_SEARCH_FIELD);
+//                departmentPicSearchFieldLocator.fill(requesterMailId);
 
                 Locator departmentPicMailIdLocator = page.locator(getDepartmentPic(requesterMailId));
                 departmentPicMailIdLocator.first().click();
@@ -103,23 +114,21 @@ public class PorCreate implements IPorCreate {
                 }
             }
 
-            Locator porCreateButtonLocator = page.locator(POR_CREATE_BUTTON);
+            Locator porCreateButtonLocator = page.locator(CATALOG_POR_CREATE_BUTTON);
             porCreateButtonLocator.first().click();
 
             boolean advancePaymentFlag = jsonNode.get("purchaseOrderRequests").get("advancePaymentFlag").asBoolean();
             boolean milestonePaymentFlag = jsonNode.get("purchaseOrderRequests").get("milestonePaymentFlag").asBoolean();
 
             if(advancePaymentFlag || milestonePaymentFlag){
-                advanceAndMilestonePayments(advancePaymentFlag, milestonePaymentFlag);
+                advanceAndMilestonePayments(advancePaymentFlag, milestonePaymentFlag, purchaseType);
             }
-
-
         } catch (Exception exception) {
             logger.error("Exception in POR Create For Catalog Type Function: {}", exception.getMessage());
         }
     }
 
-    public void porCreateButtonForNonCatalog(String type) {
+    public void porCreateButtonForNonCatalog(String type, String purchaseType) {
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             iLogin.performLogin(buyerMailId);
@@ -138,12 +147,16 @@ public class PorCreate implements IPorCreate {
                 Locator yesButtonLocator = page.locator(YES_BUTTON);
                 yesButtonLocator.click();
 
+                prListFlow.prListFlow();
+
                 iLogout.performLogout();
 
                 String requesterMailId = jsonNode.get("mailIds").get("requesterEmail").asText();
                 iLogin.performLogin(requesterMailId);
 
-                prListFlow.prListFlow();
+                rfqNavigationBarLocator.click();
+
+                titleLocator.first().click();
 
                 Locator convertSmToOmButtonLocator = page.locator(CONVERT_SM_TO_OM_BUTTON);
                 convertSmToOmButtonLocator.click();
@@ -151,8 +164,8 @@ public class PorCreate implements IPorCreate {
                 Locator departmentPicDropDownLocator = page.locator(DEPARTMENT_PIC_DROP_DOWN);
                 departmentPicDropDownLocator.click();
 
-                Locator departmentPicSearchFieldLocator = page.locator(DEPARTMENT_PIC_SEARCH_FIELD);
-                departmentPicSearchFieldLocator.fill(requesterMailId);
+//                Locator departmentPicSearchFieldLocator = page.locator(DEPARTMENT_PIC_SEARCH_FIELD);
+//                departmentPicSearchFieldLocator.fill(requesterMailId);
 
                 Locator departmentPicMailIdLocator = page.locator(getDepartmentPic(requesterMailId));
                 departmentPicMailIdLocator.first().click();
@@ -211,14 +224,14 @@ public class PorCreate implements IPorCreate {
                 }
             }
 
-            Locator porCreateButtonLocator = page.locator(POR_CREATE_BUTTON);
+            Locator porCreateButtonLocator = page.locator(NON_CATALOG_POR_CREATE_BUTTON);
             porCreateButtonLocator.first().click();
 
             boolean advancePaymentFlag = jsonNode.get("purchaseOrderRequests").get("advancePaymentFlag").asBoolean();
             boolean milestonePaymentFlag = jsonNode.get("purchaseOrderRequests").get("milestonePaymentFlag").asBoolean();
 
             if(advancePaymentFlag || milestonePaymentFlag){
-                advanceAndMilestonePayments(advancePaymentFlag, milestonePaymentFlag);
+                advanceAndMilestonePayments(advancePaymentFlag, milestonePaymentFlag, purchaseType);
             }
 
         } catch (Exception exception) {
@@ -226,7 +239,7 @@ public class PorCreate implements IPorCreate {
         }
     }
 
-    public void advanceAndMilestonePayments(boolean advancePaymentFlag, boolean milestonePaymentFlag) {
+    public void advanceAndMilestonePayments(boolean advancePaymentFlag, boolean milestonePaymentFlag, String purchaseType) {
         try {
             String advancePaymentPercentage = jsonNode.get("purchaseOrderRequests").get("advancePaymentPercentage").asText();
             String creditPeriodInDays = jsonNode.get("purchaseOrderRequests").get("creditPeriodInDays").asText();
@@ -258,7 +271,14 @@ public class PorCreate implements IPorCreate {
                     Locator milestoneButtonLocator = page.locator(MILESTONE_PAYMENT_BUTTON);
                     milestoneButtonLocator.click();
 
-                    Locator milestonePaymentNameLocator = page.locator(MILESTONE_PAYMENT_NAME);
+                    Locator milestonePaymentNameLocator;
+
+                    if(purchaseType.equalsIgnoreCase("Catalog")){
+                        milestonePaymentNameLocator = page.locator(CATALOG_MILESTONE_PAYMENT_NAME);
+                    } else {
+                        milestonePaymentNameLocator = page.locator(NON_CATALOG_MILESTONE_PAYMENT_NAME);
+                    }
+
                     milestonePaymentNameLocator.fill("Milestone - " + i);
 
                     Locator milestonePaymentPercentageLocator = page.locator(MILESTONE_PAYMENT_PERCENTAGE);
@@ -279,8 +299,16 @@ public class PorCreate implements IPorCreate {
                 for(int i = 1; i <= milestoneCount; i++){
                     Locator milestoneButtonLocator = page.locator(MILESTONE_PAYMENT_BUTTON);
                     milestoneButtonLocator.click();
-                    Locator amilestonePaymentNameLocator = page.locator(MILESTONE_PAYMENT_NAME);
-                    amilestonePaymentNameLocator.fill("Milestone-" + i);
+
+                    Locator milestonePaymentNameLocator;
+
+                    if(purchaseType.equalsIgnoreCase("Catalog")){
+                        milestonePaymentNameLocator = page.locator(CATALOG_MILESTONE_PAYMENT_NAME);
+                    } else {
+                        milestonePaymentNameLocator = page.locator(NON_CATALOG_MILESTONE_PAYMENT_NAME);
+                    }
+
+                    milestonePaymentNameLocator.fill("Milestone - " + i);
 
                     Locator milestonePaymentPercentageLocator = page.locator(MILESTONE_PAYMENT_PERCENTAGE);
                     if(i == milestoneCount){
@@ -336,17 +364,27 @@ public class PorCreate implements IPorCreate {
 
             Locator yesButtonLocator = page.locator(YES);
 
-            String reqType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
+            String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
 
             Response createResponse = page.waitForResponse(
-                    response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                    response -> response.url().startsWith(appUrl + porType) && response.status() == 200,
                     yesButtonLocator::click
             );
             status = createResponse.status();
 
+            String url = page.url();
+            String[] urlArray = url.split("=");
+            String getUid = urlArray[1];
+            playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "purchaseOrderRequestUid", getUid);
+
+            APIResponse apiResponse = page.request().fetch(appUrl + porType + getUid, RequestOptions.create());
+            JsonNode jsonNode = objectMapper.readTree(apiResponse.body());
+            String purchaseOrderRequestId = jsonNode.get("id").asText();
+            playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "purchaseOrderRequestId", purchaseOrderRequestId);
+
             iLogout.performLogout();
         } catch (Exception exception) {
-            logger.error("Exception in POR Create Function: {}", exception.getMessage());
+            logger.error("Exception in POR Create Button Function: {}", exception.getMessage());
         }
     }
 
@@ -355,7 +393,7 @@ public class PorCreate implements IPorCreate {
             if (purchaseType.equalsIgnoreCase("Catalog")) {
                 porCreateButtonForCatalog(type, purchaseType);
             } else if (purchaseType.equalsIgnoreCase("NonCatalog")) {
-                porCreateButtonForNonCatalog(type);
+                porCreateButtonForNonCatalog(type, purchaseType);
                 justification();
             }
             taxCode();
@@ -366,5 +404,4 @@ public class PorCreate implements IPorCreate {
         }
         return status;
     }
-
 }

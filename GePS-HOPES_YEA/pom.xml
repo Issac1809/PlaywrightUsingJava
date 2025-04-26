@@ -18,7 +18,7 @@
     <log4j-api-version>2.24.3</log4j-api-version>
     <testNG-version> 7.10.2 </testNG-version>
     <chaintest-testng-version>1.0.7</chaintest-testng-version>
-    <playwright-version>1.49.0</playwright-version>
+    <playwright-version>1.51.0</playwright-version>
     <maven-compiler-version>3.13.0</maven-compiler-version>
     <maven-surefire-plugin>3.2.5</maven-surefire-plugin>
     <jackson-api-version>2.18.2</jackson-api-version>

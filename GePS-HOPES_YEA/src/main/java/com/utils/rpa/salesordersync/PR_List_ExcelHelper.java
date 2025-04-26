@@ -194,14 +194,14 @@ public class PR_List_ExcelHelper {
                 if (row1 == null) {
                     sheet.createRow(i); //TODO Create a new row if it doesn't exist
                 }
-                updateCell(sheet, i, 0, String.valueOf(soNumber)); //TODO Purchase Requisition Number A column (index 0)
+                updateCell(sheet, i, 0, String.format("%08d", i)); //TODO Purchase Requisition Number A column (index 0)
                 updateCell(sheet, i, 11, "EJA530E_F000000001"); //TODO Material Number L column (index 11)
                 updateCell(sheet, i, 12, "2400"); //TODO Plant M column (index 12)
                 updateCell(sheet, i, 13, "9001"); //TODO Storage Location N column (index 13)
                 updateCell(sheet, i, 20, "30/04/2025"); //TODO Item Delivery Date U column (index 20)
                 updateCell(sheet, i, 75, "BOP252400"); //TODO MS Code BX column (index 75)
                 updateCell(sheet, i, 102, String.valueOf(soNumber)); //TODO Sales Order Number CY column (index 102)
-                updateCell(sheet, i, 103, String.valueOf((10 + i) * 10)); //TODO Sales Order Item Number CZ column (index 103)
+                updateCell(sheet, i, 103, String.valueOf((10 + i))); //TODO Sales Order Item Number CZ column (index 103)
                 String formattedNumber = String.format("%03d", i); //TODO Format the number to 3 digits (eg. 001, 002..)
                 updateCell(sheet, i, 134, transactionNumber + "-" + formattedNumber); //TODO Original Id EE column (index 134)
             }
@@ -210,6 +210,7 @@ public class PR_List_ExcelHelper {
             try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
                 workbook.write(fileOutputStream);
             }
+            workbook.close();
         } catch (IOException exception) {
             logger.error("Exception in update PR List Excel function: {}", exception.getMessage());
         }

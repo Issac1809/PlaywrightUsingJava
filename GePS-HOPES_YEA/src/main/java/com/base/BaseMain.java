@@ -103,6 +103,8 @@ import com.source.interfaces.workorders.IWoTrackerStatus;
 import com.utils.GetTitleUtil;
 import com.utils.LoggerUtil;
 import com.utils.ToastrUtil;
+import com.utils.rpa.invoiceverification.IV_Flow;
+import com.utils.rpa.orderacknowledgement.OA_Flow;
 import com.utils.rpa.purchaseorderrequest.MSA_Flow;
 import com.utils.rpa.salesordersync.PR_List_Flow;
 import org.apache.logging.log4j.Logger;
@@ -121,6 +123,8 @@ public class BaseMain {
     protected ICurrencyExchangeRate iCurrencyExchangeRate;
     protected PR_List_Flow prListFlow;
     protected MSA_Flow msaFlow;
+    protected OA_Flow oaFlow;
+    protected IV_Flow ivFlow;
     protected ILogin iLogin;
     protected ILogout iLogout;
     protected IPrType iPrType;
@@ -148,8 +152,8 @@ public class BaseMain {
     protected IPorSuspend iPorSuspend;
     protected IPorSendForApproval iPorSendForApproval;
     protected IPorReject iPorReject;
-    protected IPorSendForApprovalAndApprove iPorSendForApprovalAndApprove;
     protected IPorApprove iPorApprove;
+    protected IPorSendForApprovalAndApprove iPorSendForApprovalAndApprove;
     protected IPoSendForVendor iPoSendForVendor;
     protected IOsCreate iOsCreate;
     protected IOsEdit iOsEdit;
@@ -204,8 +208,10 @@ public class BaseMain {
             page = playwrightFactory.initializePage(jsonNode);
             toastrUtil = new ToastrUtil(page);
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
-            prListFlow = new PR_List_Flow();
+            prListFlow = new PR_List_Flow(page);
             msaFlow = new MSA_Flow(page);
+            oaFlow = new OA_Flow(page);
+            ivFlow = new IV_Flow(page);
 
 //TODO Requisition
             iLogin = new Login(jsonNode, page);
@@ -234,12 +240,12 @@ public class BaseMain {
             iCeCreate = new CommercialEvaluation(iLogin, jsonNode, page, iLogout);
 
 //TODO Purchase Order Requests
-            iPorCreate = new PorCreate(iLogin, jsonNode, page, iLogout, prListFlow);
+            iPorCreate = new PorCreate(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper, prListFlow);
             iPorEdit = new PorEdit(iLogin, jsonNode, page, iLogout);
-            iPorSuspend = new PorSuspend(iLogin, jsonNode, page, iLogout, iPorEdit, iCeCreate, iPorCreate);
-            iPorSendForApproval = new PorSendForApproval(iLogin, jsonNode, page, iLogout);
+            iPorSuspend = new PorSuspend(iLogin, jsonNode, page, iLogout, iPrEdit, iPrSendForApproval, iPrApprove, iPrAssign, iPorCreate, iPorEdit, iCeCreate);
+            iPorSendForApproval = new PorSendForApproval(iLogin, jsonNode, page, iLogout, objectMapper, playwrightFactory);
             iPorReject = new PorReject(iLogin, jsonNode, page, iLogout, iPorEdit, iPorSendForApproval);
-            iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout);
+            iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper, iPorSendForApproval);
             iPorSendForApprovalAndApprove = new PorSendForApprovalAndApprove(iPorApprove, iPorSendForApproval, msaFlow);
 
 //TODO Purchase Orders

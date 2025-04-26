@@ -1,6 +1,7 @@
 package com.source.classes.purchaseorderrequests.reject;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.purchaseorderrequests.IPorSendForApproval;
 import com.microsoft.playwright.Page;
 import com.source.interfaces.purchaseorderrequests.IPorReject;
@@ -37,12 +38,9 @@ public class PorReject implements IPorReject {
 
     public void porReject(String type, String purchaseType) {
         try {
-            List<String> matchingApprovers = iPorSendForApproval.getApprovers(type, purchaseType);
+            String approver = jsonNode.get("purchaseOrderRequests").get("approvers").asText();
 
-            for(String approver : matchingApprovers){
-                iLogin.performLogin(approver);
-                break;
-            }
+            iLogin.performLogin(approver);
 
             Locator porNavigationBar = page.locator(POR_NAVIGATION_BAR);
             porNavigationBar.click();
@@ -60,9 +58,9 @@ public class PorReject implements IPorReject {
             Locator acceptLocator = page.locator(YES);
             acceptLocator.click();
 
-            iLogout.performLogout();
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
-            iPorEdit.porEdit(type, purchaseType);
+            iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in POR Reject function: {}", exception.getMessage());
         }
