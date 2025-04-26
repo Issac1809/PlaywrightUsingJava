@@ -9,6 +9,7 @@ import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Response;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.purchaseorderrequests.IPorCreate;
 import com.source.interfaces.login.ILogin;
@@ -245,7 +246,7 @@ public class PorCreate implements IPorCreate {
             String creditPeriodInDays = jsonNode.get("purchaseOrderRequests").get("creditPeriodInDays").asText();
 
             if(advancePaymentFlag){
-                //TODO Advance Payment
+                page.waitForLoadState(LoadState.NETWORKIDLE);
                 Locator advancePaymentButtonLocator = page.locator(ADVANCE_PAYMENT_BUTTON);
                 advancePaymentButtonLocator.click();
 
@@ -291,7 +292,7 @@ public class PorCreate implements IPorCreate {
                     submitButtonLocator1.click();
                 }
             } else if (milestonePaymentFlag) {
-                //TODO Milestone Payment
+                page.waitForLoadState(LoadState.NETWORKIDLE);
                 int milestoneCount = jsonNode.get("purchaseOrderRequests").get("milestonePaymentCount").asInt();
                 int reminder = 100 % milestoneCount;
                 int percentage = 100 / milestoneCount;

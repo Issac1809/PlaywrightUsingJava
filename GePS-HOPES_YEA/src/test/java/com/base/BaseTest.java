@@ -82,8 +82,6 @@ import com.source.classes.orderschedules.edit.OsEdit;
 import com.source.classes.orderschedules.edit.OsEditTest;
 import com.source.classes.orderschedules.reject.OsReject;
 import com.source.classes.orderschedules.reject.OsRejectTest;
-import com.source.classes.purchaseorderrequests.approvalandapprove.PorSendForApprovalAndApprove;
-import com.source.classes.purchaseorderrequests.approvalandapprove.PorSendForApprovalAndApproveTest;
 import com.source.classes.purchaseorderrequests.approve.PorApprove;
 import com.source.classes.purchaseorderrequests.approve.PorApproveTest;
 import com.source.classes.purchaseorderrequests.create.PorCreate;
@@ -246,8 +244,6 @@ public class BaseTest {
     protected IPorReject iPorReject;
     protected PorApproveTest porApproveTest;
     protected IPorApprove iPorApprove;
-    protected PorSendForApprovalAndApproveTest porSendForApprovalAndApproveTest;
-    protected IPorSendForApprovalAndApprove iPorSendForApprovalAndApprove;
     protected PoSendForVendorTest poSendForVendorTest;
     protected IPoSendForVendor iPoSendForVendor;
     protected OsCreateTest osCreateTest;
@@ -410,12 +406,10 @@ public class BaseTest {
             suspendEditTest = new SuspendEditTest();
             iPorSendForApproval = new PorSendForApproval(iLogin, jsonNode, page, iLogout, objectMapper, playwrightFactory);
             porSendForApprovalTest = new PorSendForApprovalTest();
-            iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper, iPorSendForApproval);
+            iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper, iPorSendForApproval, msaFlow);
             porApproveTest = new PorApproveTest();
             iPorReject = new PorReject(iLogin, jsonNode, page, iLogout, iPorEdit, iPorSendForApproval);
             porRejectTest = new PorRejectTest();
-            iPorSendForApprovalAndApprove = new PorSendForApprovalAndApprove(iPorApprove, iPorSendForApproval, msaFlow);
-            porSendForApprovalAndApproveTest = new PorSendForApprovalAndApproveTest();
 
 //TODO Purchase Order
             iPoSendForVendor = new SendForVendor(iLogin, jsonNode, page, iLogout);

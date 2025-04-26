@@ -15,9 +15,9 @@ public class MSA_APIHelper {
         this.logger = LoggerUtil.getLogger(MSA_APIHelper.class);
     }
 
-    public void updateStatus(String apiUrl) {
+    public void updateStatus(String apiUrl, int id) {
         try {
-            page.request().fetch(apiUrl + "7808", RequestOptions.create());
+            page.request().fetch(apiUrl + id, RequestOptions.create());
             page.close();
         } catch (Exception exception) {
             logger.error("Exception in Update Status Function: {}", exception.getMessage());

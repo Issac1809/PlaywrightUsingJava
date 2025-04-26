@@ -54,6 +54,9 @@ public class PorSendForApproval implements IPorSendForApproval {
             Locator sendForApprovalButtonLocator = page.locator(SEND_FOR_APPROVAL__BUTTON);
             sendForApprovalButtonLocator.click();
 
+            page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             Locator approvalPopupLocator = page.locator(APPROVAL_POP_UP);
 
             if(approvalPopupLocator.first().isEnabled() && approvalPopupLocator.first().isVisible() || !approvalPopupLocator.first().isHidden()) {
@@ -66,7 +69,7 @@ public class PorSendForApproval implements IPorSendForApproval {
                     cfoDropdownLocator.click();
                     Locator cfoIdLocator = page.locator(getCfoId(cfoMailId));
                     cfoIdLocator.click();
-                } else if (presidentDropdownLocator.isVisible()) {
+                } if (presidentDropdownLocator.isVisible()) {
                     presidentDropdownLocator.click();
                     Locator presidentIdLocator = page.locator(getPresidentId(presidentMailId));
                     presidentIdLocator.click();

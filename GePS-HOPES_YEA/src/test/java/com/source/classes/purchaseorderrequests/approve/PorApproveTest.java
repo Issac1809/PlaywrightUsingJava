@@ -9,7 +9,7 @@ public class PorApproveTest extends BaseTest {
     @Parameters({"type", "purchaseType"})
     public void approvalAndApprove(String type, String purchaseType){
         try {
-            iPorApprove.savePorAprovers(type, purchaseType);
+            iPorApprove.approve(type, purchaseType);
         } catch (Exception exception) {
             logger.error("Exception in POR Approve Test Function: {}", exception.getMessage());
         }
