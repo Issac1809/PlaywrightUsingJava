@@ -52,7 +52,6 @@ import com.source.classes.purchaseorderrequests.edit.PorEdit;
 import com.source.classes.purchaseorderrequests.reject.PorReject;
 import com.source.classes.purchaseorderrequests.approve.PorApprove;
 import com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApproval;
-import com.source.classes.purchaseorderrequests.approvalandapprove.PorSendForApprovalAndApprove;
 import com.source.classes.purchaseorderrequests.suspend.PorSuspend;
 import com.source.classes.purchaseorders.SendForVendor;
 import com.source.classes.requestforquotations.commercialevaluation.CommercialEvaluation;
@@ -153,7 +152,6 @@ public class BaseMain {
     protected IPorSendForApproval iPorSendForApproval;
     protected IPorReject iPorReject;
     protected IPorApprove iPorApprove;
-    protected IPorSendForApprovalAndApprove iPorSendForApprovalAndApprove;
     protected IPoSendForVendor iPoSendForVendor;
     protected IOsCreate iOsCreate;
     protected IOsEdit iOsEdit;
@@ -245,8 +243,7 @@ public class BaseMain {
             iPorSuspend = new PorSuspend(iLogin, jsonNode, page, iLogout, iPrEdit, iPrSendForApproval, iPrApprove, iPrAssign, iPorCreate, iPorEdit, iCeCreate);
             iPorSendForApproval = new PorSendForApproval(iLogin, jsonNode, page, iLogout, objectMapper, playwrightFactory);
             iPorReject = new PorReject(iLogin, jsonNode, page, iLogout, iPorEdit, iPorSendForApproval);
-            iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper, iPorSendForApproval);
-            iPorSendForApprovalAndApprove = new PorSendForApprovalAndApprove(iPorApprove, iPorSendForApproval, msaFlow);
+            iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper, iPorSendForApproval, msaFlow);
 
 //TODO Purchase Orders
             iPoSendForVendor = new SendForVendor(iLogin, jsonNode, page, iLogout);

@@ -7,9 +7,9 @@
     "requesterEmail" : "requester@cormsquare.com",
     "financeCheckerEmail" : "financechecker@cormsquare.com",
     "logisticsManagerEmail" : "logisticsmanager@cormsquare.com",
-    "prApproverGroupBEmail" : "admin@cormsquare.com",
-    "prApproverGroupCEmail" : "departmentmanager@cormsquare.com",
-    "prApproverGroupDEmail" : "businessunitmanager@cormsquare.com",
+    "prApproverGroupBEmail" : "projectmanager3@cormsquare.com",
+    "prApproverGroupCEmail" : "requester2@cormsquare.com",
+    "prApproverGroupDEmail" : "requester@cormsquare.com",
     "projectManagerEmail" : "projectmanager@cormsquare.com",
     "presidentDirectorCorporateEmail" : "Achyuth@sharklasers.com",
     "vendorEmail" : "alpha123@cormsquare.com"
@@ -24,7 +24,7 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-335.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-70.0",
     "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-717.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-387.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-663.0",
@@ -57,9 +57,9 @@
     "requisitionStatus" : "Draft",
     "requisitionNotes" : "Requisition Notes and Attachments",
     "requisitionFileType" : "Internal",
-    "requisitionApprovers" : "requester@cormsquare.com",
+    "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "4ac73053-75b8-40db-99f8-8f34577d9665",
+    "requisitionUid" : "7ac4381e-076b-422d-b62e-08da7ae8442d",
     "itemImport" : "true",
     "requisitionItemCount" : "3",
     "salesTransactionNumber" : "240025TRN03058",
@@ -92,9 +92,9 @@
     "milestonePaymentCount" : 2,
     "taxCode" : "PZ-Zero Rated Purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "bcb25a89-0679-460f-b2a9-9cc481742fcf",
-    "purchaseOrderRequestId" : "8082",
-    "approvers" : "projectmanager@cormsquare.com"
+    "purchaseOrderRequestUid" : "cbd192cf-8a8a-480d-9398-855e3457215f",
+    "purchaseOrderRequestId" : "8083",
+    "approvers" : [ "projectmanager@cormsquare.com", "projectmanager3@cormsquare.com", "requester2@cormsquare.com", "requester@cormsquare.com", "buyer@cormsquare.com", "buyermanager@cormsquare.com", "cfo@cormsquare.com", "Achyuth@sharklasers.com" ]
   },
   "purchaseOrders" : {
     "poReferenceId" : "240024PO00289",

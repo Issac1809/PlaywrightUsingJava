@@ -36,6 +36,7 @@ public class MSA_Flow {
             String remotePOFilePathPO = jsonNode.get("msa").get("remotePOFilePath").asText();
             String readPORAPIUrl = jsonNode.get("msa").get("readPORAPIUrl").asText();
             String generatePOAPIUrl = jsonNode.get("msa").get("generatePOAPIUrl").asText();
+            int id = jsonNode.get("purchaseOrderRequests").get("purchaseOrderRequestId").asInt();
 
 
 //TODO Step 1: Connect to FTP and Download File
@@ -56,8 +57,8 @@ public class MSA_Flow {
 
 //TODO Step 5: Call API to Update Status
             MSA_APIHelper msaApiHelper = new MSA_APIHelper(page);
-            msaApiHelper.updateStatus(readPORAPIUrl);
-            msaApiHelper.updateStatus(generatePOAPIUrl);
+            msaApiHelper.updateStatus(readPORAPIUrl, id);
+            msaApiHelper.updateStatus(generatePOAPIUrl, id);
         } catch (Exception exception) {
             logger.error("Exception in MSA File Automation Flow Function: {}", exception.getMessage());
         }

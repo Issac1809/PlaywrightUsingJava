@@ -102,7 +102,7 @@
         <parameter name="type" value="Sales"/>
         <parameter name="purchaseType" value="Catalog"/>
         <classes>
-            <class name="com.source.classes.purchaseorderrequests.approvalandapprove.PorSendForApprovalAndApproveTest"/>
+            <class name="com.source.classes.purchaseorderrequests.approve.PorApproveTest"/>
         </classes>
     </test>
 
