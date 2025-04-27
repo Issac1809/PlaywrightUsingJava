@@ -1,12 +1,13 @@
 pipeline {
-    agent { label 'linux' }
+    agent any
 
     tools {
         maven 'Maven'
     }
 
     environment {
-        BRANCH = 'master'
+        JOB_NAME = 'GePS-HOPES_YEA Functional End to End Test'
+        BRANCH = 'GePS-HOPES'
         CREDENTIALS_ID = 'github-credentials'
         MAVEN_GOALS = 'clean package'
         TEST_SUITE = 'src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml'
@@ -15,18 +16,21 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                cleanWs() // Clean workspace before starting
+                cleanWs()
                 git credentialsId: "${CREDENTIALS_ID}", url: 'https://github.com/CormSquare/GePS.git', branch: "${BRANCH}"
             }
         }
 
-        stage('Build') {
+        stage('Build YEA Project') {
             steps {
-                sh "mvn ${MAVEN_GOALS}"
+                dir('GePS - YEA') {
+                    echo "Building GePS - YEA Project..."
+                    sh "mvn ${MAVEN_GOALS}"
+                }
             }
             post {
                 success {
-                    archiveArtifacts artifacts: 'target/*.jar', onlyIfSuccessful: true
+                    archiveArtifacts artifacts: 'GePS - YEA/target/*.jar', onlyIfSuccessful: true
                 }
                 failure {
                     echo "Build failed. Please check the logs."
@@ -34,17 +38,27 @@ pipeline {
             }
         }
 
+        stage('Start Selenium Grid') {
+            steps {
+                echo "Starting Selenium Grid using Docker Compose..."
+                sh 'docker-compose -f docker-compose.yaml up -d'
+                sleep 10
+            }
+        }
+
         stage('Regression Automation Test') {
             when {
-                succeeded()
+                success()
             }
             steps {
                 echo "Executing Regression Tests on Latest Build..."
-                sh "mvn clean test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+                dir('GePS - YEA') {
+                    sh "mvn clean test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+                }
             }
             post {
                 always {
-                    junit 'target/surefire-reports/*.xml' // Publish JUnit test results
+                    junit 'GePS - YEA/target/surefire-reports/*.xml'
                 }
                 failure {
                     echo "Tests failed. Please check the test reports."
@@ -52,33 +66,96 @@ pipeline {
             }
         }
 
-        stage('Publish Test Report') {
+        stage('Start ChainTest Report') {
+            steps {
+                echo "Starting ChainTest reporting service..."
+                sh 'docker-compose -f docker-compose-h2.yml up -d'
+                sleep 10
+            }
+        }
+
+        stage('Publish Chain Test Report') {
             steps {
                 script {
-                    if (fileExists('target/surefire-reports/TestExecutionReport.html')) {
-                        publishHTML([allowMissing: false,
-                                     alwaysLinkToLastBuild: true,
-                                     keepAll: true,
-                                     reportDir: 'target/surefire-reports',
-                                     reportFiles: 'TestExecutionReport.html',
-                                     reportName: 'HTML Extent Report'])
+                    if (fileExists('GePS - YEA/target/chaintest-reports/index.html')) {
+                        publishHTML([
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: true,
+                            keepAll: true,
+                            reportDir: 'GePS - YEA/target/chaintest-reports',
+                            reportFiles: 'index.html',
+                            reportName: 'Chain Test Report'
+                        ])
                     } else {
-                        echo "Test report not found. Skipping report publishing."
+                        echo "Chain test report not found. Skipping report publishing."
                     }
                 }
+            }
+        }
+
+        stage('Publish Test Execution Report') {
+            steps {
+                script {
+                    if (fileExists('GePS - YEA/target/surefire-reports/TestExecutionReport.html')) {
+                        publishHTML([
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: true,
+                            keepAll: true,
+                            reportDir: 'GePS - YEA/target/surefire-reports',
+                            reportFiles: 'TestExecutionReport.html',
+                            reportName: 'HTML Extent Report'
+                        ])
+                    } else {
+                        echo "Test execution report not found. Skipping report publishing."
+                    }
+                }
+            }
+        }
+
+        stage('Stop Selenium Grid') {
+            steps {
+                echo "Stopping Selenium Grid..."
+                sh 'docker-compose -f docker-compose.yaml down'
+            }
+        }
+
+        stage('Stop ChainTest Report Service') {
+            steps {
+                echo "Stopping ChainTest Report Service..."
+                sh 'docker-compose -f docker-compose-h2.yml down'
             }
         }
     }
 
     post {
         always {
-            cleanWs() // Clean workspace after pipeline execution
+            cleanWs()
         }
         failure {
-            echo "Pipeline failed. Please check the logs."
+            script {
+                emailext(
+                    to: 'issac.raja@cormsquare.com',
+                    subject: "❌ Build Failed: ${env.JOB_NAME}",
+                    body: """Hi Team,<br><br>
+                             The Jenkins build for <b>${env.JOB_NAME}</b> has <font color="red">FAILED</font>.<br>
+                             Please check the attached test reports for more details.<br><br>
+                             <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
+                    attachmentsPattern: 'GePS - YEA/target/chaintest-reports/index.html, GePS - YEA/target/surefire-reports/TestExecutionReport.html'
+                )
+            }
         }
         success {
-            echo "Pipeline executed successfully."
+            script {
+                emailext(
+                    to: 'issac.raja@cormsquare.com',
+                    subject: "✔️ Build Success: ${env.JOB_NAME}",
+                    body: """Hi Team,<br><br>
+                             The Jenkins build for <b>${env.JOB_NAME}</b> was <font color="green">SUCCESSFUL</font>.<br>
+                             Please find the attached test reports for your review.<br><br>
+                             <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
+                    attachmentsPattern: 'GePS - YEA/target/chaintest-reports/index.html, GePS - YEA/target/surefire-reports/TestExecutionReport.html'
+                )
+            }
         }
     }
 }
