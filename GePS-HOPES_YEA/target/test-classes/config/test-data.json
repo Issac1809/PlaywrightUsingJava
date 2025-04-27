@@ -24,8 +24,8 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-70.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-717.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-763.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-378.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-387.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-663.0",
     "departmentPic" : "requester@cormsquare.com",
@@ -59,7 +59,7 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "7ac4381e-076b-422d-b62e-08da7ae8442d",
+    "requisitionUid" : "12def234-086f-44b4-bd24-15cc20c33b45",
     "itemImport" : "true",
     "requisitionItemCount" : "3",
     "salesTransactionNumber" : "240025TRN03058",
@@ -67,7 +67,7 @@
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
-    "requestForQuotationUid" : "7fea56d7-555f-4012-b16f-a31226740b7d",
+    "requestForQuotationUid" : "b361f5a1-75b5-4950-8b00-30e622b2905e",
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",
@@ -92,9 +92,9 @@
     "milestonePaymentCount" : 2,
     "taxCode" : "PZ-Zero Rated Purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "cbd192cf-8a8a-480d-9398-855e3457215f",
-    "purchaseOrderRequestId" : "8083",
-    "approvers" : [ "projectmanager@cormsquare.com", "projectmanager3@cormsquare.com", "requester2@cormsquare.com", "requester@cormsquare.com", "buyer@cormsquare.com", "buyermanager@cormsquare.com", "cfo@cormsquare.com", "Achyuth@sharklasers.com" ]
+    "purchaseOrderRequestUid" : "8ab7b1b4-0531-497f-873f-c005b4005313",
+    "purchaseOrderRequestId" : "8087",
+    "approvers" : "projectmanager@cormsquare.com"
   },
   "purchaseOrders" : {
     "poReferenceId" : "240024PO00289",

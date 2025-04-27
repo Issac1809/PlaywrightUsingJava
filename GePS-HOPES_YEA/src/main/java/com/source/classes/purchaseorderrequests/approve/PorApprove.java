@@ -181,6 +181,8 @@ public class PorApprove implements IPorApprove {
                 Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
                 acceptButtonLocator.click();
 
+                msaFlow.msaFlow();
+
                 iLogout.performLogout();
             }
         } catch (Exception exception) {
