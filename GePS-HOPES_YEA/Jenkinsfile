@@ -8,7 +8,7 @@ pipeline {
     environment {
         JOB_NAME = 'GePS-HOPES_YEA'
         BRANCH = 'GePS-HOPES'
-        CREDENTIALS_ID = 'github-credentials'
+        CREDENTIALS_ID = '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'
         MAVEN_GOALS = 'clean package'
         TEST_SUITE = 'src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml'
     }
