@@ -24,8 +24,8 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-763.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-378.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-467.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-360.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-387.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-663.0",
     "departmentPic" : "requester@cormsquare.com",
@@ -59,7 +59,7 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "12def234-086f-44b4-bd24-15cc20c33b45",
+    "requisitionUid" : "054272c5-48b3-4e79-a961-557a1c52bfab",
     "itemImport" : "true",
     "requisitionItemCount" : "3",
     "salesTransactionNumber" : "240025TRN03058",
@@ -67,7 +67,7 @@
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
-    "requestForQuotationUid" : "b361f5a1-75b5-4950-8b00-30e622b2905e",
+    "requestForQuotationUid" : "45135eff-d80e-4796-84ca-b33bf54f12b1",
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",
@@ -92,9 +92,9 @@
     "milestonePaymentCount" : 2,
     "taxCode" : "PZ-Zero Rated Purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "8ab7b1b4-0531-497f-873f-c005b4005313",
-    "purchaseOrderRequestId" : "8087",
-    "approvers" : "projectmanager@cormsquare.com"
+    "purchaseOrderRequestUid" : "7a5e09b3-0dc3-4133-a4b6-be109834ebe0",
+    "purchaseOrderRequestId" : "8095",
+    "approvers" : [ "projectmanager@cormsquare.com", "buyer@cormsquare.com" ]
   },
   "purchaseOrders" : {
     "poReferenceId" : "240024PO00289",
