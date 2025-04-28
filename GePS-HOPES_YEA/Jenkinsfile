@@ -8,165 +8,150 @@ pipeline {
     environment {
         JOB_NAME = 'GePS-HOPES_YEA'
         DEVELOPMENT_BRANCH = 'GePS-HOPES'
-        TESTING_BRANCH = 'main'
+        TESTING_BRANCH = "main"
         CREDENTIALS_ID = '813c6e55-37f7-4f42-8153-3a19b435f10b'
-        MAVEN_GOALS = 'clean package'
+        MAVEN_GOALS = 'clean package -T 1C'  // Use parallel execution
         PROJECT_NAME = 'GEPS-HOPES_YEA'
         TEST_SUITE = "src/test/resources/testrunners/${PROJECT_NAME}_functional-test.xml"
-        SUREFIRE_REPORT_DIR = "target/${PROJECT_NAME}/surefire-reports"
-        CHAIN_TEST_REPORT_DIR = "target/${PROJECT_NAME}/chaintest-reports"
+        SUREFIRE_REPORT_DIR = "GePS-Testing/target/${PROJECT_NAME}/surefire-reports"
+        CHAIN_TEST_REPORT_DIR = "GePS-Testing/target/${PROJECT_NAME}/chaintest-reports"
     }
 
     stages {
-        stage('Clean Workspace') {
-            steps {
-                cleanWs()
+        stage('Checkout Repositories') {
+            parallel {
+                stage('Checkout GePS Repo') {
+                    steps {
+                        cleanWs()
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: "${DEVELOPMENT_BRANCH}"]],
+                            extensions: [
+                                [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
+                                    [$class: 'SparseCheckoutPath', path: 'GePS - YEA/']
+                                ]],
+                                [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 5]
+                            ],
+                            userRemoteConfigs: [[
+                                url: 'https://github.com/CormSquare/GePS.git',
+                                credentialsId: "${CREDENTIALS_ID}"
+                            ]]
+                        ])
+                        echo "✅ Checked out GePS repo directory (GePS - YEA)."
+                    }
+                }
+                stage('Checkout GePS-Testing Repo') {
+                    steps {
+                        cleanWs()
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: "${TESTING_BRANCH}"]],
+                            extensions: [
+                                [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
+                                    [$class: 'SparseCheckoutPath', path: 'GePS_HOPES_YEA/']
+                                ]],
+                                [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 5]
+                            ],
+                            userRemoteConfigs: [[
+                                url: 'https://github.com/CormSquare/GePS-Testing.git',
+                                credentialsId: "${CREDENTIALS_ID}"
+                            ]]
+                        ])
+                        echo "✅ Checked out GePS-Testing repo directory (GePS-HOPES_YEA)."
+                    }
+                }
             }
         }
 
-        stage('Checkout Dev Repo (Only GePS - YEA)') {
+        stage('Build and Test YEA Project') {
             steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: "${DEVELOPMENT_BRANCH}"]],
-                    extensions: [
-                        [$class: 'RelativeTargetDirectory', relativeTargetDir: 'GePS'],
-                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
-                            [$class: 'SparseCheckoutPath', path: 'GePS - YEA/']
-                        ]],
-                        [$class: 'CloneOption', shallow: true, depth: 1, noTags: false, timeout: 10]
-                    ],
-                    userRemoteConfigs: [[
-                        url: 'https://github.com/CormSquare/GePS.git',
-                        credentialsId: "${CREDENTIALS_ID}"
-                    ]]
-                ])
-                echo "Checked out ONLY 'GePS - YEA' directory from GePS repo into 'GePS' folder."
-            }
-        }
-
-        stage('Checkout Testing Repo (Only GePS-HOPES_YEA)') {
-            steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: "${TESTING_BRANCH}"]],
-                    extensions: [
-                        [$class: 'RelativeTargetDirectory', relativeTargetDir: 'GePS-Testing'],
-                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
-                            [$class: 'SparseCheckoutPath', path: 'GePS-HOPES_YEA/']
-                        ]],
-                        [$class: 'CloneOption', shallow: true, depth: 1, noTags: false, timeout: 10]
-                    ],
-                    userRemoteConfigs: [[
-                        url: 'https://github.com/CormSquare/GePS-Testing.git',
-                        credentialsId: "${CREDENTIALS_ID}"
-                    ]]
-                ])
-                echo "Checked out ONLY 'GePS-HOPES_YEA' directory from GePS-Testing repo into 'GePS-Testing' folder."
-            }
-        }
-
-        stage('Build YEA Project') {
-            steps {
-                dir('GePS-Testing/GePS-HOPES_YEA') {
-                    echo "Building YEA Project inside GePS-Testing/GePS-HOPES_YEA Repo..."
-                    bat "mvn ${MAVEN_GOALS}"
+                dir('GePS-Testing') {
+                    echo "⚙️ Building and Running Tests for YEA Project in GePS-Testing Repo..."
+                    bat "mvn ${MAVEN_GOALS} -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
                 }
             }
             post {
                 success {
-                    archiveArtifacts artifacts: '**/target/*.jar', onlyIfSuccessful: true
+                    archiveArtifacts artifacts: 'GePS-Testing/target/*.jar', onlyIfSuccessful: true
                 }
                 failure {
-                    echo "Build failed. Please check the logs."
+                    echo "❌ Build and Test failed. Please check the logs."
                 }
             }
         }
 
-        stage('Start Selenium Grid') {
-            steps {
-                echo "Starting Selenium Grid using Docker Compose..."
-                bat 'docker-compose -f docker-compose.yaml up -d'
-                sleep 10
-            }
-        }
-
-        stage('Regression Automation Test') {
-            steps {
-                dir('GePS-Testing/GePS-HOPES_YEA') {
-                    echo "Executing Regression Tests on Latest Build..."
-                    bat "mvn clean test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+        stage('Start Selenium Grid and ChainTest Services') {
+            parallel {
+                stage('Start Selenium Grid') {
+                    steps {
+                        echo "🚀 Starting Selenium Grid using Docker Compose..."
+                        bat 'docker-compose -f docker-compose.yaml up -d'
+                        sleep 10
+                    }
                 }
-            }
-            post {
-                always {
-                    junit "${SUREFIRE_REPORT_DIR}/*.xml"
-                }
-                failure {
-                    echo "Tests failed. Please check the test reports."
-                }
-            }
-        }
-
-        stage('Start ChainTest Report Service') {
-            steps {
-                echo "Starting ChainTest reporting service..."
-                bat 'docker-compose -f docker-compose-h2.yml up -d'
-                sleep 10
-            }
-        }
-
-        stage('Publish Chain Test Report') {
-            steps {
-                script {
-                    def reportDir = "${CHAIN_TEST_REPORT_DIR}"
-                    if (fileExists("${reportDir}/index.html")) {
-                        publishHTML([
-                            allowMissing: false,
-                            alwaysLinkToLastBuild: true,
-                            keepAll: true,
-                            reportDir: reportDir,
-                            reportFiles: 'index.html',
-                            reportName: 'Chain Test Report'
-                        ])
-                    } else {
-                        echo "Chain test report not found. Skipping report publishing."
+                stage('Start ChainTest Report Service') {
+                    steps {
+                        echo "📝 Starting ChainTest reporting service..."
+                        bat 'docker-compose -f docker-compose-h2.yml up -d'
+                        sleep 10
                     }
                 }
             }
         }
 
-        stage('Publish Test Execution Report') {
-            steps {
-                script {
-                    def reportDir = "${SUREFIRE_REPORT_DIR}"
-                    if (fileExists("${reportDir}/TestExecutionReport.html")) {
-                        publishHTML([
-                            allowMissing: false,
-                            alwaysLinkToLastBuild: true,
-                            keepAll: true,
-                            reportDir: reportDir,
-                            reportFiles: 'TestExecutionReport.html',
-                            reportName: 'HTML Extent Report'
-                        ])
-                    } else {
-                        echo "Test execution report not found. Skipping report publishing."
+        stage('Publish Reports') {
+            parallel {
+                stage('Publish Chain Test Report') {
+                    steps {
+                        script {
+                            def reportDir = "${CHAIN_TEST_REPORT_DIR}"
+                            if (fileExists("${reportDir}/index.html")) {
+                                publishHTML([allowMissing: false,
+                                             alwaysLinkToLastBuild: true,
+                                             keepAll: true,
+                                             reportDir: reportDir,
+                                             reportFiles: 'index.html',
+                                             reportName: 'Chain Test Report'])
+                            } else {
+                                echo "⚠️ Chain test report not found. Skipping report publishing."
+                            }
+                        }
+                    }
+                }
+                stage('Publish Test Execution Report') {
+                    steps {
+                        script {
+                            def reportDir = "${SUREFIRE_REPORT_DIR}"
+                            if (fileExists("${reportDir}/TestExecutionReport.html")) {
+                                publishHTML([allowMissing: false,
+                                             alwaysLinkToLastBuild: true,
+                                             keepAll: true,
+                                             reportDir: reportDir,
+                                             reportFiles: 'TestExecutionReport.html',
+                                             reportName: 'HTML Extent Report'])
+                            } else {
+                                echo "⚠️ Test execution report not found. Skipping report publishing."
+                            }
+                        }
                     }
                 }
             }
         }
 
-        stage('Stop Selenium Grid') {
-            steps {
-                echo "Stopping Selenium Grid..."
-                bat 'docker-compose -f docker-compose.yaml down'
-            }
-        }
-
-        stage('Stop ChainTest Report Service') {
-            steps {
-                echo "Stopping ChainTest Report Service..."
-                bat 'docker-compose -f docker-compose-h2.yml down'
+        stage('Stop Services') {
+            parallel {
+                stage('Stop Selenium Grid') {
+                    steps {
+                        echo "🛑 Stopping Selenium Grid..."
+                        bat 'docker-compose -f docker-compose.yaml down'
+                    }
+                }
+                stage('Stop ChainTest Report Service') {
+                    steps {
+                        echo "🛑 Stopping ChainTest Report Service..."
+                        bat 'docker-compose -f docker-compose-h2.yml down'
+                    }
+                }
             }
         }
     }
