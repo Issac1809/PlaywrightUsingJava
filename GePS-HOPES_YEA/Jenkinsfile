@@ -43,13 +43,13 @@ pipeline {
                     echo "Building GePS - YEA Project..."
                     bat "mvn ${MAVEN_GOALS}"
                 }
-                post {
-                    success {
-                        archiveArtifacts artifacts: 'target/*.jar', onlyIfSuccessful: true
-                    }
-                    failure {
-                        echo "Build failed. Please check the logs."
-                    }
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'target/*.jar', onlyIfSuccessful: true
+                }
+                failure {
+                    echo "Build failed. Please check the logs."
                 }
             }
         }
