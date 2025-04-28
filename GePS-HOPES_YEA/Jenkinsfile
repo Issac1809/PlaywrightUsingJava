@@ -7,27 +7,41 @@ pipeline {
 
     environment {
         JOB_NAME = 'GePS-HOPES_YEA'
-        BRANCH = 'GePS-HOPES'
+        DEVELOPMENT_BRANCH = 'GePS-HOPES'
+        TESTING_BRANCH = "main"
         CREDENTIALS_ID = '813c6e55-37f7-4f42-8153-3a19b435f10b'
         MAVEN_GOALS = 'clean package'
-        TEST_SUITE = 'src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml'
+        PROJECT_NAME = 'GEPS-HOPES_YEA'
+        TEST_SUITE = "src/test/resources/testrunners/${PROJECT_NAME}_functional-test.xml"
+        SUREFIRE_REPORT_DIR = "GePS-Testing/target/${PROJECT_NAME}/surefire-reports"
+        CHAIN_TEST_REPORT_DIR = "GePS-Testing/target/${PROJECT_NAME}/chaintest-reports"
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('Checkout Dev Repo (GePS)') {
             steps {
                 cleanWs()
-                git credentialsId: "${CREDENTIALS_ID}", url: 'https://github.com/CormSquare/GePS.git', branch: "${BRANCH}"
+                git credentialsId: "${CREDENTIALS_ID}", url: 'https://github.com/CormSquare/GePS.git', branch: "${DEVELOPMENT_BRANCH}"
+            }
+        }
+
+        stage('Checkout Testing Repo (GePS-Testing)') {
+            steps {
+                cleanWs()
+                git credentialsId: "${CREDENTIALS_ID}", url: 'https://github.com/CormSquare/GePS-Testing.git', branch: "${TESTING_BRANCH}"
             }
         }
 
         stage('Build YEA Project') {
             steps {
-                bat "mvn ${MAVEN_GOALS}"
+                dir('GePS-Testing') {
+                    echo "Building YEA Project in GePS-Testing Repo..."
+                    bat "mvn ${MAVEN_GOALS}"
+                }
             }
             post {
                 success {
-                    archiveArtifacts artifacts: 'target/*.jar', onlyIfSuccessful: true
+                    archiveArtifacts artifacts: 'GePS-Testing/target/*.jar', onlyIfSuccessful: true
                 }
                 failure {
                     echo "Build failed. Please check the logs."
@@ -50,7 +64,7 @@ pipeline {
             }
             post {
                 always {
-                    junit 'target/surefire-reports/*.xml'
+                    junit "${SUREFIRE_REPORT_DIR}/*.xml"
                 }
                 failure {
                     echo "Tests failed. Please check the test reports."
@@ -69,11 +83,12 @@ pipeline {
         stage('Publish Chain Test Report') {
             steps {
                 script {
-                    if (fileExists('target/chaintest-reports/index.html')) {
+                    def reportDir = "${CHAIN_TEST_REPORT_DIR}"
+                    if (fileExists("${reportDir}/index.html")) {
                         publishHTML([allowMissing: false,
                                      alwaysLinkToLastBuild: true,
                                      keepAll: true,
-                                     reportDir: 'target/chaintest-reports',
+                                     reportDir: reportDir,
                                      reportFiles: 'index.html',
                                      reportName: 'Chain Test Report'])
                     } else {
@@ -86,11 +101,12 @@ pipeline {
         stage('Publish Test Execution Report') {
             steps {
                 script {
-                    if (fileExists('target/surefire-reports/TestExecutionReport.html')) {
+                    def reportDir = "${SUREFIRE_REPORT_DIR}"
+                    if (fileExists("${reportDir}/TestExecutionReport.html")) {
                         publishHTML([allowMissing: false,
                                      alwaysLinkToLastBuild: true,
                                      keepAll: true,
-                                     reportDir: 'target/surefire-reports',
+                                     reportDir: reportDir,
                                      reportFiles: 'TestExecutionReport.html',
                                      reportName: 'HTML Extent Report'])
                     } else {
@@ -128,7 +144,7 @@ pipeline {
                              The Jenkins build for <b>${env.JOB_NAME}</b> has <font color="red">FAILED</font>.<br>
                              Please check the attached test reports for more details.<br><br>
                              <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
-                    attachmentsPattern: 'target/chaintest-reports/index.html, target/surefire-reports/TestExecutionReport.html'
+                    attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${SUREFIRE_REPORT_DIR}/TestExecutionReport.html"
                 )
             }
         }
@@ -141,7 +157,7 @@ pipeline {
                              The Jenkins build for <b>${env.JOB_NAME}</b> was <font color="green">SUCCESSFUL</font>.<br>
                              Please find the attached test reports for your review.<br><br>
                              <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
-                    attachmentsPattern: 'target/chaintest-reports/index.html, target/surefire-reports/TestExecutionReport.html'
+                    attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${SUREFIRE_REPORT_DIR}/TestExecutionReport.html"
                 )
             }
         }
