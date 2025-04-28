@@ -17,9 +17,22 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 cleanWs()
-                git credentialsId: "${CREDENTIALS_ID}", url: 'https://github.com/CormSquare/GePS.git', branch: "${BRANCH}"
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: "${BRANCH}"]],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [
+                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
+                            [$class: 'SparseCheckoutPath', path: 'GePS - YEA/']
+                        ]]
+                    ],
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/CormSquare/GePS.git',
+                        credentialsId: "${CREDENTIALS_ID}"
+                    ]]
+                ])
                 dir('GePS - YEA') {
-                   echo "Checked out GePS - YEA directory."
+                    echo "Checked out GePS - YEA directory."
                 }
             }
         }
