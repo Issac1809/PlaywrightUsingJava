@@ -39,8 +39,8 @@ pipeline {
 
         stage('Build YEA Project') {
             steps {
-                dir('GePS - YEA') {
-                    echo "Building GePS - YEA Project..."
+                dir('GePS-HOPES-YEA') {
+                    echo "Building GePS-HOPES_YEA Project..."
                     bat "mvn ${MAVEN_GOALS}"
                 }
             }
