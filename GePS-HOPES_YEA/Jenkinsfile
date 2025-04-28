@@ -41,7 +41,7 @@ pipeline {
             steps {
                 dir('GePS - YEA') {
                     echo "Building GePS - YEA Project..."
-                    sh "mvn ${MAVEN_GOALS}"
+                    bat "mvn ${MAVEN_GOALS}"
                 }
                 post {
                     success {
@@ -57,14 +57,14 @@ pipeline {
         stage('Start Selenium Grid') {
             steps {
                 echo "Starting Selenium Grid using Docker Compose..."
-                sh 'docker-compose -f docker-compose.yaml up -d'
+                bat 'docker-compose -f docker-compose.yaml up -d'
                 sleep 10
             }
         }
 
         stage('Build') {
             steps {
-                sh "mvn ${MAVEN_GOALS}"
+                bat "mvn ${MAVEN_GOALS}"
             }
             post {
                 success {
@@ -79,7 +79,7 @@ pipeline {
         stage('Regression Automation Test') {
             steps {
                 echo "Executing Regression Tests on Latest Build..."
-                sh "mvn clean test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+                bat "mvn clean test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
             }
             post {
                 always {
@@ -94,7 +94,7 @@ pipeline {
         stage('Start ChainTest Report') {
             steps {
                 echo "Starting ChainTest reporting service..."
-                sh 'docker-compose -f docker-compose-h2.yml up -d'
+                bat 'docker-compose -f docker-compose-h2.yml up -d'
                 sleep 10
             }
         }
@@ -140,14 +140,14 @@ pipeline {
         stage('Stop Selenium Grid') {
             steps {
                 echo "Stopping Selenium Grid..."
-                sh 'docker-compose -f docker-compose.yaml down'
+                bat 'docker-compose -f docker-compose.yaml down'
             }
         }
 
         stage('Stop ChainTest Report Service') {
             steps {
                 echo "Stopping ChainTest Report Service..."
-                sh 'docker-compose -f docker-compose-h2.yml down'
+                bat 'docker-compose -f docker-compose-h2.yml down'
             }
         }
     }
