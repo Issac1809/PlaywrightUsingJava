@@ -18,6 +18,7 @@ pipeline {
             steps {
                 cleanWs()
                 git credentialsId: "${CREDENTIALS_ID}", url: 'https://github.com/CormSquare/GePS.git', branch: "${BRANCH}"
+                sh 'git checkout ${BRANCH}'
             }
         }
 
