@@ -8,7 +8,7 @@ pipeline {
     environment {
         JOB_NAME = 'GePS-HOPES_YEA'
         DEVELOPMENT_BRANCH = 'GePS-HOPES'
-        TESTING_BRANCH = "main"
+        TESTING_BRANCH = 'main'
         CREDENTIALS_ID = '813c6e55-37f7-4f42-8153-3a19b435f10b'
         MAVEN_GOALS = 'clean package'
         PROJECT_NAME = 'GEPS-HOPES_YEA'
@@ -18,45 +18,45 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Dev Repo (GePS)') {
+        stage('Clean Workspace') {
             steps {
                 cleanWs()
+            }
+        }
+
+        stage('Checkout Dev Repo (GePS)') {
+            steps {
                 checkout([
                     $class: 'GitSCM',
                     branches: [[name: "${DEVELOPMENT_BRANCH}"]],
-                    doGenerateSubmoduleConfigurations: false,
                     extensions: [
-                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
-                            [$class: 'SparseCheckoutPath', path: 'GePS - YEA/']
-                        ]]
+                        [$class: 'RelativeTargetDirectory', relativeTargetDir: 'GePS'],
+                        [$class: 'CloneOption', shallow: true, depth: 1, noTags: false, timeout: 10]
                     ],
                     userRemoteConfigs: [[
                         url: 'https://github.com/CormSquare/GePS.git',
                         credentialsId: "${CREDENTIALS_ID}"
                     ]]
                 ])
-                echo "Checked out GePS repo directory (GePS - YEA)."
+                echo "Checked out GePS repo into 'GePS' directory."
             }
         }
 
         stage('Checkout Testing Repo (GePS-Testing)') {
             steps {
-                cleanWs()
                 checkout([
                     $class: 'GitSCM',
                     branches: [[name: "${TESTING_BRANCH}"]],
-                    doGenerateSubmoduleConfigurations: false,
                     extensions: [
-                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
-                            [$class: 'SparseCheckoutPath', path: 'GePS_HOPES_YEA/']
-                        ]]
+                        [$class: 'RelativeTargetDirectory', relativeTargetDir: 'GePS-Testing'],
+                        [$class: 'CloneOption', shallow: true, depth: 1, noTags: false, timeout: 10]
                     ],
                     userRemoteConfigs: [[
                         url: 'https://github.com/CormSquare/GePS-Testing.git',
                         credentialsId: "${CREDENTIALS_ID}"
                     ]]
                 ])
-                echo "Checked out GePS-Testing repo directory (GePS_HOPES_YEA)."
+                echo "Checked out GePS-Testing repo into 'GePS-Testing' directory."
             }
         }
 
@@ -87,8 +87,10 @@ pipeline {
 
         stage('Regression Automation Test') {
             steps {
-                echo "Executing Regression Tests on Latest Build..."
-                bat "mvn clean test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+                dir('GePS-Testing') {
+                    echo "Executing Regression Tests on Latest Build..."
+                    bat "mvn clean test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+                }
             }
             post {
                 always {
@@ -113,12 +115,14 @@ pipeline {
                 script {
                     def reportDir = "${CHAIN_TEST_REPORT_DIR}"
                     if (fileExists("${reportDir}/index.html")) {
-                        publishHTML([allowMissing: false,
-                                     alwaysLinkToLastBuild: true,
-                                     keepAll: true,
-                                     reportDir: reportDir,
-                                     reportFiles: 'index.html',
-                                     reportName: 'Chain Test Report'])
+                        publishHTML([
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: true,
+                            keepAll: true,
+                            reportDir: reportDir,
+                            reportFiles: 'index.html',
+                            reportName: 'Chain Test Report'
+                        ])
                     } else {
                         echo "Chain test report not found. Skipping report publishing."
                     }
@@ -131,12 +135,14 @@ pipeline {
                 script {
                     def reportDir = "${SUREFIRE_REPORT_DIR}"
                     if (fileExists("${reportDir}/TestExecutionReport.html")) {
-                        publishHTML([allowMissing: false,
-                                     alwaysLinkToLastBuild: true,
-                                     keepAll: true,
-                                     reportDir: reportDir,
-                                     reportFiles: 'TestExecutionReport.html',
-                                     reportName: 'HTML Extent Report'])
+                        publishHTML([
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: true,
+                            keepAll: true,
+                            reportDir: reportDir,
+                            reportFiles: 'TestExecutionReport.html',
+                            reportName: 'HTML Extent Report'
+                        ])
                     } else {
                         echo "Test execution report not found. Skipping report publishing."
                     }
