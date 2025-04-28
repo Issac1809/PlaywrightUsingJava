@@ -13,8 +13,8 @@ pipeline {
         MAVEN_GOALS = 'clean package'
         PROJECT_NAME = 'GEPS-HOPES_YEA'
         TEST_SUITE = "src/test/resources/testrunners/${PROJECT_NAME}_functional-test.xml"
-        SUREFIRE_REPORT_DIR = "GePS-Testing/target/${PROJECT_NAME}/surefire-reports"
-        CHAIN_TEST_REPORT_DIR = "GePS-Testing/target/${PROJECT_NAME}/chaintest-reports"
+        SUREFIRE_REPORT_DIR = "target/${PROJECT_NAME}/surefire-reports"
+        CHAIN_TEST_REPORT_DIR = "target/${PROJECT_NAME}/chaintest-reports"
     }
 
     stages {
@@ -24,13 +24,16 @@ pipeline {
             }
         }
 
-        stage('Checkout Dev Repo (GePS)') {
+        stage('Checkout Dev Repo (Only GePS - YEA)') {
             steps {
                 checkout([
                     $class: 'GitSCM',
                     branches: [[name: "${DEVELOPMENT_BRANCH}"]],
                     extensions: [
                         [$class: 'RelativeTargetDirectory', relativeTargetDir: 'GePS'],
+                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
+                            [$class: 'SparseCheckoutPath', path: 'GePS - YEA/']
+                        ]],
                         [$class: 'CloneOption', shallow: true, depth: 1, noTags: false, timeout: 10]
                     ],
                     userRemoteConfigs: [[
@@ -38,17 +41,20 @@ pipeline {
                         credentialsId: "${CREDENTIALS_ID}"
                     ]]
                 ])
-                echo "Checked out GePS repo into 'GePS' directory."
+                echo "Checked out ONLY 'GePS - YEA' directory from GePS repo into 'GePS' folder."
             }
         }
 
-        stage('Checkout Testing Repo (GePS-Testing)') {
+        stage('Checkout Testing Repo (Only GePS-HOPES_YEA)') {
             steps {
                 checkout([
                     $class: 'GitSCM',
                     branches: [[name: "${TESTING_BRANCH}"]],
                     extensions: [
                         [$class: 'RelativeTargetDirectory', relativeTargetDir: 'GePS-Testing'],
+                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
+                            [$class: 'SparseCheckoutPath', path: 'GePS-HOPES_YEA/']
+                        ]],
                         [$class: 'CloneOption', shallow: true, depth: 1, noTags: false, timeout: 10]
                     ],
                     userRemoteConfigs: [[
@@ -56,20 +62,20 @@ pipeline {
                         credentialsId: "${CREDENTIALS_ID}"
                     ]]
                 ])
-                echo "Checked out GePS-Testing repo into 'GePS-Testing' directory."
+                echo "Checked out ONLY 'GePS-HOPES_YEA' directory from GePS-Testing repo into 'GePS-Testing' folder."
             }
         }
 
         stage('Build YEA Project') {
             steps {
-                dir('GePS-Testing') {
-                    echo "Building YEA Project in GePS-Testing Repo..."
+                dir('GePS-Testing/GePS-HOPES_YEA') {
+                    echo "Building YEA Project inside GePS-Testing/GePS-HOPES_YEA Repo..."
                     bat "mvn ${MAVEN_GOALS}"
                 }
             }
             post {
                 success {
-                    archiveArtifacts artifacts: 'GePS-Testing/target/*.jar', onlyIfSuccessful: true
+                    archiveArtifacts artifacts: '**/target/*.jar', onlyIfSuccessful: true
                 }
                 failure {
                     echo "Build failed. Please check the logs."
@@ -87,7 +93,7 @@ pipeline {
 
         stage('Regression Automation Test') {
             steps {
-                dir('GePS-Testing') {
+                dir('GePS-Testing/GePS-HOPES_YEA') {
                     echo "Executing Regression Tests on Latest Build..."
                     bat "mvn clean test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
                 }
