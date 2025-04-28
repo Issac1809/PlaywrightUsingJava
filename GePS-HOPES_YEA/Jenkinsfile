@@ -21,14 +21,42 @@ pipeline {
         stage('Checkout Dev Repo (GePS)') {
             steps {
                 cleanWs()
-                git credentialsId: "${CREDENTIALS_ID}", url: 'https://github.com/CormSquare/GePS.git', branch: "${DEVELOPMENT_BRANCH}"
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: "${DEVELOPMENT_BRANCH}"]],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [
+                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
+                            [$class: 'SparseCheckoutPath', path: 'GePS - YEA/']
+                        ]]
+                    ],
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/CormSquare/GePS.git',
+                        credentialsId: "${CREDENTIALS_ID}"
+                    ]]
+                ])
+                echo "Checked out GePS repo directory (GePS - YEA)."
             }
         }
 
         stage('Checkout Testing Repo (GePS-Testing)') {
             steps {
                 cleanWs()
-                git credentialsId: "${CREDENTIALS_ID}", url: 'https://github.com/CormSquare/GePS-Testing.git', branch: "${TESTING_BRANCH}"
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: "${TESTING_BRANCH}"]],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [
+                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
+                            [$class: 'SparseCheckoutPath', path: 'GePS_HOPES_YEA/']
+                        ]]
+                    ],
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/CormSquare/GePS-Testing.git',
+                        credentialsId: "${CREDENTIALS_ID}"
+                    ]]
+                ])
+                echo "Checked out GePS-Testing repo directory (GePS_HOPES_YEA)."
             }
         }
 
