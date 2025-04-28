@@ -17,32 +17,13 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 cleanWs()
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: "${BRANCH}"]],
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [
-                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
-                            [$class: 'SparseCheckoutPath', path: 'GePS - YEA/']
-                        ]]
-                    ],
-                    userRemoteConfigs: [[
-                        url: 'https://github.com/CormSquare/GePS.git',
-                        credentialsId: "${CREDENTIALS_ID}"
-                    ]]
-                ])
-                dir('GePS - YEA') {
-                    echo "Checked out GePS - YEA directory."
-                }
+                git credentialsId: "${CREDENTIALS_ID}", url: 'https://github.com/CormSquare/GePS.git', branch: "${BRANCH}"
             }
         }
 
         stage('Build YEA Project') {
             steps {
-                dir('GePS-HOPES-YEA') {
-                    echo "Building GePS-HOPES_YEA Project..."
-                    bat "mvn ${MAVEN_GOALS}"
-                }
+                bat "mvn ${MAVEN_GOALS}"
             }
             post {
                 success {
@@ -62,20 +43,6 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                bat "mvn ${MAVEN_GOALS}"
-            }
-            post {
-                success {
-                    archiveArtifacts artifacts: 'target/*.jar', onlyIfSuccessful: true
-                }
-                failure {
-                    echo "Build failed. Please check the logs."
-                }
-            }
-        }
-
         stage('Regression Automation Test') {
             steps {
                 echo "Executing Regression Tests on Latest Build..."
@@ -91,7 +58,7 @@ pipeline {
             }
         }
 
-        stage('Start ChainTest Report') {
+        stage('Start ChainTest Report Service') {
             steps {
                 echo "Starting ChainTest reporting service..."
                 bat 'docker-compose -f docker-compose-h2.yml up -d'
@@ -103,14 +70,12 @@ pipeline {
             steps {
                 script {
                     if (fileExists('target/chaintest-reports/index.html')) {
-                        publishHTML([
-                            allowMissing: false,
-                            alwaysLinkToLastBuild: true,
-                            keepAll: true,
-                            reportDir: 'target/chaintest-reports',
-                            reportFiles: 'index.html',
-                            reportName: 'Chain Test Report'
-                        ])
+                        publishHTML([allowMissing: false,
+                                     alwaysLinkToLastBuild: true,
+                                     keepAll: true,
+                                     reportDir: 'target/chaintest-reports',
+                                     reportFiles: 'index.html',
+                                     reportName: 'Chain Test Report'])
                     } else {
                         echo "Chain test report not found. Skipping report publishing."
                     }
@@ -122,14 +87,12 @@ pipeline {
             steps {
                 script {
                     if (fileExists('target/surefire-reports/TestExecutionReport.html')) {
-                        publishHTML([
-                            allowMissing: false,
-                            alwaysLinkToLastBuild: true,
-                            keepAll: true,
-                            reportDir: 'target/surefire-reports',
-                            reportFiles: 'TestExecutionReport.html',
-                            reportName: 'HTML Extent Report'
-                        ])
+                        publishHTML([allowMissing: false,
+                                     alwaysLinkToLastBuild: true,
+                                     keepAll: true,
+                                     reportDir: 'target/surefire-reports',
+                                     reportFiles: 'TestExecutionReport.html',
+                                     reportName: 'HTML Extent Report'])
                     } else {
                         echo "Test execution report not found. Skipping report publishing."
                     }
