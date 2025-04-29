@@ -10,11 +10,12 @@ pipeline {
         DEVELOPMENT_BRANCH = 'GePS-HOPES'
         TESTING_BRANCH = "main"
         CREDENTIALS_ID = '813c6e55-37f7-4f42-8153-3a19b435f10b'
-        MAVEN_GOALS = 'clean package'
+        MAVEN_GOALS = 'clean package -T 2C'
         PROJECT_NAME = 'GePS-HOPES_YEA'
         TEST_SUITE = "src/test/resources/testrunners/${PROJECT_NAME}_functional-test.xml"
-        SUREFIRE_REPORT_DIR = "GePS-Testing/target/${PROJECT_NAME}/surefire-reports"
-        CHAIN_TEST_REPORT_DIR = "GePS-Testing/target/${PROJECT_NAME}/chaintest-reports"
+        WORKING_DIR = 'GePS-Testing/GePS-HOPES_YEA'
+        SUREFIRE_REPORT_DIR = "${WORKING_DIR}/target/surefire-reports"
+        CHAIN_TEST_REPORT_DIR = "${WORKING_DIR}/target/chaintest-reports"
     }
 
     stages {
@@ -47,7 +48,7 @@ pipeline {
 
         stage('Checkout Testing Repository (GePS-Testing)') {
             steps {
-                dir('GePS-Testing') {   // <--- Checkout GePS-Testing into a subfolder
+                dir('GePS-Testing') {
                     checkout([
                         $class: 'GitSCM',
                         branches: [[name: "${TESTING_BRANCH}"]],
@@ -70,14 +71,14 @@ pipeline {
 
         stage('Build YEA Project') {
             steps {
-                dir('GePS-Testing') {
-                    echo "⚙️ Building YEA Project in GePS-Testing Repo..."
+                dir("${WORKING_DIR}") {
+                    echo "⚙️ Building YEA Project..."
                     bat "mvn ${MAVEN_GOALS}"
                 }
             }
             post {
                 success {
-                    archiveArtifacts artifacts: 'GePS-Testing/target/*.jar', onlyIfSuccessful: true
+                    archiveArtifacts artifacts: "${WORKING_DIR}/target/*.jar", onlyIfSuccessful: true
                 }
                 failure {
                     echo "❌ Build failed. Please check the logs."
@@ -95,8 +96,10 @@ pipeline {
 
         stage('Regression Automation Test') {
             steps {
-                echo "🧪 Executing Regression Tests on Latest Build..."
-                bat "mvn clean test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+                dir("${WORKING_DIR}") {
+                    echo "🧪 Executing Regression Tests on Latest Build..."
+                    bat "mvn clean test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+                }
             }
             post {
                 always {
@@ -119,12 +122,11 @@ pipeline {
         stage('Publish Chain Test Report') {
             steps {
                 script {
-                    def reportDir = "${CHAIN_TEST_REPORT_DIR}"
-                    if (fileExists("${reportDir}/index.html")) {
+                    if (fileExists("${CHAIN_TEST_REPORT_DIR}/index.html")) {
                         publishHTML([allowMissing: false,
                                      alwaysLinkToLastBuild: true,
                                      keepAll: true,
-                                     reportDir: reportDir,
+                                     reportDir: "${CHAIN_TEST_REPORT_DIR}",
                                      reportFiles: 'index.html',
                                      reportName: 'Chain Test Report'])
                     } else {
@@ -137,12 +139,11 @@ pipeline {
         stage('Publish Test Execution Report') {
             steps {
                 script {
-                    def reportDir = "${SUREFIRE_REPORT_DIR}"
-                    if (fileExists("${reportDir}/TestExecutionReport.html")) {
+                    if (fileExists("${SUREFIRE_REPORT_DIR}/TestExecutionReport.html")) {
                         publishHTML([allowMissing: false,
                                      alwaysLinkToLastBuild: true,
                                      keepAll: true,
-                                     reportDir: reportDir,
+                                     reportDir: "${SUREFIRE_REPORT_DIR}",
                                      reportFiles: 'TestExecutionReport.html',
                                      reportName: 'HTML Extent Report'])
                     } else {
