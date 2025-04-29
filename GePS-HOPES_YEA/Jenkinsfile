@@ -18,7 +18,7 @@ pipeline {
         PROJECT_NAME = 'GePS-HOPES_YEA'
         TEST_SUITE = "src/test/resources/testrunners/${PROJECT_NAME}_functional-test.xml"
         WORKING_DIR = 'GePS-Testing/GePS-HOPES_YEA'
-        SUREFIRE_REPORT_DIR = "${WORKING_DIR}/test-output"
+        OUTPUT_REPORT_DIR = "${WORKING_DIR}/test-output"
         CHAIN_TEST_REPORT_DIR = "${WORKING_DIR}/test-output"
         SELENIUM_STARTED = 'false'
         CHAINTEST_STARTED = 'false'
@@ -145,7 +145,7 @@ pipeline {
             }
             post {
                 always {
-                    junit "**/${SUREFIRE_REPORT_DIR}/*.xml"
+                    junit '**/target/surefire-reports/*.xml'
                 }
                 failure {
                     echo "❌ Tests failed. Please check the test reports."
@@ -169,12 +169,12 @@ pipeline {
                         echo "⚠️ Chain test report not found. Skipping."
                     }
 
-                    if (fileExists("${SUREFIRE_REPORT_DIR}/emailable-report.html")) {
+                    if (fileExists("${OUTPUT_REPORT_DIR}/emailable-report.html")) {
                         publishHTML([
                             allowMissing: false,
                             alwaysLinkToLastBuild: true,
                             keepAll: true,
-                            reportDir: "${SUREFIRE_REPORT_DIR}",
+                            reportDir: "${OUTPUT_REPORT_DIR}",
                             reportFiles: 'emailable-report.html',
                             reportName: 'HTML Extent Report'
                         ])
@@ -229,7 +229,7 @@ pipeline {
                              The Jenkins build for <b>${env.JOB_NAME}</b> has <font color="red">FAILED</font>.<br>
                              Please check the attached test reports.<br><br>
                              <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
-                    attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${SUREFIRE_REPORT_DIR}/emailable-report.html"
+                    attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${OUTPUT_REPORT_DIR}/emailable-report.html"
                 )
             }
         }
@@ -242,7 +242,7 @@ pipeline {
                              The Jenkins build for <b>${env.JOB_NAME}</b> was <font color="green">SUCCESSFUL</font>.<br>
                              Please find the attached test reports for your review.<br><br>
                              <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
-                    attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${SUREFIRE_REPORT_DIR}/emailable-report.html"
+                    attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${OUTPUT_REPORT_DIR}/emailable-report.html"
                 )
             }
         }
