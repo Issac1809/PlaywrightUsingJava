@@ -73,7 +73,7 @@ pipeline {
             steps {
                 dir("${WORKING_DIR}") {
                     echo "⚙️ Building YEA Project..."
-                    bat "mvn ${MAVEN_GOALS}"
+                    bat "mvn ${MAVEN_GOALS} -DskipTests"
                 }
             }
             post {
@@ -88,8 +88,20 @@ pipeline {
 
         stage('Start Selenium Grid') {
             steps {
-                echo "🚀 Starting Selenium Grid using Docker Compose..."
-                bat 'docker-compose -f docker-compose.yaml up -d'
+                dir("${WORKING_DIR}") {
+                    echo "🚀 Starting Selenium Grid using Docker Compose..."
+                    bat 'docker-compose -f docker-compose.yaml up -d'
+                }
+                sleep 10
+            }
+        }
+
+        stage('Start ChainTest Report Service') {
+            steps {
+                dir("${WORKING_DIR}") {
+                    echo "📝 Starting ChainTest reporting service..."
+                    bat 'docker-compose -f docker-compose-h2.yml up -d'
+                }
                 sleep 10
             }
         }
@@ -108,14 +120,6 @@ pipeline {
                 failure {
                     echo "❌ Tests failed. Please check the test reports."
                 }
-            }
-        }
-
-        stage('Start ChainTest Report Service') {
-            steps {
-                echo "📝 Starting ChainTest reporting service..."
-                bat 'docker-compose -f docker-compose-h2.yml up -d'
-                sleep 10
             }
         }
 
@@ -155,15 +159,19 @@ pipeline {
 
         stage('Stop Selenium Grid') {
             steps {
-                echo "🛑 Stopping Selenium Grid..."
-                bat 'docker-compose -f docker-compose.yaml down'
+                dir("${WORKING_DIR}") {
+                    echo "🛑 Stopping Selenium Grid..."
+                    bat 'docker-compose -f docker-compose.yaml down'
+                }
             }
         }
 
         stage('Stop ChainTest Report Service') {
             steps {
-                echo "🛑 Stopping ChainTest Report Service..."
-                bat 'docker-compose -f docker-compose-h2.yml down'
+                dir("${WORKING_DIR}") {
+                    echo "🛑 Stopping ChainTest Report Service..."
+                    bat 'docker-compose -f docker-compose-h2.yml down'
+                }
             }
         }
     }
