@@ -33,7 +33,7 @@ pipeline {
 
         stage('Checkout Development Repository (GePS)') {
             steps {
-                timeout(time: 10, unit: 'MINUTES') {
+                timeout(time: 15, unit: 'MINUTES') {
                     retry(2) {
                         checkout([
                             $class: 'GitSCM',
@@ -53,7 +53,7 @@ pipeline {
 
         stage('Checkout Testing Repository (GePS-Testing)') {
             steps {
-                timeout(time: 10, unit: 'MINUTES') {
+                timeout(time: 15, unit: 'MINUTES') {
                     retry(2) {
                         dir('GePS-Testing') {
                             checkout([
