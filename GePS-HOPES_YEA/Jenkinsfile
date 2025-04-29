@@ -10,7 +10,7 @@ pipeline {
         DEVELOPMENT_BRANCH = 'GePS-HOPES'
         TESTING_BRANCH = "main"
         CREDENTIALS_ID = '813c6e55-37f7-4f42-8153-3a19b435f10b'
-        MAVEN_GOALS = 'clean package'
+        MAVEN_GOALS = 'clean install -DskipTests=true'
         PROJECT_NAME = 'GePS-HOPES_YEA'
         TEST_SUITE = "src/test/resources/testrunners/${PROJECT_NAME}_functional-test.xml"
         WORKING_DIR = 'GePS-Testing/GePS-HOPES_YEA'
@@ -32,15 +32,10 @@ pipeline {
                     branches: [[name: "${DEVELOPMENT_BRANCH}"]],
                     doGenerateSubmoduleConfigurations: false,
                     extensions: [
-                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
-                            [$class: 'SparseCheckoutPath', path: 'GePS - YEA/']
-                        ]],
+                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS - YEA/']]],
                         [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 5]
                     ],
-                    userRemoteConfigs: [[
-                        url: 'https://github.com/CormSquare/GePS.git',
-                        credentialsId: "${CREDENTIALS_ID}"
-                    ]]
+                    userRemoteConfigs: [[url: 'https://github.com/CormSquare/GePS.git', credentialsId: "${CREDENTIALS_ID}"]]
                 ])
                 echo "✅ Checked out GePS repo directory (GePS - YEA)."
             }
@@ -54,15 +49,10 @@ pipeline {
                         branches: [[name: "${TESTING_BRANCH}"]],
                         doGenerateSubmoduleConfigurations: false,
                         extensions: [
-                            [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
-                                [$class: 'SparseCheckoutPath', path: 'GePS-HOPES_YEA/']
-                            ]],
+                            [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS-HOPES_YEA/']]],
                             [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 5]
                         ],
-                        userRemoteConfigs: [[
-                            url: 'https://github.com/CormSquare/GePS-Testing.git',
-                            credentialsId: "${CREDENTIALS_ID}"
-                        ]]
+                        userRemoteConfigs: [[url: 'https://github.com/CormSquare/GePS-Testing.git', credentialsId: "${CREDENTIALS_ID}"]]
                     ])
                 }
                 echo "✅ Checked out GePS-Testing repo directory (GePS-HOPES_YEA)."
@@ -72,8 +62,8 @@ pipeline {
         stage('Build YEA Project') {
             steps {
                 dir("${WORKING_DIR}") {
-                    echo "⚙️ Building YEA Project..."
-                    bat "mvn ${MAVEN_GOALS} -DskipTests"
+                    echo "⚙️ Building YEA Project (Skipping Tests Only for Build)..."
+                    bat "mvn ${MAVEN_GOALS}"
                 }
             }
             post {
@@ -128,12 +118,12 @@ pipeline {
             steps {
                 dir("${WORKING_DIR}") {
                     echo "🧪 Executing Regression Tests on Latest Build..."
-                    bat "mvn clean test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+                    bat "mvn test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
                 }
             }
             post {
                 always {
-                    junit "${SUREFIRE_REPORT_DIR}/*.xml"
+                    junit "**/${SUREFIRE_REPORT_DIR}/*.xml"
                 }
                 failure {
                     echo "❌ Tests failed. Please check the test reports."
@@ -145,9 +135,7 @@ pipeline {
             steps {
                 script {
                     if (fileExists("${CHAIN_TEST_REPORT_DIR}/index.html")) {
-                        publishHTML([allowMissing: false,
-                                     alwaysLinkToLastBuild: true,
-                                     keepAll: true,
+                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true,
                                      reportDir: "${CHAIN_TEST_REPORT_DIR}",
                                      reportFiles: 'index.html',
                                      reportName: 'Chain Test Report'])
@@ -162,9 +150,7 @@ pipeline {
             steps {
                 script {
                     if (fileExists("${SUREFIRE_REPORT_DIR}/TestExecutionReport.html")) {
-                        publishHTML([allowMissing: false,
-                                     alwaysLinkToLastBuild: true,
-                                     keepAll: true,
+                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true,
                                      reportDir: "${SUREFIRE_REPORT_DIR}",
                                      reportFiles: 'emailable-report.html',
                                      reportName: 'HTML Extent Report'])
@@ -212,9 +198,9 @@ pipeline {
                     to: 'issac.raja@cormsquare.com',
                     subject: "❌ Build Failed: ${env.JOB_NAME}",
                     body: """Hi Team,<br><br>
-                             The Jenkins build for <b>${env.JOB_NAME}</b> has <font color="red">FAILED</font>.<br>
+                             The Jenkins build for <b>${env.JOB_NAME}</b> has <font color=\"red\">FAILED</font>.<br>
                              Please check the attached test reports for more details.<br><br>
-                             <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
+                             <a href=\"${env.BUILD_URL}\">Click here to view Jenkins Job</a>""",
                     attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${SUREFIRE_REPORT_DIR}/TestExecutionReport.html"
                 )
             }
@@ -225,9 +211,9 @@ pipeline {
                     to: 'issac.raja@cormsquare.com',
                     subject: "✔️ Build Success: ${env.JOB_NAME}",
                     body: """Hi Team,<br><br>
-                             The Jenkins build for <b>${env.JOB_NAME}</b> was <font color="green">SUCCESSFUL</font>.<br>
+                             The Jenkins build for <b>${env.JOB_NAME}</b> was <font color=\"green\">SUCCESSFUL</font>.<br>
                              Please find the attached test reports for your review.<br><br>
-                             <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
+                             <a href=\"${env.BUILD_URL}\">Click here to view Jenkins Job</a>""",
                     attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${SUREFIRE_REPORT_DIR}/TestExecutionReport.html"
                 )
             }
