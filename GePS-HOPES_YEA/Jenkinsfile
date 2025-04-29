@@ -95,6 +95,7 @@ pipeline {
                 stage('Start Selenium Grid') {
                     steps {
                         dir("${WORKING_DIR}") {
+                            echo "WORKING_DIR is set to: ${WORKING_DIR}"
                             script {
                                 if (!fileExists('docker-compose.yaml')) {
                                     error "docker-compose.yaml not found! Cannot start Selenium Grid."
@@ -116,6 +117,7 @@ pipeline {
                 stage('Start ChainTest Report Service') {
                     steps {
                         dir("${WORKING_DIR}") {
+                            echo "WORKING_DIR is set to: ${WORKING_DIR}"
                             script {
                                 if (!fileExists('docker-compose-h2.yml')) {
                                     error "docker-compose-h2.yml not found! Cannot start ChainTest reporting service."
@@ -193,7 +195,11 @@ pipeline {
                             script {
                                 if (env.SELENIUM_STARTED == 'true') {
                                     echo "🛑 Stopping Selenium Grid..."
+                                    bat 'docker ps -a'
                                     bat 'docker-compose -f docker-compose.yaml down'
+                                    bat 'docker ps -a'
+                                } else {
+                                    echo "ℹ️ Selenium Grid was not started by this job. Skipping stop."
                                 }
                             }
                         }
@@ -206,7 +212,11 @@ pipeline {
                             script {
                                 if (env.CHAINTEST_STARTED == 'true') {
                                     echo "🛑 Stopping ChainTest Service..."
+                                    bat 'docker ps -a'
                                     bat 'docker-compose -f docker-compose-h2.yml down'
+                                    bat 'docker ps -a'
+                                } else {
+                                    echo "ℹ️ ChainTest service was not started by this job. Skipping stop."
                                 }
                             }
                         }
@@ -223,9 +233,9 @@ pipeline {
                     to: 'issac.raja@cormsquare.com',
                     subject: "❌ Build Failed: ${env.JOB_NAME}",
                     body: """Hi Team,<br><br>
-                             The Jenkins build for <b>${env.JOB_NAME}</b> has <font color=\"red\">FAILED</font>.<br>
+                             The Jenkins build for <b>${env.JOB_NAME}</b> has <font color="red">FAILED</font>.<br>
                              Please check the attached test reports.<br><br>
-                             <a href=\"${env.BUILD_URL}\">Click here to view Jenkins Job</a>""",
+                             <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
                     attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${OUTPUT_REPORT_DIR}/emailable-report.html"
                 )
             }
@@ -236,14 +246,14 @@ pipeline {
                     to: 'issac.raja@cormsquare.com',
                     subject: "✔️ Build Success: ${env.JOB_NAME}",
                     body: """Hi Team,<br><br>
-                             The Jenkins build for <b>${env.JOB_NAME}</b> was <font color=\"green\">SUCCESSFUL</font>.<br>
+                             The Jenkins build for <b>${env.JOB_NAME}</b> was <font color="green">SUCCESSFUL</font>.<br>
                              Please find the attached test reports for your review.<br><br>
-                             <a href=\"${env.BUILD_URL}\">Click here to view Jenkins Job</a>""",
+                             <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
                     attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${OUTPUT_REPORT_DIR}/emailable-report.html"
                 )
             }
         }
-        always {
+        cleanup {
             cleanWs()
         }
     }
