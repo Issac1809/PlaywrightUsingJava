@@ -10,12 +10,12 @@ pipeline {
         DEVELOPMENT_BRANCH = 'GePS-HOPES'
         TESTING_BRANCH = "main"
         CREDENTIALS_ID = '813c6e55-37f7-4f42-8153-3a19b435f10b'
-        MAVEN_GOALS = 'clean package -T 2C'
+        MAVEN_GOALS = 'clean package'
         PROJECT_NAME = 'GePS-HOPES_YEA'
         TEST_SUITE = "src/test/resources/testrunners/${PROJECT_NAME}_functional-test.xml"
         WORKING_DIR = 'GePS-Testing/GePS-HOPES_YEA'
-        SUREFIRE_REPORT_DIR = "${WORKING_DIR}/target/surefire-reports"
-        CHAIN_TEST_REPORT_DIR = "${WORKING_DIR}/target/chaintest-reports"
+        SUREFIRE_REPORT_DIR = "${WORKING_DIR}/test-output"
+        CHAIN_TEST_REPORT_DIR = "${WORKING_DIR}/test-output"
     }
 
     stages {
@@ -90,7 +90,16 @@ pipeline {
             steps {
                 dir("${WORKING_DIR}") {
                     echo "🚀 Starting Selenium Grid using Docker Compose..."
-                    bat 'docker-compose -f docker-compose.yaml up -d'
+                    script {
+                        def result = bat(script: 'docker ps -a -f name=selenium-grid --format "{{.Names}}"', returnStdout: true).trim()
+                        if (result == '') {
+                            echo "🔄 Selenium Grid is not running, starting it now..."
+                            bat 'docker-compose -f docker-compose.yaml up -d'
+                            env.STARTED_DOCKER = "true"
+                        } else {
+                            echo "🟢 Selenium Grid is already running."
+                        }
+                    }
                 }
                 sleep 10
             }
@@ -100,7 +109,16 @@ pipeline {
             steps {
                 dir("${WORKING_DIR}") {
                     echo "📝 Starting ChainTest reporting service..."
-                    bat 'docker-compose -f docker-compose-h2.yml up -d'
+                    script {
+                        def result = bat(script: 'docker ps -a -f name=chain-test-service --format "{{.Names}}"', returnStdout: true).trim()
+                        if (result == '') {
+                            echo "🔄 ChainTest reporting service not running, starting it now..."
+                            bat 'docker-compose -f docker-compose-h2.yml up -d'
+                            env.STARTED_DOCKER = "true"
+                        } else {
+                            echo "🟢 ChainTest reporting service is already running."
+                        }
+                    }
                 }
                 sleep 10
             }
@@ -148,7 +166,7 @@ pipeline {
                                      alwaysLinkToLastBuild: true,
                                      keepAll: true,
                                      reportDir: "${SUREFIRE_REPORT_DIR}",
-                                     reportFiles: 'TestExecutionReport.html',
+                                     reportFiles: 'emailable-report.html',
                                      reportName: 'HTML Extent Report'])
                     } else {
                         echo "⚠️ Test execution report not found. Skipping report publishing."
@@ -161,7 +179,11 @@ pipeline {
             steps {
                 dir("${WORKING_DIR}") {
                     echo "🛑 Stopping Selenium Grid..."
-                    bat 'docker-compose -f docker-compose.yaml down'
+                    script {
+                        if (env.STARTED_DOCKER == 'true') {
+                            bat 'docker-compose -f docker-compose.yaml down'
+                        }
+                    }
                 }
             }
         }
@@ -170,7 +192,11 @@ pipeline {
             steps {
                 dir("${WORKING_DIR}") {
                     echo "🛑 Stopping ChainTest Report Service..."
-                    bat 'docker-compose -f docker-compose-h2.yml down'
+                    script {
+                        if (env.STARTED_DOCKER == 'true') {
+                            bat 'docker-compose -f docker-compose-h2.yml down'
+                        }
+                    }
                 }
             }
         }
