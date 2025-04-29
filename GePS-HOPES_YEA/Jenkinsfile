@@ -217,18 +217,15 @@ pipeline {
     }
 
     post {
-        always {
-            cleanWs()
-        }
         failure {
             script {
                 emailext(
                     to: 'issac.raja@cormsquare.com',
                     subject: "❌ Build Failed: ${env.JOB_NAME}",
                     body: """Hi Team,<br><br>
-                             The Jenkins build for <b>${env.JOB_NAME}</b> has <font color="red">FAILED</font>.<br>
+                             The Jenkins build for <b>${env.JOB_NAME}</b> has <font color=\"red\">FAILED</font>.<br>
                              Please check the attached test reports.<br><br>
-                             <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
+                             <a href=\"${env.BUILD_URL}\">Click here to view Jenkins Job</a>""",
                     attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${OUTPUT_REPORT_DIR}/emailable-report.html"
                 )
             }
@@ -239,12 +236,15 @@ pipeline {
                     to: 'issac.raja@cormsquare.com',
                     subject: "✔️ Build Success: ${env.JOB_NAME}",
                     body: """Hi Team,<br><br>
-                             The Jenkins build for <b>${env.JOB_NAME}</b> was <font color="green">SUCCESSFUL</font>.<br>
+                             The Jenkins build for <b>${env.JOB_NAME}</b> was <font color=\"green\">SUCCESSFUL</font>.<br>
                              Please find the attached test reports for your review.<br><br>
-                             <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
+                             <a href=\"${env.BUILD_URL}\">Click here to view Jenkins Job</a>""",
                     attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${OUTPUT_REPORT_DIR}/emailable-report.html"
                 )
             }
+        }
+        always {
+            cleanWs()
         }
     }
 }
