@@ -33,33 +33,41 @@ pipeline {
 
         stage('Checkout Development Repository (GePS)') {
             steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: "${DEVELOPMENT_BRANCH}"]],
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [
-                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS - YEA/']]],
-                        [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 5]
-                    ],
-                    userRemoteConfigs: [[url: 'https://github.com/CormSquare/GePS.git', credentialsId: "${CREDENTIALS_ID}"]]
-                ])
+                timeout(time: 10, unit: 'MINUTES') {
+                    retry(2) {
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: "${DEVELOPMENT_BRANCH}"]],
+                            doGenerateSubmoduleConfigurations: false,
+                            extensions: [
+                                [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS - YEA/']]],
+                                [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 15]
+                            ],
+                            userRemoteConfigs: [[url: 'https://github.com/CormSquare/GePS.git', credentialsId: "${CREDENTIALS_ID}"]]
+                        ])
+                    }
+                }
                 echo "✅ Checked out GePS repo directory (GePS - YEA)."
             }
         }
 
         stage('Checkout Testing Repository (GePS-Testing)') {
             steps {
-                dir('GePS-Testing') {
-                    checkout([
-                        $class: 'GitSCM',
-                        branches: [[name: "${TESTING_BRANCH}"]],
-                        doGenerateSubmoduleConfigurations: false,
-                        extensions: [
-                            [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS-HOPES_YEA/']]],
-                            [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 5]
-                        ],
-                        userRemoteConfigs: [[url: 'https://github.com/CormSquare/GePS-Testing.git', credentialsId: "${CREDENTIALS_ID}"]]
-                    ])
+                timeout(time: 10, unit: 'MINUTES') {
+                    retry(2) {
+                        dir('GePS-Testing') {
+                            checkout([
+                                $class: 'GitSCM',
+                                branches: [[name: "${TESTING_BRANCH}"]],
+                                doGenerateSubmoduleConfigurations: false,
+                                extensions: [
+                                    [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS-HOPES_YEA/']]],
+                                    [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 15]
+                                ],
+                                userRemoteConfigs: [[url: 'https://github.com/CormSquare/GePS-Testing.git', credentialsId: "${CREDENTIALS_ID}"]]
+                            ])
+                        }
+                    }
                 }
                 echo "✅ Checked out GePS-Testing repo directory (GePS-HOPES_YEA)."
             }
