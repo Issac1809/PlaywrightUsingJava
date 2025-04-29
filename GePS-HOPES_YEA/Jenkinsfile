@@ -5,6 +5,10 @@ pipeline {
         maven 'Maven'
     }
 
+    options {
+        timestamps()
+    }
+
     environment {
         JOB_NAME = 'GePS-HOPES_YEA'
         DEVELOPMENT_BRANCH = 'GePS-HOPES'
@@ -16,6 +20,8 @@ pipeline {
         WORKING_DIR = 'GePS-Testing/GePS-HOPES_YEA'
         SUREFIRE_REPORT_DIR = "${WORKING_DIR}/test-output"
         CHAIN_TEST_REPORT_DIR = "${WORKING_DIR}/test-output"
+        SELENIUM_STARTED = 'false'
+        CHAINTEST_STARTED = 'false'
     }
 
     stages {
@@ -76,41 +82,49 @@ pipeline {
             }
         }
 
-        stage('Start Selenium Grid') {
-            steps {
-                dir("${WORKING_DIR}") {
-                    echo "🚀 Starting Selenium Grid using Docker Compose..."
-                    script {
-                        def result = bat(script: 'docker ps -a -f name=selenium-grid --format "{{.Names}}"', returnStdout: true).trim()
-                        if (result == '') {
-                            echo "🔄 Selenium Grid is not running, starting it now..."
-                            bat 'docker-compose -f docker-compose.yaml up -d'
-                            env.STARTED_DOCKER = "true"
-                        } else {
-                            echo "🟢 Selenium Grid is already running."
+        stage('Start Services') {
+            parallel {
+                stage('Start Selenium Grid') {
+                    steps {
+                        dir("${WORKING_DIR}") {
+                            script {
+                                if (!fileExists('docker-compose.yaml')) {
+                                    error "docker-compose.yaml not found! Cannot start Selenium Grid."
+                                }
+                                def result = bat(script: 'docker ps -a -f name=selenium-grid --format "{{.Names}}"', returnStdout: true).trim()
+                                if (result == '') {
+                                    echo "🔄 Starting Selenium Grid..."
+                                    bat 'docker-compose -f docker-compose.yaml up -d'
+                                    env.SELENIUM_STARTED = "true"
+                                } else {
+                                    echo "🟢 Selenium Grid is already running."
+                                }
+                            }
                         }
+                        sleep 10
                     }
                 }
-                sleep 10
-            }
-        }
 
-        stage('Start ChainTest Report Service') {
-            steps {
-                dir("${WORKING_DIR}") {
-                    echo "📝 Starting ChainTest reporting service..."
-                    script {
-                        def result = bat(script: 'docker ps -a -f name=chain-test-service --format "{{.Names}}"', returnStdout: true).trim()
-                        if (result == '') {
-                            echo "🔄 ChainTest reporting service not running, starting it now..."
-                            bat 'docker-compose -f docker-compose-h2.yml up -d'
-                            env.STARTED_DOCKER = "true"
-                        } else {
-                            echo "🟢 ChainTest reporting service is already running."
+                stage('Start ChainTest Report Service') {
+                    steps {
+                        dir("${WORKING_DIR}") {
+                            script {
+                                if (!fileExists('docker-compose-h2.yml')) {
+                                    error "docker-compose-h2.yml not found! Cannot start ChainTest reporting service."
+                                }
+                                def result = bat(script: 'docker ps -a -f name=chain-test-service --format "{{.Names}}"', returnStdout: true).trim()
+                                if (result == '') {
+                                    echo "🔄 Starting ChainTest reporting service..."
+                                    bat 'docker-compose -f docker-compose-h2.yml up -d'
+                                    env.CHAINTEST_STARTED = "true"
+                                } else {
+                                    echo "🟢 ChainTest service is already running."
+                                }
+                            }
                         }
+                        sleep 10
                     }
                 }
-                sleep 10
             }
         }
 
@@ -131,56 +145,62 @@ pipeline {
             }
         }
 
-        stage('Publish Chain Test Report') {
+        stage('Publish Reports') {
             steps {
                 script {
                     if (fileExists("${CHAIN_TEST_REPORT_DIR}/index.html")) {
-                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true,
-                                     reportDir: "${CHAIN_TEST_REPORT_DIR}",
-                                     reportFiles: 'index.html',
-                                     reportName: 'Chain Test Report'])
+                        publishHTML([
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: true,
+                            keepAll: true,
+                            reportDir: "${CHAIN_TEST_REPORT_DIR}",
+                            reportFiles: 'index.html',
+                            reportName: 'Chain Test Report'
+                        ])
                     } else {
-                        echo "⚠️ Chain test report not found. Skipping report publishing."
+                        echo "⚠️ Chain test report not found. Skipping."
+                    }
+
+                    if (fileExists("${SUREFIRE_REPORT_DIR}/emailable-report.html")) {
+                        publishHTML([
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: true,
+                            keepAll: true,
+                            reportDir: "${SUREFIRE_REPORT_DIR}",
+                            reportFiles: 'emailable-report.html',
+                            reportName: 'HTML Extent Report'
+                        ])
+                    } else {
+                        echo "⚠️ Test execution report not found. Skipping."
                     }
                 }
             }
         }
 
-        stage('Publish Test Execution Report') {
-            steps {
-                script {
-                    if (fileExists("${SUREFIRE_REPORT_DIR}/TestExecutionReport.html")) {
-                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true,
-                                     reportDir: "${SUREFIRE_REPORT_DIR}",
-                                     reportFiles: 'emailable-report.html',
-                                     reportName: 'HTML Extent Report'])
-                    } else {
-                        echo "⚠️ Test execution report not found. Skipping report publishing."
-                    }
-                }
-            }
-        }
-
-        stage('Stop Selenium Grid') {
-            steps {
-                dir("${WORKING_DIR}") {
-                    echo "🛑 Stopping Selenium Grid..."
-                    script {
-                        if (env.STARTED_DOCKER == 'true') {
-                            bat 'docker-compose -f docker-compose.yaml down'
+        stage('Stop Services') {
+            parallel {
+                stage('Stop Selenium Grid') {
+                    steps {
+                        dir("${WORKING_DIR}") {
+                            script {
+                                if (env.SELENIUM_STARTED == 'true') {
+                                    echo "🛑 Stopping Selenium Grid..."
+                                    bat 'docker-compose -f docker-compose.yaml down'
+                                }
+                            }
                         }
                     }
                 }
-            }
-        }
 
-        stage('Stop ChainTest Report Service') {
-            steps {
-                dir("${WORKING_DIR}") {
-                    echo "🛑 Stopping ChainTest Report Service..."
-                    script {
-                        if (env.STARTED_DOCKER == 'true') {
-                            bat 'docker-compose -f docker-compose-h2.yml down'
+                stage('Stop ChainTest Service') {
+                    steps {
+                        dir("${WORKING_DIR}") {
+                            script {
+                                if (env.CHAINTEST_STARTED == 'true') {
+                                    echo "🛑 Stopping ChainTest Service..."
+                                    bat 'docker-compose -f docker-compose-h2.yml down'
+                                }
+                            }
                         }
                     }
                 }
@@ -198,10 +218,10 @@ pipeline {
                     to: 'issac.raja@cormsquare.com',
                     subject: "❌ Build Failed: ${env.JOB_NAME}",
                     body: """Hi Team,<br><br>
-                             The Jenkins build for <b>${env.JOB_NAME}</b> has <font color=\"red\">FAILED</font>.<br>
-                             Please check the attached test reports for more details.<br><br>
-                             <a href=\"${env.BUILD_URL}\">Click here to view Jenkins Job</a>""",
-                    attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${SUREFIRE_REPORT_DIR}/TestExecutionReport.html"
+                             The Jenkins build for <b>${env.JOB_NAME}</b> has <font color="red">FAILED</font>.<br>
+                             Please check the attached test reports.<br><br>
+                             <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
+                    attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${SUREFIRE_REPORT_DIR}/emailable-report.html"
                 )
             }
         }
@@ -211,10 +231,10 @@ pipeline {
                     to: 'issac.raja@cormsquare.com',
                     subject: "✔️ Build Success: ${env.JOB_NAME}",
                     body: """Hi Team,<br><br>
-                             The Jenkins build for <b>${env.JOB_NAME}</b> was <font color=\"green\">SUCCESSFUL</font>.<br>
+                             The Jenkins build for <b>${env.JOB_NAME}</b> was <font color="green">SUCCESSFUL</font>.<br>
                              Please find the attached test reports for your review.<br><br>
-                             <a href=\"${env.BUILD_URL}\">Click here to view Jenkins Job</a>""",
-                    attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${SUREFIRE_REPORT_DIR}/TestExecutionReport.html"
+                             <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
+                    attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${SUREFIRE_REPORT_DIR}/emailable-report.html"
                 )
             }
         }
