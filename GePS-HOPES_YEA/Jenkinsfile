@@ -101,13 +101,14 @@ pipeline {
                                     error "❌ docker-compose.yaml not found! Cannot start Selenium Grid."
                                 }
 
-                                def containerId = bat(
+                                def output = bat(
                                     script: 'docker-compose -f docker-compose.yaml ps -q selenium-hub',
                                     returnStdout: true
                                 ).trim()
+                                def containerId = output.readLines().findAll { it.trim() }[-1]
                                 echo "📦 Selenium Container ID: ${containerId}"
 
-                                if (containerId == '') {
+                                if (!containerId) {
                                     echo "🔄 selenium-hub not found. Starting Selenium Grid..."
                                     bat 'docker-compose -f docker-compose.yaml up -d --remove-orphans'
                                     env.SELENIUM_STARTED = "true"
@@ -138,13 +139,14 @@ pipeline {
                                     error "❌ docker-compose-h2.yml not found! Cannot start ChainTest reporting service."
                                 }
 
-                                def containerId = bat(
+                                def output = bat(
                                     script: 'docker-compose -f docker-compose-h2.yml ps -q chaintest',
                                     returnStdout: true
                                 ).trim()
+                                def containerId = output.readLines().findAll { it.trim() }[-1]
                                 echo "📦 ChainTest Container ID: ${containerId}"
 
-                                if (containerId == '') {
+                                if (!containerId) {
                                     echo "🔄 chaintest not found. Starting ChainTest reporting service..."
                                     bat 'docker-compose -f docker-compose-h2.yml up -d --remove-orphans'
                                     env.CHAINTEST_STARTED = "true"
@@ -226,9 +228,7 @@ pipeline {
                                 echo "SELENIUM_STARTED: ${env.SELENIUM_STARTED}"
                                 if (env.SELENIUM_STARTED == 'true') {
                                     echo "🛑 Stopping Selenium Grid..."
-                                    bat 'docker ps -a'
                                     bat 'docker-compose -f docker-compose.yaml down --remove-orphans'
-                                    bat 'docker ps -a'
                                 } else {
                                     echo "ℹ️ Selenium Grid was not started by this job. Skipping stop."
                                 }
@@ -244,9 +244,7 @@ pipeline {
                                 echo "CHAINTEST_STARTED: ${env.CHAINTEST_STARTED}"
                                 if (env.CHAINTEST_STARTED == 'true') {
                                     echo "🛑 Stopping ChainTest Service..."
-                                    bat 'docker ps -a'
                                     bat 'docker-compose -f docker-compose-h2.yml down --remove-orphans'
-                                    bat 'docker ps -a'
                                 } else {
                                     echo "ℹ️ ChainTest service was not started by this job. Skipping stop."
                                 }
