@@ -142,7 +142,7 @@ pipeline {
             steps {
                 dir("${WORKING_DIR}") {
                     echo "🧪 Executing Regression Tests on Latest Build..."
-                    bat "mvn test -DSELENIUM_REMOTE_URL=http://host.docker.internal:4444/wd/hub -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+                    bat "mvn test -DSELENIUM_REMOTE_URL=http://localhost:4444/wd/hub -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
                 }
             }
             post {
