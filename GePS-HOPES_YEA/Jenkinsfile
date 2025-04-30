@@ -100,8 +100,18 @@ pipeline {
                                 if (!fileExists('docker-compose.yaml')) {
                                     error "docker-compose.yaml not found! Cannot start Selenium Grid."
                                 }
-                                def result = bat(script: 'docker ps -a -f name=selenium-grid --format "{{.Names}}"', returnStdout: true).trim()
-                                if (result == '') {
+                                def retries = 5
+                                def success = false
+                                while (retries > 0) {
+                                    def result = bat(script: 'docker-compose ps -q selenium-hub', returnStdout: true).trim()
+                                    if (result != '') {
+                                        success = true
+                                        break
+                                    }
+                                    retries--
+                                    sleep 10
+                                }
+                                if (!success) {
                                     echo "🔄 Starting Selenium Grid..."
                                     bat 'docker-compose -f docker-compose.yaml up -d'
                                     env.SELENIUM_STARTED = "true"
@@ -122,8 +132,19 @@ pipeline {
                                 if (!fileExists('docker-compose-h2.yml')) {
                                     error "docker-compose-h2.yml not found! Cannot start ChainTest reporting service."
                                 }
-                                def result = bat(script: 'docker ps -a -f name=chain-test-service --format "{{.Names}}"', returnStdout: true).trim()
-                                if (result == '') {
+                                def retries = 5
+                                def success = false
+                                while (retries > 0) {
+                                    def result = bat(script: 'docker-compose -f docker-compose-h2.yml ps -q chaintest', returnStdout: true).trim()
+                                    if (result != '') {
+                                        success = true
+                                        break
+                                    }
+                                    retries--
+                                    sleep 10
+                                }
+
+                                if (!success) {
                                     echo "🔄 Starting ChainTest reporting service..."
                                     bat 'docker-compose -f docker-compose-h2.yml up -d'
                                     env.CHAINTEST_STARTED = "true"
