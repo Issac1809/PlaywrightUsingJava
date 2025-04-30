@@ -100,6 +100,7 @@ pipeline {
                                 if (!fileExists('docker-compose.yaml')) {
                                     error "docker-compose.yaml not found! Cannot start Selenium Grid."
                                 }
+
                                 def containerId = bat(script: 'docker-compose -f docker-compose.yaml ps -q selenium-hub', returnStdout: true).trim()
                                 if (containerId == '') {
                                     echo "🔄 selenium-hub not found. Starting Selenium Grid..."
@@ -115,8 +116,8 @@ pipeline {
                                     }
                                 }
                             }
+                            sleep(15)
                         }
-                        sleep 10
                     }
                 }
 
@@ -128,6 +129,7 @@ pipeline {
                                 if (!fileExists('docker-compose-h2.yml')) {
                                     error "docker-compose-h2.yml not found! Cannot start ChainTest reporting service."
                                 }
+
                                 def containerId = bat(script: 'docker-compose -f docker-compose-h2.yml ps -q chaintest', returnStdout: true).trim()
                                 if (containerId == '') {
                                     echo "🔄 chaintest not found. Starting ChainTest reporting service..."
@@ -143,8 +145,8 @@ pipeline {
                                     }
                                 }
                             }
+                            sleep(15)
                         }
-                        sleep 10
                     }
                 }
             }
@@ -154,7 +156,7 @@ pipeline {
             steps {
                 dir("${WORKING_DIR}") {
                     echo "🧪 Executing Regression Tests on Latest Build..."
-                    bat "mvn test -DSELENIUM_REMOTE_URL=http://localhost:4444/wd/hub -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+                    bat "mvn test -DSELENIUM_REMOTE_URL=http://localhost:4444 -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
                 }
             }
             post {
