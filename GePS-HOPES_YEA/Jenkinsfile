@@ -102,17 +102,20 @@ pipeline {
                                 }
 
                                 def containerId = bat(
-                                    script: 'docker-compose -f docker-compose.yaml ps -q selenium-hub',
+                                    script: 'docker-compose -f docker-compose.yaml ps -q selenium-hub > container_id.txt',
                                     returnStdout: true
-                                ).trim()
+                                )
+
+                                containerId = readFile('container_id.txt').trim()
+                                echo "📦 Selenium Container ID: ${containerId}"
 
                                 if (containerId == '') {
                                     echo "🔄 selenium-hub not found. Starting Selenium Grid..."
                                     bat 'docker-compose -f docker-compose.yaml up -d --remove-orphans'
                                     env.SELENIUM_STARTED = "true"
                                 } else {
-                                    def inspectCmd = "docker inspect -f \"{{.State.Running}}\" ${containerId}"
-                                    def status = bat(script: inspectCmd, returnStdout: true).trim()
+                                    bat "docker inspect -f \"{{.State.Running}}\" ${containerId} > status.txt"
+                                    def status = readFile('status.txt').trim()
 
                                     if (status != "true") {
                                         echo "♻️ selenium-hub exists but is not running. Restarting..."
@@ -137,17 +140,20 @@ pipeline {
                                 }
 
                                 def containerId = bat(
-                                    script: 'docker-compose -f docker-compose-h2.yml ps -q chaintest',
+                                    script: 'docker-compose -f docker-compose-h2.yml ps -q chaintest > container_id.txt',
                                     returnStdout: true
-                                ).trim()
+                                )
+
+                                containerId = readFile('container_id.txt').trim()
+                                echo "📦 ChainTest Container ID: ${containerId}"
 
                                 if (containerId == '') {
                                     echo "🔄 chaintest not found. Starting ChainTest reporting service..."
                                     bat 'docker-compose -f docker-compose-h2.yml up -d --remove-orphans'
                                     env.CHAINTEST_STARTED = "true"
                                 } else {
-                                    def inspectCmd = "docker inspect -f \"{{.State.Running}}\" ${containerId}"
-                                    def status = bat(script: inspectCmd, returnStdout: true).trim()
+                                    bat "docker inspect -f \"{{.State.Running}}\" ${containerId} > status.txt"
+                                    def status = readFile('status.txt').trim()
 
                                     if (status != "true") {
                                         echo "♻️ chaintest exists but is not running. Restarting..."
