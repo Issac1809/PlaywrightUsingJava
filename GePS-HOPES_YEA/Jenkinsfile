@@ -91,61 +91,61 @@ pipeline {
         }
 
         stage('Start Services') {
-            parallel {
-                stage('Start Selenium Grid') {
-                    steps {
-                        dir("${WORKING_DIR}") {
-                            script {
-                                echo "🔎 Checking for existing Selenium Grid container..."
-                                def containerId = bat(script: 'docker-compose -f docker-compose.yaml ps -q selenium-hub', returnStdout: true).trim()
+          parallel {
+            stage('Start Selenium Grid') {
+              steps {
+                dir('GePS-Testing/GePS-HOPES_YEA') {
+                  script {
+                    echo "🔎 Checking for existing Selenium Grid container..."
 
-                                if (containerId && containerId != '') {
-                                    echo "📦 Found Selenium Grid container ID: ${containerId}"
-                                    def status = bat(script: "docker inspect --format='{{.State.Running}}' ${containerId}", returnStdout: true).trim()
+                    bat(script: "docker-compose -f docker-compose.yaml ps -q selenium-hub > selenium_id.txt", returnStatus: true)
+                    def seleniumContainerId = readFile('selenium_id.txt').trim()
 
-                                    if (status != "true") {
-                                        echo "♻️ Restarting Selenium Grid (was stopped)..."
-                                        bat 'docker-compose -f docker-compose.yaml down --remove-orphans'
-                                        bat 'docker-compose -f docker-compose.yaml up -d --remove-orphans'
-                                    } else {
-                                        echo "🟢 Selenium Grid is already running."
-                                    }
-                                } else {
-                                    echo "🚀 No Selenium Grid container found. Starting fresh..."
-                                    bat 'docker-compose -f docker-compose.yaml up -d --remove-orphans'
-                                }
-                            }
-                        }
+                    if (seleniumContainerId) {
+                      bat(script: "docker inspect -f \"{{.State.Running}}\" ${seleniumContainerId} > selenium_status.txt", returnStatus: true)
+                      def seleniumRunning = readFile('selenium_status.txt').trim()
+                      if (seleniumRunning == 'true') {
+                        echo "✅ Selenium Grid is already running with ID: ${seleniumContainerId}"
+                      } else {
+                        echo "🔄 Starting Selenium Grid..."
+                        bat "docker-compose -f docker-compose.yaml up -d selenium-hub"
+                      }
+                    } else {
+                      echo "🚀 Starting Selenium Grid..."
+                      bat "docker-compose -f docker-compose.yaml up -d selenium-hub"
                     }
+                  }
                 }
-
-                stage('Start ChainTest Report Service') {
-                    steps {
-                        dir("${WORKING_DIR}") {
-                            script {
-                                echo "🔎 Checking for existing ChainTest container..."
-                                def containerId = bat(script: 'docker-compose -f docker-compose-h2.yml ps -q chaintest', returnStdout: true).trim()
-
-                                if (containerId && containerId != '') {
-                                    echo "📦 Found ChainTest container ID: ${containerId}"
-                                    def status = bat(script: "docker inspect --format='{{.State.Running}}' ${containerId}", returnStdout: true).trim()
-
-                                    if (status != "true") {
-                                        echo "♻️ Restarting ChainTest (was stopped)..."
-                                        bat 'docker-compose -f docker-compose-h2.yml down --remove-orphans'
-                                        bat 'docker-compose -f docker-compose-h2.yml up -d --remove-orphans'
-                                    } else {
-                                        echo "🟢 ChainTest service is already running."
-                                    }
-                                } else {
-                                    echo "🚀 No ChainTest container found. Starting fresh..."
-                                    bat 'docker-compose -f docker-compose-h2.yml up -d --remove-orphans'
-                                }
-                            }
-                        }
-                    }
-                }
+              }
             }
+
+            stage('Start ChainTest Report Service') {
+              steps {
+                dir('GePS-Testing/GePS-HOPES_YEA') {
+                  script {
+                    echo "🔎 Checking for existing ChainTest container..."
+
+                    bat(script: "docker-compose -f docker-compose-h2.yml ps -q chaintest > chaintest_id.txt", returnStatus: true)
+                    def chainTestContainerId = readFile('chaintest_id.txt').trim()
+
+                    if (chainTestContainerId) {
+                      bat(script: "docker inspect -f \"{{.State.Running}}\" ${chainTestContainerId} > chaintest_status.txt", returnStatus: true)
+                      def chainTestRunning = readFile('chaintest_status.txt').trim()
+                      if (chainTestRunning == 'true') {
+                        echo "✅ ChainTest is already running with ID: ${chainTestContainerId}"
+                      } else {
+                        echo "🔄 Starting ChainTest..."
+                        bat "docker-compose -f docker-compose-h2.yml up -d chaintest"
+                      }
+                    } else {
+                      echo "🚀 Starting ChainTest..."
+                      bat "docker-compose -f docker-compose-h2.yml up -d chaintest"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
 
         stage('Regression Automation Test') {
