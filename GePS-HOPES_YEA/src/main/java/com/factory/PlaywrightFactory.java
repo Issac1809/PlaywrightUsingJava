@@ -6,6 +6,8 @@ import com.microsoft.playwright.*;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
@@ -53,10 +55,11 @@ public class PlaywrightFactory {
         return localPage.get();
     }
 
-    public Page initializePage(JsonNode jsonNode) {
+    public void initializeBrowser(JsonNode jsonNode) {
         try {
             String browserName = jsonNode.get("configSettings").get("browserName").asText().toUpperCase();
-            switch (browserName.toUpperCase()) {
+
+            switch (browserName) {
                 case "CHROMIUM":
                     localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
                     break;
@@ -76,13 +79,56 @@ public class PlaywrightFactory {
                     System.out.println("--Enter Proper Browser Name--");
                     break;
             }
-            localBrowserContext.set(getBrowser().newContext());
-            localPage.set(getBrowserContext().newPage());
-            getPage().navigate(jsonNode.get("configSettings").get("appUrl").asText().trim());
         } catch (Exception exception) {
-            logger.error("Error in Initialize Page Function: {}", exception.getMessage());
+            System.out.println("Error initializing browser: " + exception.getMessage());
+        }
+    }
+
+    public void initializeBrowserContext() {
+        try {
+            BrowserContext context = getBrowser().newContext(new Browser.NewContextOptions()
+                    .setRecordVideoDir(Paths.get("videos"))
+            );
+
+            localBrowserContext.set(context);
+        } catch (Exception exception) {
+            System.out.println("Error initializing browser context: " + exception.getMessage());
+        }
+    }
+
+    public Page initializePage(JsonNode jsonNode) {
+        try {
+            Page page = getBrowserContext().newPage();
+            localPage.set(page);
+            page.navigate(jsonNode.get("configSettings").get("appUrl").asText().trim());
+        } catch (Exception exception) {
+            System.out.println("Error initializing page: " + exception.getMessage());
         }
         return getPage();
+    }
+
+    public void startTracing(BrowserContext context, String traceFileName) {
+        try {
+            context.tracing().start(new Tracing.StartOptions()
+                    .setScreenshots(true)
+                    .setSnapshots(true)
+                    .setSources(true)
+                    .setTitle("Test Trace")
+                    .setName(traceFileName)
+            );
+        } catch (Exception exception) {
+            logger.error("Error in Start Tracing Function: {}", exception.getMessage());
+        }
+    }
+
+    public void stopTracing(BrowserContext context, String traceFileName) {
+        Path traceDir = Paths.get("test-output/traces");
+        try {
+            Files.createDirectories(traceDir);
+            context.tracing().stop(new Tracing.StopOptions().setPath(traceDir.resolve(traceFileName)));
+        } catch (Exception exception) {
+            logger.error("Error in Stop Tracing Function: {}", exception.getMessage());
+        }
     }
 
     public void savePropertiesIntoJsonFile(String parentKey, String attributeKey, String attributeValue) {

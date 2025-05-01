@@ -17,7 +17,7 @@
     <extend-reports-version> 5.1.2 </extend-reports-version>
     <allure-testng-reports-version> 2.29.0 </allure-testng-reports-version>
     <allure-maven-reports-version> 2.14.0 </allure-maven-reports-version>
-    <playwright-version>1.47.0</playwright-version>
+    <playwright-version>1.51.0</playwright-version>
     <maven-compiler-version>3.13.0</maven-compiler-version>
     <maven-surefire-plugin>3.2.5</maven-surefire-plugin>
     <jackson-plugin-version>2.14.2</jackson-plugin-version>
