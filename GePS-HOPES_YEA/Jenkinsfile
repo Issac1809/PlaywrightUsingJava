@@ -163,33 +163,20 @@ pipeline {
         stage('Regression Automation Test') {
             steps {
                 dir("${WORKING_DIR}") {
-                    echo "🔍 Checking environment variables..."
-                    if (!WORKING_DIR || !TEST_SUITE) {
-                        error "❌ WORKING_DIR or TEST_SUITE is not set. Aborting!"
+                   echo "🧪 Executing Regression Tests on Latest Build..."
+                   bat "mvn test -DSELENIUM_REMOTE_URL=http://localhost:4444 -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+                   }
+                }
+                post {
+                    always {
+                        junit '**/target/surefire-reports/*.xml'
+                        }
+                        failure {
+                            echo "❌ Tests failed. Please check the test reports."
+                        }
                     }
-
-                    echo "🔎 Validating Selenium Grid availability..."
-                    bat 'curl -s http://localhost:4444/status || error "❌ Selenium Grid is not reachable!"'
-
-                    echo "🧪 Executing Regression Tests on Latest Build..."
-                    def result = bat(returnStatus: true, script: "mvn test -DSELENIUM_REMOTE_URL=http://localhost:4444 -Dsurefire.suiteXmlFiles=${TEST_SUITE}")
-
-                    if (result != 0) {
-                        error "❌ Maven test execution failed!"
-                    }
-                    echo "📜 Regression tests completed successfully!"
                 }
-            }
-            post {
-                always {
-                    echo "📊 Collecting test results..."
-                    junit '**/target/surefire-reports/*.xml'
-                }
-                failure {
-                    echo "❌ Tests failed. Please check the test reports."
-                }
-            }
-        }
+
 
         stage('Publish Reports') {
             steps {
