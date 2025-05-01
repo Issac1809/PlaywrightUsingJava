@@ -108,16 +108,14 @@ pipeline {
                                 if (containerId) {
                                     echo "💡 Checking if Selenium Grid is running..."
                                     def status = bat(script: "docker inspect -f \"{{.State.Running}}\" ${containerId}", returnStdout: true).trim()
-                                    echo "✅ Selenium Grid running status: ${status}"
-
                                     if (status != "true") {
-                                        echo "♻️ Selenium Grid exists but is not running. Restarting..."
+                                        echo "♻️ Restarting Selenium Grid..."
                                         bat 'docker-compose -f docker-compose.yaml up -d --remove-orphans'
                                     } else {
                                         echo "🟢 Selenium Grid is already running."
                                     }
                                 } else {
-                                    echo "🚀 No Selenium Grid container found. Starting new instance..."
+                                    echo "🚀 Starting new Selenium Grid instance..."
                                     bat 'docker-compose -f docker-compose.yaml up -d --remove-orphans'
                                 }
                             }
@@ -141,16 +139,14 @@ pipeline {
                                 if (containerId) {
                                     echo "💡 Checking if ChainTest is running..."
                                     def status = bat(script: "docker inspect -f \"{{.State.Running}}\" ${containerId}", returnStdout: true).trim()
-                                    echo "✅ ChainTest running status: ${status}"
-
                                     if (status != "true") {
-                                        echo "♻️ ChainTest exists but is not running. Restarting..."
+                                        echo "♻️ Restarting ChainTest service..."
                                         bat 'docker-compose -f docker-compose-h2.yml up -d --remove-orphans'
                                     } else {
                                         echo "🟢 ChainTest service is already running."
                                     }
                                 } else {
-                                    echo "🚀 No ChainTest container found. Starting new instance..."
+                                    echo "🚀 Starting new ChainTest instance..."
                                     bat 'docker-compose -f docker-compose-h2.yml up -d --remove-orphans'
                                 }
                             }
