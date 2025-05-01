@@ -43,7 +43,10 @@ pipeline {
                                 [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS - YEA/']]],
                                 [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 15]
                             ],
-                            userRemoteConfigs: [[url: 'https://github.com/CormSquare/GePS.git', credentialsId: "${CREDENTIALS_ID}"]]
+                            userRemoteConfigs: [[
+                                url: 'https://github.com/CormSquare/GePS.git',
+                                credentialsId: "${CREDENTIALS_ID}"
+                            ]]
                         ])
                     }
                 }
@@ -64,7 +67,10 @@ pipeline {
                                     [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS-HOPES_YEA/']]],
                                     [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 15]
                                 ],
-                                userRemoteConfigs: [[url: 'https://github.com/CormSquare/GePS-Testing.git', credentialsId: "${CREDENTIALS_ID}"]]
+                                userRemoteConfigs: [[
+                                    url: 'https://github.com/CormSquare/GePS-Testing.git',
+                                    credentialsId: "${CREDENTIALS_ID}"
+                                ]]
                             ])
                         }
                     }
@@ -91,80 +97,97 @@ pipeline {
         }
 
         stage('Start Services') {
-          parallel {
-            stage('Start Selenium Grid') {
-              steps {
-                dir('GePS-Testing/GePS-HOPES_YEA') {
-                  script {
-                    echo "🔎 Checking for existing Selenium Grid container..."
-
-                    bat(script: "docker-compose -f docker-compose.yaml ps -q selenium-hub > selenium_id.txt", returnStatus: true)
-                    def seleniumContainerId = readFile('selenium_id.txt').trim()
-
-                    if (seleniumContainerId) {
-                      bat(script: "docker inspect -f \"{{.State.Running}}\" ${seleniumContainerId} > selenium_status.txt", returnStatus: true)
-                      def seleniumRunning = readFile('selenium_status.txt').trim()
-                      if (seleniumRunning == 'true') {
-                        echo "✅ Selenium Grid is already running with ID: ${seleniumContainerId}"
-                      } else {
-                        echo "🔄 Starting Selenium Grid..."
-                        bat "docker-compose -f docker-compose.yaml up -d selenium-hub"
-                      }
-                    } else {
-                      echo "🚀 Starting Selenium Grid..."
-                      bat "docker-compose -f docker-compose.yaml up -d selenium-hub"
+            parallel {
+                stage('Start Main Docker Service') {
+                    steps {
+                        dir("${WORKING_DIR}") {
+                            script {
+                                echo "🔎 Checking for existing Main Docker container..."
+                                bat(script: "docker-compose -f docker-compose.yml ps -q main > main_id.txt", returnStatus: true)
+                                def mainId = readFile('main_id.txt').trim()
+                                if (mainId) {
+                                    bat(script: "docker inspect -f \"{{.State.Running}}\" ${mainId} > main_status.txt", returnStatus: true)
+                                    if (readFile('main_status.txt').trim() == 'true') {
+                                        echo "✅ Main Docker is already running."
+                                    } else {
+                                        echo "🔄 Starting Main Docker..."
+                                        bat "docker-compose -f docker-compose.yml up -d"
+                                    }
+                                } else {
+                                    echo "🚀 Starting Main Docker..."
+                                    bat "docker-compose -f docker-compose.yml up -d"
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
-            }
 
-            stage('Start ChainTest Report Service') {
-              steps {
-                dir('GePS-Testing/GePS-HOPES_YEA') {
-                  script {
-                    echo "🔎 Checking for existing ChainTest container..."
-
-                    bat(script: "docker-compose -f docker-compose-h2.yml ps -q chaintest > chaintest_id.txt", returnStatus: true)
-                    def chainTestContainerId = readFile('chaintest_id.txt').trim()
-
-                    if (chainTestContainerId) {
-                      bat(script: "docker inspect -f \"{{.State.Running}}\" ${chainTestContainerId} > chaintest_status.txt", returnStatus: true)
-                      def chainTestRunning = readFile('chaintest_status.txt').trim()
-                      if (chainTestRunning == 'true') {
-                        echo "✅ ChainTest is already running with ID: ${chainTestContainerId}"
-                      } else {
-                        echo "🔄 Starting ChainTest..."
-                        bat "docker-compose -f docker-compose-h2.yml up -d chaintest"
-                      }
-                    } else {
-                      echo "🚀 Starting ChainTest..."
-                      bat "docker-compose -f docker-compose-h2.yml up -d chaintest"
+                stage('Start Playwright Service') {
+                    steps {
+                        dir("${WORKING_DIR}") {
+                            script {
+                                echo "🔎 Checking for existing Playwright container..."
+                                bat(script: "docker-compose -f docker-compose.playwright.yml ps -q playwright > playwright_id.txt", returnStatus: true)
+                                def pid = readFile('playwright_id.txt').trim()
+                                if (pid) {
+                                    bat(script: "docker inspect -f \"{{.State.Running}}\" ${pid} > playwright_status.txt", returnStatus: true)
+                                    if (readFile('playwright_status.txt').trim() == 'true') {
+                                        echo "✅ Playwright container is already running."
+                                    } else {
+                                        echo "🔄 Starting Playwright..."
+                                        bat "docker-compose -f docker-compose.playwright.yml up -d"
+                                    }
+                                } else {
+                                    echo "🚀 Starting Playwright..."
+                                    bat "docker-compose -f docker-compose.playwright.yml up -d"
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
+
+                stage('Start ChainTest Service') {
+                    steps {
+                        dir("${WORKING_DIR}") {
+                            script {
+                                echo "🔎 Checking for existing ChainTest container..."
+                                bat(script: "docker-compose -f docker-compose-h2.yml ps -q chaintest > chaintest_id.txt", returnStatus: true)
+                                def cid = readFile('chaintest_id.txt').trim()
+                                if (cid) {
+                                    bat(script: "docker inspect -f \"{{.State.Running}}\" ${cid} > chaintest_status.txt", returnStatus: true)
+                                    if (readFile('chaintest_status.txt').trim() == 'true') {
+                                        echo "✅ ChainTest container is already running."
+                                    } else {
+                                        echo "🔄 Starting ChainTest..."
+                                        bat "docker-compose -f docker-compose-h2.yml up -d"
+                                    }
+                                } else {
+                                    echo "🚀 Starting ChainTest..."
+                                    bat "docker-compose -f docker-compose-h2.yml up -d"
+                                }
+                            }
+                        }
+                    }
+                }
             }
-          }
         }
 
         stage('Regression Automation Test') {
             steps {
                 dir("${WORKING_DIR}") {
-                   echo "🧪 Executing Regression Tests on Latest Build..."
-                   bat 'mvn test -DSELENIUM_REMOTE_URL=http://localhost:4444 -Dsurefire.suiteXmlFiles=${TEST_SUITE}'
-                   }
+                    echo "🧪 Running Playwright tests..."
+                    bat "docker-compose -f docker-compose.playwright.yml run --rm playwright mvn test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
                 }
-                post {
-                    always {
-                        junit '**/target/surefire-reports/*.xml'
-                        }
-                        failure {
-                            echo "❌ Tests failed. Please check the test reports."
-                        }
-                    }
+            }
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml'
                 }
-
+                failure {
+                    echo "❌ Test run failed."
+                }
+            }
+        }
 
         stage('Publish Reports') {
             steps {
@@ -179,7 +202,7 @@ pipeline {
                             reportName: 'Chain Test Report'
                         ])
                     } else {
-                        echo "⚠️ Chain test report not found. Skipping."
+                        echo "⚠️ Chain Test report not found."
                     }
 
                     if (fileExists("${OUTPUT_REPORT_DIR}/emailable-report.html")) {
@@ -192,7 +215,7 @@ pipeline {
                             reportName: 'HTML Extent Report'
                         ])
                     } else {
-                        echo "⚠️ Test execution report not found. Skipping."
+                        echo "⚠️ Test execution report not found."
                     }
                 }
             }
@@ -200,24 +223,23 @@ pipeline {
 
         stage('Stop Services') {
             parallel {
-                stage('Stop Selenium Grid') {
+                stage('Stop Main Docker Service') {
                     steps {
                         dir("${WORKING_DIR}") {
                             script {
-                                def seleniumStarted = env.SELENIUM_STARTED ?: "false"
-                                echo "SELENIUM_STARTED: ${seleniumStarted}"
+                                echo "🛑 Stopping Main Docker Service..."
+                                bat 'docker-compose -f docker-compose.yml down --remove-orphans'
+                            }
+                        }
+                    }
+                }
 
-                                if (seleniumStarted == 'true') {
-                                    echo "🛑 Stopping Selenium Grid..."
-                                    try {
-                                        bat 'docker-compose -f docker-compose.yaml down --remove-orphans'
-                                        echo "✅ Selenium Grid stopped successfully."
-                                    } catch (Exception exception) {
-                                        echo "⚠️ Error stopping Selenium Grid: ${exception.message}"
-                                    }
-                                } else {
-                                    echo "ℹ️ Selenium Grid was not started by this job. Skipping stop."
-                                }
+                stage('Stop Playwright Service') {
+                    steps {
+                        dir("${WORKING_DIR}") {
+                            script {
+                                echo "🛑 Stopping Playwright Service..."
+                                bat 'docker-compose -f docker-compose.playwright.yml down --remove-orphans'
                             }
                         }
                     }
@@ -227,20 +249,8 @@ pipeline {
                     steps {
                         dir("${WORKING_DIR}") {
                             script {
-                                def chaintestStarted = env.CHAINTEST_STARTED ?: "false"
-                                echo "CHAINTEST_STARTED: ${chaintestStarted}"
-
-                                if (chaintestStarted == 'true') {
-                                    echo "🛑 Stopping ChainTest Service..."
-                                    try {
-                                        bat 'docker-compose -f docker-compose-h2.yml down --remove-orphans'
-                                        echo "✅ ChainTest Service stopped successfully."
-                                    } catch (Exception exception) {
-                                        echo "⚠️ Error stopping ChainTest Service: ${exception.message}"
-                                    }
-                                } else {
-                                    echo "ℹ️ ChainTest Service was not started by this job. Skipping stop."
-                                }
+                                echo "🛑 Stopping ChainTest Service..."
+                                bat 'docker-compose -f docker-compose-h2.yml down --remove-orphans'
                             }
                         }
                     }

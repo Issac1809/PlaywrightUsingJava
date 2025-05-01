@@ -1,0 +1,14 @@
+version: '3'
+services:
+  playwright:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    tty: true
+    environment:
+      - JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+      - PATH=/usr/lib/jvm/java-21-openjdk-amd64/bin:$PATH
+    entrypoint: ["/bin/sh", "-c", "mvn clean test"]
