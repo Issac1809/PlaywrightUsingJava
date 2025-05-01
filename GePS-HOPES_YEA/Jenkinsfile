@@ -95,34 +95,17 @@ pipeline {
                 stage('Start Selenium Grid') {
                     steps {
                         dir("${WORKING_DIR}") {
-                            echo "WORKING_DIR is set to: ${WORKING_DIR}"
                             script {
                                 if (!fileExists('docker-compose.yaml')) {
-                                    error "❌ docker-compose.yaml not found! Cannot start Selenium Grid."
+                                    error "docker-compose.yaml not found! Cannot start Selenium Grid."
                                 }
 
-                                def output = bat(
-                                    script: 'docker-compose -f docker-compose.yaml ps -q selenium-hub',
-                                    returnStdout: true
-                                ).trim()
-                                def containerId = output.readLines().findAll { it.trim() }[-1]
-                                echo "📦 Selenium Container ID: ${containerId}"
+                                def containerId = bat(script: 'docker-compose -f docker-compose.yaml ps -q selenium-hub', returnStdout: true).trim()
 
                                 if (!containerId) {
-                                    echo "🔄 selenium-hub not found. Starting Selenium Grid..."
                                     bat 'docker-compose -f docker-compose.yaml up -d --remove-orphans'
-                                    env.SELENIUM_STARTED = "true"
-                                } else {
-                                    def status = bat(
-                                        script: "docker inspect -f \"{{.State.Running}}\" ${containerId}",
-                                        returnStdout: true
-                                    ).trim()
-                                    if (status != "true") {
-                                        echo "♻️ selenium-hub exists but is not running. Restarting..."
-                                        bat 'docker-compose -f docker-compose.yaml up -d --remove-orphans'
-                                    } else {
-                                        echo "🟢 Selenium Grid is already running."
-                                    }
+                                } else if (bat(script: "docker inspect -f \"{{.State.Running}}\" ${containerId}", returnStdout: true).trim() != "true") {
+                                    bat 'docker-compose -f docker-compose.yaml up -d --remove-orphans'
                                 }
                             }
                             sleep time: 15, unit: 'SECONDS'
@@ -133,34 +116,17 @@ pipeline {
                 stage('Start ChainTest Report Service') {
                     steps {
                         dir("${WORKING_DIR}") {
-                            echo "WORKING_DIR is set to: ${WORKING_DIR}"
                             script {
                                 if (!fileExists('docker-compose-h2.yml')) {
-                                    error "❌ docker-compose-h2.yml not found! Cannot start ChainTest reporting service."
+                                    error "docker-compose-h2.yml not found! Cannot start ChainTest reporting service."
                                 }
 
-                                def output = bat(
-                                    script: 'docker-compose -f docker-compose-h2.yml ps -q chaintest',
-                                    returnStdout: true
-                                ).trim()
-                                def containerId = output.readLines().findAll { it.trim() }[-1]
-                                echo "📦 ChainTest Container ID: ${containerId}"
+                                def containerId = bat(script: 'docker-compose -f docker-compose-h2.yml ps -q chaintest', returnStdout: true).trim()
 
                                 if (!containerId) {
-                                    echo "🔄 chaintest not found. Starting ChainTest reporting service..."
                                     bat 'docker-compose -f docker-compose-h2.yml up -d --remove-orphans'
-                                    env.CHAINTEST_STARTED = "true"
-                                } else {
-                                    def status = bat(
-                                        script: "docker inspect -f \"{{.State.Running}}\" ${containerId}",
-                                        returnStdout: true
-                                    ).trim()
-                                    if (status != "true") {
-                                        echo "♻️ chaintest exists but is not running. Restarting..."
-                                        bat 'docker-compose -f docker-compose-h2.yml up -d --remove-orphans'
-                                    } else {
-                                        echo "🟢 ChainTest service is already running."
-                                    }
+                                } else if (bat(script: "docker inspect -f \"{{.State.Running}}\" ${containerId}", returnStdout: true).trim() != "true") {
+                                    bat 'docker-compose -f docker-compose-h2.yml up -d --remove-orphans'
                                 }
                             }
                             sleep time: 15, unit: 'SECONDS'
