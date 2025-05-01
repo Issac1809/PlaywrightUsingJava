@@ -96,19 +96,31 @@ pipeline {
                     steps {
                         dir("${WORKING_DIR}") {
                             script {
+                                echo "🔍 Checking for docker-compose.yaml..."
                                 if (!fileExists('docker-compose.yaml')) {
-                                    error "docker-compose.yaml not found! Cannot start Selenium Grid."
+                                    error "❌ docker-compose.yaml not found! Cannot start Selenium Grid."
                                 }
 
+                                echo "🔎 Searching for existing Selenium Grid container..."
                                 def containerId = bat(script: 'docker-compose -f docker-compose.yaml ps -q selenium-hub', returnStdout: true).trim()
+                                echo "📦 Found Selenium Grid container ID: ${containerId}"
 
-                                if (!containerId) {
-                                    bat 'docker-compose -f docker-compose.yaml up -d --remove-orphans'
-                                } else if (bat(script: "docker inspect -f \"{{.State.Running}}\" ${containerId}", returnStdout: true).trim() != "true") {
+                                if (containerId) {
+                                    echo "💡 Checking if Selenium Grid is running..."
+                                    def status = bat(script: "docker inspect -f \"{{.State.Running}}\" ${containerId}", returnStdout: true).trim()
+                                    echo "✅ Selenium Grid running status: ${status}"
+
+                                    if (status != "true") {
+                                        echo "♻️ Selenium Grid exists but is not running. Restarting..."
+                                        bat 'docker-compose -f docker-compose.yaml up -d --remove-orphans'
+                                    } else {
+                                        echo "🟢 Selenium Grid is already running."
+                                    }
+                                } else {
+                                    echo "🚀 No Selenium Grid container found. Starting new instance..."
                                     bat 'docker-compose -f docker-compose.yaml up -d --remove-orphans'
                                 }
                             }
-                            sleep time: 15, unit: 'SECONDS'
                         }
                     }
                 }
@@ -117,19 +129,31 @@ pipeline {
                     steps {
                         dir("${WORKING_DIR}") {
                             script {
+                                echo "🔍 Checking for docker-compose-h2.yml..."
                                 if (!fileExists('docker-compose-h2.yml')) {
-                                    error "docker-compose-h2.yml not found! Cannot start ChainTest reporting service."
+                                    error "❌ docker-compose-h2.yml not found! Cannot start ChainTest reporting service."
                                 }
 
+                                echo "🔎 Searching for existing ChainTest container..."
                                 def containerId = bat(script: 'docker-compose -f docker-compose-h2.yml ps -q chaintest', returnStdout: true).trim()
+                                echo "📦 Found ChainTest container ID: ${containerId}"
 
-                                if (!containerId) {
-                                    bat 'docker-compose -f docker-compose-h2.yml up -d --remove-orphans'
-                                } else if (bat(script: "docker inspect -f \"{{.State.Running}}\" ${containerId}", returnStdout: true).trim() != "true") {
+                                if (containerId) {
+                                    echo "💡 Checking if ChainTest is running..."
+                                    def status = bat(script: "docker inspect -f \"{{.State.Running}}\" ${containerId}", returnStdout: true).trim()
+                                    echo "✅ ChainTest running status: ${status}"
+
+                                    if (status != "true") {
+                                        echo "♻️ ChainTest exists but is not running. Restarting..."
+                                        bat 'docker-compose -f docker-compose-h2.yml up -d --remove-orphans'
+                                    } else {
+                                        echo "🟢 ChainTest service is already running."
+                                    }
+                                } else {
+                                    echo "🚀 No ChainTest container found. Starting new instance..."
                                     bat 'docker-compose -f docker-compose-h2.yml up -d --remove-orphans'
                                 }
                             }
-                            sleep time: 15, unit: 'SECONDS'
                         }
                     }
                 }
@@ -139,12 +163,26 @@ pipeline {
         stage('Regression Automation Test') {
             steps {
                 dir("${WORKING_DIR}") {
+                    echo "🔍 Checking environment variables..."
+                    if (!WORKING_DIR || !TEST_SUITE) {
+                        error "❌ WORKING_DIR or TEST_SUITE is not set. Aborting!"
+                    }
+
+                    echo "🔎 Validating Selenium Grid availability..."
+                    bat 'curl -s http://localhost:4444/status || error "❌ Selenium Grid is not reachable!"'
+
                     echo "🧪 Executing Regression Tests on Latest Build..."
-                    bat "mvn test -DSELENIUM_REMOTE_URL=http://localhost:4444 -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+                    def result = bat(returnStatus: true, script: "mvn test -DSELENIUM_REMOTE_URL=http://localhost:4444 -Dsurefire.suiteXmlFiles=${TEST_SUITE}")
+
+                    if (result != 0) {
+                        error "❌ Maven test execution failed!"
+                    }
+                    echo "📜 Regression tests completed successfully!"
                 }
             }
             post {
                 always {
+                    echo "📊 Collecting test results..."
                     junit '**/target/surefire-reports/*.xml'
                 }
                 failure {
@@ -191,10 +229,17 @@ pipeline {
                     steps {
                         dir("${WORKING_DIR}") {
                             script {
-                                echo "SELENIUM_STARTED: ${env.SELENIUM_STARTED}"
-                                if (env.SELENIUM_STARTED == 'true') {
+                                def seleniumStarted = env.SELENIUM_STARTED ?: "false"
+                                echo "SELENIUM_STARTED: ${seleniumStarted}"
+
+                                if (seleniumStarted == 'true') {
                                     echo "🛑 Stopping Selenium Grid..."
-                                    bat 'docker-compose -f docker-compose.yaml down --remove-orphans'
+                                    try {
+                                        bat 'docker-compose -f docker-compose.yaml down --remove-orphans'
+                                        echo "✅ Selenium Grid stopped successfully."
+                                    } catch (Exception exception) {
+                                        echo "⚠️ Error stopping Selenium Grid: ${exception.message}"
+                                    }
                                 } else {
                                     echo "ℹ️ Selenium Grid was not started by this job. Skipping stop."
                                 }
@@ -203,17 +248,23 @@ pipeline {
                     }
                 }
 
-
                 stage('Stop ChainTest Service') {
                     steps {
                         dir("${WORKING_DIR}") {
                             script {
-                                echo "CHAINTEST_STARTED: ${env.CHAINTEST_STARTED}"
-                                if (env.CHAINTEST_STARTED == 'true') {
+                                def chaintestStarted = env.CHAINTEST_STARTED ?: "false"
+                                echo "CHAINTEST_STARTED: ${chaintestStarted}"
+
+                                if (chaintestStarted == 'true') {
                                     echo "🛑 Stopping ChainTest Service..."
-                                    bat 'docker-compose -f docker-compose-h2.yml down --remove-orphans'
+                                    try {
+                                        bat 'docker-compose -f docker-compose-h2.yml down --remove-orphans'
+                                        echo "✅ ChainTest Service stopped successfully."
+                                    } catch (Exception exception) {
+                                        echo "⚠️ Error stopping ChainTest Service: ${exception.message}"
+                                    }
                                 } else {
-                                    echo "ℹ️ ChainTest service was not started by this job. Skipping stop."
+                                    echo "ℹ️ ChainTest Service was not started by this job. Skipping stop."
                                 }
                             }
                         }
