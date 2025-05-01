@@ -99,7 +99,7 @@ pipeline {
                                 echo "🔎 Checking for existing Selenium Grid container..."
                                 def containerId = bat(script: 'docker-compose -f docker-compose.yaml ps -q selenium-hub', returnStdout: true).trim()
 
-                                if (containerId) {
+                                if (containerId && containerId != '') {
                                     echo "📦 Found Selenium Grid container ID: ${containerId}"
                                     def status = bat(script: "docker inspect --format='{{.State.Running}}' ${containerId}", returnStdout: true).trim()
 
@@ -126,7 +126,7 @@ pipeline {
                                 echo "🔎 Checking for existing ChainTest container..."
                                 def containerId = bat(script: 'docker-compose -f docker-compose-h2.yml ps -q chaintest', returnStdout: true).trim()
 
-                                if (containerId) {
+                                if (containerId && containerId != '') {
                                     echo "📦 Found ChainTest container ID: ${containerId}"
                                     def status = bat(script: "docker inspect --format='{{.State.Running}}' ${containerId}", returnStdout: true).trim()
 
