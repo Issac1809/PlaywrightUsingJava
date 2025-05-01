@@ -97,11 +97,17 @@ pipeline {
                         dir("${WORKING_DIR}") {
                             script {
                                 echo "🔎 Checking for existing Selenium Grid container..."
-                                def containerId = bat(script: 'docker-compose -f docker-compose.yaml ps -q selenium-hub', returnStdout: true).trim()
+                                def containerId = bat(
+                                    script: '@echo off && for /f "delims=" %%i in (\'docker-compose -f docker-compose.yaml ps -q selenium-hub\') do @echo %%i',
+                                    returnStdout: true
+                                ).trim()
 
                                 if (containerId) {
                                     echo "📦 Found Selenium Grid container ID: ${containerId}"
-                                    def status = bat(script: "docker inspect --format='{{.State.Running}}' ${containerId}", returnStdout: true).trim()
+                                    def status = bat(
+                                        script: "docker inspect --format='{{.State.Running}}' ${containerId}",
+                                        returnStdout: true
+                                    ).trim()
 
                                     if (status != "true") {
                                         echo "♻️ Restarting Selenium Grid..."
@@ -124,11 +130,17 @@ pipeline {
                         dir("${WORKING_DIR}") {
                             script {
                                 echo "🔎 Checking for existing ChainTest container..."
-                                def containerId = bat(script: 'docker-compose -f docker-compose-h2.yml ps -q chaintest', returnStdout: true).trim()
+                                def containerId = bat(
+                                    script: '@echo off && for /f "delims=" %%i in (\'docker-compose -f docker-compose-h2.yml ps -q chaintest\') do @echo %%i',
+                                    returnStdout: true
+                                ).trim()
 
                                 if (containerId) {
                                     echo "📦 Found ChainTest container ID: ${containerId}"
-                                    def status = bat(script: "docker inspect --format='{{.State.Running}}' ${containerId}", returnStdout: true).trim()
+                                    def status = bat(
+                                        script: "docker inspect --format='{{.State.Running}}' ${containerId}",
+                                        returnStdout: true
+                                    ).trim()
 
                                     if (status != "true") {
                                         echo "♻️ Restarting ChainTest Service..."
@@ -152,7 +164,7 @@ pipeline {
             steps {
                 dir("${WORKING_DIR}") {
                    echo "🧪 Executing Regression Tests on Latest Build..."
-                   bat "mvn test -DSELENIUM_REMOTE_URL=http://localhost:4444 -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+                   bat 'mvn test -DSELENIUM_REMOTE_URL=http://localhost:4444 -Dsurefire.suiteXmlFiles=${TEST_SUITE}'
                    }
                 }
                 post {
