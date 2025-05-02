@@ -7,7 +7,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/workspace
-      - "C:/Users/issac/.m2:/root/.m2"
+      - "C:/Users/issac/.m2:/root/.m2" # Maven cache
+      - "C:/Users/issac/.cache/ms-playwright:/root/.cache/ms-playwright"  # Playwright browser cache
     working_dir: /workspace
     tty: true
     command: mvn clean test
