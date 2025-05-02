@@ -7,10 +7,8 @@ public class PoSendForVendorTest extends BaseTest {
 
     @Test
     @Parameters({"type", "purchaseType"})
-    public void sendForVendor(){
+    public void sendForVendor(String type, String purchaseType) {
         try {
-            String type = "";
-            String purchaseType = "";
             iPoSendForVendor.sendPoForVendor(type, purchaseType);
         } catch (Exception error) {
             System.out.println("What is the error: " + error.getMessage());

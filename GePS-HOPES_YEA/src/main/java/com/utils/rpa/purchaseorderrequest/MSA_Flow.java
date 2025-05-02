@@ -25,7 +25,8 @@ public class MSA_Flow {
         try {
             FTPClient ftpClient = new FTPClient();
             ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(new File("C:\\My_Personal_Folder\\GePS-Testing\\GePS-HOPES_YEA\\src\\test\\resources\\config\\msa-config.json"));
+            JsonNode jsonNode = objectMapper.readTree(new File("src\\test\\resources\\config\\msa-config.json"));
+            JsonNode jsonNode2 = objectMapper.readTree(new File("src\\test\\resources\\config\\test-data.json"));
             String ftpHost = jsonNode.get("msa").get("ftpHost").asText();
             int ftpPort = jsonNode.get("msa").get("ftpPort").asInt();
             String ftpUser = jsonNode.get("msa").get("ftpUser").asText();
@@ -36,14 +37,13 @@ public class MSA_Flow {
             String remotePOFilePathPO = jsonNode.get("msa").get("remotePOFilePath").asText();
             String readPORAPIUrl = jsonNode.get("msa").get("readPORAPIUrl").asText();
             String generatePOAPIUrl = jsonNode.get("msa").get("generatePOAPIUrl").asText();
-            int id = jsonNode.get("purchaseOrderRequests").get("purchaseOrderRequestId").asInt();
-
+            int id = jsonNode2.get("purchaseOrderRequests").get("purchaseOrderRequestId").asInt();
+            String porReferenceNumber = jsonNode2.get("purchaseOrderRequests").get("porReferenceNumber").asText();
 
 //TODO Step 1: Connect to FTP and Download File
             MSA_FTPHelper msaFtpHelper = new MSA_FTPHelper(ftpClient);
             msaFtpHelper.connectionEstablish(ftpHost, ftpPort, ftpUser, ftpPassword);
-            String localExcelFilePath = msaFtpHelper.downloadFile(remoteGepsToHopesFilePath, localPath);
-
+            String localExcelFilePath = msaFtpHelper.downloadFile(remoteGepsToHopesFilePath, localPath, porReferenceNumber);
 //TODO Step 2: Update the Excel File
             MSA_ExcelHelper msaExcelHelper = new MSA_ExcelHelper();
             int poNumber = msaExcelHelper.updateExcel(localExcelFilePath);
@@ -53,7 +53,7 @@ public class MSA_Flow {
             String localPoFilePath = msaPoPdfHelper.poPdfFileNameUpdate(poNumber, localPath);
 
 //TODO Step 4: Upload the Updated File
-            msaFtpHelper.connectionEstablishAndUploadFiles(ftpHost, ftpPort, ftpUser, ftpPassword, localPoFilePath, localExcelFilePath, poNumber, remotePOFilePathPO, remoteHopesToGepsPathXLS);
+            msaFtpHelper.connectionEstablishAndUploadFiles(ftpHost, ftpPort, ftpUser, ftpPassword, localPoFilePath, localExcelFilePath, poNumber, remotePOFilePathPO, remoteHopesToGepsPathXLS, porReferenceNumber);
 
 //TODO Step 5: Call API to Update Status
             MSA_APIHelper msaApiHelper = new MSA_APIHelper(page);

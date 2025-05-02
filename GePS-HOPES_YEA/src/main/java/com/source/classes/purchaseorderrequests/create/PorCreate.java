@@ -358,7 +358,8 @@ public class PorCreate implements IPorCreate {
         }
     }
 
-    public void createButton(String type){
+    public int createButton(String type){
+        int status = 0;
         try {
             Locator createButtonLocator = page.locator(CREATE_BUTTON);
             createButtonLocator.click();
@@ -381,15 +382,21 @@ public class PorCreate implements IPorCreate {
             APIResponse apiResponse = page.request().fetch(appUrl + porType + getUid, RequestOptions.create());
             JsonNode jsonNode = objectMapper.readTree(apiResponse.body());
             String purchaseOrderRequestId = jsonNode.get("id").asText();
+            String porReferenceNumber = jsonNode.get("referenceId").asText();
             playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "purchaseOrderRequestId", purchaseOrderRequestId);
+            playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "porReferenceNumber", porReferenceNumber);
+
+            status = apiResponse.status();
 
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in POR Create Button Function: {}", exception.getMessage());
         }
+        return status;
     }
 
     public int porCreate(String type, String purchaseType) {
+        int status = 0;
         try {
             if (purchaseType.equalsIgnoreCase("Catalog")) {
                 porCreateButtonForCatalog(type, purchaseType);
@@ -399,7 +406,7 @@ public class PorCreate implements IPorCreate {
             }
             taxCode();
             porNotes();
-            createButton(type);
+            status = createButton(type);
         }catch (Exception exception) {
             logger.error("Exception in POR Create Function: {}", exception.getMessage());
         }

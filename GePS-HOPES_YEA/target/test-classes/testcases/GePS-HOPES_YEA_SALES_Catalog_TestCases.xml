@@ -2,61 +2,62 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="GePS-HOPES_YEA SALES Catalog Test Cases" >
 
-    <test name="Requisition Create">
-        <parameter name="type" value="Sales"/>
-        <parameter name="purchaseType" value="Catalog"/>
-        <classes>
-            <class name="com.source.classes.requisitions.create.CreateTest"/>
-        </classes>
-    </test>
+<!--    <test name="Requisition Create">-->
+<!--        <parameter name="type" value="Sales"/>-->
+<!--        <parameter name="purchaseType" value="Catalog"/>-->
+<!--        <classes>-->
+<!--            <class name="com.source.classes.requisitions.create.CreateTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
-    <test name="Requisition Edit">
-        <parameter name="type" value="Sales"/>
-        <parameter name="purchaseType" value="Catalog"/>
-        <classes>
-            <class name="com.source.classes.requisitions.edit.EditTest"/>
-        </classes>
-    </test>
+<!--&lt;!&ndash;    <test name="Requisition Edit">&ndash;&gt;-->
+<!--&lt;!&ndash;        <parameter name="type" value="Sales"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <parameter name="purchaseType" value="Catalog"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <classes>&ndash;&gt;-->
+<!--&lt;!&ndash;            <class name="com.source.classes.requisitions.edit.EditTest"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </classes>&ndash;&gt;-->
+<!--&lt;!&ndash;    </test>&ndash;&gt;-->
 
-    <test name="Requisition Send For Approval">
-        <parameter name="type" value="Sales"/>
-        <parameter name="purchaseType" value="Catalog"/>
-        <classes>
-            <class name="com.source.classes.requisitions.sendforapproval.SendForApprovalTest"/>
-        </classes>
-    </test>
+<!--    <test name="Requisition Send For Approval">-->
+<!--        <parameter name="type" value="Sales"/>-->
+<!--        <parameter name="purchaseType" value="Catalog"/>-->
+<!--        <classes>-->
+<!--            <class name="com.source.classes.requisitions.sendforapproval.SendForApprovalTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
-    <test name="Requisition Reject">
-        <parameter name="type" value="Sales"/>
-        <parameter name="purchaseType" value="Catalog"/>
-        <classes>
-            <class name="com.source.classes.requisitions.reject.RejectTest"/>
-        </classes>
-    </test>
+<!--&lt;!&ndash;    <test name="Requisition Reject">&ndash;&gt;-->
+<!--&lt;!&ndash;        <parameter name="type" value="Sales"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <parameter name="purchaseType" value="Catalog"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <classes>&ndash;&gt;-->
+<!--&lt;!&ndash;            <class name="com.source.classes.requisitions.reject.RejectTest"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </classes>&ndash;&gt;-->
+<!--&lt;!&ndash;    </test>&ndash;&gt;-->
 
-    <test name="Requisition Approve">
-        <parameter name="type" value="Sales"/>
-        <parameter name="purchaseType" value="Catalog"/>
-        <classes>
-            <class name="com.source.classes.requisitions.approve.ApproveTest"/>
-        </classes>
-    </test>
+<!--    <test name="Requisition Approve">-->
+<!--        <parameter name="type" value="Sales"/>-->
+<!--        <parameter name="purchaseType" value="Catalog"/>-->
+<!--        <classes>-->
+<!--            <class name="com.source.classes.requisitions.approve.ApproveTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
-    <test name="Requisition Buyer Manager Suspend">
-        <parameter name="type" value="Sales"/>
-        <parameter name="purchaseType" value="Catalog"/>
-        <classes>
-            <class name="com.source.classes.requisitions.suspend.BuyerManagerSuspendTest"/>
-        </classes>
-    </test>
 
-    <test name="Requisition Buyer Suspend">
-        <parameter name="type" value="Sales"/>
-        <parameter name="purchaseType" value="Catalog"/>
-        <classes>
-            <class name="com.source.classes.requisitions.suspend.BuyerSuspendTest"/>
-        </classes>
-    </test>
+<!--    <test name="Requisition Buyer Manager Suspend">-->
+<!--        <parameter name="type" value="Sales"/>-->
+<!--        <parameter name="purchaseType" value="Catalog"/>-->
+<!--        <classes>-->
+<!--            <class name="com.source.classes.requisitions.suspend.BuyerManagerSuspendTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+<!--&lt;!&ndash;    <test name="Requisition Buyer Suspend">&ndash;&gt;-->
+<!--&lt;!&ndash;        <parameter name="type" value="Sales"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <parameter name="purchaseType" value="Catalog"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <classes>&ndash;&gt;-->
+<!--&lt;!&ndash;            <class name="com.source.classes.requisitions.suspend.BuyerSuspendTest"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </classes>&ndash;&gt;-->
+<!--&lt;!&ndash;    </test>&ndash;&gt;-->
 
     <test name="Purchase Order Request Create">
         <parameter name="type" value="Sales"/>

@@ -161,8 +161,8 @@ public class PorApprove implements IPorApprove {
             savePorAprovers(type, purchaseType);
             JsonNode approvers = jsonNode.get("purchaseOrderRequests").get("approvers");
 
-            for(int i = 0; i < approvers.size(); i++){
-                if(i == 0){
+            for(int i = 0; i < approvers.size(); i++) {
+                if (i == 0) {
                     continue; //TODO to skip first approval
                 }
                 String approver = approvers.get(i).asText();
@@ -181,7 +181,9 @@ public class PorApprove implements IPorApprove {
                 Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
                 acceptButtonLocator.click();
 
-                msaFlow.msaFlow();
+                if(i==approvers.size()-1) {
+                    msaFlow.msaFlow();
+                }
 
                 iLogout.performLogout();
             }
