@@ -106,7 +106,7 @@ pipeline {
                                 bat "docker-compose -f docker-compose.playwright.yml up -d --remove-orphans"
 
                                 echo "⏳ Waiting for Playwright container to initialize..."
-                                bat "timeout /T 10"
+                                bat 'ping -n 11 127.0.0.1 > nul'
                                 echo "✅ Playwright container is ready."
                             }
                         }
@@ -134,7 +134,7 @@ pipeline {
                                 }
 
                                 echo "⏳ Waiting for ChainTest container to initialize..."
-                                bat "timeout /T 10"
+                                bat 'ping -n 11 127.0.0.1 > nul'
                                 echo "✅ ChainTest container is ready."
                             }
                         }
