@@ -102,8 +102,9 @@ pipeline {
                     steps {
                         dir("${WORKING_DIR}") {
                             script {
+                                def containerName = "main-playwright-container"
                                 echo "🔎 Checking for existing Main Docker container..."
-                                bat(script: "docker-compose -f docker-compose.yml ps -q main > main_id.txt", returnStatus: true)
+                                bat(script: "docker ps -q --filter 'name=${containerName}' > main_id.txt", returnStatus: true)
                                 def mainId = readFile('main_id.txt').trim()
                                 if (mainId) {
                                     bat(script: "docker inspect -f \"{{.State.Running}}\" ${mainId} > main_status.txt", returnStatus: true)
@@ -111,11 +112,12 @@ pipeline {
                                         echo "✅ Main Docker is already running."
                                     } else {
                                         echo "🔄 Starting Main Docker..."
-                                        bat "docker-compose -f docker-compose.yml up -d"
+                                        bat "docker rm ${containerName} || exit 0"
+                                        bat "docker build -t my-playwright-image . && docker run -d --name ${containerName} my-playwright-image"
                                     }
                                 } else {
                                     echo "🚀 Starting Main Docker..."
-                                    bat "docker-compose -f docker-compose.yml up -d"
+                                    bat "docker build -t my-playwright-image . && docker run -d --name ${containerName} my-playwright-image"
                                 }
                             }
                         }
@@ -227,8 +229,10 @@ pipeline {
                     steps {
                         dir("${WORKING_DIR}") {
                             script {
+                                def containerName = "main-playwright-container"
                                 echo "🛑 Stopping Main Docker Service..."
-                                bat 'docker-compose -f docker-compose.yml down --remove-orphans'
+                                bat "docker stop ${containerName} || exit 0"
+                                bat "docker rm ${containerName} || exit 0"
                             }
                         }
                     }
