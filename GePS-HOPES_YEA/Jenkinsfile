@@ -98,51 +98,12 @@ pipeline {
 
         stage('Start Services') {
             parallel {
-                stage('Start Main Docker Service') {
-                    steps {
-                        dir("${WORKING_DIR}") {
-                            script {
-                                def containerName = "main-playwright-container"
-                                echo "🔎 Checking for existing Main Docker container..."
-                                bat(script: "docker ps -q --filter 'name=${containerName}' > main_id.txt", returnStatus: true)
-                                def mainId = readFile('main_id.txt').trim()
-                                if (mainId) {
-                                    bat(script: "docker inspect -f \"{{.State.Running}}\" ${mainId} > main_status.txt", returnStatus: true)
-                                    if (readFile('main_status.txt').trim() == 'true') {
-                                        echo "✅ Main Docker is already running."
-                                    } else {
-                                        echo "🔄 Starting Main Docker..."
-                                        bat "docker rm ${containerName} || exit 0"
-                                        bat "docker build -t my-playwright-image . && docker run -d --name ${containerName} my-playwright-image"
-                                    }
-                                } else {
-                                    echo "🚀 Starting Main Docker..."
-                                    bat "docker build -t my-playwright-image . && docker run -d --name ${containerName} my-playwright-image"
-                                }
-                            }
-                        }
-                    }
-                }
-
                 stage('Start Playwright Service') {
                     steps {
                         dir("${WORKING_DIR}") {
                             script {
-                                echo "🔎 Checking for existing Playwright container..."
-                                bat(script: "docker-compose -f docker-compose.playwright.yml ps -q playwright > playwright_id.txt", returnStatus: true)
-                                def pid = readFile('playwright_id.txt').trim()
-                                if (pid) {
-                                    bat(script: "docker inspect -f \"{{.State.Running}}\" ${pid} > playwright_status.txt", returnStatus: true)
-                                    if (readFile('playwright_status.txt').trim() == 'true') {
-                                        echo "✅ Playwright container is already running."
-                                    } else {
-                                        echo "🔄 Starting Playwright..."
-                                        bat "docker-compose -f docker-compose.playwright.yml up -d"
-                                    }
-                                } else {
-                                    echo "🚀 Starting Playwright..."
-                                    bat "docker-compose -f docker-compose.playwright.yml up -d"
-                                }
+                                echo "🚀 Ensuring Playwright container is up..."
+                                bat "docker-compose -f docker-compose.playwright.yml up -d"
                             }
                         }
                     }
@@ -225,19 +186,6 @@ pipeline {
 
         stage('Stop Services') {
             parallel {
-                stage('Stop Main Docker Service') {
-                    steps {
-                        dir("${WORKING_DIR}") {
-                            script {
-                                def containerName = "main-playwright-container"
-                                echo "🛑 Stopping Main Docker Service..."
-                                bat "docker stop ${containerName} || exit 0"
-                                bat "docker rm ${containerName} || exit 0"
-                            }
-                        }
-                    }
-                }
-
                 stage('Stop Playwright Service') {
                     steps {
                         dir("${WORKING_DIR}") {

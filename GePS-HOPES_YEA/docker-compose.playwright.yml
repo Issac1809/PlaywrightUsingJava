@@ -1,6 +1,6 @@
-version: '3'
 services:
   playwright:
+    container_name: main-playwright-container
     image: my-playwright-image
     build:
       context: .
