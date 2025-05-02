@@ -103,10 +103,10 @@ pipeline {
                         dir("${WORKING_DIR}") {
                             script {
                                 echo "🚀 Ensuring Playwright container is up..."
-                                bat "docker-compose -f docker-compose.playwright.yml up -d"
+                                bat "docker-compose -f docker-compose.playwright.yml up -d --remove-orphans"
 
                                 echo "⏳ Waiting for Playwright container to initialize..."
-                                bat "docker-compose -f docker-compose.playwright.yml exec -T playwright sh -c 'while ! nc -z localhost 8080; do sleep 1; done'"
+                                bat "timeout /T 10"
                                 echo "✅ Playwright container is ready."
                             }
                         }
@@ -126,15 +126,15 @@ pipeline {
                                         echo "✅ ChainTest container is already running."
                                     } else {
                                         echo "🔄 Starting ChainTest..."
-                                        bat "docker-compose -f docker-compose-h2.yml up -d"
+                                        bat "docker-compose -f docker-compose-h2.yml up -d --remove-orphans"
                                     }
                                 } else {
                                     echo "🚀 Starting ChainTest..."
-                                    bat "docker-compose -f docker-compose-h2.yml up -d"
+                                    bat "docker-compose -f docker-compose-h2.yml up -d --remove-orphans"
                                 }
 
                                 echo "⏳ Waiting for ChainTest container to initialize..."
-                                bat "docker-compose -f docker-compose-h2.yml exec -T chaintest sh -c 'while ! nc -z localhost 8081; do sleep 1; done'"
+                                bat "timeout /T 10"
                                 echo "✅ ChainTest container is ready."
                             }
                         }

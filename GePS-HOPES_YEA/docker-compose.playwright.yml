@@ -9,6 +9,4 @@ services:
       - .:/workspace
     working_dir: /workspace
     tty: true
-    ports:
-      - "8080:80"
     command: mvn clean test
