@@ -33,12 +33,12 @@ public class MSA_FTPHelper {
         }
     }
 
-    public String downloadFile(String remotePath, String localPath) {
+    public String downloadFile(String remotePath, String localPath, String porReferenceNumber) {
         try {
             File localDir = new File(localPath);
             if (!localDir.exists() && !localDir.mkdirs());
 
-            excelFileName = "240024POR01457_PT1_GePS-HOPES_R0.xls";
+            excelFileName = porReferenceNumber + "_PT1_GePS-HOPES_R0.xls";
             excelRemoteFilePath = remotePath + excelFileName;
             excelLocalFile = new File(localDir, excelFileName);
 
@@ -52,7 +52,7 @@ public class MSA_FTPHelper {
         return excelLocalFile.getAbsolutePath();
     }
 
-    public void connectionEstablishAndUploadFiles(String server, int port, String user, String password, String localPoFilePath, String localXLSFilePath, int poNumber, String remotePathPO, String remotePathXLS) {
+    public void connectionEstablishAndUploadFiles(String server, int port, String user, String password, String localPoFilePath, String localXLSFilePath, int poNumber, String remotePathPO, String remotePathXLS, String porReferenceNumber) {
         try {
             connectionEstablish(server, port, user, password);
 
@@ -60,7 +60,7 @@ public class MSA_FTPHelper {
             uploadFile(localPoFilePath, remotePathPO + "PO_" + poNumber + ".pdf");
 
 //TODO XLS File Upload
-            uploadFile(localXLSFilePath, remotePathXLS + "240024POR01457_PT1_GePS-HOPES_R0.xls");
+            uploadFile(localXLSFilePath, remotePathXLS + porReferenceNumber + "_PT1_GePS-HOPES_R0.xls");
         } catch (Exception exception) {
             logger.error("Exception in call upload file function: {}", exception.getMessage());
         }

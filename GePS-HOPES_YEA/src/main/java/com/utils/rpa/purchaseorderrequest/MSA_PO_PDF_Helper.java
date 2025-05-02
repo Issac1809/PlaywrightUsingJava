@@ -16,7 +16,7 @@ public class MSA_PO_PDF_Helper {
     public String poPdfFileNameUpdate(int newPoNumber, String filePath) {
         File newFilePath = null;
         try {
-            String oldFileName = "PO_" + 3489843 + ".pdf";
+            String oldFileName = "PO_.pdf";
             File oldFilePath = new File(filePath, oldFileName);
 
             String newFileName = "PO_" + newPoNumber + ".pdf";

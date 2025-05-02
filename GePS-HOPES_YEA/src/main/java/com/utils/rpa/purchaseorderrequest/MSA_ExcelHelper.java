@@ -5,6 +5,9 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 public class MSA_ExcelHelper {
 
@@ -46,11 +49,21 @@ public class MSA_ExcelHelper {
                 }
             }
 
-//TODO Save Changes
-            try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+////TODO Save Changes
+//            try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+//                workbook.write(fileOutputStream);
+//            }
+//            workbook.close();
+
+            // Write to temp file
+            File tempFile = File.createTempFile("updated_excel", filePath.endsWith(".xls") ? ".xls" : ".xlsx");
+            try (FileOutputStream fileOutputStream = new FileOutputStream(tempFile)) {
                 workbook.write(fileOutputStream);
             }
             workbook.close();
+            // Replace original with temp file
+            Files.copy(tempFile.toPath(), Path.of(filePath), StandardCopyOption.REPLACE_EXISTING);
+            tempFile.delete();
         } catch (IOException exception) {
             logger.error("Exception in update excel function: {}", exception.getMessage());
         }

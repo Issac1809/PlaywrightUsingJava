@@ -7,6 +7,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class PR_List_ExcelHelper {
 
@@ -65,13 +68,13 @@ public class PR_List_ExcelHelper {
             updateCell(sheet1, i, 12, "GN40"); //TODO Sales office HK column (index 13)
             updateCell(sheet1, i, 13, "Overseas Int.Company"); //TODO Text: Sales Office HK column (index 14)
             updateCell(sheet1, i, 18, "5800- TEST 16"); //TODO Sales Group HK column (index 19)
-            updateCell(sheet1, i, 20, "12/09/2025"); //TODO PO date HK column (index 21.00)
-            updateCell(sheet1, i, 21, "31/10/2024"); //TODO Requested deliv.date HK column (index 22.00)
+            updateCell(sheet1, i, 20, "12-09-2025"); //TODO PO date HK column (index 21.00)
+            updateCell(sheet1, i, 21, "31-10-2024"); //TODO Requested deliv.date HK column (index 22.00)
             updateCell(sheet1, i, 23, "Y12"); //TODO Order reason HK column (index 24)
             updateCell(sheet1, i, 24, "Y12 Order Intake with PO"); //TODO Text: Order reason HK column (index 25)
             updateCell(sheet1, i, 25, "0.00"); //TODO Net value of the order HK column (index 26)
             updateCell(sheet1, i, 26, "EUR"); //TODO SD document currency HK column (index 27)
-            updateCell(sheet1, i, 27, "31/10/2024"); //TODO Pricing date HK column (index 28.00)
+            updateCell(sheet1, i, 27, "31-10-2024"); //TODO Pricing date HK column (index 28.00)
             updateCell(sheet1, i, 36, "Y2U00027"); //TODO Sold-to party HK column (index 37)
             updateCell(sheet1, i, 38, "Y2U00027"); //TODO Name: Sold-to party HK column (index 39)
             //TODO <<Mandatory Field>>
@@ -95,7 +98,7 @@ public class PR_List_ExcelHelper {
             updateCell(sheet1, i, 83, "Text: Customer Group"); //TODO Domestic Price (Japan) HK column (index 84)
             updateCell(sheet1, i, 91, "30059222"); //TODO Direct PO to MFG Flag HK column (index 92)
             updateCell(sheet1, i, 92, "Rohit Bharad"); //TODO Reason for rejection HK column (index 93)
-            updateCell(sheet1, i, 93, "12/09/2024"); //TODO Text: Reason for rejection HK column (index 94.00)
+            updateCell(sheet1, i, 93, "12-09-2024"); //TODO Text: Reason for rejection HK column (index 94.00)
             updateCell(sheet1, i, 97, "10"); //TODO Delivery Quantity in sales unit HK column (index 98)
             updateCell(sheet1, i, 100, "F3XD64_F000000001"); //TODO Delivery Basis Indicator HK column (index 101)
             updateCell(sheet1, i, 105, "10.000"); //TODO Value to be Billed in Billing Plan HK column (index 106.000)
@@ -140,7 +143,7 @@ public class PR_List_ExcelHelper {
             updateCell(sheet1, i, 183, "F3XD64-3F/K2/CT"); //TODO Overall Status HK column (index 184)
             updateCell(sheet1, i, 213, "987654321"); //TODO Billing Status HK column (index 214)
             //TODO <<Mandatory Field>>
-            updateCell(sheet1, i, 217, "15/12/2025"); //TODO Actual Billing Date HK column (index 218)
+            updateCellDate(sheet1, i, 217, workbook,"15-12-2025"); //TODO Actual Billing Date HK column (index 218)
             //TODO <<Mandatory Field>>
             updateCell(sheet1, i, 218, "2002"); //TODO Planned Billing Date HK column (index 219)
             updateCell(sheet1, i, 220, "FCA"); //TODO Automatic Billing Style HK column (index 221)
@@ -198,7 +201,7 @@ public class PR_List_ExcelHelper {
                 updateCell(sheet, i, 11, "EJA530E_F000000001"); //TODO Material Number L column (index 11)
                 updateCell(sheet, i, 12, "2400"); //TODO Plant M column (index 12)
                 updateCell(sheet, i, 13, "9001"); //TODO Storage Location N column (index 13)
-                updateCell(sheet, i, 20, "30/04/2025"); //TODO Item Delivery Date U column (index 20)
+                updateCellDate(sheet, i, 20, workbook,"30-04-2025"); //TODO Item Delivery Date U column (index 20)
                 updateCell(sheet, i, 75, "BOP252400"); //TODO MS Code BX column (index 75)
                 updateCell(sheet, i, 102, String.valueOf(soNumber)); //TODO Sales Order Number CY column (index 102)
                 updateCell(sheet, i, 103, String.valueOf((10 + i))); //TODO Sales Order Item Number CZ column (index 103)
@@ -224,6 +227,31 @@ public class PR_List_ExcelHelper {
                 cell = row.createCell(colNum); //TODO Create the cell if it doesn't exist
             }
             cell.setCellValue(newValue); //TODO Set the value
+        } catch (Exception exception) {
+            logger.error("Exception in update cell function: {}", exception.getMessage());
+        }
+    }
+
+    public void updateCellDate(Sheet sheet, int rowNum, int colNum, Workbook workbook, String dateValue) {
+        try {
+            Row row = sheet.getRow(rowNum);
+            Cell cell = row.getCell(colNum);
+            if (cell == null || cell.getCellType() == CellType.BLANK) {
+                cell = row.createCell(colNum); //TODO Create the cell if it doesn't exist
+            }
+
+            // Parse the date string into a Date object
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date date = dateFormat.parse(dateValue);
+
+            // Set the cell value as a date
+            cell.setCellValue(date);
+
+            CellStyle dateCellStyle = workbook.createCellStyle();
+            CreationHelper creationHelper = workbook.getCreationHelper();
+            dateCellStyle.setDataFormat(creationHelper.createDataFormat().getFormat("dd-MM-yyyy"));
+            cell.setCellStyle(dateCellStyle);
+
         } catch (Exception exception) {
             logger.error("Exception in update cell function: {}", exception.getMessage());
         }
