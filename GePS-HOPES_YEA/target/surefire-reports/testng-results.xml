@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="7" passed="7" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2025-04-30T13:48:44 IST" name="GePS-HOPES_YEA PR - Invoice Functional Test Suite" finished-at="2025-04-30T13:48:44 IST" duration-ms="0">
+    <groups>
+    </groups>
+  </suite> <!-- GePS-HOPES_YEA PR - Invoice Functional Test Suite -->
+  <suite started-at="2025-04-30T13:43:52 IST" name="GePS-HOPES_YEA PS Catalog Test Cases" finished-at="2025-04-30T13:48:43 IST" duration-ms="290388">
+    <groups>
+    </groups>
+    <test started-at="2025-04-30T13:43:52 IST" name="Requisition Create" finished-at="2025-04-30T13:45:08 IST" duration-ms="75526">
+      <class name="com.source.classes.requisitions.create.CreateTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.source.classes.requisitions.create.CreateTest@3d6300e8]" started-at="2025-04-30T13:43:52 IST" name="setUp" finished-at="2025-04-30T13:44:10 IST" duration-ms="17155" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="create(java.lang.String,java.lang.String)[pri:0, instance:com.source.classes.requisitions.create.CreateTest@3d6300e8]" started-at="2025-04-30T13:44:10 IST" name="create" finished-at="2025-04-30T13:45:02 IST" duration-ms="51906" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[PS]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Catalog]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- create -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.source.classes.requisitions.create.CreateTest@3d6300e8]" started-at="2025-04-30T13:45:02 IST" name="tearDown" finished-at="2025-04-30T13:45:08 IST" duration-ms="6402" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.source.classes.requisitions.create.CreateTest -->
+    </test> <!-- Requisition Create -->
+    <test started-at="2025-04-30T13:45:08 IST" name="Requisition Edit" finished-at="2025-04-30T13:45:26 IST" duration-ms="18046">
+      <class name="com.source.classes.requisitions.edit.EditTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.source.classes.requisitions.edit.EditTest@21362712]" started-at="2025-04-30T13:45:08 IST" name="setUp" finished-at="2025-04-30T13:45:11 IST" duration-ms="3239" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="edit(java.lang.String,java.lang.String)[pri:0, instance:com.source.classes.requisitions.edit.EditTest@21362712]" started-at="2025-04-30T13:45:11 IST" name="edit" finished-at="2025-04-30T13:45:20 IST" duration-ms="8678" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[PS]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Catalog]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- edit -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.source.classes.requisitions.edit.EditTest@21362712]" started-at="2025-04-30T13:45:20 IST" name="tearDown" finished-at="2025-04-30T13:45:26 IST" duration-ms="6117" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.source.classes.requisitions.edit.EditTest -->
+    </test> <!-- Requisition Edit -->
+    <test started-at="2025-04-30T13:45:26 IST" name="Requisition Send For Approval" finished-at="2025-04-30T13:45:57 IST" duration-ms="30617">
+      <class name="com.source.classes.requisitions.sendforapproval.SendForApprovalTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.source.classes.requisitions.sendforapproval.SendForApprovalTest@1b5bc39d]" started-at="2025-04-30T13:45:26 IST" name="setUp" finished-at="2025-04-30T13:45:33 IST" duration-ms="7467" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="sendForApproval(java.lang.String,java.lang.String)[pri:0, instance:com.source.classes.requisitions.sendforapproval.SendForApprovalTest@1b5bc39d]" started-at="2025-04-30T13:45:34 IST" name="sendForApproval" finished-at="2025-04-30T13:45:50 IST" duration-ms="16484" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[PS]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Catalog]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sendForApproval -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.source.classes.requisitions.sendforapproval.SendForApprovalTest@1b5bc39d]" started-at="2025-04-30T13:45:50 IST" name="tearDown" finished-at="2025-04-30T13:45:57 IST" duration-ms="6664" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.source.classes.requisitions.sendforapproval.SendForApprovalTest -->
+    </test> <!-- Requisition Send For Approval -->
+    <test started-at="2025-04-30T13:45:57 IST" name="Requisition Reject" finished-at="2025-04-30T13:46:37 IST" duration-ms="40212">
+      <class name="com.source.classes.requisitions.reject.RejectTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.source.classes.requisitions.reject.RejectTest@4628b1d3]" started-at="2025-04-30T13:45:57 IST" name="setUp" finished-at="2025-04-30T13:46:02 IST" duration-ms="5575" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="reject(java.lang.String,java.lang.String)[pri:0, instance:com.source.classes.requisitions.reject.RejectTest@4628b1d3]" started-at="2025-04-30T13:46:02 IST" name="reject" finished-at="2025-04-30T13:46:30 IST" duration-ms="27972" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[PS]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Catalog]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- reject -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.source.classes.requisitions.reject.RejectTest@4628b1d3]" started-at="2025-04-30T13:46:30 IST" name="tearDown" finished-at="2025-04-30T13:46:37 IST" duration-ms="6660" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.source.classes.requisitions.reject.RejectTest -->
+    </test> <!-- Requisition Reject -->
+    <test started-at="2025-04-30T13:46:37 IST" name="Requisition Approve" finished-at="2025-04-30T13:46:58 IST" duration-ms="21318">
+      <class name="com.source.classes.requisitions.approve.ApproveTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.source.classes.requisitions.approve.ApproveTest@2cd2c8fe]" started-at="2025-04-30T13:46:37 IST" name="setUp" finished-at="2025-04-30T13:46:42 IST" duration-ms="5305" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="approve(java.lang.String,java.lang.String)[pri:0, instance:com.source.classes.requisitions.approve.ApproveTest@2cd2c8fe]" started-at="2025-04-30T13:46:42 IST" name="approve" finished-at="2025-04-30T13:46:52 IST" duration-ms="9490" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[PS]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Catalog]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- approve -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.source.classes.requisitions.approve.ApproveTest@2cd2c8fe]" started-at="2025-04-30T13:46:52 IST" name="tearDown" finished-at="2025-04-30T13:46:58 IST" duration-ms="6518" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.source.classes.requisitions.approve.ApproveTest -->
+    </test> <!-- Requisition Approve -->
+    <test started-at="2025-04-30T13:46:58 IST" name="Requisition Buyer Manager Suspend" finished-at="2025-04-30T13:47:51 IST" duration-ms="52871">
+      <class name="com.source.classes.requisitions.suspend.BuyerManagerSuspendTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.source.classes.requisitions.suspend.BuyerManagerSuspendTest@681aad3b]" started-at="2025-04-30T13:46:58 IST" name="setUp" finished-at="2025-04-30T13:47:02 IST" duration-ms="3541" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="suspend(java.lang.String,java.lang.String)[pri:0, instance:com.source.classes.requisitions.suspend.BuyerManagerSuspendTest@681aad3b]" started-at="2025-04-30T13:47:02 IST" name="suspend" finished-at="2025-04-30T13:47:44 IST" duration-ms="42321" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[PS]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Catalog]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- suspend -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.source.classes.requisitions.suspend.BuyerManagerSuspendTest@681aad3b]" started-at="2025-04-30T13:47:44 IST" name="tearDown" finished-at="2025-04-30T13:47:51 IST" duration-ms="7006" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.source.classes.requisitions.suspend.BuyerManagerSuspendTest -->
+    </test> <!-- Requisition Buyer Manager Suspend -->
+    <test started-at="2025-04-30T13:47:51 IST" name="Requisition Buyer Suspend" finished-at="2025-04-30T13:48:43 IST" duration-ms="51673">
+      <class name="com.source.classes.requisitions.suspend.BuyerSuspendTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.source.classes.requisitions.suspend.BuyerSuspendTest@63f34b70]" started-at="2025-04-30T13:47:51 IST" name="setUp" finished-at="2025-04-30T13:47:55 IST" duration-ms="3831" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="suspend(java.lang.String,java.lang.String)[pri:0, instance:com.source.classes.requisitions.suspend.BuyerSuspendTest@63f34b70]" started-at="2025-04-30T13:47:55 IST" name="suspend" finished-at="2025-04-30T13:48:36 IST" duration-ms="41360" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[PS]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Catalog]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- suspend -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.source.classes.requisitions.suspend.BuyerSuspendTest@63f34b70]" started-at="2025-04-30T13:48:36 IST" name="tearDown" finished-at="2025-04-30T13:48:43 IST" duration-ms="6476" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.source.classes.requisitions.suspend.BuyerSuspendTest -->
+    </test> <!-- Requisition Buyer Suspend -->
+  </suite> <!-- GePS-HOPES_YEA PS Catalog Test Cases -->
+</testng-results>

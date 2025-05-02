@@ -1,5 +1,8 @@
 package com.base;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.Playwright;
 import com.source.classes.currencyexchangerate.CurrencyExchangeRate;
 import com.source.classes.dispatchnotes.assign.DnAssign;
 import com.source.classes.dispatchnotes.assign.DnAssignTest;
@@ -171,21 +174,23 @@ import com.utils.rpa.orderacknowledgement.OA_Flow;
 import com.utils.rpa.purchaseorderrequest.MSA_Flow;
 import com.utils.rpa.salesordersync.PR_List_Flow;
 import org.apache.logging.log4j.Logger;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
-
+import org.testng.annotations.*;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class BaseTest {
 
-    protected Logger logger;
+    protected static Logger logger;
     protected ToastrUtil toastrUtil;
-    protected ObjectMapper objectMapper;
-    protected JsonNode jsonNode;
+    protected static ObjectMapper objectMapper;
+    protected static JsonNode jsonNode;
     protected GetTitleUtil getTitleUtil;
-    protected PlaywrightFactory playwrightFactory;
-    protected Page page;
+    protected static PlaywrightFactory playwrightFactory;
+    protected static Playwright playwright;
+    protected static Browser browser;
+    protected static BrowserContext browserContext;
+    protected static Page page;
     protected ICurrencyExchangeRate iCurrencyExchangeRate;
     protected PR_List_Flow prListFlow;
     protected MSA_Flow msaFlow;
@@ -332,21 +337,41 @@ public class BaseTest {
     protected IWoInvReject iWoInvReject;
     protected WoInvApprovalTest woInvApprovalTest;
     protected IWoInvApproval iWoInvApproval;
+    protected String traceFileName;
 
 //TODO Constructor
     public BaseTest() {
     }
 
+
+    @BeforeSuite
+    public void globalSetup(){
+        try {
+            logger = LoggerUtil.getLogger(BaseTest.class);
+            objectMapper = new ObjectMapper();
+            jsonNode = objectMapper.readTree(new File("./src/test/resources/config/test-data.json"));
+
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            traceFileName = "trace_suite_" + timestamp + ".zip";
+
+            playwrightFactory = new PlaywrightFactory(objectMapper, jsonNode);
+            playwright = playwrightFactory.getPlaywright();
+            playwrightFactory.initializeBrowser(jsonNode);
+            browser = playwrightFactory.getBrowser();
+            playwrightFactory.initializeBrowserContext();
+            browserContext = playwrightFactory.getBrowserContext();
+            page = playwrightFactory.initializePage(jsonNode);
+            playwrightFactory.startTracing(browserContext, traceFileName);
+            toastrUtil = new ToastrUtil(page);
+            getTitleUtil = new GetTitleUtil(jsonNode, logger);
+        } catch (Exception exception) {
+            logger.error("Error Initializing Global Setup Function: {}", exception.getMessage());
+        }
+    }
+
     @BeforeClass
     public void setUp(){
         try {
-            this.logger = LoggerUtil.getLogger(BaseTest.class);
-            objectMapper = new ObjectMapper();
-            jsonNode = objectMapper.readTree(new File("./src/test/resources/config/test-data.json"));
-            playwrightFactory = new PlaywrightFactory(objectMapper, jsonNode);
-            page = playwrightFactory.initializePage(jsonNode);
-            toastrUtil = new ToastrUtil(page);
-            getTitleUtil = new GetTitleUtil(jsonNode, logger);
             prListFlow = new PR_List_Flow(page);
             msaFlow = new MSA_Flow(page);
             oaFlow = new OA_Flow(page);
@@ -522,12 +547,13 @@ public class BaseTest {
         }
     }
 
-    @AfterClass
-    public void tearDown() {
+    @AfterSuite
+    public void globalTearDown() {
         try {
-            page.context().browser().close();
+            playwrightFactory.stopTracing(browserContext, traceFileName);
+            browserContext.browser().close();
         } catch (Exception exception) {
-            logger.error("Error Initializing Tear Down Function: {}", exception.getMessage());
+            System.out.println("Error Initializing Global Tear Down Function: " + exception.getMessage());
         }
     }
 }

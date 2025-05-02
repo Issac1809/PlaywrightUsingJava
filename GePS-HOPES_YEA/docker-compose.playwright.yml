@@ -1,0 +1,13 @@
+services:
+  playwright:
+    container_name: main-playwright-container
+    image: my-playwright-image
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/workspace
+      - - ~/.m2:/root/.m2
+    working_dir: /workspace
+    tty: true
+    command: mvn clean test
