@@ -883,6 +883,15 @@ public class Create implements IPrCreate {
                 playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionId", requisitionId);
                 playwrightFactory.savePropertiesIntoJsonFile("requisition", "salesTransactionNumber", transactionId);
             }
+            else
+            {
+                APIResponse apiResponse = page.request().fetch(appUrl + "/api/Requisitions/" + getUid, RequestOptions.create());
+                JsonNode jsonNode1 = objectMapper.readTree(apiResponse.body());
+                String requisitionId = jsonNode1.get("baseId").asText();
+                String transactionId = jsonNode1.get("transactionId").asText();
+                playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionId", requisitionId);
+                playwrightFactory.savePropertiesIntoJsonFile("requisition", "psTransactionNumber", transactionId);
+            }
 
             iLogout.performLogout();
         } catch (Exception exception) {

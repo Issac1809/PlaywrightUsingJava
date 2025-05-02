@@ -1,8 +1,11 @@
 package com.utils.rpa.purchaseorderrequest;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
+
+import static com.factory.PlaywrightFactory.getPage;
 
 public class MSA_APIHelper {
 
@@ -17,8 +20,7 @@ public class MSA_APIHelper {
 
     public void updateStatus(String apiUrl, int id) {
         try {
-            page.request().fetch(apiUrl + id, RequestOptions.create());
-            page.close();
+            page.request().fetch((apiUrl + id), RequestOptions.create());
         } catch (Exception exception) {
             logger.error("Exception in Update Status Function: {}", exception.getMessage());
         }

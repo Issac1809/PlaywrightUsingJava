@@ -24,9 +24,9 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-557.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-360.0",
-    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-387.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-740.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-156.0",
+    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-755.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-663.0",
     "departmentPic" : "requester@cormsquare.com",
     "shipToYokogawa" : "no",
@@ -59,15 +59,16 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "bf10b8e9-99fd-44b8-b315-94654f5bdc1f",
+    "requisitionUid" : "a14cde9f-d97d-4c1f-8566-cfe6a52a455c",
     "itemImport" : "true",
-    "requisitionItemCount" : "3",
-    "salesTransactionNumber" : "240025TRN03058",
-    "requisitionId" : "22240"
+    "requisitionItemCount" : "2",
+    "psTransactionNumber" : "240025TRN03128",
+    "salesTransactionNumber" : "240025TRN03095",
+    "requisitionId" : "22388"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
-    "requestForQuotationUid" : "45135eff-d80e-4796-84ca-b33bf54f12b1",
+    "requestForQuotationUid" : "423ddf19-43de-41c4-9d26-46ca8ebe48b3",
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",
@@ -92,9 +93,10 @@
     "milestonePaymentCount" : 2,
     "taxCode" : "PZ-Zero Rated Purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "f547ee8c-272a-4bfc-837d-d286161aec6d",
-    "purchaseOrderRequestId" : "8133",
-    "approvers" : [ "projectmanager@cormsquare.com", "buyer@cormsquare.com" ]
+    "purchaseOrderRequestUid" : "d99450bb-77ca-4004-aa9d-30be7359cff9",
+    "purchaseOrderRequestId" : "8136",
+    "approvers" : [ "projectmanager@cormsquare.com", "buyer@cormsquare.com" ],
+    "porReferenceNumber" : "240025POR01551"
   },
   "purchaseOrders" : {
     "poReferenceId" : "240024PO00289",
