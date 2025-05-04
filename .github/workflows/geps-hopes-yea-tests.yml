@@ -1,4 +1,4 @@
-name: GePS-HOPES-YEA Test
+name: GePS-HOPES_YEA Test
 on:
   push:
     branches: [ main ]
@@ -20,21 +20,21 @@ jobs:
       - name: Set up Selenium Grid
         run: |
           docker-compose -f docker-compose.yaml up -d
-        working-directory: ./GePS-HOPES-YEA
+        working-directory: ./GePS-HOPES_YEA
 
       - name: Build & Install
         run: mvn -B install -DskipTests --no-transfer-progress
-        working-directory: ./GePS-HOPES-YEA
+        working-directory: ./GePS-HOPES_YEA
 
       - name: Ensure browsers are installed
         run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
-        working-directory: ./GePS-HOPES-YEA
+        working-directory: ./GePS-HOPES_YEA
 
       - name: Run tests
         run: mvn clean test -DSELENIUM_REMOTE_URL=http://localhost:4444 -DsuiteXmlFile=src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml
-        working-directory: ./GePS-HOPES-YEA
+        working-directory: ./GePS-HOPES_YEA
 
       - name: Shutdown Selenium Grid
         run: |
           docker-compose -f docker-compose.yaml down
-        working-directory: ./GePS-HOPES-YEA
+        working-directory: ./GePS-HOPES_YEA
