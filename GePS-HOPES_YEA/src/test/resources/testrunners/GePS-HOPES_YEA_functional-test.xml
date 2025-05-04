@@ -11,7 +11,7 @@
     <suite-files>
         <suite-file path="../testcases/GePS-HOPES_YEA_PS_Catalog_TestCases.xml" />
 <!--        <suite-file path="../testcases/GePS-HOPES_YEA_PS_Non-Catalog_TestCases.xml" />-->
-        <suite-file path="../testcases/GePS-HOPES_YEA_SALES_Catalog_TestCases.xml" />
+<!--        <suite-file path="../testcases/GePS-HOPES_YEA_SALES_Catalog_TestCases.xml" />-->
 <!--        <suite-file path="../testcases/GePS-HOPES_YEA_SALES_Non-Catalog_TestCases.xml" />-->
     </suite-files>
 

@@ -355,6 +355,7 @@ public class BaseTest {
             traceFileName = "trace_suite_" + timestamp + ".zip";
 
             playwrightFactory = new PlaywrightFactory(objectMapper, jsonNode);
+            playwrightFactory.setPlaywright();
             playwright = playwrightFactory.getPlaywright();
             playwrightFactory.initializeBrowser(jsonNode);
             browser = playwrightFactory.getBrowser();

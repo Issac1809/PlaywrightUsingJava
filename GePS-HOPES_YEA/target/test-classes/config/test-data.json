@@ -24,7 +24,7 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-123.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-286.0",
     "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-156.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-755.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-663.0",
@@ -59,12 +59,12 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "a14cde9f-d97d-4c1f-8566-cfe6a52a455c",
+    "requisitionUid" : "281c5755-0f30-488e-92dc-5c4bb9d5779d",
     "itemImport" : "true",
     "requisitionItemCount" : "2",
-    "psTransactionNumber" : "240025TRN03128",
+    "psTransactionNumber" : "240025TRN03133",
     "salesTransactionNumber" : "240025TRN03095",
-    "requisitionId" : "22388"
+    "requisitionId" : "22400"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
@@ -93,10 +93,10 @@
     "milestonePaymentCount" : 2,
     "taxCode" : "PZ-Zero Rated Purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "d99450bb-77ca-4004-aa9d-30be7359cff9",
-    "purchaseOrderRequestId" : "8136",
+    "purchaseOrderRequestUid" : "87f90fa3-2447-4462-8c47-e1771cf5766b",
+    "purchaseOrderRequestId" : "8141",
     "approvers" : [ "projectmanager@cormsquare.com", "buyer@cormsquare.com" ],
-    "porReferenceNumber" : "240025POR01551"
+    "porReferenceNumber" : "240025POR01556"
   },
   "purchaseOrders" : {
     "poReferenceId" : "240024PO00289",

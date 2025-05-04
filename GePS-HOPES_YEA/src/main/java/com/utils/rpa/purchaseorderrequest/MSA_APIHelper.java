@@ -1,11 +1,8 @@
 package com.utils.rpa.purchaseorderrequest;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-
-import static com.factory.PlaywrightFactory.getPage;
 
 public class MSA_APIHelper {
 

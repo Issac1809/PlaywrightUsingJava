@@ -57,25 +57,23 @@ public class PlaywrightFactory {
 
     public void initializeBrowser(JsonNode jsonNode) {
         try {
-            String remoteBrowserUrl = System.getProperty("remoteBrowserUrl");
             String browserName = jsonNode.get("configSettings").get("browserName").asText().toUpperCase();
 
             switch (browserName) {
                 case "CHROMIUM":
-                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(true)));
                     break;
                 case "CHROME":
-                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false)));
+                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(true)));
                     break;
                 case "EDGE":
-//                    localBrowser.set(getPlaywright().chromium().connect(remoteBrowserUrl));
-                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("msedge").setHeadless(false)));
+                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("msedge").setHeadless(true)));
                     break;
                 case "SAFARI":
-                    localBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+                    localBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(true)));
                     break;
                 case "FIREFOX":
-                    localBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+                    localBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(true)));
                     break;
                 default:
                     System.out.println("--Enter Proper Browser Name--");
@@ -89,9 +87,8 @@ public class PlaywrightFactory {
     public void initializeBrowserContext() {
         try {
             BrowserContext context = getBrowser().newContext(new Browser.NewContextOptions()
-                    .setRecordVideoDir(Paths.get("videos"))
+                    .setRecordVideoDir(Paths.get("test-output/videos"))
             );
-
             localBrowserContext.set(context);
         } catch (Exception exception) {
             System.out.println("Error initializing browser context: " + exception.getMessage());

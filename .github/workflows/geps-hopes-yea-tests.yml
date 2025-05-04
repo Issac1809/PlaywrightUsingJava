@@ -26,5 +26,5 @@ jobs:
         working-directory: ./GePS-HOPES_YEA
 
       - name: Run tests
-        run: mvn clean test -DSELENIUM_REMOTE_URL=http://localhost:4444 -DsuiteXmlFile=src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml
+        run: mvn clean test -DsuiteXmlFile=src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml
         working-directory: ./GePS-HOPES_YEA

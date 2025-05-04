@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="TestSuite" time="17.771" tests="14" errors="0" skipped="0" failures="6">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="TestSuite" time="23.163" tests="14" errors="0" skipped="0" failures="8">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -10,13 +10,13 @@
     <property name="user.variant" value=""/>
     <property name="java.vendor.url" value="https://java.oracle.com/"/>
     <property name="user.timezone" value="Asia/Calcutta"/>
+    <property name="suiteXmlFile" value="src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml"/>
     <property name="os.name" value="Windows 11"/>
     <property name="java.vm.specification.version" value="21"/>
-    <property name="remoteBrowserUrl" value="ws://localhost:4444/playwright"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="GB"/>
     <property name="sun.boot.library.path" value="D:\Java_JDK_17_for_Jenkins\jdk-21.0.6\bin"/>
-    <property name="sun.java.command" value="C:\Users\issac\AppData\Local\Temp\surefire117892357246824418\surefirebooter-20250503003442389_3.jar C:\Users\issac\AppData\Local\Temp\surefire117892357246824418 2025-05-03T00-34-42_142-jvmRun1 surefire-20250503003442389_1tmp surefire_0-20250503003442389_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\issac\AppData\Local\Temp\surefire5101585086540116842\surefirebooter-20250504211655940_3.jar C:\Users\issac\AppData\Local\Temp\surefire5101585086540116842 2025-05-04T21-16-55_558-jvmRun1 surefire-20250504211655940_1tmp surefire_0-20250504211655940_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\My_Personal_Folder\GePS-Testing\GePS-HOPES_YEA\target\test-classes;C:\My_Personal_Folder\GePS-Testing\GePS-HOPES_YEA\target\classes;C:\Users\issac\.m2\repository\org\apache\logging\log4j\log4j-core\2.24.3\log4j-core-2.24.3.jar;C:\Users\issac\.m2\repository\org\apache\logging\log4j\log4j-api\2.24.3\log4j-api-2.24.3.jar;C:\Users\issac\.m2\repository\org\testng\testng\7.10.2\testng-7.10.2.jar;C:\Users\issac\.m2\repository\org\slf4j\slf4j-api\1.7.36\slf4j-api-1.7.36.jar;C:\Users\issac\.m2\repository\com\beust\jcommander\1.82\jcommander-1.82.jar;C:\Users\issac\.m2\repository\org\webjars\jquery\3.7.1\jquery-3.7.1.jar;C:\Users\issac\.m2\repository\com\aventstack\chaintest-testng\1.0.7\chaintest-testng-1.0.7.jar;C:\Users\issac\.m2\repository\com\aventstack\chaintest-core\1.0.7\chaintest-core-1.0.7.jar;C:\Users\issac\.m2\repository\org\yaml\snakeyaml\2.3\snakeyaml-2.3.jar;C:\Users\issac\.m2\repository\org\freemarker\freemarker\2.3.33\freemarker-2.3.33.jar;C:\Users\issac\.m2\repository\com\azure\azure-storage-blob\12.28.0\azure-storage-blob-12.28.0.jar;C:\Users\issac\.m2\repository\com\azure\azure-core\1.52.0\azure-core-1.52.0.jar;C:\Users\issac\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.17.2\jackson-datatype-jsr310-2.17.2.jar;C:\Users\issac\.m2\repository\io\projectreactor\reactor-core\3.4.38\reactor-core-3.4.38.jar;C:\Users\issac\.m2\repository\com\azure\azure-core-http-netty\1.15.4\azure-core-http-netty-1.15.4.jar;C:\Users\issac\.m2\repository\io\netty\netty-handler\4.1.110.Final\netty-handler-4.1.110.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-handler-proxy\4.1.110.Final\netty-handler-proxy-4.1.110.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-codec-socks\4.1.110.Final\netty-codec-socks-4.1.110.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-buffer\4.1.110.Final\netty-buffer-4.1.110.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-codec\4.1.110.Final\netty-codec-4.1.110.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-codec-http\4.1.110.Final\netty-codec-http-4.1.110.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-codec-http2\4.1.110.Final\netty-codec-http2-4.1.110.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.110.Final\netty-transport-native-unix-common-4.1.110.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-transport-native-epoll\4.1.110.Final\netty-transport-native-epoll-4.1.110.Final-linux-x86_64.jar;C:\Users\issac\.m2\repository\io\netty\netty-transport-native-kqueue\4.1.110.Final\netty-transport-native-kqueue-4.1.110.Final-osx-x86_64.jar;C:\Users\issac\.m2\repository\io\netty\netty-transport-classes-kqueue\4.1.110.Final\netty-transport-classes-kqueue-4.1.110.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-tcnative-boringssl-static\2.0.65.Final\netty-tcnative-boringssl-static-2.0.65.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-tcnative-classes\2.0.65.Final\netty-tcnative-classes-2.0.65.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-tcnative-boringssl-static\2.0.65.Final\netty-tcnative-boringssl-static-2.0.65.Final-linux-x86_64.jar;C:\Users\issac\.m2\repository\io\netty\netty-tcnative-boringssl-static\2.0.65.Final\netty-tcnative-boringssl-static-2.0.65.Final-linux-aarch_64.jar;C:\Users\issac\.m2\repository\io\netty\netty-tcnative-boringssl-static\2.0.65.Final\netty-tcnative-boringssl-static-2.0.65.Final-osx-x86_64.jar;C:\Users\issac\.m2\repository\io\netty\netty-tcnative-boringssl-static\2.0.65.Final\netty-tcnative-boringssl-static-2.0.65.Final-osx-aarch_64.jar;C:\Users\issac\.m2\repository\io\netty\netty-tcnative-boringssl-static\2.0.65.Final\netty-tcnative-boringssl-static-2.0.65.Final-windows-x86_64.jar;C:\Users\issac\.m2\repository\io\projectreactor\netty\reactor-netty-http\1.0.45\reactor-netty-http-1.0.45.jar;C:\Users\issac\.m2\repository\io\netty\netty-resolver-dns\4.1.109.Final\netty-resolver-dns-4.1.109.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-codec-dns\4.1.109.Final\netty-codec-dns-4.1.109.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-resolver-dns-native-macos\4.1.109.Final\netty-resolver-dns-native-macos-4.1.109.Final-osx-x86_64.jar;C:\Users\issac\.m2\repository\io\netty\netty-resolver-dns-classes-macos\4.1.109.Final\netty-resolver-dns-classes-macos-4.1.109.Final.jar;C:\Users\issac\.m2\repository\io\projectreactor\netty\reactor-netty-core\1.0.45\reactor-netty-core-1.0.45.jar;C:\Users\issac\.m2\repository\io\netty\netty-common\4.1.110.Final\netty-common-4.1.110.Final.jar;C:\Users\issac\.m2\repository\com\azure\azure-storage-internal-avro\12.13.0\azure-storage-internal-avro-12.13.0.jar;C:\Users\issac\.m2\repository\com\azure\azure-xml\1.1.0\azure-xml-1.1.0.jar;C:\Users\issac\.m2\repository\com\azure\azure-storage-common\12.28.0\azure-storage-common-12.28.0.jar;C:\Users\issac\.m2\repository\com\azure\azure-identity\1.13.3\azure-identity-1.13.3.jar;C:\Users\issac\.m2\repository\com\azure\azure-json\1.3.0\azure-json-1.3.0.jar;C:\Users\issac\.m2\repository\com\microsoft\azure\msal4j\1.17.1\msal4j-1.17.1.jar;C:\Users\issac\.m2\repository\com\nimbusds\oauth2-oidc-sdk\11.18\oauth2-oidc-sdk-11.18.jar;C:\Users\issac\.m2\repository\com\github\stephenc\jcip\jcip-annotations\1.0-1\jcip-annotations-1.0-1.jar;C:\Users\issac\.m2\repository\com\nimbusds\content-type\2.3\content-type-2.3.jar;C:\Users\issac\.m2\repository\com\nimbusds\lang-tag\1.7\lang-tag-1.7.jar;C:\Users\issac\.m2\repository\com\nimbusds\nimbus-jose-jwt\9.40\nimbus-jose-jwt-9.40.jar;C:\Users\issac\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\issac\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\issac\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\issac\.m2\repository\com\microsoft\azure\msal4j-persistence-extension\1.3.0\msal4j-persistence-extension-1.3.0.jar;C:\Users\issac\.m2\repository\net\java\dev\jna\jna\5.13.0\jna-5.13.0.jar;C:\Users\issac\.m2\repository\net\java\dev\jna\jna-platform\5.6.0\jna-platform-5.6.0.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\s3\2.29.39\s3-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\aws-xml-protocol\2.29.39\aws-xml-protocol-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\aws-query-protocol\2.29.39\aws-query-protocol-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\protocol-core\2.29.39\protocol-core-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\arns\2.29.39\arns-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\profiles\2.29.39\profiles-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\crt-core\2.29.39\crt-core-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\http-auth\2.29.39\http-auth-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\identity-spi\2.29.39\identity-spi-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\http-auth-spi\2.29.39\http-auth-spi-2.29.39.jar;C:\Users\issac\.m2\repository\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\http-auth-aws\2.29.39\http-auth-aws-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\checksums\2.29.39\checksums-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\checksums-spi\2.29.39\checksums-spi-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\retries-spi\2.29.39\retries-spi-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\sdk-core\2.29.39\sdk-core-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\retries\2.29.39\retries-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\auth\2.29.39\auth-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\http-auth-aws-eventstream\2.29.39\http-auth-aws-eventstream-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\eventstream\eventstream\1.0.1\eventstream-1.0.1.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\http-client-spi\2.29.39\http-client-spi-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\regions\2.29.39\regions-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\annotations\2.29.39\annotations-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\utils\2.29.39\utils-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\aws-core\2.29.39\aws-core-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\metrics-spi\2.29.39\metrics-spi-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\json-utils\2.29.39\json-utils-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\third-party-jackson-core\2.29.39\third-party-jackson-core-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\endpoints-spi\2.29.39\endpoints-spi-2.29.39.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\netty-nio-client\2.29.39\netty-nio-client-2.29.39.jar;C:\Users\issac\.m2\repository\io\netty\netty-transport\4.1.115.Final\netty-transport-4.1.115.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-transport-classes-epoll\4.1.115.Final\netty-transport-classes-epoll-4.1.115.Final.jar;C:\Users\issac\.m2\repository\io\netty\netty-resolver\4.1.115.Final\netty-resolver-4.1.115.Final.jar;C:\Users\issac\.m2\repository\software\amazon\awssdk\apache-client\2.29.39\apache-client-2.29.39.jar;C:\Users\issac\.m2\repository\org\apache\httpcomponents\httpclient\4.5.13\httpclient-4.5.13.jar;C:\Users\issac\.m2\repository\org\apache\httpcomponents\httpcore\4.4.16\httpcore-4.4.16.jar;C:\Users\issac\.m2\repository\com\microsoft\playwright\playwright\1.51.0\playwright-1.51.0.jar;C:\Users\issac\.m2\repository\com\google\code\gson\gson\2.12.1\gson-2.12.1.jar;C:\Users\issac\.m2\repository\com\google\errorprone\error_prone_annotations\2.36.0\error_prone_annotations-2.36.0.jar;C:\Users\issac\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\issac\.m2\repository\com\microsoft\playwright\driver\1.51.0\driver-1.51.0.jar;C:\Users\issac\.m2\repository\com\microsoft\playwright\driver-bundle\1.51.0\driver-bundle-1.51.0.jar;C:\Users\issac\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.18.2\jackson-databind-2.18.2.jar;C:\Users\issac\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.18.2\jackson-annotations-2.18.2.jar;C:\Users\issac\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.18.2\jackson-core-2.18.2.jar;C:\Users\issac\.m2\repository\commons-net\commons-net\3.11.1\commons-net-3.11.1.jar;C:\Users\issac\.m2\repository\org\apache\poi\poi-ooxml\5.4.0\poi-ooxml-5.4.0.jar;C:\Users\issac\.m2\repository\org\apache\poi\poi\5.4.0\poi-5.4.0.jar;C:\Users\issac\.m2\repository\commons-codec\commons-codec\1.17.1\commons-codec-1.17.1.jar;C:\Users\issac\.m2\repository\org\apache\commons\commons-math3\3.6.1\commons-math3-3.6.1.jar;C:\Users\issac\.m2\repository\com\zaxxer\SparseBitSet\1.3\SparseBitSet-1.3.jar;C:\Users\issac\.m2\repository\org\apache\poi\poi-ooxml-lite\5.4.0\poi-ooxml-lite-5.4.0.jar;C:\Users\issac\.m2\repository\org\apache\xmlbeans\xmlbeans\5.3.0\xmlbeans-5.3.0.jar;C:\Users\issac\.m2\repository\org\apache\commons\commons-compress\1.27.1\commons-compress-1.27.1.jar;C:\Users\issac\.m2\repository\org\apache\commons\commons-lang3\3.16.0\commons-lang3-3.16.0.jar;C:\Users\issac\.m2\repository\commons-io\commons-io\2.18.0\commons-io-2.18.0.jar;C:\Users\issac\.m2\repository\com\github\virtuald\curvesapi\1.08\curvesapi-1.08.jar;C:\Users\issac\.m2\repository\org\apache\commons\commons-collections4\4.4\commons-collections4-4.4.jar;C:\Users\issac\.m2\repository\org\apache\httpcomponents\client5\httpclient5\5.4.2\httpclient5-5.4.2.jar;C:\Users\issac\.m2\repository\org\apache\httpcomponents\core5\httpcore5\5.3.3\httpcore5-5.3.3.jar;C:\Users\issac\.m2\repository\org\apache\httpcomponents\core5\httpcore5-h2\5.3.3\httpcore5-h2-5.3.3.jar;C:\Users\issac\.m2\repository\org\apache\pdfbox\pdfbox\2.0.29\pdfbox-2.0.29.jar;C:\Users\issac\.m2\repository\org\apache\pdfbox\fontbox\2.0.29\fontbox-2.0.29.jar;C:\Users\issac\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -31,7 +31,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\issac\AppData\Local\Temp\surefire117892357246824418\surefirebooter-20250503003442389_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\issac\AppData\Local\Temp\surefire5101585086540116842\surefirebooter-20250504211655940_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.6+8-LTS-188"/>
@@ -59,7 +59,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="create[PS, Catalog](1)" classname="com.source.classes.requisitions.create.CreateTest" time="0.019">
+  <testcase name="create[PS, Catalog](1)" classname="com.source.classes.requisitions.create.CreateTest" time="0.051">
     <failure message="Requisition Create was not Successful expected [0] but found [200]" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Requisition Create was not Successful expected [0] but found [200]
 	at org.testng.Assert.fail(Assert.java:111)
 	at org.testng.Assert.failNotEquals(Assert.java:1578)
@@ -101,57 +101,106 @@
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 ]]></failure>
     <system-out><![CDATA[Error initializing browser: Error {
-  message='Invalid URL: /playwright/
-  name='SyntaxError
-  stack='SyntaxError: Invalid URL: /playwright/
-    at my (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\utilsBundleImpl\index.js:173:36795)
-    at new t (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\utilsBundleImpl\index.js:173:31304)
-    at new WebSocketTransport (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\server\transport.js:110:16)
-    at WebSocketTransport._connect (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\server\transport.js:47:23)
-    at WebSocketTransport._connect (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\server\transport.js:91:33)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async WebSocketTransport.connect (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\server\transport.js:39:12)
-    at async C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\server\dispatchers\localUtilsDispatcher.js:85:25
-    at async ProgressController.run (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\server\progress.js:79:22)
-    at async LocalUtilsDispatcher.connect (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\server\dispatchers\localUtilsDispatcher.js:77:12)
+  message='WebSocket error: getaddrinfo ENOTFOUND selenium-hub
+  name='Error
+  stack='Error: WebSocket error: getaddrinfo ENOTFOUND selenium-hub
+    at t.<anonymous> (C:\Users\issac\AppData\Local\Temp\playwright-java-8662034463406461530\package\lib\server\transport.js:61:16)
+    at t.emit (node:events:530:35)
+    at ra (C:\Users\issac\AppData\Local\Temp\playwright-java-8662034463406461530\package\lib\utilsBundleImpl\index.js:173:40890)
+    at ClientRequest.<anonymous> (C:\Users\issac\AppData\Local\Temp\playwright-java-8662034463406461530\package\lib\utilsBundleImpl\index.js:173:39141)
+    at ClientRequest.emit (node:events:518:28)
+    at emitErrorEvent (node:_http_client:104:11)
+    at _destroy (node:_http_client:898:9)
+    at onSocketNT (node:_http_client:918:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:91:21)
 }
 Call log:
--   - <ws connecting> ws://localhost:4444/playwright
--   - <ws error> ws://localhost:4444/playwright error WebSocket was closed before the connection was established
--   - <ws connect error> ws://localhost:4444/playwright WebSocket was closed before the connection was established
--   - <ws disconnected> ws://localhost:4444/playwright code=1006 reason=
--   - <ws connecting> /playwright/
+-   - <selenium> connecting to http://localhost:4444/wd/hub/
+-   - <selenium> connected to sessionId=4684ce7e970c776ce0cbe34076097dc1
+-   - <selenium> using selenium v4
+-   - <selenium> retrieved endpoint ws://selenium-hub:4444/session/4684ce7e970c776ce0cbe34076097dc1/se/cdp for sessionId=4684ce7e970c776ce0cbe34076097dc1
+-   - <ws connecting> ws://selenium-hub:4444/session/4684ce7e970c776ce0cbe34076097dc1/se/cdp
+-   - <ws error> ws://selenium-hub:4444/session/4684ce7e970c776ce0cbe34076097dc1/se/cdp error getaddrinfo ENOTFOUND selenium-hub
+-   - <ws connect error> ws://selenium-hub:4444/session/4684ce7e970c776ce0cbe34076097dc1/se/cdp getaddrinfo ENOTFOUND selenium-hub
+-   - <ws disconnected> ws://selenium-hub:4444/session/4684ce7e970c776ce0cbe34076097dc1/se/cdp code=1006 reason=
+-   - <selenium> disconnecting from sessionId=4684ce7e970c776ce0cbe34076097dc1
+-   - <selenium> disconnected from sessionId=4684ce7e970c776ce0cbe34076097dc1
 
 Error initializing browser context: Cannot invoke "com.microsoft.playwright.Browser.newContext(com.microsoft.playwright.Browser$NewContextOptions)" because the return value of "com.factory.PlaywrightFactory.getBrowser()" is null
 Error initializing page: Cannot invoke "com.microsoft.playwright.BrowserContext.newPage()" because the return value of "com.factory.PlaywrightFactory.getBrowserContext()" is null
-00:34:58.318 [main] ERROR com.factory.PlaywrightFactory - Error in Start Tracing Function: Cannot invoke "com.microsoft.playwright.BrowserContext.tracing()" because "context" is null
-00:34:58.495 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.495 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Create Button Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.497 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Purchase Type Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.499 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Title Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Ship To Yokogawa Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Project Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Vendor Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Rate Contract Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Shipping Address Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Shipping Mode Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Expected PO Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Expected Delivery Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Buyer Manager Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Project Manager Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Inspection Required Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in TCAS Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Catalog Requisition Items Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Requisition Notes Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.500 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Requisition Attachments Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.502 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Requisition Create Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.408 [main] ERROR com.factory.PlaywrightFactory - Error in Start Tracing Function: Cannot invoke "com.microsoft.playwright.BrowserContext.tracing()" because "context" is null
+21:17:18.818 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.818 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Create Button Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.822 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Purchase Type Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.830 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Title Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.831 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Ship To Yokogawa Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.831 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Project Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.831 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Vendor Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.832 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Rate Contract Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.832 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Shipping Address Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.832 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Shipping Mode Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.833 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Expected PO Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.833 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Expected Delivery Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.833 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Buyer Manager Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.833 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Project Manager Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.834 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Inspection Required Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.834 [main] ERROR com.source.classes.requisitions.create.Create - Exception in TCAS Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.834 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Catalog Requisition Items Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.834 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Requisition Notes Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.835 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Requisition Attachments Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.835 [main] ERROR com.source.classes.requisitions.create.Create - Exception in Requisition Create Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
 ]]></system-out>
     <system-err><![CDATA[SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 ]]></system-err>
   </testcase>
-  <testcase name="sendForApproval[PS, Catalog](1)" classname="com.source.classes.requisitions.sendforapproval.SendForApprovalTest" time="0.005">
+  <testcase name="edit[PS, Catalog](1)" classname="com.source.classes.requisitions.edit.EditTest" time="0.012">
+    <failure message="Requisition Edit was not successful expected [0] but found [200]" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Requisition Edit was not successful expected [0] but found [200]
+	at org.testng.Assert.fail(Assert.java:111)
+	at org.testng.Assert.failNotEquals(Assert.java:1578)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:150)
+	at org.testng.Assert.assertEquals(Assert.java:132)
+	at org.testng.Assert.assertEquals(Assert.java:1419)
+	at org.testng.Assert.assertEquals(Assert.java:1383)
+	at com.source.classes.requisitions.edit.EditTest.edit(EditTest.java:14)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:686)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:992)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.testng.TestRunner.privateRun(TestRunner.java:739)
+	at org.testng.TestRunner.run(TestRunner.java:614)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1269)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+	at org.testng.TestNG.runSuites(TestNG.java:1112)
+	at org.testng.TestNG.run(TestNG.java:1079)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]></failure>
+    <system-out><![CDATA[21:17:18.924 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.927 [main] ERROR com.source.classes.requisitions.edit.Edit - Exception in Requisition Edit Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+]]></system-out>
+  </testcase>
+  <testcase name="sendForApproval[PS, Catalog](1)" classname="com.source.classes.requisitions.sendforapproval.SendForApprovalTest" time="0.011">
     <failure message="Requisition Send For Approval was not successful expected [0] but found [200]" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Requisition Send For Approval was not successful expected [0] but found [200]
 	at org.testng.Assert.fail(Assert.java:111)
 	at org.testng.Assert.failNotEquals(Assert.java:1578)
@@ -192,11 +241,60 @@ SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further detail
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 ]]></failure>
-    <system-out><![CDATA[00:34:58.538 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.539 [main] ERROR com.source.classes.requisitions.sendforapproval.SendForApproval - Exception in Requisition Send For Approval Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+    <system-out><![CDATA[21:17:18.950 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.953 [main] ERROR com.source.classes.requisitions.sendforapproval.SendForApproval - Exception in Requisition Send For Approval Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
 ]]></system-out>
   </testcase>
-  <testcase name="approve[PS, Catalog](1)" classname="com.source.classes.requisitions.approve.ApproveTest" time="0.006">
+  <testcase name="reject[PS, Catalog](1)" classname="com.source.classes.requisitions.reject.RejectTest" time="0.011">
+    <failure message="Requisition Edit was not successful expected [0] but found [200]" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Requisition Edit was not successful expected [0] but found [200]
+	at org.testng.Assert.fail(Assert.java:111)
+	at org.testng.Assert.failNotEquals(Assert.java:1578)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:150)
+	at org.testng.Assert.assertEquals(Assert.java:132)
+	at org.testng.Assert.assertEquals(Assert.java:1419)
+	at org.testng.Assert.assertEquals(Assert.java:1383)
+	at com.source.classes.requisitions.reject.RejectTest.reject(RejectTest.java:15)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:686)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:992)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.testng.TestRunner.privateRun(TestRunner.java:739)
+	at org.testng.TestRunner.run(TestRunner.java:614)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1269)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+	at org.testng.TestNG.runSuites(TestNG.java:1112)
+	at org.testng.TestNG.run(TestNG.java:1079)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]></failure>
+    <system-out><![CDATA[21:17:18.977 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.980 [main] ERROR com.source.classes.requisitions.reject.Reject - Exception in Requisition Reject Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.980 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.981 [main] ERROR com.source.classes.requisitions.edit.Edit - Exception in Requisition Edit Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.981 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:18.981 [main] ERROR com.source.classes.requisitions.sendforapproval.SendForApproval - Exception in Requisition Send For Approval Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+]]></system-out>
+  </testcase>
+  <testcase name="approve[PS, Catalog](1)" classname="com.source.classes.requisitions.approve.ApproveTest" time="0.012">
     <failure message="Requisition Approve was not successful expected [0] but found [200]" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Requisition Approve was not successful expected [0] but found [200]
 	at org.testng.Assert.fail(Assert.java:111)
 	at org.testng.Assert.failNotEquals(Assert.java:1578)
@@ -237,11 +335,11 @@ SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further detail
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 ]]></failure>
-    <system-out><![CDATA[00:34:58.550 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.552 [main] ERROR com.source.classes.requisitions.approve.Approve - Exception in Requisition Approve Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+    <system-out><![CDATA[21:17:19.003 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.006 [main] ERROR com.source.classes.requisitions.approve.Approve - Exception in Requisition Approve Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
 ]]></system-out>
   </testcase>
-  <testcase name="suspend[PS, Catalog](1)" classname="com.source.classes.requisitions.suspend.BuyerManagerSuspendTest" time="0.008">
+  <testcase name="suspend[PS, Catalog](1)" classname="com.source.classes.requisitions.suspend.BuyerManagerSuspendTest" time="0.007">
     <failure message="Requisition Suspend was not Successful expected [0] but found [200]" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Requisition Suspend was not Successful expected [0] but found [200]
 	at org.testng.Assert.fail(Assert.java:111)
 	at org.testng.Assert.failNotEquals(Assert.java:1578)
@@ -282,11 +380,51 @@ SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further detail
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 ]]></failure>
-    <system-out><![CDATA[00:34:58.568 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.570 [main] ERROR com.source.classes.requisitions.suspend.BuyerManagerSuspend - Error in Requisition Buyer Manager Suspend Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+    <system-out><![CDATA[21:17:19.028 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.028 [main] ERROR com.source.classes.requisitions.suspend.BuyerManagerSuspend - Error in Requisition Buyer Manager Suspend Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
 ]]></system-out>
   </testcase>
-  <testcase name="create[PS, Catalog](1)" classname="com.source.classes.purchaseorderrequests.create.PorCreateTest" time="0.006">
+  <testcase name="suspend[PS, Catalog](1)" classname="com.source.classes.requisitions.suspend.BuyerSuspendTest" time="0.007">
+    <failure message="Exception in Requisition Buyer Suspend Test Function: Cannot invoke &quot;org.apache.logging.log4j.Logger.error(String, Object)&quot; because &quot;this.logger&quot; is null" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Exception in Requisition Buyer Suspend Test Function: Cannot invoke "org.apache.logging.log4j.Logger.error(String, Object)" because "this.logger" is null
+	at org.testng.Assert.fail(Assert.java:111)
+	at com.source.classes.requisitions.suspend.BuyerSuspendTest.suspend(BuyerSuspendTest.java:21)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:686)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:992)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.testng.TestRunner.privateRun(TestRunner.java:739)
+	at org.testng.TestRunner.run(TestRunner.java:614)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1269)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+	at org.testng.TestNG.runSuites(TestNG.java:1112)
+	at org.testng.TestNG.run(TestNG.java:1079)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]></failure>
+    <system-out><![CDATA[21:17:19.049 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.049 [main] ERROR com.base.BaseTest - Exception in Requisition Buyer Suspend Test Function: Cannot invoke "org.apache.logging.log4j.Logger.error(String, Object)" because "this.logger" is null
+]]></system-out>
+  </testcase>
+  <testcase name="create[PS, Catalog](1)" classname="com.source.classes.purchaseorderrequests.create.PorCreateTest" time="0.008">
     <failure message="Requisition Create was not Successful expected [0] but found [200]" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Requisition Create was not Successful expected [0] but found [200]
 	at org.testng.Assert.fail(Assert.java:111)
 	at org.testng.Assert.failNotEquals(Assert.java:1578)
@@ -327,151 +465,62 @@ SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further detail
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 ]]></failure>
-    <system-out><![CDATA[00:34:58.584 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.584 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create For Catalog Type Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.584 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create Tax Code Function: Cannot invoke "com.microsoft.playwright.Page.getByText(String)" because "this.page" is null
-00:34:58.584 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Notes Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.585 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create Button Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+    <system-out><![CDATA[21:17:19.072 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.072 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create For Catalog Type Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.072 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create Tax Code Function: Cannot invoke "com.microsoft.playwright.Page.getByText(String)" because "this.page" is null
+21:17:19.072 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Notes Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.073 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create Button Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
 ]]></system-out>
   </testcase>
-  <testcase name="create[Sales, Catalog](1)" classname="com.source.classes.purchaseorderrequests.create.PorCreateTest" time="0.001">
-    <failure message="Requisition Create was not Successful expected [0] but found [200]" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Requisition Create was not Successful expected [0] but found [200]
-	at org.testng.Assert.fail(Assert.java:111)
-	at org.testng.Assert.failNotEquals(Assert.java:1578)
-	at org.testng.Assert.assertEqualsImpl(Assert.java:150)
-	at org.testng.Assert.assertEquals(Assert.java:132)
-	at org.testng.Assert.assertEquals(Assert.java:1419)
-	at org.testng.Assert.assertEquals(Assert.java:1383)
-	at com.source.classes.purchaseorderrequests.create.PorCreateTest.create(PorCreateTest.java:14)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
-	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:686)
-	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
-	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
-	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:992)
-	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
-	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
-	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at org.testng.TestRunner.privateRun(TestRunner.java:739)
-	at org.testng.TestRunner.run(TestRunner.java:614)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:312)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1269)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
-	at org.testng.TestNG.runSuites(TestNG.java:1112)
-	at org.testng.TestNG.run(TestNG.java:1079)
-	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
-	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
-	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
-	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
-	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-]]></failure>
-    <system-out><![CDATA[00:34:58.627 [main] ERROR com.factory.PlaywrightFactory - Error in Stop Tracing Function: Cannot invoke "com.microsoft.playwright.BrowserContext.tracing()" because "context" is null
-Error Initializing Global Tear Down Function: Cannot invoke "com.microsoft.playwright.BrowserContext.browser()" because "com.base.BaseTest.browserContext" is null
-Error initializing browser: Error {
-  message='Invalid URL: /playwright/
-  name='SyntaxError
-  stack='SyntaxError: Invalid URL: /playwright/
-    at my (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\utilsBundleImpl\index.js:173:36795)
-    at new t (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\utilsBundleImpl\index.js:173:31304)
-    at new WebSocketTransport (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\server\transport.js:110:16)
-    at WebSocketTransport._connect (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\server\transport.js:47:23)
-    at WebSocketTransport._connect (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\server\transport.js:91:33)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async WebSocketTransport.connect (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\server\transport.js:39:12)
-    at async C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\server\dispatchers\localUtilsDispatcher.js:85:25
-    at async ProgressController.run (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\server\progress.js:79:22)
-    at async LocalUtilsDispatcher.connect (C:\Users\issac\AppData\Local\Temp\playwright-java-1172114142332824643\package\lib\server\dispatchers\localUtilsDispatcher.js:77:12)
-}
-Call log:
--   - <ws connecting> ws://localhost:4444/playwright
--   - <ws error> ws://localhost:4444/playwright error WebSocket was closed before the connection was established
--   - <ws connect error> ws://localhost:4444/playwright WebSocket was closed before the connection was established
--   - <ws disconnected> ws://localhost:4444/playwright code=1006 reason=
--   - <ws connecting> /playwright/
-
-Error initializing browser context: Cannot invoke "com.microsoft.playwright.Browser.newContext(com.microsoft.playwright.Browser$NewContextOptions)" because the return value of "com.factory.PlaywrightFactory.getBrowser()" is null
-Error initializing page: Cannot invoke "com.microsoft.playwright.BrowserContext.newPage()" because the return value of "com.factory.PlaywrightFactory.getBrowserContext()" is null
-00:35:00.402 [main] ERROR com.factory.PlaywrightFactory - Error in Start Tracing Function: Cannot invoke "com.microsoft.playwright.BrowserContext.tracing()" because "context" is null
-00:35:00.405 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.406 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create For Catalog Type Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.406 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create Tax Code Function: Cannot invoke "com.microsoft.playwright.Page.getByText(String)" because "this.page" is null
-00:35:00.406 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Notes Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.407 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create Button Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+  <testcase name="edit[PS, Catalog](1)" classname="com.source.classes.purchaseorderrequests.edit.PorEditTest" time="0.005">
+    <system-out><![CDATA[21:17:19.093 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.093 [main] ERROR com.source.classes.purchaseorderrequests.edit.PorEdit - Exception in POR Edit function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
 ]]></system-out>
   </testcase>
-  <testcase name="approvalAndApprove[PS, Catalog](1)" classname="com.source.classes.purchaseorderrequests.approve.PorApproveTest" time="0.009">
-    <system-out><![CDATA[00:34:58.597 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.597 [main] ERROR com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApproval - Exception in POR Send For Approval function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.598 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.599 [main] ERROR com.source.classes.purchaseorderrequests.approve.PorApprove - Exception in POR Save Approvers function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.599 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.599 [main] ERROR com.source.classes.purchaseorderrequests.approve.PorApprove - Exception in POR Approve function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+  <testcase name="suspend[PS, Catalog](1)" classname="com.source.classes.purchaseorderrequests.suspend.SuspendEditTest" time="0.018">
+    <system-out><![CDATA[21:17:19.112 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.113 [main] ERROR com.source.classes.purchaseorderrequests.suspend.PorSuspend - Exception in POR Suspend function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.113 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.113 [main] ERROR com.source.classes.purchaseorderrequests.edit.PorEdit - Exception in POR Edit function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.113 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.113 [main] ERROR com.source.classes.purchaseorderrequests.suspend.PorSuspend - Exception in POR Suspend function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.113 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.114 [main] ERROR com.source.classes.requisitions.edit.Edit - Exception in Requisition Edit Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.114 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.114 [main] ERROR com.source.classes.requisitions.sendforapproval.SendForApproval - Exception in Requisition Send For Approval Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.114 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.114 [main] ERROR com.source.classes.requisitions.approve.Approve - Exception in Requisition Approve Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.115 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.118 [main] ERROR com.source.classes.requisitions.assign.Assign - Error in Requisition Buyer Manager Assign Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.118 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.118 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create For Catalog Type Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.118 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create Tax Code Function: Cannot invoke "com.microsoft.playwright.Page.getByText(String)" because "this.page" is null
+21:17:19.118 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Notes Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.119 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create Button Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
 ]]></system-out>
   </testcase>
-  <testcase name="approvalAndApprove[Sales, Catalog](1)" classname="com.source.classes.purchaseorderrequests.approve.PorApproveTest" time="0.005">
-    <system-out><![CDATA[00:35:00.491 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.492 [main] ERROR com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApproval - Exception in POR Send For Approval function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.492 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.492 [main] ERROR com.source.classes.purchaseorderrequests.approve.PorApprove - Exception in POR Save Approvers function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.492 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.492 [main] ERROR com.source.classes.purchaseorderrequests.approve.PorApprove - Exception in POR Approve function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+  <testcase name="sendForApproval[PS, Catalog](1)" classname="com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApprovalTest" time="0.006">
+    <system-out><![CDATA[21:17:19.140 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.141 [main] ERROR com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApproval - Exception in POR Send For Approval function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+]]></system-out>
+  </testcase>
+  <testcase name="reject[PS, Catalog](1)" classname="com.source.classes.purchaseorderrequests.reject.PorRejectTest" time="0.007">
+    <system-out><![CDATA[21:17:19.162 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.163 [main] ERROR com.base.BaseTest - Exception in POR Reject Test Function: Cannot invoke "org.apache.logging.log4j.Logger.error(String, Object)" because "this.logger" is null
+]]></system-out>
+  </testcase>
+  <testcase name="approvalAndApprove[PS, Catalog](1)" classname="com.source.classes.purchaseorderrequests.approve.PorApproveTest" time="0.008">
+    <system-out><![CDATA[21:17:19.184 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.185 [main] ERROR com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApproval - Exception in POR Send For Approval function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.186 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.187 [main] ERROR com.source.classes.purchaseorderrequests.approve.PorApprove - Exception in POR Save Approvers function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.187 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.187 [main] ERROR com.source.classes.purchaseorderrequests.approve.PorApprove - Exception in POR Approve function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
 ]]></system-out>
   </testcase>
   <testcase name="sendForVendor[PS, Catalog](1)" classname="com.source.classes.purchaseorders.PoSendForVendorTest" time="0.005">
-    <system-out><![CDATA[00:34:58.614 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:34:58.614 [main] ERROR com.source.classes.purchaseorders.SendForVendor - Exception in Send PO For Vendor function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-]]></system-out>
-  </testcase>
-  <testcase name="sendForVendor[Sales, Catalog](1)" classname="com.source.classes.purchaseorders.PoSendForVendorTest" time="0.003">
-    <system-out><![CDATA[00:35:00.504 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.504 [main] ERROR com.source.classes.purchaseorders.SendForVendor - Exception in Send PO For Vendor function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-]]></system-out>
-  </testcase>
-  <testcase name="edit[Sales, Catalog](1)" classname="com.source.classes.purchaseorderrequests.edit.PorEditTest" time="0.006">
-    <system-out><![CDATA[00:35:00.425 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.425 [main] ERROR com.source.classes.purchaseorderrequests.edit.PorEdit - Exception in POR Edit function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-]]></system-out>
-  </testcase>
-  <testcase name="suspend[Sales, Catalog](1)" classname="com.source.classes.purchaseorderrequests.suspend.SuspendEditTest" time="0.017">
-    <system-out><![CDATA[00:35:00.442 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.442 [main] ERROR com.source.classes.purchaseorderrequests.suspend.PorSuspend - Exception in POR Suspend function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.443 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.443 [main] ERROR com.source.classes.purchaseorderrequests.edit.PorEdit - Exception in POR Edit function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.443 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.443 [main] ERROR com.source.classes.purchaseorderrequests.suspend.PorSuspend - Exception in POR Suspend function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.443 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.445 [main] ERROR com.source.classes.requisitions.edit.Edit - Exception in Requisition Edit Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.445 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.445 [main] ERROR com.source.classes.requisitions.sendforapproval.SendForApproval - Exception in Requisition Send For Approval Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.445 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.446 [main] ERROR com.source.classes.requisitions.approve.Approve - Exception in Requisition Approve Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.446 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.449 [main] ERROR com.source.classes.requisitions.assign.Assign - Error in Requisition Buyer Manager Assign Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.449 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.449 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create For Catalog Type Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.451 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create Tax Code Function: Cannot invoke "com.microsoft.playwright.Page.getByText(String)" because "this.page" is null
-00:35:00.451 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Notes Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.451 [main] ERROR com.source.classes.purchaseorderrequests.create.PorCreate - Exception in POR Create Button Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-]]></system-out>
-  </testcase>
-  <testcase name="sendForApproval[Sales, Catalog](1)" classname="com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApprovalTest" time="0.004">
-    <system-out><![CDATA[00:35:00.465 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.465 [main] ERROR com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApproval - Exception in POR Send For Approval function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-]]></system-out>
-  </testcase>
-  <testcase name="reject[Sales, Catalog](1)" classname="com.source.classes.purchaseorderrequests.reject.PorRejectTest" time="0.005">
-    <system-out><![CDATA[00:35:00.478 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
-00:35:00.478 [main] ERROR com.base.BaseTest - Exception in POR Reject Test Function: Cannot invoke "org.apache.logging.log4j.Logger.error(String, Object)" because "this.logger" is null
+    <system-out><![CDATA[21:17:19.204 [main] ERROR com.source.classes.login.Login - Error in Perform Login Function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
+21:17:19.204 [main] ERROR com.source.classes.purchaseorders.SendForVendor - Exception in Send PO For Vendor function: Cannot invoke "com.microsoft.playwright.Page.locator(String)" because "this.page" is null
 ]]></system-out>
   </testcase>
 </testsuite>
