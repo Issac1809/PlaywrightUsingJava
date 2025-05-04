@@ -17,16 +17,22 @@ jobs:
           distribution: 'temurin'
           java-version: '22'
 
-      - name: Set up Docker
+      - name: Install Docker
         run: |
           sudo apt-get update
           sudo apt-get install -y docker.io
           sudo systemctl enable --now docker
-          sudo apt-get install -y docker-compose
+          docker --version
 
-      - name: Set up Selenium Grid (Hub + Nodes)
+      - name: Install Docker Compose
         run: |
-          docker-compose -f docker-compose.yml up -d
+          sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
+
+      - name: Start Selenium Grid
+        run: |
+          docker-compose -f ./GePS-HOPES_YEA/docker-compose.yaml up -d
         working-directory: ./GePS-HOPES_YEA
 
       - name: Build & Install
@@ -41,7 +47,7 @@ jobs:
         run: mvn clean test -DSELENIUM_REMOTE_URL=http://localhost:4444 -DsuiteXmlFile=src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml
         working-directory: ./GePS-HOPES_YEA
 
-      - name: Shutdown Selenium Grid
+      - name: Stop Selenium Grid
         run: |
-          docker-compose -f docker-compose.yml down
+          docker-compose -f ./GePS-HOPES_YEA/docker-compose.yaml down
         working-directory: ./GePS-HOPES_YEA
