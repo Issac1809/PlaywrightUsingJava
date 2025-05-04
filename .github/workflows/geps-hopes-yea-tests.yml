@@ -17,9 +17,16 @@ jobs:
           distribution: 'temurin'
           java-version: '22'
 
-      - name: Set up Selenium Grid
+      - name: Set up Docker
         run: |
-          docker-compose -f docker-compose.yaml up -d
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo systemctl enable --now docker
+          sudo apt-get install -y docker-compose
+
+      - name: Set up Selenium Grid (Hub + Nodes)
+        run: |
+          docker-compose -f docker-compose.yml up -d
         working-directory: ./GePS-HOPES_YEA
 
       - name: Build & Install
@@ -36,5 +43,5 @@ jobs:
 
       - name: Shutdown Selenium Grid
         run: |
-          docker-compose -f docker-compose.yaml down
+          docker-compose -f docker-compose.yml down
         working-directory: ./GePS-HOPES_YEA
