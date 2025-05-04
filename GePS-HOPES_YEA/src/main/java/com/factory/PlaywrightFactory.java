@@ -57,6 +57,7 @@ public class PlaywrightFactory {
 
     public void initializeBrowser(JsonNode jsonNode) {
         try {
+            String remoteBrowserUrl = System.getProperty("remoteBrowserUrl");
             String browserName = jsonNode.get("configSettings").get("browserName").asText().toUpperCase();
 
             switch (browserName) {
@@ -67,6 +68,7 @@ public class PlaywrightFactory {
                     localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false)));
                     break;
                 case "EDGE":
+//                    localBrowser.set(getPlaywright().chromium().connect(remoteBrowserUrl));
                     localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("msedge").setHeadless(false)));
                     break;
                 case "SAFARI":
