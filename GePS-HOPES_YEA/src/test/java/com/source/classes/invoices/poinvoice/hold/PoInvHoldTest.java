@@ -1,5 +1,6 @@
 package com.source.classes.invoices.poinvoice.hold;
 import com.base.BaseTest;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class PoInvHoldTest extends BaseTest {
@@ -10,6 +11,8 @@ public class PoInvHoldTest extends BaseTest {
             iInvHold.hold();
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Hold Test function: {}", exception.getMessage());
+            Assert.fail("Exception in PO Invoice Hold Test Function: " + exception.getMessage());
+
         }
     }
 }

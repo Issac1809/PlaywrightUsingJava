@@ -1,5 +1,6 @@
 package com.source.classes.freightforwarderrequests.invite;
 import com.base.BaseTest;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class FfrInviteTest extends BaseTest {
@@ -10,6 +11,8 @@ public class FfrInviteTest extends BaseTest {
             iFfrInvite.invite();
         } catch (Exception exception) {
             logger.error("Exception in Freight Forwarder Requests Invite Test function: {}", exception.getMessage());
+            Assert.fail("Exception in FFR Invite Test Function: " + exception.getMessage());
+
         }
     }
 }

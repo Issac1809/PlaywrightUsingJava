@@ -1,5 +1,6 @@
 package com.source.classes.inspections.fail;
 import com.base.BaseTest;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class InsFailTest extends BaseTest {
@@ -10,6 +11,7 @@ public class InsFailTest extends BaseTest {
             iInsFail.fail();
         } catch (Exception exception) {
             logger.error("Exception in Inspection Fail Test function: {}", exception.getMessage());
+            Assert.fail("Exception in Inspection Fail Test Function: " + exception.getMessage());
         }
     }
 }

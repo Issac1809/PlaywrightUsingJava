@@ -1,5 +1,6 @@
 package com.source.classes.workorders.trackerstatus;
 import com.base.BaseTest;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class WoTrackerStatusTest extends BaseTest {
@@ -10,6 +11,7 @@ public class WoTrackerStatusTest extends BaseTest {
             iWoTrackerStatus.trackerStatus();
         } catch (Exception exception) {
             logger.error("Exception in Work Order Tracker Status Test function: {}", exception.getMessage());
+            Assert.fail("Exception in WO Tracker Status Test Function: " + exception.getMessage());
         }
     }
 }

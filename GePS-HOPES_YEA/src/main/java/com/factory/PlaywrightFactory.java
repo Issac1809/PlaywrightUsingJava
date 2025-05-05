@@ -14,7 +14,6 @@ import java.util.List;
 
 public class PlaywrightFactory {
 
-    FileWriter fileWriter;
     ObjectMapper objectMapper;
     JsonNode jsonNode;
     static Logger logger;
@@ -58,22 +57,23 @@ public class PlaywrightFactory {
     public void initializeBrowser(JsonNode jsonNode) {
         try {
             String browserName = jsonNode.get("configSettings").get("browserName").asText().toUpperCase();
+            boolean runConfig = jsonNode.get("configSettings").get("runHeadless").asBoolean();
 
             switch (browserName) {
                 case "CHROMIUM":
-                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(true)));
+                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(runConfig)));
                     break;
                 case "CHROME":
-                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(true)));
+                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(runConfig)));
                     break;
                 case "EDGE":
-                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("msedge").setHeadless(true)));
+                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("msedge").setHeadless(runConfig)));
                     break;
                 case "SAFARI":
-                    localBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(true)));
+                    localBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(runConfig)));
                     break;
                 case "FIREFOX":
-                    localBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(true)));
+                    localBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(runConfig)));
                     break;
                 default:
                     System.out.println("--Enter Proper Browser Name--");

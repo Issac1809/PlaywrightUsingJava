@@ -1,5 +1,6 @@
 package com.source.classes.invoices.woinvoice.revert;
 import com.base.BaseTest;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class WoInvRevertTest extends BaseTest {
@@ -10,6 +11,8 @@ public class WoInvRevertTest extends BaseTest {
             iWoInvRevert.revert();
         }  catch (Exception exception) {
             logger.error("Exception in WO Invoice Revert Test function: {}", exception.getMessage());
+            Assert.fail("Exception in WO Invoice Revert Test Function: " + exception.getMessage());
+
         }
     }
 }

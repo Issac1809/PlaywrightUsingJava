@@ -1,4 +1,19 @@
 {
+  "configSettings" : {
+    "browserName" : "chrome",
+    "runHeadless" : true,
+    "appUrl" : "https://geps_hopes_yea.cormsquare.com",
+    "loginPassword" : "Admin@123",
+    "currencyCode" : "",
+    "internalAttachmentFilePath" : "documents/Internal Requisition Attachments.xlsx",
+    "externalAttachmentFilePath" : "documents/External Requisition Attachments.xlsx",
+    "tcasFilePath" : "documents/TCAS_File.xlsx",
+    "catalogItemImportFilePath" : "documents/Catalog_Item_Import.xlsx",
+    "nonCatalogItemImportFilePath" : "documents/NonCatalog_Item_Import.xlsx",
+    "technicalAttachmentFilePath" : "documents/Technical Documents.xlsx",
+    "commercialAttachmentFilePath" : "documents/Commercial Documents.xlsx"
+  },
+
   "mailIds" : {
     "adminEmail" : "admin@cormsquare.com",
     "buyerEmail" : "buyer@cormsquare.com",
@@ -14,6 +29,7 @@
     "presidentDirectorCorporateEmail" : "Achyuth@sharklasers.com",
     "vendorEmail" : "alpha123@cormsquare.com"
   },
+
   "commonRemarks" : {
     "approveRemarks" : "Approved",
     "rejectRemarks" : "Rejected",
@@ -21,6 +37,7 @@
     "suspendRemarks" : "Suspended",
     "cancelRemarks" : "Cancelled"
   },
+
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
@@ -66,6 +83,7 @@
     "salesTransactionNumber" : "240025TRN03095",
     "requisitionId" : "22404"
   },
+
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
     "requestForQuotationUid" : "423ddf19-43de-41c4-9d26-46ca8ebe48b3",
@@ -85,6 +103,7 @@
     "salesTransactionNumber" : "240025TRN03058",
     "requestForQuotationId" : "3473"
   },
+
   "purchaseOrderRequests" : {
     "advancePaymentFlag" : true,
     "advancePaymentPercentage" : "30",
@@ -98,12 +117,14 @@
     "approvers" : [ "projectmanager@cormsquare.com", "buyer@cormsquare.com" ],
     "porReferenceNumber" : "240025POR01557"
   },
+
   "purchaseOrders" : {
     "poReferenceId" : "240024PO00289",
     "poRevisionNumber" : "",
     "poValue" : 9000,
     "unitRate" : 200
   },
+
   "dispatchNotes" : {
     "dispatchNoteReferenceId" : "",
     "sourceCountry" : "India",
@@ -115,30 +136,18 @@
     "volumeCm3" : 50,
     "unitRate" : 300
   },
+
   "workOrders" : {
     "sourceCountry" : "India",
     "priority" : "High",
     "destinationCountry" : "India",
     "workOrderReferenceId" : ""
   },
+
   "invoices" : {
     "vendorReferenceId" : "",
     "invoiceReferenceId" : "",
     "poInvoiceNumber" : "INV-AUT-PO-",
     "woInvoiceNumber" : "INV-AUT-WO-"
-  },
-  "configSettings" : {
-    "browserName" : "edge",
-    "runHeadless" : false,
-    "appUrl" : "https://geps_hopes_yea.cormsquare.com",
-    "loginPassword" : "Admin@123",
-    "currencyCode" : "",
-    "internalAttachmentFilePath" : "documents/Internal Requisition Attachments.xlsx",
-    "externalAttachmentFilePath" : "documents/External Requisition Attachments.xlsx",
-    "tcasFilePath" : "documents/TCAS_File.xlsx",
-    "catalogItemImportFilePath" : "documents/Catalog_Item_Import.xlsx",
-    "nonCatalogItemImportFilePath" : "documents/NonCatalog_Item_Import.xlsx",
-    "technicalAttachmentFilePath" : "documents/Technical Documents.xlsx",
-    "commercialAttachmentFilePath" : "documents/Commercial Documents.xlsx"
   }
 }

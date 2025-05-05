@@ -1,5 +1,6 @@
 package com.source.classes.invoices.woinvoice.edit;
 import com.base.BaseTest;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class WoInvEditTest extends BaseTest {
@@ -10,6 +11,8 @@ public class WoInvEditTest extends BaseTest {
             iWoInvEdit.edit();
         }  catch (Exception exception) {
             logger.error("Exception in WO Invoice Edit Test function: {}", exception.getMessage());
+            Assert.fail("Exception in WO Invoice Edit Test Function: " + exception.getMessage());
+
         }
     }
 }

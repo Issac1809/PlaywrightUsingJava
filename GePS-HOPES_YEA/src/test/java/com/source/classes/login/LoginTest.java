@@ -12,7 +12,8 @@ public class LoginTest extends BaseTest {
             int statusCode = iLogin.performLogin(emailId);
             Assert.assertEquals(statusCode, 200, "Login was not Successful");
         } catch (Exception exception) {
-            logger.error("Error in Login Test Function: {}", exception.getMessage());
+            logger.error("Exception in Login Test Function: {}", exception.getMessage());
+            Assert.fail("Exception in Login Test Function: " + exception.getMessage());
         }
     }
 }
