@@ -1,16 +1,18 @@
 name: GePS-HOPES_YEA Test
+
 on:
-#  push:
-#    branches: [ main ]
-#  pull_request:
-#    branches: [ main ]
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
-    description: 'Trigger the GePS-HOPES_YEA tests manually from GitHub Actions UI.'
+    description: 'GePS-HOPES_YEA Test Workflow'
 
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -19,14 +21,22 @@ jobs:
           distribution: 'temurin'
           java-version: '22'
 
+      - name: Install GUI dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb libnss3 libatk1.0-0 libatk-bridge2.0-0 \
+            libcups2 libxss1 libasound2 libgbm-dev
+
       - name: Build & Install
         run: mvn -B install -DskipTests --no-transfer-progress
         working-directory: ./GePS-HOPES_YEA
 
-      - name: Ensure browsers are installed
+      - name: Install Playwright Browsers
         run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
         working-directory: ./GePS-HOPES_YEA
 
-      - name: Run tests
-        run: mvn clean test -DsuiteXmlFile=src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml
+      - name: Run Tests (supports headless & headed)
+        run: |
+          xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' \
+            mvn clean test -DsuiteXmlFile=src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml
         working-directory: ./GePS-HOPES_YEA
