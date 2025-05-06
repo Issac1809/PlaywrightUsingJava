@@ -20,62 +20,67 @@ pipeline {
         WORKING_DIR = 'GePS-Testing/GePS-HOPES_YEA'
         OUTPUT_REPORT_DIR = "${WORKING_DIR}/test-output"
         CHAIN_TEST_REPORT_DIR = "${WORKING_DIR}/test-output"
-        SELENIUM_STARTED = 'false'
-        CHAINTEST_STARTED = 'false'
     }
 
     stages {
-        stage('Prepare Workspace') {
+        stage('Clean Workspace') {
             steps {
                 cleanWs()
+                echo '✅ Workspace cleaned.'
             }
         }
 
-        stage('Checkout Development Repository (GePS)') {
-            steps {
-                timeout(time: 15, unit: 'MINUTES') {
-                    retry(2) {
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: [[name: "${DEVELOPMENT_BRANCH}"]],
-                            doGenerateSubmoduleConfigurations: false,
-                            extensions: [
-                                [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS - YEA/']]],
-                                [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 15]
-                            ],
-                            userRemoteConfigs: [[
-                                url: 'https://github.com/CormSquare/GePS.git',
-                                credentialsId: "${CREDENTIALS_ID}"
-                            ]]
-                        ])
-                    }
-                }
-                echo "✅ Checked out GePS repo directory (GePS - YEA)."
-            }
-        }
-
-        stage('Checkout Testing Repository (GePS-Testing)') {
-            steps {
-                timeout(time: 15, unit: 'MINUTES') {
-                    retry(2) {
-                        dir('GePS-Testing') {
-                            checkout([
-                                $class: 'GitSCM',
-                                branches: [[name: "${TESTING_BRANCH}"]],
-                                doGenerateSubmoduleConfigurations: false,
-                                extensions: [
-                                    [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS-HOPES_YEA/']]],
-                                    [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 15]
-                                ],
-                                userRemoteConfigs: [[
-                                    url: 'https://github.com/CormSquare/GePS-Testing.git',
-                                    credentialsId: "${CREDENTIALS_ID}"
-                                ]]
-                            ])
+        stage('Parallel Checkout Repositories') {
+            parallel {
+                stage('Checkout Development Repository (GePS)') {
+                    steps {
+                        timeout(time: 10, unit: 'MINUTES') {
+                            retry(2) {
+                                echo "🔁 Checking out GePS repo (GePS - YEA)..."
+                                checkout([
+                                    $class: 'GitSCM',
+                                    branches: [[name: "${DEVELOPMENT_BRANCH}"]],
+                                    doGenerateSubmoduleConfigurations: false,
+                                    extensions: [
+                                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS - YEA/']]],
+                                        [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 10]
+                                    ],
+                                    userRemoteConfigs: [[
+                                        url: 'https://github.com/CormSquare/GePS.git',
+                                        credentialsId: "${CREDENTIALS_ID}"
+                                    ]]
+                                ])
+                                echo "✅ Checked out GePS repo directory (GePS - YEA)."
+                            }
                         }
                     }
                 }
-                echo "✅ Checked out GePS-Testing repo directory (GePS-HOPES_YEA)."
+
+                stage('Checkout Testing Repository (GePS-Testing)') {
+                    steps {
+                        timeout(time: 10, unit: 'MINUTES') {
+                            retry(2) {
+                                dir('GePS-Testing') {
+                                    echo "🔁 Checking out GePS-Testing repo (GePS-HOPES_YEA)..."
+                                    checkout([
+                                        $class: 'GitSCM',
+                                        branches: [[name: "${TESTING_BRANCH}"]],
+                                        doGenerateSubmoduleConfigurations: false,
+                                        extensions: [
+                                            [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS-HOPES_YEA/']]],
+                                            [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 10]
+                                        ],
+                                        userRemoteConfigs: [[
+                                            url: 'https://github.com/CormSquare/GePS-Testing.git',
+                                            credentialsId: "${CREDENTIALS_ID}"
+                                        ]]
+                                    ])
+                                }
+                                echo "✅ Checked out GePS-Testing repo directory (GePS-HOPES_YEA)."
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -98,21 +103,6 @@ pipeline {
 
         stage('Start Services') {
             parallel {
-                stage('Start Playwright Service') {
-                    steps {
-                        dir("${WORKING_DIR}") {
-                            script {
-                                echo "🚀 Ensuring Playwright container is up..."
-                                bat "docker-compose -f docker-compose.playwright.yml up -d --remove-orphans"
-
-                                echo "⏳ Waiting for Playwright container to initialize..."
-                                bat 'ping -n 11 127.0.0.1 > nul'
-                                echo "✅ Playwright container is ready."
-                            }
-                        }
-                    }
-                }
-
                 stage('Start ChainTest Service') {
                     steps {
                         dir("${WORKING_DIR}") {
@@ -120,22 +110,34 @@ pipeline {
                                 echo "🔎 Checking for existing ChainTest container..."
                                 bat(script: "docker-compose -f docker-compose-h2.yml ps -q chaintest > chaintest_id.txt", returnStatus: true)
                                 def cid = readFile('chaintest_id.txt').trim()
-                                if (cid) {
-                                    bat(script: "docker inspect -f \"{{.State.Running}}\" ${cid} > chaintest_status.txt", returnStatus: true)
-                                    if (readFile('chaintest_status.txt').trim() == 'true') {
-                                        echo "✅ ChainTest container is already running."
-                                    } else {
-                                        echo "🔄 Starting ChainTest..."
-                                        bat "docker-compose -f docker-compose-h2.yml up -d --remove-orphans"
-                                    }
-                                } else {
+                                if (!cid || readFile('chaintest_status.txt').trim() != 'true') {
                                     echo "🚀 Starting ChainTest..."
                                     bat "docker-compose -f docker-compose-h2.yml up -d --remove-orphans"
+                                } else {
+                                    echo "✅ ChainTest container is already running."
                                 }
-
-                                echo "⏳ Waiting for ChainTest container to initialize..."
+                                echo "⏳ Waiting for ChainTest to initialize..."
                                 bat 'ping -n 11 127.0.0.1 > nul'
-                                echo "✅ ChainTest container is ready."
+                            }
+                        }
+                    }
+                }
+
+                stage('Start Selenium Grid Service') {
+                    steps {
+                        dir("${WORKING_DIR}") {
+                            script {
+                                echo "🔎 Checking for existing Selenium container..."
+                                bat(script: "docker-compose -f docker-compose.yaml ps -q selenium-hub > selenium_id.txt", returnStatus: true)
+                                def sid = readFile('selenium_id.txt').trim()
+                                if (!sid || readFile('selenium_status.txt').trim() != 'true') {
+                                    echo "🚀 Starting Selenium Grid..."
+                                    bat "docker-compose -f docker-compose.yaml up -d --remove-orphans"
+                                } else {
+                                    echo "✅ Selenium Grid is already running."
+                                }
+                                echo "⏳ Waiting for Selenium Grid to initialize..."
+                                bat 'ping -n 11 127.0.0.1 > nul'
                             }
                         }
                     }
@@ -147,7 +149,9 @@ pipeline {
             steps {
                 dir("${WORKING_DIR}") {
                     echo "🧪 Running Playwright tests..."
-                    bat "docker-compose -f docker-compose.playwright.yml run --rm playwright mvn test -Dsurefire.suiteXmlFiles=${TEST_SUITE}"
+                    bat """
+                        mvn test -Dsurefire.suiteXmlFiles=${TEST_SUITE} -DSELENIUM_REMOTE_URL=http://localhost:4444/wd/hub
+                    """
                 }
             }
             post {
@@ -193,26 +197,12 @@ pipeline {
         }
 
         stage('Stop Services') {
-            parallel {
-                stage('Stop Playwright Service') {
-                    steps {
-                        dir("${WORKING_DIR}") {
-                            script {
-                                echo "🛑 Stopping Playwright Service..."
-                                bat 'docker-compose -f docker-compose.playwright.yml down --remove-orphans'
-                            }
-                        }
-                    }
-                }
-
-                stage('Stop ChainTest Service') {
-                    steps {
-                        dir("${WORKING_DIR}") {
-                            script {
-                                echo "🛑 Stopping ChainTest Service..."
-                                bat 'docker-compose -f docker-compose-h2.yml down --remove-orphans'
-                            }
-                        }
+            steps {
+                dir("${WORKING_DIR}") {
+                    script {
+                        echo "🛑 Stopping ChainTest & Selenium Grid Services..."
+                        bat 'docker-compose -f docker-compose-h2.yml down --remove-orphans'
+                        bat 'docker-compose -f docker-compose.yaml down --remove-orphans'
                     }
                 }
             }

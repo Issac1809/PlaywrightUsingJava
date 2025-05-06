@@ -9,6 +9,8 @@ import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
 import static com.constants.orderschedules.LOsApprove.*;
+import static com.constants.orderschedules.LOsReject.getTitle;
+import static com.utils.GetTitleUtil.getTransactionTitle;
 
 public class OsApprove implements IOsApprove {
 
@@ -30,7 +32,7 @@ public class OsApprove implements IOsApprove {
         this.logger = LoggerUtil.getLogger(OsApprove.class);
     }
 
-    public void approve(){
+    public void approve(String type, String purchaseType){
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerMailId").asText();
             iLogin.performLogin(buyerMailId);
@@ -38,14 +40,9 @@ public class OsApprove implements IOsApprove {
             Locator poNavigationBarLocator = page.locator(PO_NAVIGATION_BAR);
             poNavigationBarLocator.click();
 
-            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : containerList){
-                if(tr.contains(poReferenceId)){
-                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
-                    detailsButtonLocator.first().click();
-                }
-            }
+            String title = getTransactionTitle(type, purchaseType);
+            Locator titleLocator = page.locator(getTitle(title));
+            titleLocator.first().click();
 
             Locator viewOrderScheduleButtonLocator = page.locator(VIEW_ORDER_SCHEDULE__BUTTON);
             viewOrderScheduleButtonLocator.click();

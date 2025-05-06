@@ -12,7 +12,6 @@ public class FfrInviteTest extends BaseTest {
         } catch (Exception exception) {
             logger.error("Exception in Freight Forwarder Requests Invite Test function: {}", exception.getMessage());
             Assert.fail("Exception in FFR Invite Test Function: " + exception.getMessage());
-
         }
     }
 }

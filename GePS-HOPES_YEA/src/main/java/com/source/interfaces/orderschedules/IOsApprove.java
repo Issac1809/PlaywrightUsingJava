@@ -1,5 +1,5 @@
 package com.source.interfaces.orderschedules;
 
 public interface IOsApprove {
-    void approve();
+    void approve(String type, String purchaseType);
 }

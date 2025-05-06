@@ -12,7 +12,6 @@ public class DnAssignTest extends BaseTest {
         } catch (Exception exception) {
             logger.error("Exception in Dispatch Notes Assign Test function: {}", exception.getMessage());
             Assert.fail("Exception in DN Assign Test Function: " + exception.getMessage());
-
         }
     }
 }
