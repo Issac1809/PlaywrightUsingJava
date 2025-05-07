@@ -2,6 +2,7 @@ package com.source.classes.purchaseorderrequests.suspend;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.purchaseorderrequests.IPorCreate;
@@ -102,6 +103,8 @@ public class PorSuspend implements IPorSuspend {
 
             Locator acceptLocator = page.locator(YES);
             acceptLocator.click();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             iLogout.performLogout();
         } catch (Exception exception) {

@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Response;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requestforquotations.ITeCreate;
@@ -82,6 +83,8 @@ public class TechnicalEvaluationCreate implements ITeCreate  {
                     acceptLocator::click
             );
             status = submitResponse.status();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             iLogout.performLogout();
         } catch (Exception exception) {

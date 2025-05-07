@@ -1,4 +1,18 @@
 {
+  "configSettings" : {
+    "browserName" : "chrome",
+    "runHeadless" : true,
+    "appUrl" : "https://geps_hopes_yea.cormsquare.com",
+    "loginPassword" : "Admin@123",
+    "currencyCode" : "",
+    "internalAttachmentFilePath" : "documents/Internal Requisition Attachments.xlsx",
+    "externalAttachmentFilePath" : "documents/External Requisition Attachments.xlsx",
+    "tcasFilePath" : "documents/TCAS_File.xlsx",
+    "catalogItemImportFilePath" : "documents/Catalog_Item_Import.xlsx",
+    "nonCatalogItemImportFilePath" : "documents/NonCatalog_Item_Import.xlsx",
+    "technicalAttachmentFilePath" : "documents/Technical Documents.xlsx",
+    "commercialAttachmentFilePath" : "documents/Commercial Documents.xlsx"
+  },
   "mailIds" : {
     "adminEmail" : "admin@cormsquare.com",
     "buyerEmail" : "buyer@cormsquare.com",
@@ -24,7 +38,7 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-569.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-717.0",
     "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-156.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-755.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-663.0",
@@ -59,12 +73,12 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "bb93fb00-f7ae-43a6-a760-6a4c187c7bfb",
+    "requisitionUid" : "ff67b55a-4c37-4556-8e55-110626251fe7",
     "itemImport" : "true",
     "requisitionItemCount" : "2",
-    "psTransactionNumber" : "240025TRN03134",
+    "psTransactionNumber" : "240025TRN03168",
     "salesTransactionNumber" : "240025TRN03095",
-    "requisitionId" : "22404"
+    "requisitionId" : "22516"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
@@ -93,10 +107,10 @@
     "milestonePaymentCount" : 2,
     "taxCode" : "PZ-Zero Rated Purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "141816a8-559f-477e-bd9e-13bf3044ba09",
-    "purchaseOrderRequestId" : "8142",
+    "purchaseOrderRequestUid" : "6257aa2d-da79-40ba-830c-5a1f0dc0f987",
+    "purchaseOrderRequestId" : "8211",
     "approvers" : [ "projectmanager@cormsquare.com", "buyer@cormsquare.com" ],
-    "porReferenceNumber" : "240025POR01557"
+    "porReferenceNumber" : "240025POR01583"
   },
   "purchaseOrders" : {
     "poReferenceId" : "240024PO00289",
@@ -126,19 +140,5 @@
     "invoiceReferenceId" : "",
     "poInvoiceNumber" : "INV-AUT-PO-",
     "woInvoiceNumber" : "INV-AUT-WO-"
-  },
-  "configSettings" : {
-    "browserName" : "edge",
-    "runHeadless" : false,
-    "appUrl" : "https://geps_hopes_yea.cormsquare.com",
-    "loginPassword" : "Admin@123",
-    "currencyCode" : "",
-    "internalAttachmentFilePath" : "documents/Internal Requisition Attachments.xlsx",
-    "externalAttachmentFilePath" : "documents/External Requisition Attachments.xlsx",
-    "tcasFilePath" : "documents/TCAS_File.xlsx",
-    "catalogItemImportFilePath" : "documents/Catalog_Item_Import.xlsx",
-    "nonCatalogItemImportFilePath" : "documents/NonCatalog_Item_Import.xlsx",
-    "technicalAttachmentFilePath" : "documents/Technical Documents.xlsx",
-    "commercialAttachmentFilePath" : "documents/Commercial Documents.xlsx"
   }
 }

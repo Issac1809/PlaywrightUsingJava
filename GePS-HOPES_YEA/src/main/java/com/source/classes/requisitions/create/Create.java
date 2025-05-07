@@ -893,6 +893,8 @@ public class Create implements IPrCreate {
                 playwrightFactory.savePropertiesIntoJsonFile("requisition", "psTransactionNumber", transactionId);
             }
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Requisition Create Function: {}", exception.getMessage());

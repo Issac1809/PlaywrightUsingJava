@@ -76,6 +76,8 @@ public class Approve implements IPrApprove {
                     requisitionStatus = responseJson.get("status").asText();
                 }
 
+                page.waitForLoadState(LoadState.NETWORKIDLE);
+
                 iLogout.performLogout();
 
                 if(requisitionStatus.equals("Approved")) {

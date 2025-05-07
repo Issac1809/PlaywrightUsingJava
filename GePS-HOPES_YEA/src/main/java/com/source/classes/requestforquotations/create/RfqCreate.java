@@ -87,6 +87,8 @@ public class RfqCreate implements IRfqCreate {
                 playwrightFactory.savePropertiesIntoJsonFile("requestForQuotation", "salesTransactionNumber", transactionId);
             }
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Buyer RFQ Create Function: {}", exception.getMessage());

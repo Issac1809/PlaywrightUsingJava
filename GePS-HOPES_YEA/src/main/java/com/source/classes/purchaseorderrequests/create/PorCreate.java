@@ -72,6 +72,8 @@ public class PorCreate implements IPorCreate {
 
                 prListFlow.prListFlow();
 
+                page.waitForLoadState(LoadState.NETWORKIDLE);
+
                 iLogout.performLogout();
 
                 String requesterMailId = jsonNode.get("mailIds").get("requesterEmail").asText();
@@ -108,6 +110,8 @@ public class PorCreate implements IPorCreate {
 
                     Locator submitButtonLocator = page.locator(LPorCreate.SUBMIT_BUTTON);
                     submitButtonLocator.click();
+
+                    page.waitForLoadState(LoadState.NETWORKIDLE);
 
                     iLogout.performLogout();
 
@@ -150,6 +154,8 @@ public class PorCreate implements IPorCreate {
 
                 prListFlow.prListFlow();
 
+                page.waitForLoadState(LoadState.NETWORKIDLE);
+
                 iLogout.performLogout();
 
                 String requesterMailId = jsonNode.get("mailIds").get("requesterEmail").asText();
@@ -184,6 +190,8 @@ public class PorCreate implements IPorCreate {
                     Locator submitButtonLocator = page.locator(LPorCreate.SUBMIT_BUTTON);
                     submitButtonLocator.click();
 
+                    page.waitForLoadState(LoadState.NETWORKIDLE);
+
                     iLogout.performLogout();
 
                     String vendorMailId = jsonNode.get("mailIds").get("vendorEmail").asText();
@@ -201,6 +209,8 @@ public class PorCreate implements IPorCreate {
                     Locator acceptLocator = page.locator(ACCEPT_REMARKS_POP_UP);
                     acceptLocator.click();
 
+                    page.waitForLoadState(LoadState.NETWORKIDLE);
+
                     iLogout.performLogout();
 
                     iLogin.performLogin(requesterMailId);
@@ -211,6 +221,8 @@ public class PorCreate implements IPorCreate {
                     String title1 = getRFQTransactionTitle(type);
                     Locator titleLocator1 = page.locator(LPorCreate.getTitle(title1));
                     titleLocator1.first().click();
+
+                    page.waitForLoadState(LoadState.NETWORKIDLE);
 
                     iLogout.performLogout();
 
@@ -387,6 +399,8 @@ public class PorCreate implements IPorCreate {
             playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "porReferenceNumber", porReferenceNumber);
 
             status = apiResponse.status();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             iLogout.performLogout();
         } catch (Exception exception) {

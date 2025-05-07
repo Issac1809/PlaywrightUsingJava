@@ -83,6 +83,8 @@ public class Requote implements IQuoRequote {
         );
         status = submitResponse.status();
 
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+
         iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Requote Function: {}", exception.getMessage());

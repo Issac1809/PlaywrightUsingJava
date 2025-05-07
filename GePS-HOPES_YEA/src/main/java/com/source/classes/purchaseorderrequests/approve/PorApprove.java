@@ -6,6 +6,7 @@ import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.purchaseorderrequests.IPorApprove;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -128,6 +129,8 @@ public class PorApprove implements IPorApprove {
 
                 playwrightFactory.savePorApproversIntoJsonFile("purchaseOrderRequests", "approvers", porApprovers);
 
+                page.waitForLoadState(LoadState.NETWORKIDLE);
+
                 iLogout.performLogout();
             } else {
                 Locator approveButtonLocator = page.locator(APPROVE_BUTTON);
@@ -148,6 +151,8 @@ public class PorApprove implements IPorApprove {
                 }
 
                 playwrightFactory.savePorApproversIntoJsonFile("purchaseOrderRequests", "approvers", porApprovers);
+
+                page.waitForLoadState(LoadState.NETWORKIDLE);
 
                 iLogout.performLogout();
             }
@@ -181,9 +186,28 @@ public class PorApprove implements IPorApprove {
                 Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
                 acceptButtonLocator.click();
 
-                if(i==approvers.size()-1) {
+                if(i == approvers.size() - 1) {
+                    page.waitForLoadState(LoadState.NETWORKIDLE);
+
+                    String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
+                    String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
+
+                    String url = page.url();
+                    String[] urlArray = url.split("=");
+                    String getUid = urlArray[1];
+                    playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "purchaseOrderRequestUid", getUid);
+
+                    APIResponse apiResponse = page.request().fetch(appUrl + porType + getUid, RequestOptions.create());
+                    JsonNode jsonNode = objectMapper.readTree(apiResponse.body());
+                    String purchaseOrderRequestId = jsonNode.get("id").asText();
+                    String porReferenceNumber = jsonNode.get("referenceId").asText();
+                    playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "purchaseOrderRequestId", purchaseOrderRequestId);
+                    playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "porReferenceNumber", porReferenceNumber);
+
                     msaFlow.msaFlow();
                 }
+
+                page.waitForLoadState(LoadState.NETWORKIDLE);
 
                 iLogout.performLogout();
             }

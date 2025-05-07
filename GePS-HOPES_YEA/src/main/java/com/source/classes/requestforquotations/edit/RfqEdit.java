@@ -71,6 +71,8 @@ public class RfqEdit implements IRfqEdit {
         );
         status = editResponse.status();
 
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+
         iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in RFQ Edit Function: {}", exception.getMessage());

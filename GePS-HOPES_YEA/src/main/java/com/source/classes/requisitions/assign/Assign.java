@@ -106,6 +106,7 @@ public class Assign implements IPrAssign {
             }
 
             assignStatus = assignResponse.status();
+
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
             iLogout.performLogout();

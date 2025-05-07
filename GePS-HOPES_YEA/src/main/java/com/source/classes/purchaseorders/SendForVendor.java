@@ -2,6 +2,7 @@ package com.source.classes.purchaseorders;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.purchaseorders.IPoSendForVendor;
@@ -48,6 +49,8 @@ public class SendForVendor implements IPoSendForVendor {
 
             Locator emailPopUpLocator = page.locator(EMAIL_POP_UP);
             emailPopUpLocator.click();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             iLogout.performLogout();
         } catch (Exception exception) {

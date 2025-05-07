@@ -44,6 +44,7 @@ public class MSA_Flow {
             MSA_FTPHelper msaFtpHelper = new MSA_FTPHelper(ftpClient);
             msaFtpHelper.connectionEstablish(ftpHost, ftpPort, ftpUser, ftpPassword);
             String localExcelFilePath = msaFtpHelper.downloadFile(remoteGepsToHopesFilePath, localPath, porReferenceNumber);
+
 //TODO Step 2: Update the Excel File
             MSA_ExcelHelper msaExcelHelper = new MSA_ExcelHelper();
             int poNumber = msaExcelHelper.updateExcel(localExcelFilePath);

@@ -343,7 +343,6 @@ public class BaseTest {
     public BaseTest() {
     }
 
-
     @BeforeSuite
     public void globalSetup(){
         try {

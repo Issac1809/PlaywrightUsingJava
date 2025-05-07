@@ -96,6 +96,8 @@ public class PorSendForApproval implements IPorSendForApproval {
 
             playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "approvers", email);
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in POR Send For Approval function: {}", exception.getMessage());

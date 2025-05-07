@@ -99,6 +99,8 @@ public class SendForApproval implements IPrSendForApproval {
             }
         }
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Requisition Send For Approval Function: {}", exception.getMessage());

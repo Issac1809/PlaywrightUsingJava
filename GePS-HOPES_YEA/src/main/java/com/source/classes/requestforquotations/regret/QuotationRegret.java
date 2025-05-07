@@ -5,6 +5,7 @@ import com.microsoft.playwright.*;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Response;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.requestforquotations.IQuoRegret;
@@ -66,6 +67,8 @@ public class QuotationRegret implements IQuoRegret {
                 acceptLocator::click
         );
         status = regretResponse.status();
+
+        page.waitForLoadState(LoadState.NETWORKIDLE);
 
         iLogout.performLogout();
         } catch (Exception exception) {

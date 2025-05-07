@@ -1,7 +1,7 @@
 {
   "configSettings" : {
     "browserName" : "chrome",
-    "runHeadless" : false,
+    "runHeadless" : true,
     "appUrl" : "https://geps_hopes_yea.cormsquare.com",
     "loginPassword" : "Admin@123",
     "currencyCode" : "",
@@ -13,7 +13,6 @@
     "technicalAttachmentFilePath" : "documents/Technical Documents.xlsx",
     "commercialAttachmentFilePath" : "documents/Commercial Documents.xlsx"
   },
-
   "mailIds" : {
     "adminEmail" : "admin@cormsquare.com",
     "buyerEmail" : "buyer@cormsquare.com",
@@ -29,7 +28,6 @@
     "presidentDirectorCorporateEmail" : "Achyuth@sharklasers.com",
     "vendorEmail" : "alpha123@cormsquare.com"
   },
-
   "commonRemarks" : {
     "approveRemarks" : "Approved",
     "rejectRemarks" : "Rejected",
@@ -37,11 +35,10 @@
     "suspendRemarks" : "Suspended",
     "cancelRemarks" : "Cancelled"
   },
-
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-569.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-618.0",
     "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-156.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-755.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-663.0",
@@ -76,14 +73,13 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "bb93fb00-f7ae-43a6-a760-6a4c187c7bfb",
+    "requisitionUid" : "1dd076c1-b523-496d-9055-61e7558eba1a",
     "itemImport" : "true",
     "requisitionItemCount" : "2",
-    "psTransactionNumber" : "240025TRN03134",
+    "psTransactionNumber" : "240025TRN03169",
     "salesTransactionNumber" : "240025TRN03095",
-    "requisitionId" : "22404"
+    "requisitionId" : "22520"
   },
-
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
     "requestForQuotationUid" : "423ddf19-43de-41c4-9d26-46ca8ebe48b3",
@@ -103,7 +99,6 @@
     "salesTransactionNumber" : "240025TRN03058",
     "requestForQuotationId" : "3473"
   },
-
   "purchaseOrderRequests" : {
     "advancePaymentFlag" : true,
     "advancePaymentPercentage" : "30",
@@ -112,19 +107,17 @@
     "milestonePaymentCount" : 2,
     "taxCode" : "PZ-Zero Rated Purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "141816a8-559f-477e-bd9e-13bf3044ba09",
-    "purchaseOrderRequestId" : "8142",
+    "purchaseOrderRequestUid" : "6cc56d57-a760-471b-9ac5-6deb3b0ff1a0",
+    "purchaseOrderRequestId" : "8216",
     "approvers" : [ "projectmanager@cormsquare.com", "buyer@cormsquare.com" ],
-    "porReferenceNumber" : "240025POR01557"
+    "porReferenceNumber" : "240025POR01584"
   },
-
   "purchaseOrders" : {
     "poReferenceId" : "240024PO00289",
     "poRevisionNumber" : "",
     "poValue" : 9000,
     "unitRate" : 200
   },
-
   "dispatchNotes" : {
     "dispatchNoteReferenceId" : "",
     "sourceCountry" : "India",
@@ -136,14 +129,12 @@
     "volumeCm3" : 50,
     "unitRate" : 300
   },
-
   "workOrders" : {
     "sourceCountry" : "India",
     "priority" : "High",
     "destinationCountry" : "India",
     "workOrderReferenceId" : ""
   },
-
   "invoices" : {
     "vendorReferenceId" : "",
     "invoiceReferenceId" : "",

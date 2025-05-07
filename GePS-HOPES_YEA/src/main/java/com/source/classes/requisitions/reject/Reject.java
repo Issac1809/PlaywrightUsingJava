@@ -66,6 +66,8 @@ public class Reject implements IPrReject {
             );
             rejectStatus = rejectResponse.status();
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Requisition Reject Function: {}", exception.getMessage());

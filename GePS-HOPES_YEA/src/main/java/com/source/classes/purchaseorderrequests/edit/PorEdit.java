@@ -57,6 +57,8 @@ public class PorEdit implements IPorEdit {
             Locator acceptLocator = page.locator(YES);
             acceptLocator.click();
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in POR Edit function: {}", exception.getMessage());
