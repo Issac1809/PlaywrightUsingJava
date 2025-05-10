@@ -38,10 +38,10 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-25.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-854.0",
-    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-590.0",
-    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-182.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-689.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-606.0",
+    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-854.0",
+    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-585.0",
     "departmentPic" : "requester@cormsquare.com",
     "shipToYokogawa" : "no",
     "companyName" : "Yokogawa Engineering Asia Pte Ltd",
@@ -73,12 +73,12 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "requester@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "18c7b61a-bce1-4e78-851d-f7a48c1a7390",
+    "requisitionUid" : "bfe2d40d-507f-46eb-990d-eb0f1aac1c62",
     "itemImport" : false,
     "requisitionItemCount" : "2",
-    "psTransactionNumber" : "240025TRN03234",
-    "salesTransactionNumber" : "240025TRN03235",
-    "requisitionId" : "22781"
+    "psTransactionNumber" : "240025TRN03241",
+    "salesTransactionNumber" : "240025TRN03243",
+    "requisitionId" : "22789"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
