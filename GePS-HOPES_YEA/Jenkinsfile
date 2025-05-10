@@ -76,13 +76,18 @@ pipeline {
                                         $class: 'GitSCM',
                                         branches: [[name: "${TESTING_BRANCH}"]],
                                         extensions: [
-                                            [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS-HOPES_YEA/'], [path: 'docker-compose.yaml'], [path: 'docker-compose-h2.yml']]],
+                                            [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
+                                                [path: 'GePS-HOPES_YEA/'],
+                                                [path: 'docker-compose.yaml'],
+                                                [path: 'docker-compose-h2.yml']
+                                            ]],
                                             [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 10]
                                         ],
                                         userRemoteConfigs: [[
                                             url: 'https://github.com/CormSquare/GePS-Testing.git',
                                             credentialsId: "${CREDENTIALS_ID}"
-                                        ]])
+                                        ]]
+                                    ])
                                 }
                                 echo "✅ Checked out GePS-Testing repo directory (GePS-HOPES_YEA)."
                             }
