@@ -151,9 +151,8 @@ pipeline {
                     timeout(time: 30, unit: 'MINUTES') {
                         echo "🧪 Running Playwright tests..."
                         bat """
-                            mvn test ^
-                              -Dsurefire.suiteXmlFiles=${TEST_SUITE} ^
-                              -DSELENIUM_REMOTE_URL=http://localhost:4444/wd/hub
+                        set SELENIUM_REMOTE_URL=http://localhost:4444/wd/hub
+                        mvn test -DsuiteXmlFile=${TEST_SUITE}
                         """
                     }
                 }
