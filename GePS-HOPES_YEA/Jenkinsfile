@@ -58,7 +58,8 @@ pipeline {
                                     userRemoteConfigs: [[
                                         url: 'https://github.com/CormSquare/GePS.git',
                                         credentialsId: "${CREDENTIALS_ID}"
-                                    ]])
+                                    ]]
+                                ])
                                 echo "✅ Checked out GePS repo directory (GePS - YEA)."
                             }
                         }
