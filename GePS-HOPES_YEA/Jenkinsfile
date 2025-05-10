@@ -1,4 +1,3 @@
-/*  Jenkinsfile — GePS-HOPES_YEA  */
 pipeline {
     agent any
 
@@ -11,29 +10,29 @@ pipeline {
     }
 
     environment {
-        // ── Repo / Branch Info ───────────────────────────────────────────────
-        JOB_NAME           = 'GePS-HOPES_YEA'
+        // ── Repo / Branch info ────────────────────────────────────────────────
+        JOB_NAME          = 'GePS-HOPES_YEA'
         DEVELOPMENT_BRANCH = 'GePS-HOPES'
         TESTING_BRANCH     = 'main'
         CREDENTIALS_ID     = '813c6e55-37f7-4f42-8153-3a19b435f10b'
 
-        // ── Build / Test Settings ────────────────────────────────────────────
+        // ── Build / Test settings ─────────────────────────────────────────────
         MAVEN_GOALS        = 'clean install -DskipTests=true'
         PROJECT_NAME       = 'GePS-HOPES_YEA'
         TEST_SUITE         = "src/test/resources/testrunners/${PROJECT_NAME}_functional-test.xml"
         WORKING_DIR        = 'GePS-Testing/GePS-HOPES_YEA'
 
-        // ── Report Paths ─────────────────────────────────────────────────────
-        OUTPUT_REPORT_DIR     = "${WORKING_DIR}/test-output"
-        CHAIN_TEST_REPORT_DIR = "${WORKING_DIR}/test-output"
+        // ── Reports ───────────────────────────────────────────────────────────
+        OUTPUT_REPORT_DIR      = "${WORKING_DIR}/test-output"
+        CHAIN_TEST_REPORT_DIR  = "${WORKING_DIR}/test-output"
 
-        // ── Miscellaneous ────────────────────────────────────────────────────
-        WAIT_TIME_SEC = '20'
+        // ── Misc ──────────────────────────────────────────────────────────────
+        WAIT_TIME_SEC      = '20'          // configurable sleep
     }
 
     stages {
 
-        /* ───────────────────────── Clean Workspace ───────────────────────── */
+        /* ─────────────────────────────── Workspace ───────────────────────── */
         stage('Clean Workspace') {
             steps {
                 cleanWs()
@@ -41,48 +40,44 @@ pipeline {
             }
         }
 
-        /* ──────────────── Parallel Checkout of Repositories ──────────────── */
-        stage('Checkout Repositories') {
+        /* ────────────────────── Parallel Git Checkouts ────────────────────── */
+        stage('Parallel Checkout Repositories') {
             parallel {
-                stage('Checkout GePS') {
+                stage('Checkout Development Repository (GePS)') {
                     steps {
                         timeout(time: 10, unit: 'MINUTES') {
                             retry(2) {
-                                echo "🔁 Checking out GePS repo..."
-                                checkout([
+                                echo "🔁 Checking out GePS repo (GePS - YEA)..."
+                                checkout([ 
                                     $class: 'GitSCM',
                                     branches: [[name: "${DEVELOPMENT_BRANCH}"]],
                                     extensions: [
-                                        [$class: 'SparseCheckoutPaths',
-                                         sparseCheckoutPaths: [[path: 'GePS - YEA/']]],
-                                        [$class: 'CloneOption',
-                                         shallow: true, depth: 1, noTags: true, timeout: 10]
+                                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS - YEA/']]],
+                                        [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 10]
                                     ],
                                     userRemoteConfigs: [[
                                         url: 'https://github.com/CormSquare/GePS.git',
                                         credentialsId: "${CREDENTIALS_ID}"
                                     ]]
                                 ])
-                                echo "✅ GePS repo checkout complete."
+                                echo "✅ Checked out GePS repo directory (GePS - YEA)."
                             }
                         }
                     }
                 }
 
-                stage('Checkout GePS-Testing') {
+                stage('Checkout Testing Repository (GePS-Testing)') {
                     steps {
                         timeout(time: 10, unit: 'MINUTES') {
                             retry(2) {
                                 dir('GePS-Testing') {
-                                    echo "🔁 Checking out GePS-Testing repo..."
-                                    checkout([
+                                    echo "🔁 Checking out GePS-Testing repo (GePS-HOPES_YEA)..."
+                                    checkout([ 
                                         $class: 'GitSCM',
                                         branches: [[name: "${TESTING_BRANCH}"]],
                                         extensions: [
-                                            [$class: 'SparseCheckoutPaths',
-                                             sparseCheckoutPaths: [[path: 'GePS-HOPES_YEA/']]],
-                                            [$class: 'CloneOption',
-                                             shallow: true, depth: 1, noTags: true, timeout: 10]
+                                            [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS-HOPES_YEA/']]],
+                                            [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 10]
                                         ],
                                         userRemoteConfigs: [[
                                             url: 'https://github.com/CormSquare/GePS-Testing.git',
@@ -90,7 +85,7 @@ pipeline {
                                         ]]
                                     ])
                                 }
-                                echo "✅ GePS-Testing repo checkout complete."
+                                echo "✅ Checked out GePS-Testing repo directory (GePS-HOPES_YEA)."
                             }
                         }
                     }
@@ -98,11 +93,11 @@ pipeline {
             }
         }
 
-        /* ────────────────────── Build with Maven (no tests) ───────────────── */
+        /* ───────────────────────── Maven Build (skip tests) ───────────────── */
         stage('Build YEA Project') {
             steps {
                 dir("${WORKING_DIR}") {
-                    echo "⚙️ Building project (skipping tests)..."
+                    echo "⚙️ Building YEA Project (Skipping Tests Only for Build)..."
                     bat "mvn ${MAVEN_GOALS}"
                 }
             }
@@ -111,48 +106,35 @@ pipeline {
                     archiveArtifacts artifacts: "${WORKING_DIR}/target/*.jar", onlyIfSuccessful: true
                 }
                 failure {
-                    echo "❌ Build failed."
+                    echo "❌ Build failed. Please check the logs."
                 }
             }
         }
 
-        /* ────────────────────── Start Docker Services ─────────────────────── */
+        /* ────────────────────────── Start Docker Services ─────────────────── */
         stage('Start Services') {
-            steps {
-                dir("${WORKING_DIR}") {
-                    script {
-                        echo "🔎 Verifying Docker daemon..."
-                        if (bat(script: 'docker info >nul 2>&1', returnStatus: true) != 0) {
-                            error('❌ Docker is not running or accessible.')
+            parallel {
+                stage('Start ChainTest Service') {
+                    steps {
+                        script {
+                            echo "🔎 Verifying Docker daemon..."
+                            bat "docker info >nul 2>&1" // Verifies Docker is running
+                            echo "🚀 Starting ChainTest service..."
+                            bat "docker-compose -f docker-compose-h2.yml up -d --remove-orphans"
+                            echo "⏳ Waiting ${WAIT_TIME_SEC}s for ChainTest..."
+                            bat "powershell -Command Start-Sleep -Seconds ${WAIT_TIME_SEC}" // PowerShell sleep command
                         }
+                    }
+                }
 
-                        echo "🚀 Starting ChainTest service..."
-                        def chainTestRunning = bat(
-                            script: "docker compose -f docker-compose-h2.yml ps -q chaintest",
-                            returnStdout: true
-                        ).trim()
-                        if (!chainTestRunning) {
-                            bat "docker compose -f docker-compose-h2.yml up -d --remove-orphans"
-                        } else {
-                            echo "✅ ChainTest already running."
+                stage('Start Selenium Grid Service') {
+                    steps {
+                        script {
+                            echo "🚀 Starting Selenium Grid..."
+                            bat "docker-compose -f docker-compose.yaml up -d --remove-orphans"
+                            echo "⏳ Waiting ${WAIT_TIME_SEC}s for Selenium Grid..."
+                            bat "powershell -Command Start-Sleep -Seconds ${WAIT_TIME_SEC}" // PowerShell sleep command
                         }
-
-                        echo "⏳ Waiting ${WAIT_TIME_SEC}s for ChainTest..."
-                        bat "timeout /t ${WAIT_TIME_SEC} > nul"
-
-                        echo "🚀 Starting Selenium Grid service..."
-                        def seleniumRunning = bat(
-                            script: "docker compose -f docker-compose.yaml ps -q selenium-hub",
-                            returnStdout: true
-                        ).trim()
-                        if (!seleniumRunning) {
-                            bat "docker compose -f docker-compose.yaml up -d --remove-orphans"
-                        } else {
-                            echo "✅ Selenium Grid already running."
-                        }
-
-                        echo "⏳ Waiting ${WAIT_TIME_SEC}s for Selenium Grid..."
-                        bat "timeout /t ${WAIT_TIME_SEC} > nul"
                     }
                 }
             }
@@ -163,11 +145,11 @@ pipeline {
             steps {
                 dir("${WORKING_DIR}") {
                     timeout(time: 30, unit: 'MINUTES') {
-                        echo "🧪 Executing Playwright test suite..."
+                        echo "🧪 Running Playwright tests..."
                         bat """
                             mvn test ^
-                                -Dsurefire.suiteXmlFiles=${TEST_SUITE} ^
-                                -DSELENIUM_REMOTE_URL=http://localhost:4444/wd/hub
+                              -Dsurefire.suiteXmlFiles=${TEST_SUITE} ^
+                              -DSELENIUM_REMOTE_URL=http://localhost:4444/wd/hub
                         """
                     }
                 }
@@ -177,55 +159,57 @@ pipeline {
                     junit '**/target/surefire-reports/*.xml'
                 }
                 failure {
-                    echo "❌ Test execution failed."
+                    echo "❌ Test run failed."
                 }
             }
         }
 
-        /* ────────────────────── Publish HTML Reports ─────────────────────── */
+        /* ───────────────────────────── Reports ────────────────────────────── */
         stage('Publish Reports') {
             steps {
                 script {
                     if (fileExists("${CHAIN_TEST_REPORT_DIR}/index.html")) {
-                        publishHTML([
+                        publishHTML([ 
                             keepAll: true,
                             alwaysLinkToLastBuild: true,
-                            reportDir: "${CHAIN_TEST_REPORT_DIR}",
-                            reportFiles: 'index.html',
-                            reportName: 'Chain Test Report'
+                            reportDir   : "${CHAIN_TEST_REPORT_DIR}",
+                            reportFiles : 'index.html',
+                            reportName  : 'Chain Test Report'
                         ])
                     } else {
-                        echo "⚠️ Chain Test Report not found."
+                        echo "⚠️ Chain Test report not found."
                     }
 
                     if (fileExists("${OUTPUT_REPORT_DIR}/emailable-report.html")) {
-                        publishHTML([
+                        publishHTML([ 
                             keepAll: true,
                             alwaysLinkToLastBuild: true,
-                            reportDir: "${OUTPUT_REPORT_DIR}",
-                            reportFiles: 'emailable-report.html',
-                            reportName: 'HTML Extent Report'
+                            reportDir   : "${OUTPUT_REPORT_DIR}",
+                            reportFiles : 'emailable-report.html',
+                            reportName  : 'HTML Extent Report'
                         ])
                     } else {
-                        echo "⚠️ Test Execution Report not found."
+                        echo "⚠️ Test execution report not found."
                     }
                 }
             }
         }
 
-        /* ─────────────────────── Stop Docker Services ─────────────────────── */
+        /* ────────────────────────── Stop Services ─────────────────────────── */
         stage('Stop Services') {
             steps {
                 dir("${WORKING_DIR}") {
-                    echo "🛑 Stopping services..."
-                    bat 'docker compose -f docker-compose-h2.yml down --remove-orphans'
-                    bat 'docker compose -f docker-compose.yaml down --remove-orphans'
+                    script {
+                        echo "🛑 Stopping ChainTest & Selenium Grid services..."
+                        bat 'docker compose -f docker-compose-h2.yml down --remove-orphans'
+                        bat 'docker compose -f docker-compose.yaml down --remove-orphans'
+                    }
                 }
             }
         }
     }
 
-    /* ────────────────────── Notifications & Cleanup ─────────────────────── */
+    /* ────────────────────────────── Notifications ────────────────────────── */
     post {
         failure {
             emailext(
@@ -235,6 +219,7 @@ pipeline {
                          The Jenkins build for <b>${env.JOB_NAME}</b> has <font color="red">FAILED</font>.<br>
                          Please check the attached test reports.<br><br>
                          <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
+                /* Windows paths need back-slashes in attachmentsPattern */
                 attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}\\index.html, ${OUTPUT_REPORT_DIR}\\emailable-report.html"
             )
         }
@@ -245,7 +230,7 @@ pipeline {
                 subject: "✔️ Build Success: ${env.JOB_NAME}",
                 body: """Hi Team,<br><br>
                          The Jenkins build for <b>${env.JOB_NAME}</b> was <font color="green">SUCCESSFUL</font>.<br>
-                         Please find the attached test reports.<br><br>
+                         Please find the attached test reports for your review.<br><br>
                          <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
                 attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}\\index.html, ${OUTPUT_REPORT_DIR}\\emailable-report.html"
             )
