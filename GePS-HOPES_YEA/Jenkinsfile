@@ -204,8 +204,8 @@ pipeline {
                 dir("${WORKING_DIR}") {
                     script {
                         echo "🛑 Stopping ChainTest & Selenium Grid services..."
-                        bat 'docker-compose -f docker-compose-h2.yml down --remove-orphans'
-                        bat 'docker-compose -f docker-compose.yaml down --remove-orphans'
+                        bat 'docker-compose -f docker-compose-h2.yml down'
+                        bat 'docker-compose -f docker-compose.yaml down'
                     }
                 }
             }
