@@ -11,7 +11,7 @@ pipeline {
 
     environment {
         // ── Repo / Branch info ────────────────────────────────────────────────
-        JOB_NAME          = 'GePS-HOPES_YEA'
+        JOB_NAME           = 'GePS-HOPES_YEA'
         DEVELOPMENT_BRANCH = 'GePS-HOPES'
         TESTING_BRANCH     = 'main'
         CREDENTIALS_ID     = '813c6e55-37f7-4f42-8153-3a19b435f10b'
@@ -52,7 +52,7 @@ pipeline {
                                     $class: 'GitSCM',
                                     branches: [[name: "${DEVELOPMENT_BRANCH}"]],
                                     extensions: [
-                                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS - YEA/']]],
+                                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS - YEA/']]], 
                                         [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 10]
                                     ],
                                     userRemoteConfigs: [[
@@ -76,7 +76,7 @@ pipeline {
                                         $class: 'GitSCM',
                                         branches: [[name: "${TESTING_BRANCH}"]],
                                         extensions: [
-                                            [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS-HOPES_YEA/']]],
+                                            [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS-HOPES_YEA/'], [path: 'docker-compose.yaml'], [path: 'docker-compose-h2.yml']]], 
                                             [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 10]
                                         ],
                                         userRemoteConfigs: [[
@@ -147,8 +147,8 @@ pipeline {
                     timeout(time: 30, unit: 'MINUTES') {
                         echo "🧪 Running Playwright tests..."
                         bat """
-                            mvn test ^
-                              -Dsurefire.suiteXmlFiles=${TEST_SUITE} ^
+                            mvn test ^ 
+                              -Dsurefire.suiteXmlFiles=${TEST_SUITE} ^ 
                               -DSELENIUM_REMOTE_URL=http://localhost:4444/wd/hub
                         """
                     }
@@ -201,8 +201,8 @@ pipeline {
                 dir("${WORKING_DIR}") {
                     script {
                         echo "🛑 Stopping ChainTest & Selenium Grid services..."
-                        bat 'docker compose -f docker-compose-h2.yml down --remove-orphans'
-                        bat 'docker compose -f docker-compose.yaml down --remove-orphans'
+                        bat 'docker-compose -f docker-compose-h2.yml down --remove-orphans'
+                        bat 'docker-compose -f docker-compose.yaml down --remove-orphans'
                     }
                 }
             }
@@ -219,7 +219,6 @@ pipeline {
                          The Jenkins build for <b>${env.JOB_NAME}</b> has <font color="red">FAILED</font>.<br>
                          Please check the attached test reports.<br><br>
                          <a href="${env.BUILD_URL}">Click here to view Jenkins Job</a>""",
-                /* Windows paths need back-slashes in attachmentsPattern */
                 attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}\\index.html, ${OUTPUT_REPORT_DIR}\\emailable-report.html"
             )
         }
