@@ -121,7 +121,7 @@ pipeline {
                                 echo "🔎 Verifying Docker daemon..."
                                 bat "docker info >nul 2>&1"
                                 echo "🚀 Starting ChainTest service..."
-                                bat "docker-compose -f docker-compose-h2.yml up -d --remove-orphans"
+                                bat "docker-compose -f docker-compose-h2.yml up -d"
                                 echo "⏳ Waiting ${WAIT_TIME_SEC}s for ChainTest..."
                                 bat "powershell -Command Start-Sleep -Seconds ${WAIT_TIME_SEC}"
                             }
@@ -134,7 +134,7 @@ pipeline {
                         dir("${WORKING_DIR}") {
                             script {
                                 echo "🚀 Starting Selenium Grid..."
-                                bat "docker-compose -f docker-compose.yaml up -d --remove-orphans"
+                                bat "docker-compose -f docker-compose.yaml up -d"
                                 echo "⏳ Waiting ${WAIT_TIME_SEC}s for Selenium Grid..."
                                 bat "powershell -Command Start-Sleep -Seconds ${WAIT_TIME_SEC}"
                             }
