@@ -22,7 +22,7 @@ public class PR_List_Flow {
         this.logger = LoggerUtil.getLogger(PR_List_Flow.class);
     }
 
-    public void prListFlow() {
+    public void prListFlow(String purchaseType) {
         try {
             FTPClient ftpClient = new FTPClient();
             ObjectMapper objectMapper = new ObjectMapper();
@@ -63,9 +63,8 @@ public class PR_List_Flow {
 //TODO Step 5: Call API to Update Status
             PR_List_APIHelper prListApiHelper = new PR_List_APIHelper(page);
             prListApiHelper.syncSO(syncSOUrl);
-            page.waitForLoadState(LoadState.NETWORKIDLE);
-            prListApiHelper.updateStatus(readPRListFileForCatalog, requisitionId);
-            //prListApiHelper.updateStatus(readPRListFileForNonCatalog, requestForQuotationId);
+            prListApiHelper.updateStatus(purchaseType, readPRListFileForCatalog, readPRListFileForNonCatalog, requisitionId, requestForQuotationId);
+            Thread.sleep(3000);
         } catch (Exception exception) {
             logger.error("Exception in PR List and SO File Automation Flow Function: {}", exception.getMessage());
         }

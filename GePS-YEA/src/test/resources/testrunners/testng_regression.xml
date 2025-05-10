@@ -5,7 +5,7 @@
     <listeners>
         <listener class-name="org.testng.reporters.EmailableReporter2" />
         <listener class-name="org.testng.reporters.FailedReporter" />
-        <listener class-name="com.reports.ExtendReportListener" />
+        <listener class-name="com.listeners.ExtendReportListener" />
     </listeners>
 
     <test name="YEA Login Page Test">

@@ -5,7 +5,7 @@
 
     <listeners>
         <listener class-name="org.testng.reporters.EmailableReporter2" />
-        <listener class-name="com.reports.ExtentReportListener" />
+        <listener class-name="com.listeners.ExtentReportListener" />
     </listeners>
 
     <test name="YIL Login Page Test">

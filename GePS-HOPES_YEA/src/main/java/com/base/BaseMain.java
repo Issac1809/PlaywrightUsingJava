@@ -53,6 +53,7 @@ import com.source.classes.purchaseorderrequests.create.PorCreate;
 import com.source.classes.purchaseorderrequests.edit.PorEdit;
 import com.source.classes.purchaseorderrequests.reject.PorReject;
 import com.source.classes.purchaseorderrequests.approve.PorApprove;
+import com.source.classes.purchaseorderrequests.revision.PorRevision;
 import com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApproval;
 import com.source.classes.purchaseorderrequests.suspend.PorSuspend;
 import com.source.classes.purchaseorders.SendForVendor;
@@ -156,6 +157,7 @@ public class BaseMain {
     protected IPorSendForApproval iPorSendForApproval;
     protected IPorReject iPorReject;
     protected IPorApprove iPorApprove;
+    protected IPorRevision iPorRevision;
     protected IPoSendForVendor iPoSendForVendor;
     protected IOsCreate iOsCreate;
     protected IOsEdit iOsEdit;
@@ -228,7 +230,7 @@ public class BaseMain {
             iPrEdit = new Edit(iLogin, jsonNode, page, iLogout);
             iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, jsonNode, page, iLogout);
             iPrReject = new Reject(iLogin, jsonNode, page, iLogout);
-            iPrApprove = new Approve(objectMapper, iLogin, jsonNode, page, iLogout);
+            iPrApprove = new Approve(objectMapper, iLogin, jsonNode, page, iLogout, playwrightFactory);
             iPrBuyerManagerSuspend = new BuyerManagerSuspend(iLogin, jsonNode, page, iLogout, iPrEdit);
             iPrAssign = new Assign(playwrightFactory, iLogin, jsonNode, page, iLogout, objectMapper);
             iPrBuyerSuspend = new BuyerSuspend(iLogin, jsonNode, page, iLogout, objectMapper);
@@ -240,7 +242,7 @@ public class BaseMain {
             iQuoSubmit = new Quote(iLogin, jsonNode, page, iLogout);
             iQuoRegret = new QuotationRegret(iQuoSubmit, iLogin, jsonNode, page, iLogout);
             iQuoRequote = new Requote(iLogin, jsonNode, page, iLogout);
-            iReadyForEvalutation = new ReadyForEvaluation(iLogin, jsonNode, page, iLogout);
+            iReadyForEvalutation = new ReadyForEvaluation(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper);
             iTeCreate = new TechnicalEvaluationCreate(iLogin, jsonNode, page, iLogout);
             iTeReject = new TechnicalEvaluationReject(iLogin, jsonNode, page, iLogout, iTeCreate);
             iTeApprove = new TechnicalEvaluationApprove(iLogin, jsonNode, page, iLogout, iTeCreate);
@@ -255,7 +257,10 @@ public class BaseMain {
             iPorApprove = new PorApprove(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper, iPorSendForApproval, msaFlow);
 
 //TODO Purchase Orders
-            iPoSendForVendor = new SendForVendor(iLogin, jsonNode, page, iLogout);
+            iPoSendForVendor = new SendForVendor(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper);
+
+//TODO Purchase Order Request Revision
+            iPorRevision = new PorRevision(iLogin, jsonNode, page, iLogout, iPorSendForApproval, iPorApprove, iPoSendForVendor);
 
 //TODO Order Schedules
             iOsCreate = new OsCreate(iLogin, jsonNode, page, iLogout, playwrightFactory);

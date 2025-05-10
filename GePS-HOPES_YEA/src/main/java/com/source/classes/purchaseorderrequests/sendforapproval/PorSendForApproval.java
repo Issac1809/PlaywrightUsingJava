@@ -42,6 +42,9 @@ public class PorSendForApproval implements IPorSendForApproval {
         String email = "";
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             iLogin.performLogin(buyerMailId);
 
             Locator porNavigationBarLocator = page.locator(POR_NAVIGATION_BAR);

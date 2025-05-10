@@ -1,4 +1,18 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-/.idea/
+# Ignore all target and test-output directories recursively
+**/target/
+**/test-output/
+
+# IntelliJ project files
+.idea/
+*.iml
+*.iws
+**/workspace.xml
+**/shelf/
+
+# Logs and temp files
+*.log
+*.tmp
+
+# OS-specific files
+.DS_Store
+Thumbs.db

@@ -32,8 +32,8 @@ public class OsEdit implements IOsEdit {
 
     public void edit(){
         try {
-            String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
-            iLogin.performLogin(buyerMailId);
+            String vendorMailId = jsonNode.get("mailIds").get("vendorEmail").asText();
+            iLogin.performLogin(vendorMailId);
 
             Locator osNavigationBarLocator = page.locator(OS_NAVIGATION_BAR);
             osNavigationBarLocator.click();
@@ -44,6 +44,7 @@ public class OsEdit implements IOsEdit {
                 if(tr.contains(poReferenceId)){
                     Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
                     detailsButtonLocator.first().click();
+                    break;
                 }
             }
 

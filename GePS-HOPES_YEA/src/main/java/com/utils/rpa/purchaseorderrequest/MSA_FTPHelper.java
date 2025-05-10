@@ -1,4 +1,5 @@
 package com.utils.rpa.purchaseorderrequest;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.utils.LoggerUtil;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -17,7 +18,7 @@ public class MSA_FTPHelper {
     private MSA_FTPHelper() {
     }
 
-    public MSA_FTPHelper(FTPClient ftpClient){
+    public MSA_FTPHelper(FTPClient ftpClient) {
         this.ftpClient = ftpClient;
         this.logger = LoggerUtil.getLogger(MSA_FTPHelper.class);
     }
@@ -33,12 +34,18 @@ public class MSA_FTPHelper {
         }
     }
 
-    public String downloadFile(String remotePath, String localPath, String porReferenceNumber) {
+    public String downloadFile(String remotePath, String localPath, String porReferenceNumber, JsonNode jsonNode) {
         try {
             File localDir = new File(localPath);
             if (!localDir.exists() && !localDir.mkdirs());
 
-            excelFileName = porReferenceNumber + "_PT1_GePS-HOPES_R0.xls";
+            boolean porRevisionFlag = jsonNode.get("porRevision").asBoolean();
+            if (porRevisionFlag) {
+                excelFileName = porReferenceNumber + "_PT1_GePS-HOPES_R1.xls";
+            } else {
+                excelFileName = porReferenceNumber + "_PT1_GePS-HOPES_R0.xls";
+            }
+
             excelRemoteFilePath = remotePath + excelFileName;
             excelLocalFile = new File(localDir, excelFileName);
 
@@ -60,7 +67,7 @@ public class MSA_FTPHelper {
             uploadFile(localPoFilePath, remotePathPO + "PO_" + poNumber + ".pdf");
 
 //TODO XLS File Upload
-            uploadFile(localXLSFilePath, remotePathXLS + porReferenceNumber + "_PT1_GePS-HOPES_R0.xls");
+            uploadFile(localXLSFilePath, remotePathXLS + excelFileName);
         } catch (Exception exception) {
             logger.error("Exception in call upload file function: {}", exception.getMessage());
         }

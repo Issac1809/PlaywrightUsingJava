@@ -50,6 +50,8 @@ public class PorApprove implements IPorApprove {
     public void savePorAprovers(String type, String purchaseType) {
         List<String> porApprovers = new ArrayList<>();
         try {
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             iPorSendForApproval.sendForApproval(type, purchaseType);
 
             String firstApprover = jsonNode.get("purchaseOrderRequests").get("approvers").asText();
@@ -200,11 +202,16 @@ public class PorApprove implements IPorApprove {
                     APIResponse apiResponse = page.request().fetch(appUrl + porType + getUid, RequestOptions.create());
                     JsonNode jsonNode = objectMapper.readTree(apiResponse.body());
                     String purchaseOrderRequestId = jsonNode.get("id").asText();
+                    String porStatus = jsonNode.get("status").asText();
                     String porReferenceNumber = jsonNode.get("referenceId").asText();
                     playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "purchaseOrderRequestId", purchaseOrderRequestId);
                     playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "porReferenceNumber", porReferenceNumber);
 
-                    msaFlow.msaFlow();
+                    if(porStatus.equalsIgnoreCase("ProcessingPO")) {
+                        msaFlow.msaFlow();
+                    } else {
+                        throw new RuntimeException("POR is not in Processing PO status");
+                    }
                 }
 
                 page.waitForLoadState(LoadState.NETWORKIDLE);

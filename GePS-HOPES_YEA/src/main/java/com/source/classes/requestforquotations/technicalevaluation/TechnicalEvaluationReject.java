@@ -10,7 +10,6 @@ import com.source.interfaces.requestforquotations.ITeCreate;
 import com.source.interfaces.requestforquotations.ITeReject;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-
 import static com.constants.requestforquotations.LTeReject.*;
 import static com.utils.GetTitleUtil.getRFQTransactionTitle;
 

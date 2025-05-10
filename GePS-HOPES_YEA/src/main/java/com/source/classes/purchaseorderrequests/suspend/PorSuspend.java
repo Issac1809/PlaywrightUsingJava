@@ -86,6 +86,9 @@ public class PorSuspend implements IPorSuspend {
     public void suspend(String type, String purchaseType){
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             iLogin.performLogin(buyerMailId);
 
             Locator porNavigationBarLocator = page.locator(POR_NAVIGATION_BAR);

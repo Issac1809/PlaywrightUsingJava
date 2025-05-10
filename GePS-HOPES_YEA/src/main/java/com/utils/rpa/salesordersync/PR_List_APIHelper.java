@@ -23,9 +23,13 @@ public class PR_List_APIHelper {
         }
     }
 
-    public void updateStatus(String apiUrl, int id) {
+    public void updateStatus(String purchaseType, String readPRListFileForCatalog, String readPRListFileForNonCatalog, int requisitionId, int requestForQuotationId) {
         try {
-            page.request().fetch(apiUrl + id, RequestOptions.create());
+            if (purchaseType.equalsIgnoreCase("Catalog")) {
+                page.request().fetch(readPRListFileForCatalog + requisitionId, RequestOptions.create());
+            } else {
+                page.request().fetch(readPRListFileForNonCatalog + requestForQuotationId, RequestOptions.create());
+            }
         } catch (Exception exception) {
             logger.error("Exception in Update Status Function: {}", exception.getMessage());
         }

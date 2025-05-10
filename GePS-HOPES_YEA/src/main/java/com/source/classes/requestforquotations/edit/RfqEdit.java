@@ -52,6 +52,7 @@ public class RfqEdit implements IRfqEdit {
 
         Locator editButtonLocator = page.locator(EDIT_BUTTON);
         editButtonLocator.click();
+
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
         Locator updateButtonLocator = page.locator(UPDATE_BUTTON);

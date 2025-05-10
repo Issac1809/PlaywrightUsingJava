@@ -20,11 +20,17 @@ public class Logout implements ILogout {
 
     public void performLogout() {
         try {
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             Locator loginAvatarLocator = page.locator(LOGIN_AVATAR);
             loginAvatarLocator.click();
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             Locator singOutLocator = page.locator(SIGN_OUT);
             singOutLocator.click();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
         } catch (Exception exception) {
             logger.error("Error in Perform Logout Function: {}", exception.getMessage());
         }
@@ -33,11 +39,17 @@ public class Logout implements ILogout {
     //TODO This function is only used for currency Exchange Rate
     public void performLogout(Page page) {
         try {
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             Locator loginAvatarLocator = page.locator(LOGIN_AVATAR);
             loginAvatarLocator.click();
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             Locator singOutLocator = page.locator(SIGN_OUT);
             singOutLocator.click();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
         } catch (Exception exception) {
             logger.error("Error in Perform Logout Function for Admin (Currency Exchange Rate): {}", exception.getMessage());
         }

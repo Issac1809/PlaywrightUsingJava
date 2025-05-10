@@ -81,13 +81,11 @@ public class RfqCreate implements IRfqCreate {
             {
                 APIResponse apiResponse = page.request().fetch(appUrl + "/api/RequestForQuotationsOthers/" + getUid, RequestOptions.create());
                 JsonNode jsonNode1 = objectMapper.readTree(apiResponse.body());
-                String requestForQuotationId = jsonNode1.get("baseId").asText();
+                String requestForQuotationId = jsonNode.get("baseId").asText();
                 String transactionId = jsonNode1.get("transactionId").asText();
                 playwrightFactory.savePropertiesIntoJsonFile("requestForQuotation", "requestForQuotationId", requestForQuotationId);
                 playwrightFactory.savePropertiesIntoJsonFile("requestForQuotation", "salesTransactionNumber", transactionId);
             }
-
-            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             iLogout.performLogout();
         } catch (Exception exception) {

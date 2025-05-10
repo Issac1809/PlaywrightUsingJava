@@ -38,10 +38,10 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-618.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-156.0",
-    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-755.0",
-    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-663.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-25.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-854.0",
+    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-590.0",
+    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-182.0",
     "departmentPic" : "requester@cormsquare.com",
     "shipToYokogawa" : "no",
     "companyName" : "Yokogawa Engineering Asia Pte Ltd",
@@ -62,7 +62,7 @@
     "inspectionRequired" : "yes",
     "rohsCompliance" : "No",
     "items" : "Power Cable 3C x 2.5 Sqmm,TERMINAL MARKER 8/5,LED Type Indication Lamps 24V AMBER",
-    "quantityList" : "150,200,20",
+    "quantityList" : "110,120,130",
     "shippingPoint" : "NA",
     "vendorName" : "Alpha Limited",
     "rateContract" : "Alpha's second Rate-Contract",
@@ -71,18 +71,18 @@
     "requisitionStatus" : "Draft",
     "requisitionNotes" : "Requisition Notes and Attachments",
     "requisitionFileType" : "Internal",
-    "requisitionApprovers" : "projectmanager@cormsquare.com",
+    "requisitionApprovers" : "requester@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "1dd076c1-b523-496d-9055-61e7558eba1a",
-    "itemImport" : "true",
+    "requisitionUid" : "18c7b61a-bce1-4e78-851d-f7a48c1a7390",
+    "itemImport" : false,
     "requisitionItemCount" : "2",
-    "psTransactionNumber" : "240025TRN03169",
-    "salesTransactionNumber" : "240025TRN03095",
-    "requisitionId" : "22520"
+    "psTransactionNumber" : "240025TRN03234",
+    "salesTransactionNumber" : "240025TRN03235",
+    "requisitionId" : "22781"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
-    "requestForQuotationUid" : "423ddf19-43de-41c4-9d26-46ca8ebe48b3",
+    "requestForQuotationUid" : "44bef4a2-5981-4919-96a1-82754cbbd36c",
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",
@@ -96,8 +96,8 @@
     "discount" : 20,
     "discountType" : "Percentage",
     "gstPercentage" : 8,
-    "salesTransactionNumber" : "240025TRN03058",
-    "requestForQuotationId" : "3473"
+    "salesTransactionNumber" : "240025TRN03213",
+    "requestForQuotationId" : "3579"
   },
   "purchaseOrderRequests" : {
     "advancePaymentFlag" : true,
@@ -107,16 +107,23 @@
     "milestonePaymentCount" : 2,
     "taxCode" : "PZ-Zero Rated Purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "6cc56d57-a760-471b-9ac5-6deb3b0ff1a0",
-    "purchaseOrderRequestId" : "8216",
-    "approvers" : [ "projectmanager@cormsquare.com", "buyer@cormsquare.com" ],
-    "porReferenceNumber" : "240025POR01584"
+    "purchaseOrderRequestUid" : "cc46986b-f0ba-4fdc-a141-4a70b95698c5",
+    "purchaseOrderRequestId" : "8264",
+    "approvers" : [ "projectmanager@cormsquare.com", "buyer@cormsquare.com", "buyermanager@cormsquare.com" ],
+    "porReferenceNumber" : "240025POR01605",
+    "integrationStatus" : "SOSynced",
+    "additionalItemName" : "Packing Charges"
   },
   "purchaseOrders" : {
-    "poReferenceId" : "240024PO00289",
+    "poReferenceId" : "6516",
+    "purchaseOrderRequestUid" : "1bf70416-9b2c-4547-b92d-6f9abf5aac66",
     "poRevisionNumber" : "",
+    "porRevision" : "",
     "poValue" : 9000,
     "unitRate" : 200
+  },
+  "orderSchedules" : {
+    "orderScheduleStatus" : ""
   },
   "dispatchNotes" : {
     "dispatchNoteReferenceId" : "",

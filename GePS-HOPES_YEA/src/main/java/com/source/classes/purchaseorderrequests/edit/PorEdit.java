@@ -34,6 +34,9 @@ public class PorEdit implements IPorEdit {
     public void porEdit(String type, String purchaseType) {
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             iLogin.performLogin(buyerMailId);
 
             Locator porNavigationBarLocator = page.locator(POR_NAVIGATION_BAR);
@@ -56,8 +59,6 @@ public class PorEdit implements IPorEdit {
 
             Locator acceptLocator = page.locator(YES);
             acceptLocator.click();
-
-            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             iLogout.performLogout();
         } catch (Exception exception) {

@@ -38,8 +38,8 @@ public class OsCreate implements IOsCreate {
             String vendorMailId = jsonNode.get("mailIds").get("vendorEmail").asText();
             iLogin.performLogin(vendorMailId);
 
-            Locator porNavigationBarLocator = page.locator(PO_NAVIGATION_BAR);
-            porNavigationBarLocator.click();
+            Locator poNavigationBarLocator = page.locator(PO_NAVIGATION_BAR);
+            poNavigationBarLocator.click();
 
             String title = getTransactionTitle(type, purchaseType);
             Locator titleLocator = page.locator(getTitle(title));

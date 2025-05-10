@@ -2,7 +2,7 @@ package com.constants.requestforquotations;
 
 public class LQuoSubmit {
 
-    public static final String RFQ_NAVIGATION_BAR = "//*[contains(text(), 'Request For Quotations')]";
+    public static final String RFQ_NAVIGATION_BAR = "//span[contains(text(), 'Request For Quotations')]";
     public static final String INVITE_VENDORS = "#addRequestForQuotationVendors";
     public static final String VENDOR_SEARCH_FIELD = "#select2-vendorId-container";
     public static final String VENDOR_SEARCH = ".select2-search__field";

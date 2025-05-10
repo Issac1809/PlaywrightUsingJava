@@ -1,4 +1,5 @@
 package com.source.classes.requisitions.approve;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.APIResponse;
@@ -22,6 +23,7 @@ public class Approve implements IPrApprove {
     private ILogin iLogin;
     private ILogout iLogout;
     private JsonNode jsonNode;
+    PlaywrightFactory playwrightFactory;
     private Page page;
     private String appUrl;
 
@@ -29,12 +31,13 @@ public class Approve implements IPrApprove {
     }
 
 //TODO Constructor
-    public Approve(ObjectMapper objectMapper, ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
+    public Approve(ObjectMapper objectMapper, ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout, PlaywrightFactory playwrightFactory){
         this.objectMapper = objectMapper;
         this.iLogin = iLogin;
         this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
+        this.playwrightFactory = playwrightFactory;
         this.logger = LoggerUtil.getLogger(Approve.class);
         this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
@@ -74,6 +77,30 @@ public class Approve implements IPrApprove {
 
                 if(responseJson.has("status")) {
                     requisitionStatus = responseJson.get("status").asText();
+                }
+
+                page.waitForLoadState(LoadState.NETWORKIDLE);
+
+                String url = page.url();
+                String[] urlArray = url.split("=");
+                String getUid = urlArray[1];
+                playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionUid", getUid);
+
+                if (type.equalsIgnoreCase("sales"))
+                {
+                    APIResponse apiResponse = page.request().fetch(appUrl + "/api/RequisitionsSales/" + getUid, RequestOptions.create());
+                    JsonNode jsonNode1 = objectMapper.readTree(apiResponse.body());
+                    String requisitionId = jsonNode1.get("requisitionId").asText();
+                    String transactionId = jsonNode1.get("transactionId").asText();
+                    playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionId", requisitionId);
+                    playwrightFactory.savePropertiesIntoJsonFile("requisition", "salesTransactionNumber", transactionId);
+                } else {
+                    APIResponse apiResponse = page.request().fetch(appUrl + "/api/Requisitions/" + getUid, RequestOptions.create());
+                    JsonNode jsonNode1 = objectMapper.readTree(apiResponse.body());
+                    String requisitionId = jsonNode1.get("requisitionId").asText();
+                    String transactionId = jsonNode1.get("transactionId").asText();
+                    playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionId", requisitionId);
+                    playwrightFactory.savePropertiesIntoJsonFile("requisition", "psTransactionNumber", transactionId);
                 }
 
                 page.waitForLoadState(LoadState.NETWORKIDLE);

@@ -43,7 +43,7 @@ public class MSA_Flow {
 //TODO Step 1: Connect to FTP and Download File
             MSA_FTPHelper msaFtpHelper = new MSA_FTPHelper(ftpClient);
             msaFtpHelper.connectionEstablish(ftpHost, ftpPort, ftpUser, ftpPassword);
-            String localExcelFilePath = msaFtpHelper.downloadFile(remoteGepsToHopesFilePath, localPath, porReferenceNumber);
+            String localExcelFilePath = msaFtpHelper.downloadFile(remoteGepsToHopesFilePath, localPath, porReferenceNumber, jsonNode2);
 
 //TODO Step 2: Update the Excel File
             MSA_ExcelHelper msaExcelHelper = new MSA_ExcelHelper();

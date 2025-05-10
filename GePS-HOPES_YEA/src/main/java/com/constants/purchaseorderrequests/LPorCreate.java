@@ -6,9 +6,11 @@ public class LPorCreate {
     public static final String SEND_TO_Y_QUOTE_BUTTON = "//button[contains(text(), 'Send to Y-Quote')]";
     public static final String YES_BUTTON = ".bootbox-accept";
     public static final String CONVERT_SM_TO_OM_BUTTON = "//button[contains(text(), 'Convert SM To OM')]";
+    public static final String NON_CATALOG_CONVERT_SM_TO_OM_BUTTON = "#convertSMtoOM";
     public static final String DEPARTMENT_PIC_DROP_DOWN = "#select2-departmentPICModelId-container";
     public static final String DEPARTMENT_PIC_SEARCH_FIELD =".select2-search__field";
     public static final String UPDATE_BUTTON = "#reqUpdateSubmitBtn";
+    public static final String RFQ_UPDATE_BUTTON = "#rfqUpdateSubmitBtn";
     public static final String QUANTITY_MISMATCH_POPUP = "//h5[contains(text(), 'mismatch')]";
     public static final String SUBMIT_BUTTON = "//button[contains(text(), 'Submit')]";
     public static final String RFQ_NAVIGATION_BAR = "//*[contains(text(), 'Request For Quotations')]";

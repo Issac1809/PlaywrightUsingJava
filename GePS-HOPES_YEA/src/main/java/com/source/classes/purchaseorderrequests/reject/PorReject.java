@@ -40,6 +40,8 @@ public class PorReject implements IPorReject {
         try {
             String approver = jsonNode.get("purchaseOrderRequests").get("approvers").asText();
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             iLogin.performLogin(approver);
 
             Locator porNavigationBar = page.locator(POR_NAVIGATION_BAR);

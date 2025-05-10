@@ -2,7 +2,7 @@ package com.constants.requestforquotations;
 
 public class LCeCreate {
 
-    public static final String RFQ_NAVIGATION_BAR = "//*[contains(text(), 'Request For Quotations')]";
+    public static final String RFQ_NAVIGATION_BAR = "//span[contains(text(), 'Request For Quotations')]";
     public static final String CREATE_BUTTON = "#btnCreateCE";
     public static final String SELECTION_CRITERIA = "select[onchange='isSelect(event)']";
     public static final String OPTION = "Yes";

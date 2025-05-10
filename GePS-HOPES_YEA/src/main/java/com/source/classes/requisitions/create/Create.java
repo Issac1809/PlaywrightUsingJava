@@ -866,8 +866,6 @@ public class Create implements IPrCreate {
 
             status = statusResponse.status();
 
-
-            //getUID
             String url = page.url();
             String[] urlArray = url.split("=");
             String getUid = urlArray[1];
@@ -878,16 +876,14 @@ public class Create implements IPrCreate {
             {
                 APIResponse apiResponse = page.request().fetch(appUrl + "/api/RequisitionsSales/" + getUid, RequestOptions.create());
                 JsonNode jsonNode1 = objectMapper.readTree(apiResponse.body());
-                String requisitionId = jsonNode1.get("baseId").asText();
+                String requisitionId = jsonNode1.get("requisitionId").asText();
                 String transactionId = jsonNode1.get("transactionId").asText();
                 playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionId", requisitionId);
                 playwrightFactory.savePropertiesIntoJsonFile("requisition", "salesTransactionNumber", transactionId);
-            }
-            else
-            {
+            } else {
                 APIResponse apiResponse = page.request().fetch(appUrl + "/api/Requisitions/" + getUid, RequestOptions.create());
                 JsonNode jsonNode1 = objectMapper.readTree(apiResponse.body());
-                String requisitionId = jsonNode1.get("baseId").asText();
+                String requisitionId = jsonNode1.get("requisitionId").asText();
                 String transactionId = jsonNode1.get("transactionId").asText();
                 playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionId", requisitionId);
                 playwrightFactory.savePropertiesIntoJsonFile("requisition", "psTransactionNumber", transactionId);

@@ -2,7 +2,7 @@ package com.constants.requestforquotations;
 
 public class LRfqEdit {
 
-    public static final String RFQ_NAVIGATION_BAR = "//*[contains(text(), 'Request For Quotations')]";
+    public static final String RFQ_NAVIGATION_BAR = "//span[contains(text(), 'Request For Quotations')]";
     public static final String EDIT_BUTTON = "#btnEditRfq";
     public static final String UPDATE_BUTTON = "#btnUpdate";
     public static final String REMARKS_POP_UP = ".bootbox-input";

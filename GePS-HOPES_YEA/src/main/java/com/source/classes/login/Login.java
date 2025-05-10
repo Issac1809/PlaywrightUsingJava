@@ -30,6 +30,8 @@ public class Login implements ILogin {
             String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
             String password = jsonNode.get("configSettings").get("loginPassword").asText();
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             page.locator(EMAIL).fill(emailId);
             page.locator(PASSWORD).fill(password);
             page.locator(LOGIN_BUTTON).click();

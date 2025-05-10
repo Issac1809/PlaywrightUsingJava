@@ -34,7 +34,7 @@ public class OsApprove implements IOsApprove {
 
     public void approve(String type, String purchaseType){
         try {
-            String buyerMailId = jsonNode.get("mailIds").get("buyerMailId").asText();
+            String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             iLogin.performLogin(buyerMailId);
 
             Locator poNavigationBarLocator = page.locator(PO_NAVIGATION_BAR);

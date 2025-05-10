@@ -93,6 +93,8 @@ import com.source.classes.purchaseorderrequests.edit.PorEdit;
 import com.source.classes.purchaseorderrequests.edit.PorEditTest;
 import com.source.classes.purchaseorderrequests.reject.PorReject;
 import com.source.classes.purchaseorderrequests.reject.PorRejectTest;
+import com.source.classes.purchaseorderrequests.revision.PorRevision;
+import com.source.classes.purchaseorderrequests.revision.PorRevisionTest;
 import com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApproval;
 import com.source.classes.purchaseorderrequests.sendforapproval.PorSendForApprovalTest;
 import com.source.classes.purchaseorderrequests.suspend.PorSuspend;
@@ -251,6 +253,8 @@ public class BaseTest {
     protected IPorReject iPorReject;
     protected PorApproveTest porApproveTest;
     protected IPorApprove iPorApprove;
+    protected PorRevisionTest porRevisionTest;
+    protected IPorRevision iPorRevision;
     protected PoSendForVendorTest poSendForVendorTest;
     protected IPoSendForVendor iPoSendForVendor;
     protected OsCreateTest osCreateTest;
@@ -386,7 +390,7 @@ public class BaseTest {
             createTest = new CreateTest();
             iPrSendForApproval = new SendForApproval(playwrightFactory, objectMapper, iLogin, jsonNode, page, iLogout);
             sendForApprovalTest = new SendForApprovalTest();
-            iPrApprove = new Approve(objectMapper, iLogin, jsonNode, page, iLogout);
+            iPrApprove = new Approve(objectMapper, iLogin, jsonNode, page, iLogout, playwrightFactory);
             approveTest = new ApproveTest();
             iPrAssign = new Assign(playwrightFactory, iLogin, jsonNode, page, iLogout, objectMapper);
             assignTest = new AssignTest();
@@ -413,7 +417,7 @@ public class BaseTest {
             regretTest = new RegretTest();
             iQuoRequote = new Requote(iLogin, jsonNode, page, iLogout);
             requoteTest = new RequoteTest();
-            iReadyForEvalutation = new ReadyForEvaluation(iLogin, jsonNode, page, iLogout);
+            iReadyForEvalutation = new ReadyForEvaluation(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper);
             readyForEvaluationTest = new ReadyForEvaluationTest();
             iTeCreate = new TechnicalEvaluationCreate(iLogin, jsonNode, page, iLogout);
             technicalEvaluationCreateTest = new TechnicalEvaluationCreateTest();
@@ -439,8 +443,12 @@ public class BaseTest {
             porRejectTest = new PorRejectTest();
 
 //TODO Purchase Order
-            iPoSendForVendor = new SendForVendor(iLogin, jsonNode, page, iLogout);
+            iPoSendForVendor = new SendForVendor(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper);
             poSendForVendorTest = new PoSendForVendorTest();
+
+//TODO Purchase Order Request Revision
+            iPorRevision = new PorRevision(iLogin, jsonNode, page, iLogout, iPorSendForApproval, iPorApprove, iPoSendForVendor);
+            porRevisionTest = new PorRevisionTest();
 
 //TODO Order Schedule
             iOsCreate = new OsCreate(iLogin, jsonNode, page, iLogout, playwrightFactory);

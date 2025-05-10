@@ -143,7 +143,7 @@ public class PR_List_ExcelHelper {
             updateCell(sheet1, i, 183, "F3XD64-3F/K2/CT"); //TODO Overall Status HK column (index 184)
             updateCell(sheet1, i, 213, "987654321"); //TODO Billing Status HK column (index 214)
             //TODO <<Mandatory Field>>
-            updateCellDate(sheet1, i, 217, workbook,"15-12-2025"); //TODO Actual Billing Date HK column (index 218)
+            updateCellDate(sheet1, i, 217, workbook,"30-12-2025"); //TODO Actual Billing Date HK column (index 218)
             //TODO <<Mandatory Field>>
             updateCell(sheet1, i, 218, "2002"); //TODO Planned Billing Date HK column (index 219)
             updateCell(sheet1, i, 220, "FCA"); //TODO Automatic Billing Style HK column (index 221)
@@ -201,7 +201,7 @@ public class PR_List_ExcelHelper {
                 updateCell(sheet, i, 11, "EJA530E_F000000001"); //TODO Material Number L column (index 11)
                 updateCell(sheet, i, 12, "2400"); //TODO Plant M column (index 12)
                 updateCell(sheet, i, 13, "9001"); //TODO Storage Location N column (index 13)
-                updateCellDate(sheet, i, 20, workbook,"30-04-2025"); //TODO Item Delivery Date U column (index 20)
+                updateCellDate(sheet, i, 20, workbook,"30-12-2025"); //TODO Item Delivery Date U column (index 20)
                 updateCell(sheet, i, 75, "BOP252400"); //TODO MS Code BX column (index 75)
                 updateCell(sheet, i, 102, String.valueOf(soNumber)); //TODO Sales Order Number CY column (index 102)
                 updateCell(sheet, i, 103, String.valueOf((10 + i))); //TODO Sales Order Item Number CZ column (index 103)
@@ -253,7 +253,7 @@ public class PR_List_ExcelHelper {
             cell.setCellStyle(dateCellStyle);
 
         } catch (Exception exception) {
-            logger.error("Exception in update cell function: {}", exception.getMessage());
+            logger.error("Exception in update cell data function: {}", exception.getMessage());
         }
     }
 }
