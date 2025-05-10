@@ -58,8 +58,7 @@ pipeline {
                                     userRemoteConfigs: [[
                                         url: 'https://github.com/CormSquare/GePS.git',
                                         credentialsId: "${CREDENTIALS_ID}"
-                                    ]]
-                                ])
+                                    ]])
                                 echo "✅ Checked out GePS repo directory (GePS - YEA)."
                             }
                         }
@@ -72,18 +71,17 @@ pipeline {
                             retry(2) {
                                 dir('GePS-Testing') {
                                     echo "🔁 Checking out GePS-Testing repo (GePS-HOPES_YEA)..."
-                                    checkout([ 
+                                    checkout([
                                         $class: 'GitSCM',
                                         branches: [[name: "${TESTING_BRANCH}"]],
                                         extensions: [
-                                            [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS-HOPES_YEA/'], [path: 'docker-compose.yaml'], [path: 'docker-compose-h2.yml']]], 
+                                            [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'GePS-HOPES_YEA/'], [path: 'docker-compose.yaml'], [path: 'docker-compose-h2.yml']]],
                                             [$class: 'CloneOption', shallow: true, depth: 1, noTags: true, timeout: 10]
                                         ],
                                         userRemoteConfigs: [[
                                             url: 'https://github.com/CormSquare/GePS-Testing.git',
                                             credentialsId: "${CREDENTIALS_ID}"
-                                        ]]
-                                    ])
+                                        ]])
                                 }
                                 echo "✅ Checked out GePS-Testing repo directory (GePS-HOPES_YEA)."
                             }
@@ -116,24 +114,28 @@ pipeline {
             parallel {
                 stage('Start ChainTest Service') {
                     steps {
-                        script {
-                            echo "🔎 Verifying Docker daemon..."
-                            bat "docker info >nul 2>&1" // Verifies Docker is running
-                            echo "🚀 Starting ChainTest service..."
-                            bat "docker-compose -f docker-compose-h2.yml up -d --remove-orphans"
-                            echo "⏳ Waiting ${WAIT_TIME_SEC}s for ChainTest..."
-                            bat "powershell -Command Start-Sleep -Seconds ${WAIT_TIME_SEC}" // PowerShell sleep command
+                        dir("${WORKING_DIR}") {
+                            script {
+                                echo "🔎 Verifying Docker daemon..."
+                                bat "docker info >nul 2>&1"
+                                echo "🚀 Starting ChainTest service..."
+                                bat "docker-compose -f GePS-HOPES_YEA/docker-compose-h2.yml up -d --remove-orphans"
+                                echo "⏳ Waiting ${WAIT_TIME_SEC}s for ChainTest..."
+                                bat "powershell -Command Start-Sleep -Seconds ${WAIT_TIME_SEC}"
+                            }
                         }
                     }
                 }
 
                 stage('Start Selenium Grid Service') {
                     steps {
-                        script {
-                            echo "🚀 Starting Selenium Grid..."
-                            bat "docker-compose -f docker-compose.yaml up -d --remove-orphans"
-                            echo "⏳ Waiting ${WAIT_TIME_SEC}s for Selenium Grid..."
-                            bat "powershell -Command Start-Sleep -Seconds ${WAIT_TIME_SEC}" // PowerShell sleep command
+                        dir("${WORKING_DIR}") {
+                            script {
+                                echo "🚀 Starting Selenium Grid..."
+                                bat "docker-compose -f GePS-HOPES_YEA/docker-compose.yaml up -d --remove-orphans"
+                                echo "⏳ Waiting ${WAIT_TIME_SEC}s for Selenium Grid..."
+                                bat "powershell -Command Start-Sleep -Seconds ${WAIT_TIME_SEC}"
+                            }
                         }
                     }
                 }
@@ -147,8 +149,8 @@ pipeline {
                     timeout(time: 30, unit: 'MINUTES') {
                         echo "🧪 Running Playwright tests..."
                         bat """
-                            mvn test ^ 
-                              -Dsurefire.suiteXmlFiles=${TEST_SUITE} ^ 
+                            mvn test ^
+                              -Dsurefire.suiteXmlFiles=${TEST_SUITE} ^
                               -DSELENIUM_REMOTE_URL=http://localhost:4444/wd/hub
                         """
                     }
@@ -169,7 +171,7 @@ pipeline {
             steps {
                 script {
                     if (fileExists("${CHAIN_TEST_REPORT_DIR}/index.html")) {
-                        publishHTML([ 
+                        publishHTML([
                             keepAll: true,
                             alwaysLinkToLastBuild: true,
                             reportDir   : "${CHAIN_TEST_REPORT_DIR}",
@@ -181,7 +183,7 @@ pipeline {
                     }
 
                     if (fileExists("${OUTPUT_REPORT_DIR}/emailable-report.html")) {
-                        publishHTML([ 
+                        publishHTML([
                             keepAll: true,
                             alwaysLinkToLastBuild: true,
                             reportDir   : "${OUTPUT_REPORT_DIR}",
@@ -201,8 +203,8 @@ pipeline {
                 dir("${WORKING_DIR}") {
                     script {
                         echo "🛑 Stopping ChainTest & Selenium Grid services..."
-                        bat 'docker-compose -f docker-compose-h2.yml down --remove-orphans'
-                        bat 'docker-compose -f docker-compose.yaml down --remove-orphans'
+                        bat 'docker-compose -f GePS-HOPES_YEA/docker-compose-h2.yml down --remove-orphans'
+                        bat 'docker-compose -f GePS-HOPES_YEA/docker-compose.yaml down --remove-orphans'
                     }
                 }
             }
