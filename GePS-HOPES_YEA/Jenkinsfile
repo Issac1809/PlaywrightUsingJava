@@ -225,14 +225,21 @@ pipeline {
                             <p><strong>Build Number:</strong> ${env.BUILD_NUMBER}</p>
                             <p><strong>Status:</strong> <span style="color:red;">FAILED</span></p>
                             <p><strong>Time:</strong> ${new Date()}</p>
-                            <p>Please check the attached reports and Jenkins console output for details.</p>
+                            <p>Please check the reports and Jenkins console output for more details.</p>
                             <p><a href="${env.BUILD_URL}">🔗 View Jenkins Job</a></p>
                             <hr/>
-                            <p>📎 <strong>Attached Reports:</strong></p>
+                            <p>📎 <strong>View Reports:</strong></p>
                             <ul>
-                                <li>Chain Test Report</li>
-                                <li>TestNG Emailable Report</li>
+                                <li><a href="${env.BUILD_URL}Chain_Test_Report/">🔗 Chain Test Report</a></li>
+                                <li><a href="${env.BUILD_URL}HTML_Extent_Report/">🔗 TestNG Emailable Report</a></li>
                             </ul>
+                            <hr/>
+                            <footer style="font-size: 12px; color: #888;">
+                                <p>Thanks and Regards,</p>
+                                <p><strong>Jenkins CI/CD System</strong></p>
+                                <p>This is an automated message. Please do not reply directly to this email.</p>
+                                <p>If you need assistance, please contact the <a href="mailto:qa-team@cormsquare.com">QA Team</a>.</p>
+                            </footer>
                         </body>
                         </html>""",
                 attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${OUTPUT_REPORT_DIR}/emailable-report.html"
@@ -250,14 +257,21 @@ pipeline {
                             <p><strong>Build Number:</strong> ${env.BUILD_NUMBER}</p>
                             <p><strong>Status:</strong> <span style="color:green;">SUCCESS</span></p>
                             <p><strong>Time:</strong> ${new Date()}</p>
-                            <p>All tests have passed successfully. Reports are attached below.</p>
+                            <p>All tests have passed successfully. Please check the reports below.</p>
                             <p><a href="${env.BUILD_URL}">🔗 View Jenkins Job</a></p>
                             <hr/>
-                            <p>📎 <strong>Attached Reports:</strong></p>
+                            <p>📎 <strong>View Reports:</strong></p>
                             <ul>
-                                <li>Chain Test Report</li>
-                                <li>TestNG Emailable Report</li>
+                                <li><a href="${env.BUILD_URL}Chain_Test_Report/">🔗 Chain Test Report</a></li>
+                                <li><a href="${env.BUILD_URL}HTML_Extent_Report/">🔗 TestNG Emailable Report</a></li>
                             </ul>
+                            <hr/>
+                            <footer style="font-size: 12px; color: #888;">
+                                <p>Thanks and Regards,</p>
+                                <p><strong>Jenkins CI/CD System</strong></p>
+                                <p>This is an automated message. Please do not reply directly to this email.</p>
+                                <p>If you need assistance, please contact the <a href="mailto:qa-team@cormsquare.com">QA Team</a>.</p>
+                            </footer>
                         </body>
                         </html>""",
                 attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${OUTPUT_REPORT_DIR}/emailable-report.html"
