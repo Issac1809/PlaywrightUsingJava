@@ -42,6 +42,8 @@
     "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-606.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-854.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-585.0",
+    "sdCatalogTitle" : "",
+    "sdNonCatalogTitle" : "",
     "departmentPic" : "requester@cormsquare.com",
     "shipToYokogawa" : "no",
     "companyName" : "Yokogawa Engineering Asia Pte Ltd",
@@ -78,6 +80,7 @@
     "requisitionItemCount" : "2",
     "psTransactionNumber" : "240025TRN03241",
     "salesTransactionNumber" : "240025TRN03243",
+    "sdTransactionNumber" : "",
     "requisitionId" : "22789"
   },
   "requestForQuotation" : {

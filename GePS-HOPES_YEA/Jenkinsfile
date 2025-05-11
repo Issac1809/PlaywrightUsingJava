@@ -216,25 +216,51 @@ pipeline {
     post {
         failure {
             emailext(
+                mimeType: 'text/html',
                 to: 'issac.raja@cormsquare.com',
-                subject: "❌ Build Failed: ${env.JOB_NAME}",
-                body: """Hi Team,<br><br>
-                         The Jenkins build for <b>${env.JOB_NAME}</b> has <font color=\"red\">FAILED</font>.<br>
-                         Please check the attached test reports.<br><br>
-                         <a href=\"${env.BUILD_URL}\">Click here to view Jenkins Job</a>""",
-                attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}\\index.html, ${OUTPUT_REPORT_DIR}\\emailable-report.html"
+                subject: "❌ Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<html>
+                        <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+                            <h2 style="color: red;">❌ Build Failed: ${env.JOB_NAME}</h2>
+                            <p><strong>Build Number:</strong> ${env.BUILD_NUMBER}</p>
+                            <p><strong>Status:</strong> <span style="color:red;">FAILED</span></p>
+                            <p><strong>Time:</strong> ${new Date()}</p>
+                            <p>Please check the attached reports and Jenkins console output for details.</p>
+                            <p><a href="${env.BUILD_URL}">🔗 View Jenkins Job</a></p>
+                            <hr/>
+                            <p>📎 <strong>Attached Reports:</strong></p>
+                            <ul>
+                                <li>Chain Test Report</li>
+                                <li>TestNG Emailable Report</li>
+                            </ul>
+                        </body>
+                        </html>""",
+                attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${OUTPUT_REPORT_DIR}/emailable-report.html"
             )
         }
 
         success {
             emailext(
+                mimeType: 'text/html',
                 to: 'issac.raja@cormsquare.com',
-                subject: "✔️ Build Success: ${env.JOB_NAME}",
-                body: """Hi Team,<br><br>
-                         The Jenkins build for <b>${env.JOB_NAME}</b> was <font color=\"green\">SUCCESSFUL</font>.<br>
-                         Please find the attached test reports for your review.<br><br>
-                         <a href=\"${env.BUILD_URL}\">Click here to view Jenkins Job</a>""",
-                attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}\\index.html, ${OUTPUT_REPORT_DIR}\\emailable-report.html"
+                subject: "✔️ Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<html>
+                        <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+                            <h2 style="color: green;">✔️ Build Success: ${env.JOB_NAME}</h2>
+                            <p><strong>Build Number:</strong> ${env.BUILD_NUMBER}</p>
+                            <p><strong>Status:</strong> <span style="color:green;">SUCCESS</span></p>
+                            <p><strong>Time:</strong> ${new Date()}</p>
+                            <p>All tests have passed successfully. Reports are attached below.</p>
+                            <p><a href="${env.BUILD_URL}">🔗 View Jenkins Job</a></p>
+                            <hr/>
+                            <p>📎 <strong>Attached Reports:</strong></p>
+                            <ul>
+                                <li>Chain Test Report</li>
+                                <li>TestNG Emailable Report</li>
+                            </ul>
+                        </body>
+                        </html>""",
+                attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${OUTPUT_REPORT_DIR}/emailable-report.html"
             )
         }
 
