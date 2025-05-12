@@ -1,11 +1,16 @@
 package com.source.classes.invoices.woinvoice.revert;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class WoInvRevertTest extends BaseTest {
 
-    @Test
+    @Epic("Work Order Revert")
+    @Feature("Work Order Invoice Revert")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Verifier Can Able To Revert The Work Order Invoice")
+    @Test(description = "Work Order Invoice Revert Test")
     public void revert() {
         try {
             iWoInvRevert.revert();

@@ -1,4 +1,5 @@
 package com.source.classes.requestforquotations.technicalevaluation;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -85,6 +86,8 @@ public class TechnicalEvaluationCreate implements ITeCreate  {
             status = submitResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            PlaywrightFactory.attachScreenshotWithName("Technical Evaluation Create", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

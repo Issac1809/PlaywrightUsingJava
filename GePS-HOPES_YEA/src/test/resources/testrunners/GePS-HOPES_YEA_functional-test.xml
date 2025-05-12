@@ -4,15 +4,16 @@
 <!--    parallel="tests" thread-count="4" verbose="1">-->
 
     <listeners>
-        <listener class-name="org.testng.reporters.EmailableReporter2" />
-        <listener class-name="com.aventstack.chaintest.plugins.ChainTestListener"/>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+<!--        <listener class-name="org.testng.reporters.EmailableReporter2" />-->
+<!--        <listener class-name="com.aventstack.chaintest.plugins.ChainTestListener"/>-->
     </listeners>
 
     <suite-files>
         <suite-file path="../testcases/GePS-HOPES_YEA_PS_Catalog_TestCases.xml" />
-<!--        <suite-file path="../testcases/GePS-HOPES_YEA_PS_Non-Catalog_TestCases.xml" />-->
-<!--        <suite-file path="../testcases/GePS-HOPES_YEA_SALES_Catalog_TestCases.xml" />-->
-<!--        <suite-file path="../testcases/GePS-HOPES_YEA_SALES_Non-Catalog_TestCases.xml" />-->
+        <suite-file path="../testcases/GePS-HOPES_YEA_PS_Non-Catalog_TestCases.xml" />
+        <suite-file path="../testcases/GePS-HOPES_YEA_SALES_Catalog_TestCases.xml" />
+        <suite-file path="../testcases/GePS-HOPES_YEA_SALES_Non-Catalog_TestCases.xml" />
     </suite-files>
 
 </suite>

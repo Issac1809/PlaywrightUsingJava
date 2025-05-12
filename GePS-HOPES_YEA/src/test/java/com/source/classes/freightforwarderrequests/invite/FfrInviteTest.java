@@ -1,11 +1,16 @@
 package com.source.classes.freightforwarderrequests.invite;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class FfrInviteTest extends BaseTest {
 
-    @Test
+    @Epic("Freight Forwarder Requests")
+    @Feature("Freight Forwarder Requests Invite")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Logistics Manager Can Invite The Freight Forwarder")
+    @Test(description = "Freight Forwarder Invite Test")
     public void invite(){
         try {
             iFfrInvite.invite();

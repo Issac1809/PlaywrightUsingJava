@@ -1,11 +1,16 @@
 package com.source.classes.invoices.woinvoice.edit;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class WoInvEditTest extends BaseTest {
 
-    @Test
+    @Epic("Work Order Edit")
+    @Feature("Work Order Invoice Edit")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Verifier Can Able To Edit The Work Order Invoice")
+    @Test(description = "Work Order Invoice Edit Test")
     public void edit(){
         try {
             iWoInvEdit.edit();

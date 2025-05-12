@@ -1,12 +1,17 @@
 package com.source.classes.dispatchnotes.create;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class DnCreateTest extends BaseTest {
 
-    @Test
+    @Epic("Dispatch Notes")
+    @Feature("Dispatch Notes Create")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Vendor Can Create The Dispatch Notes")
+    @Test(description = "Dispatch Notes Create Test")
     @Parameters({"type", "purchaseType"})
     public void create(String type, String purchaseType) {
         try {

@@ -1,4 +1,5 @@
 package com.source.classes.purchaseorderrequests.reject;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.options.LoadState;
@@ -61,6 +62,8 @@ public class PorReject implements IPorReject {
             acceptLocator.click();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Request Reject", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

@@ -1,4 +1,5 @@
 package com.source.classes.freightforwarderrequests.invite;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -67,6 +68,8 @@ public class FfrInvite implements IFfrInvite {
 
             Locator emailPopUpLocator = page.locator(EMAIL_POP_UP);
             emailPopUpLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Freight Forwarder Invite", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

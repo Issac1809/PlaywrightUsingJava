@@ -1,12 +1,17 @@
 package com.source.classes.purchaseorderrequests.suspend;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class SuspendEditTest extends BaseTest {
 
-    @Test
+    @Epic("Purchase Order Requests")
+    @Feature("Purchase Order Request Suspend")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Buyer Can Able To Suspend The Purchase Order Request")
+    @Test(description = "Purchase Order Request Suspend Test")
     @Parameters({"type", "purchaseType"})
     public void suspend(String type, String purchaseType) {
         try {

@@ -1,4 +1,5 @@
 package com.source.classes.requisitions.reject;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
@@ -67,6 +68,8 @@ public class Reject implements IPrReject {
             rejectStatus = rejectResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            PlaywrightFactory.attachScreenshotWithName("Requisition Reject", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

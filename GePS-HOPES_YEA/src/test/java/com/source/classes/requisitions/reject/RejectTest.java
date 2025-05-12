@@ -1,12 +1,18 @@
 package com.source.classes.requisitions.reject;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class RejectTest extends BaseTest {
 
-    @Test@Parameters({"type", "purchaseType"})
+    @Epic("Requisitions")
+    @Feature("Requisition Reject")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Approvers Can Reject The Requisition")
+    @Test(description = "Requisition Reject Test")
+    @Parameters({"type", "purchaseType"})
     public void reject(String type, String purchaseType) {
         try {
             int status = iPrReject.reject(type, purchaseType);

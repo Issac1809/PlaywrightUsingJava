@@ -1,4 +1,5 @@
 package com.source.classes.dispatchnotes.dnreturn;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -61,6 +62,8 @@ public class DnReturn implements IDnReturn {
 
             Locator acceptLocator = page.locator(ACCEPT_BUTTON);
             acceptLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Dispatch Notes Return", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

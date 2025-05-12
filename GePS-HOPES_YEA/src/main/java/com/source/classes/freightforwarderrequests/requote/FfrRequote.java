@@ -1,4 +1,5 @@
 package com.source.classes.freightforwarderrequests.requote;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -51,6 +52,8 @@ public class FfrRequote implements IFfrRequote {
                     detailsButtonLocator.first().click();
                 }
             }
+
+            PlaywrightFactory.attachScreenshotWithName("Freight Forwarder Re-Quote", page);
 
             iFfrQuote.quote();
         } catch (Exception exception) {

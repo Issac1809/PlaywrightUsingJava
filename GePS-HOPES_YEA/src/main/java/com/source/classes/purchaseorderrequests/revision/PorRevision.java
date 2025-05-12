@@ -1,4 +1,5 @@
 package com.source.classes.purchaseorderrequests.revision;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -127,6 +128,8 @@ public class PorRevision implements IPorRevision {
             acceptButtonLocator.click();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Request Revision", page);
 
             iLogout.performLogout();
 

@@ -1,4 +1,5 @@
 package com.source.classes.requestforquotations.regret;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.*;
 
@@ -70,7 +71,9 @@ public class QuotationRegret implements IQuoRegret {
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
-        iLogout.performLogout();
+            PlaywrightFactory.attachScreenshotWithName("Quotation Regret", page);
+
+            iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Quotation Regret Function: {}", exception.getMessage());
         }

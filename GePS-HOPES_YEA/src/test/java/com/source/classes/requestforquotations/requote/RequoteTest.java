@@ -1,12 +1,17 @@
 package com.source.classes.requestforquotations.requote;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class RequoteTest extends BaseTest {
 
-    @Test
+    @Epic("Quotation")
+    @Feature("Quotation Re-Quote")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Vendor Can Able To Re-Submit The Quotation")
+    @Test(description = "Quotation Re-Quote Test")
     @Parameters({"type"})
     public void requote(String type) {
         try {

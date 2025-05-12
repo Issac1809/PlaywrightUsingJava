@@ -1,4 +1,5 @@
 package com.source.classes.requestforquotations.edit;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.Locator;
@@ -62,7 +63,6 @@ public class RfqEdit implements IRfqEdit {
         remarksLocator.fill(REMARKS);
 
         Locator acceptLocator = page.locator(ACCEPT_REMARKS_POP_UP);
-//        acceptLocator.click();
 
         String reqType = type.equalsIgnoreCase("PS") ? "/api/RequestForQuotations/" : "/api/RequestForQuotationsOthers/";
 
@@ -73,6 +73,8 @@ public class RfqEdit implements IRfqEdit {
         status = editResponse.status();
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
+
+        PlaywrightFactory.attachScreenshotWithName("Request For Quotation Edit", page);
 
         iLogout.performLogout();
         } catch (Exception exception) {

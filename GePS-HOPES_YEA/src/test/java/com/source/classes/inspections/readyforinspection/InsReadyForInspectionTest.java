@@ -1,11 +1,16 @@
 package com.source.classes.inspections.readyforinspection;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class InsReadyForInspectionTest extends BaseTest {
 
-    @Test
+    @Epic("Inspections")
+    @Feature("Inspection Ready For Inspection")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Vendor Can Make The Ready For Inspection")
+    @Test(description = "Inspections Ready For Inspection Test")
     public void readyForInspection(){
         try {
             iInsReadyForInspection.readyForInspection();

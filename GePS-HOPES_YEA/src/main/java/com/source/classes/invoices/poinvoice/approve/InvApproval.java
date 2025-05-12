@@ -1,4 +1,5 @@
 package com.source.classes.invoices.poinvoice.approve;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -53,6 +54,8 @@ public class InvApproval implements IInvApproval {
 
             Locator acceptLocator = page.locator(ACCEPT_BUTTON);
             acceptLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Invoice Approve", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

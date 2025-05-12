@@ -220,6 +220,10 @@ public class WoInvCreate implements IWoInvCreate {
 
                 Locator acceptLocator = page.locator(ACCEPT_BUTTON);
                 acceptLocator.click();
+
+                PlaywrightFactory.attachScreenshotWithName("Work Order Invoice Create", page);
+
+                iLogout.performLogout();
             }
         } catch (Exception exception) {
             logger.error("Exception in WO Invoice SGD function: {}", exception.getMessage());

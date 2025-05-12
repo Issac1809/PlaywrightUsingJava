@@ -80,6 +80,8 @@ public class SendForVendor implements IPoSendForVendor {
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Send For Vendor", page);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Send PO For Vendor function: {}", exception.getMessage());

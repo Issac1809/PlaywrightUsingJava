@@ -109,6 +109,8 @@ public class Assign implements IPrAssign {
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
+            PlaywrightFactory.attachScreenshotWithName("Requisition Assign", page);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Error in Requisition Buyer Manager Assign Function: {}", exception.getMessage());

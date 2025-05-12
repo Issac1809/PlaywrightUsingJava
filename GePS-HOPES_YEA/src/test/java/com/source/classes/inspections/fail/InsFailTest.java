@@ -1,11 +1,16 @@
 package com.source.classes.inspections.fail;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class InsFailTest extends BaseTest {
 
-    @Test
+    @Epic("Inspections")
+    @Feature("Inspection Fail")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Assigned User Can Fail The Inspection")
+    @Test(description = "Inspections Fail Test")
     public void fail(){
         try {
             iInsFail.fail();

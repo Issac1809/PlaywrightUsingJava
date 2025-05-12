@@ -4,12 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.microsoft.playwright.*;
 import com.utils.LoggerUtil;
+import io.qameta.allure.Allure;
 import org.apache.logging.log4j.Logger;
+
+import java.io.ByteArrayInputStream;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
 import java.util.List;
 
 public class PlaywrightFactory {
@@ -169,16 +171,25 @@ public class PlaywrightFactory {
         }
     }
 
-    public static String takeScreenshot(){
-        String base64Path = "";
+    public static byte[] saveScreenshot(Page page) {
+        byte[] screenshot = null;
         try {
-            String path = System.getProperty("user.dir") + "/screenshot/" + System.currentTimeMillis() + ".png";
-            byte[] buffer = getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
-            base64Path = Base64.getEncoder().encodeToString(buffer);
+            screenshot = page.screenshot(new Page.ScreenshotOptions().setFullPage(true));
         } catch (Exception exception) {
-            logger.error("Error in Take Screenshot Function: {}", exception.getMessage());
+            logger.error("Error in Save Screenshot Function: {}", exception.getMessage());
         }
-        return base64Path;
+        return screenshot;
+    }
+
+    public static void attachScreenshotWithName(String screenshotName, Page page) {
+        try {
+            byte[] screenshot = saveScreenshot(page);
+            if (screenshot != null) {
+                Allure.addAttachment(screenshotName, "image/png", new ByteArrayInputStream(screenshot), ".png");
+            }
+        } catch (Exception exception) {
+            logger.error("Error in Attach Screenshot With Name Function: {}", exception.getMessage());
+        }
     }
 
     public void tearDown(Page page) {

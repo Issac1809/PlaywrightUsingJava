@@ -238,7 +238,7 @@ pipeline {
                                 <p>Thanks and Regards,</p>
                                 <p><strong>Jenkins CI/CD System</strong></p>
                                 <p>This is an automated message. Please do not reply directly to this email.</p>
-                                <p>If you need assistance, please contact the <a href="mailto:qa-team@cormsquare.com">QA Team</a>.</p>
+                                <p>If you need assistance, please contact the <a href="mailto:issac.raja@cormsquare.com">QA Team</a>.</p>
                             </footer>
                         </body>
                         </html>""",
@@ -270,7 +270,7 @@ pipeline {
                                 <p>Thanks and Regards,</p>
                                 <p><strong>Jenkins CI/CD System</strong></p>
                                 <p>This is an automated message. Please do not reply directly to this email.</p>
-                                <p>If you need assistance, please contact the <a href="mailto:qa-team@cormsquare.com">QA Team</a>.</p>
+                                <p>If you need assistance, please contact the <a href="mailto:issac.raja@cormsquare.com">QA Team</a>.</p>
                             </footer>
                         </body>
                         </html>""",

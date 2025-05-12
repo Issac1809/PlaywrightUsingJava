@@ -1,11 +1,16 @@
 package com.source.classes.dispatchnotes.dnreturn;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class DnReturnTest extends BaseTest {
 
-    @Test
+    @Epic("Dispatch Notes")
+    @Feature("Dispatch Notes Return")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Logistics Manager Can Return The Dispatch Notes")
+    @Test(description = "Dispatch Notes Return Test")
     public void dnReturn(){
         try {
             iDnReturn.dnReturn();

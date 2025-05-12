@@ -1,4 +1,5 @@
 package com.source.classes.workorder.create;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -87,6 +88,8 @@ public class WoCreate implements IWoCreate {
 
             Locator acceptLocator = page.locator(ACCEPT_BUTTON);
             acceptLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Work Order Create", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

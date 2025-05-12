@@ -105,6 +105,8 @@ public class Approve implements IPrApprove {
 
                 page.waitForLoadState(LoadState.NETWORKIDLE);
 
+                PlaywrightFactory.attachScreenshotWithName("Requisition Approve", page);
+
                 iLogout.performLogout();
 
                 if(requisitionStatus.equals("Approved")) {

@@ -219,7 +219,11 @@ public class InvCreate implements IInvCreate {
 
             Locator acceptLocator = page.locator(ACCEPT_BUTTON);
             acceptLocator.click();
-        }
+
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Invoice Create", page);
+
+            iLogout.performLogout();
+            }
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice SGD Enable function: {}", exception.getMessage());
         }

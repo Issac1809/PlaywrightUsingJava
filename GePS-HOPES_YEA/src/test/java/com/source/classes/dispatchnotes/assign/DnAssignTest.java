@@ -1,11 +1,16 @@
 package com.source.classes.dispatchnotes.assign;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class DnAssignTest extends BaseTest {
 
-    @Test
+    @Epic("Dispatch Notes")
+    @Feature("Dispatch Notes Assign")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Logistics Manager Can Assign The Dispatch Notes")
+    @Test(description = "Dispatch Notes Assign Test")
     public void assign(){
         try {
             iDnAssign.assign();

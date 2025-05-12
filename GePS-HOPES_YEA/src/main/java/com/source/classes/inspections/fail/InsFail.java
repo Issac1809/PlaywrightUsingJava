@@ -1,4 +1,5 @@
 package com.source.classes.inspections.fail;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -7,7 +8,6 @@ import com.source.interfaces.inspections.IInsReadyForInspection;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import org.apache.logging.log4j.Logger;
-
 import java.util.List;
 import static com.constants.inspections.LInsFail.*;
 
@@ -81,6 +81,8 @@ public class InsFail implements IInsFail {
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
             acceptButtonLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Inspection Fail", page);
 
             iLogout.performLogout();
 

@@ -1,4 +1,5 @@
 package com.source.classes.invoices.poinvoice.sendforapproval;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -52,6 +53,8 @@ public class InvSendForApproval implements IInvSendForApproval {
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
             acceptButtonLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Invoice Send For Approval", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

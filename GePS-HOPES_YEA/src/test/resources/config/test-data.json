@@ -38,10 +38,10 @@
   "requisition" : {
     "purchaseType" : "Catalog",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-689.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-606.0",
-    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-854.0",
-    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-585.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-293.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-773.0",
+    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-62.0",
+    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-381.0",
     "sdCatalogTitle" : "",
     "sdNonCatalogTitle" : "",
     "departmentPic" : "requester@cormsquare.com",
@@ -75,13 +75,13 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "requester@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "bfe2d40d-507f-46eb-990d-eb0f1aac1c62",
+    "requisitionUid" : "9c76ed30-5864-4c9a-ab83-d5f62abd1180",
     "itemImport" : false,
     "requisitionItemCount" : "2",
-    "psTransactionNumber" : "240025TRN03241",
-    "salesTransactionNumber" : "240025TRN03243",
+    "psTransactionNumber" : "240025TRN03294",
+    "salesTransactionNumber" : "240025TRN03296",
     "sdTransactionNumber" : "",
-    "requisitionId" : "22789"
+    "requisitionId" : "22842"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",

@@ -1,4 +1,5 @@
 package com.source.classes.requestforquotations.quote;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -264,6 +265,8 @@ public class Quote implements IQuoSubmit {
             status = submitResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            PlaywrightFactory.attachScreenshotWithName("Quotation Submit", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

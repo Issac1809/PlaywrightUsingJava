@@ -1,11 +1,16 @@
 package com.source.classes.invoices.woinvoice.create;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class WoInvCreateTest extends BaseTest {
 
-    @Test
+    @Epic("Work Order Create")
+    @Feature("Work Order Invoice Create")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Verifier Can Able To Create The Work Order Invoice")
+    @Test(description = "Work Order Invoice Create Test")
     public void create(){
         try {
             iWoInvCreate.create();

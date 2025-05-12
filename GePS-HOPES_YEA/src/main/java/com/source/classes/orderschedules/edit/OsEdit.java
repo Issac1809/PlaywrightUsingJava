@@ -1,4 +1,5 @@
 package com.source.classes.orderschedules.edit;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -56,6 +57,8 @@ public class OsEdit implements IOsEdit {
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
             acceptButtonLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Order Schedule Edit", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

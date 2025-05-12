@@ -1,4 +1,5 @@
 package com.source.classes.invoices.woinvoice.cancel;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -61,6 +62,8 @@ public class WoInvCancel implements IWoInvCancel {
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
             acceptButtonLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Work Order Invoice Cancel", page);
 
             iLogout.performLogout();
 

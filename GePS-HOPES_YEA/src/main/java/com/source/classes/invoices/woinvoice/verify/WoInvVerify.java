@@ -1,4 +1,5 @@
 package com.source.classes.invoices.woinvoice.verify;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -57,6 +58,8 @@ public class WoInvVerify implements IWoInvVerify {
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
             acceptButtonLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Work Order Invoice Verify", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

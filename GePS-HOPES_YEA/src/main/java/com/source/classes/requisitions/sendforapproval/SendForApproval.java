@@ -101,6 +101,8 @@ public class SendForApproval implements IPrSendForApproval {
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
+            PlaywrightFactory.attachScreenshotWithName("Requisition Send For Approval", page);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Requisition Send For Approval Function: {}", exception.getMessage());

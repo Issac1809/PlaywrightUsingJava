@@ -1,4 +1,5 @@
 package com.source.classes.invoices.poinvoice.edit;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -57,6 +58,8 @@ public class InvEdit implements IInvEdit {
 
             Locator acceptLocator = page.locator(ACCEPT_BUTTON);
             acceptLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Invoice Edit", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

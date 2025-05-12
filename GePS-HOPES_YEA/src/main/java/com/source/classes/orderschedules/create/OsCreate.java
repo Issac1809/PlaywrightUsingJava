@@ -65,6 +65,8 @@ public class OsCreate implements IOsCreate {
             Locator acceptLocator = page.locator(ACCEPT_BUTTON);
             acceptLocator.click();
 
+            PlaywrightFactory.attachScreenshotWithName("Order Schedule Create", page);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in OS Create Function: {}", exception.getMessage());

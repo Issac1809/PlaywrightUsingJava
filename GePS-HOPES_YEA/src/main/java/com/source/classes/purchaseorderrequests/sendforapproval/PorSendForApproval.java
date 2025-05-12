@@ -101,6 +101,8 @@ public class PorSendForApproval implements IPorSendForApproval {
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Request Send For Approval", page);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in POR Send For Approval function: {}", exception.getMessage());

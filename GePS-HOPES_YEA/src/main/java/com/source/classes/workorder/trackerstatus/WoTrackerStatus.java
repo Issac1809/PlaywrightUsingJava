@@ -77,6 +77,8 @@ public class WoTrackerStatus implements IWoTrackerStatus {
                 acceptButtonLocator.click();
             }
 
+            PlaywrightFactory.attachScreenshotWithName("Work Order Tracker Status", page);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Work Order Tracker Status: {}", exception.getMessage());

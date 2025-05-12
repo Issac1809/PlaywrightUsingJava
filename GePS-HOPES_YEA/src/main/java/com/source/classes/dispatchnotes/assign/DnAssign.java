@@ -73,6 +73,8 @@ public class DnAssign implements IDnAssign {
             Locator saveButtonLocator = page.locator(SAVE_BUTTON);
             saveButtonLocator.click();
 
+            PlaywrightFactory.attachScreenshotWithName("Dispatch Notes Assign", page);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Dispatch Notes Assign function: {}", exception.getMessage());

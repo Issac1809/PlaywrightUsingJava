@@ -1,4 +1,5 @@
 package com.source.classes.inspections.assign;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -61,6 +62,8 @@ public class InsAssign implements IInsAssign {
 
             Locator saveInspectorButtonLocator = page.locator(SAVE_INSPECTOR);
             saveInspectorButtonLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Inspection Assign", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

@@ -1,4 +1,5 @@
 package com.source.classes.requisitions.edit;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
@@ -68,7 +69,9 @@ public class Edit implements IPrEdit {
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
-        iLogout.performLogout();
+            PlaywrightFactory.attachScreenshotWithName("Requisition Edit", page);
+
+            iLogout.performLogout();
         }
         catch (Exception exception) {
             logger.error("Exception in Requisition Edit Function: {}", exception.getMessage());

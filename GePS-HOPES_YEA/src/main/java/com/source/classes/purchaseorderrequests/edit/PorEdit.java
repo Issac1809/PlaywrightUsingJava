@@ -1,4 +1,5 @@
 package com.source.classes.purchaseorderrequests.edit;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -59,6 +60,8 @@ public class PorEdit implements IPorEdit {
 
             Locator acceptLocator = page.locator(YES);
             acceptLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Request Edit", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

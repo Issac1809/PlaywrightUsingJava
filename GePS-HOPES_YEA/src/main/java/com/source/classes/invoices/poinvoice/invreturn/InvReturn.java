@@ -1,4 +1,5 @@
 package com.source.classes.invoices.poinvoice.invreturn;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -62,6 +63,8 @@ public class InvReturn implements IInvReturn {
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
             acceptButtonLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Invoice Return", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

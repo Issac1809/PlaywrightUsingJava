@@ -1,4 +1,5 @@
 package com.source.classes.inspections.create;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -58,6 +59,8 @@ public class InsCreate implements IInsCreate {
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
             acceptButtonLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Inspection Create", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

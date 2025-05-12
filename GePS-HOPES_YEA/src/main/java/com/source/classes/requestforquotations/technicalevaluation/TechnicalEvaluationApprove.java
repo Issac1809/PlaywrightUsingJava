@@ -1,4 +1,5 @@
 package com.source.classes.requestforquotations.technicalevaluation;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -67,7 +68,9 @@ public class TechnicalEvaluationApprove implements ITeApprove {
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
-        iLogout.performLogout();
+            PlaywrightFactory.attachScreenshotWithName("Technical Evaluation Approve", page);
+
+            iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Technical Evaluation Approve Function: {}", exception.getMessage());
         }

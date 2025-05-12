@@ -1,4 +1,5 @@
 package com.source.classes.requisitions.suspend;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -67,6 +68,8 @@ public class BuyerManagerSuspend implements IPrBuyerManagerSuspend {
             status = suspendResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            PlaywrightFactory.attachScreenshotWithName("Requisition Buyer Manager Suspend", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

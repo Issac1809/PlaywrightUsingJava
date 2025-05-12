@@ -1,11 +1,16 @@
 package com.source.classes.invoices.poinvoice.cancel;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class PoInvCancelTest extends BaseTest {
 
-    @Test
+    @Epic("Purchase Order Invoice")
+    @Feature("Purchase Order Invoice Cancel")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Verifier Can Able To Cancel The Purchase Order Invoice")
+    @Test(description = "Purchase Order Invoice Cancel Test")
     public void cancel(){
         try {
             iInvCancel.cancel();

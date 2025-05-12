@@ -1,12 +1,17 @@
 package com.source.classes.requestforquotations.quote;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class QuoteTest extends BaseTest {
 
-    @Test
+    @Epic("Quotation")
+    @Feature("Quotation Submit")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Vendor Can Able To Submit The Quotation")
+    @Test(description = "Quotation Submit Test")
     @Parameters({"type"})
     public void quote(String type) {
         try {

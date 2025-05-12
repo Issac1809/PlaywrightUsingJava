@@ -431,6 +431,8 @@ public class PorCreate implements IPorCreate {
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Request Create", page);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in POR Create Button Function: {}", exception.getMessage());

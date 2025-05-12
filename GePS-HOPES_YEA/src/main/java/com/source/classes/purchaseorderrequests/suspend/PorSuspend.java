@@ -1,4 +1,5 @@
 package com.source.classes.purchaseorderrequests.suspend;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -108,6 +109,8 @@ public class PorSuspend implements IPorSuspend {
             acceptLocator.click();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Request Suspend", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

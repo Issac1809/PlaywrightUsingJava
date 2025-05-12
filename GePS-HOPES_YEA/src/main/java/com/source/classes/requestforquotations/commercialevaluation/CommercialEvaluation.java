@@ -1,5 +1,6 @@
 package com.source.classes.requestforquotations.commercialevaluation;
 import com.constants.requestforquotations.LCeCreate;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
@@ -71,6 +72,8 @@ public class CommercialEvaluation implements ICeCreate {
             status = updateResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            PlaywrightFactory.attachScreenshotWithName("Commercial Evaluation Create", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

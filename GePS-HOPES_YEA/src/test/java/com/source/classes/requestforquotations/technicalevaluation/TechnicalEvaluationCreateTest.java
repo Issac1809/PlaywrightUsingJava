@@ -1,12 +1,17 @@
 package com.source.classes.requestforquotations.technicalevaluation;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class TechnicalEvaluationCreateTest extends BaseTest {
 
-    @Test
+    @Epic("Technical Evaluation")
+    @Feature("Technical Evaluation Create")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Requester Can Able To Create The Technical Evaluation")
+    @Test(description = "Technical Evaluation Create Test")
     @Parameters({"type"})
     public void TechnicalEvaluationCreate(String type){
         try {

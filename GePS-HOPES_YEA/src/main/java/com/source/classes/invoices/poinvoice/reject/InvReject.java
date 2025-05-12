@@ -1,4 +1,5 @@
 package com.source.classes.invoices.poinvoice.reject;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -61,6 +62,8 @@ public class InvReject implements IInvReject {
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
             acceptButtonLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Invoice Reject", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

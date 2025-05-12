@@ -1,12 +1,17 @@
 package com.source.classes.purchaseorders;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class PoSendForVendorTest extends BaseTest {
 
-    @Test
+    @Epic("Purchase Orders")
+    @Feature("Purchase Order Send To Vendor")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Buyer Can Able To Send The Purchase Order To Vendor")
+    @Test(description = "Purchase Order Send To Vendor Test")
     @Parameters({"type", "purchaseType"})
     public void sendForVendor(String type, String purchaseType) {
         try {

@@ -1,4 +1,5 @@
 package com.source.classes.dispatchnotes.create;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -104,6 +105,8 @@ public class DnCreate implements IDnCreate {
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
             acceptButtonLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Dispatch Notes Create", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

@@ -1,11 +1,16 @@
 package com.source.classes.invoices.woinvoice.checklist;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class WoInvChecklistRejectTest extends BaseTest {
 
-    @Test
+    @Epic("Work Order Checklist Reject")
+    @Feature("Work Order Invoice Checklist Reject")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Verifier Can Able To Reject The Work Order Invoice Checklist")
+    @Test(description = "Work Order Invoice Checklist Reject Test")
     public void reject(){
         try {
             iWoInvReject.reject();

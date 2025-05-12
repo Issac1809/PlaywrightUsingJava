@@ -1,11 +1,16 @@
 package com.source.classes.login;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class LoginTest extends BaseTest {
 
-    @Test
+    @Epic("Login")
+    @Feature("Login Functionality")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Test Description: Verify The User Can Able To Login")
+    @Test(description = "Login Test")
     public void login() {
         try {
             String emailId = jsonNode.get("requisition").get("requesterEmail").asText();

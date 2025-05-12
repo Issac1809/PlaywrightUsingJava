@@ -1,4 +1,5 @@
 package com.source.classes.dispatchnotes.cancel;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -58,6 +59,8 @@ public class DnCancel implements IDnCancel {
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
             acceptButtonLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Dispatch Notes Cancel", page);
 
             iLogout.performLogout();
 

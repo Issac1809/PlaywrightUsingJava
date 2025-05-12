@@ -216,6 +216,8 @@ public class PorApprove implements IPorApprove {
 
                 page.waitForLoadState(LoadState.NETWORKIDLE);
 
+                PlaywrightFactory.attachScreenshotWithName("Purchase Order Request Approve", page);
+
                 iLogout.performLogout();
             }
         } catch (Exception exception) {

@@ -1,11 +1,16 @@
 package com.source.classes.workorders.create;
 import com.base.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class WoCreateTest extends BaseTest {
 
-    @Test
+    @Epic("Work Orders")
+    @Feature("Work Orders Create")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Description: Verify Assigned User Can Able To Create The Work Order")
+    @Test(description = "Work Order Create Test")
     public void create() {
         try {
             iWoCreate.create();

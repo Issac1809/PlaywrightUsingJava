@@ -891,6 +891,8 @@ public class Create implements IPrCreate {
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
+            PlaywrightFactory.attachScreenshotWithName("Requisition Create", page);
+
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Requisition Create Function: {}", exception.getMessage());

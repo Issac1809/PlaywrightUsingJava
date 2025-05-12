@@ -1,4 +1,5 @@
 package com.source.classes.freightforwarderrequests.quote;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -60,6 +61,8 @@ public class FfrQuote implements IFfrQuote {
 
             Locator submitQuotationLocator = page.locator(SUBMIT_BUTTON);
             submitQuotationLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Freight Forwarder Quote", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

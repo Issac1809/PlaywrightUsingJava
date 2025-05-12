@@ -1,4 +1,5 @@
 package com.source.classes.requestforquotations.suspend;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -120,7 +121,9 @@ public class RfqSuspend implements IRfqSuspend {
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
-        iLogout.performLogout();
+            PlaywrightFactory.attachScreenshotWithName("Request For Quotation Suspend", page);
+
+            iLogout.performLogout();
 
         iPrEdit.edit(type, purchaseType);
         iPrSendForApproval.sendForApproval(type, purchaseType);

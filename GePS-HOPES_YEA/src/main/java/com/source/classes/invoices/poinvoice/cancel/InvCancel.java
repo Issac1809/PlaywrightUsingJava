@@ -1,4 +1,5 @@
 package com.source.classes.invoices.poinvoice.cancel;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -60,6 +61,8 @@ public class InvCancel implements IInvCancel {
 
             Locator acceptLocator = page.locator(ACCEPT_BUTTON);
             acceptLocator.click();
+
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Invoice Cancel", page);
 
             iLogout.performLogout();
 

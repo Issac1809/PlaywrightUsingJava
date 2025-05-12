@@ -1,4 +1,5 @@
 package com.source.classes.requestforquotations.requote;
+import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -85,7 +86,9 @@ public class Requote implements IQuoRequote {
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
-        iLogout.performLogout();
+            PlaywrightFactory.attachScreenshotWithName("Quotation Re-Quote", page);
+
+            iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Requote Function: {}", exception.getMessage());
         }

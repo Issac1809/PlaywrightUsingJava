@@ -83,7 +83,9 @@ public class ReadyForEvaluation implements IReadyForEvalutation {
                 playwrightFactory.savePropertiesIntoJsonFile("requestForQuotation", "requestForQuotationId", requestForQuotationId);
             }
 
-        iLogout.performLogout();
+            PlaywrightFactory.attachScreenshotWithName("Ready For Evaluation", page);
+
+            iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Ready For Evaluation Button Function: {}", exception.getMessage());
         }
