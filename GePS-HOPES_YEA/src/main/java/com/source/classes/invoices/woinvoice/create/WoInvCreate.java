@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.currencyexchangerate.ICurrencyExchangeRate;
 import com.source.interfaces.invoices.woinvoices.IWoInvCreate;
 import com.source.interfaces.login.ILogin;
@@ -220,6 +221,8 @@ public class WoInvCreate implements IWoInvCreate {
 
                 Locator acceptLocator = page.locator(ACCEPT_BUTTON);
                 acceptLocator.click();
+
+                page.waitForLoadState(LoadState.NETWORKIDLE);
 
                 PlaywrightFactory.attachScreenshotWithName("Work Order Invoice Create", page);
 

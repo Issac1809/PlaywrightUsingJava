@@ -10,29 +10,30 @@ pipeline {
     }
 
     environment {
-        // ───────────────────── Repo / Branch Info ────────────────────────────────
+        // ───────────────────────────── Repo / Branch Info ─────────────────────────────
         JOB_NAME           = 'GePS-HOPES_YEA'
         DEVELOPMENT_BRANCH = 'GePS-HOPES'
         TESTING_BRANCH     = 'main'
         CREDENTIALS_ID     = '813c6e55-37f7-4f42-8153-3a19b435f10b'
 
-        // ───────────────────── Build / Test Settings ─────────────────────────────
+        // ───────────────────── Build / Test Settings ─────────────────────
         MAVEN_GOALS        = 'clean install -DskipTests=true'
         PROJECT_NAME       = 'GePS-HOPES_YEA'
         TEST_SUITE         = "src/test/resources/testrunners/${PROJECT_NAME}_functional-test.xml"
         WORKING_DIR        = 'GePS-Testing/GePS-HOPES_YEA'
 
-        // ──────────────────────────── Reports ────────────────────────────────────
+        // ─────────────────────────── Reports ────────────────────────────
         OUTPUT_REPORT_DIR      = "${WORKING_DIR}/test-output"
-        CHAIN_TEST_REPORT_DIR  = "${WORKING_DIR}/test-output"
+        ALLURE_RESULT_DIR      = "${WORKING_DIR}/allure-results"
+        ALLURE_REPORT_DIR      = "${WORKING_DIR}/allure-results"
 
-        // ────────────────────────────── Misc ─────────────────────────────────────
-        WAIT_TIME_SEC      = '20'          // configurable sleep
+        // ─────────────────────────── Misc ──────────────────────────────
+        WAIT_TIME_SEC      = '20'
     }
 
     stages {
 
-        /* ─────────────────────────────── Clean Workspace ─────────────────────────────── */
+        // ──────────────── [1] Clean Workspace ────────────────
         stage('Clean Workspace') {
             steps {
                 cleanWs()
@@ -40,7 +41,7 @@ pipeline {
             }
         }
 
-        /* ───────────────────────────── Parallel Git Checkouts ─────────────────────────── */
+        // ─────── [2] Parallel Git Checkouts (Development & Testing Repos) ───────
         stage('Parallel Checkout Repositories') {
             parallel {
                 stage('Checkout Development Repository (GePS)') {
@@ -93,7 +94,7 @@ pipeline {
             }
         }
 
-        /* ────────────────────────────── Maven Build (Skip Tests) ───────────────────────────── */
+        // ──────────────── [3] Build Maven Project ────────────────
         stage('Build YEA Project') {
             steps {
                 dir("${WORKING_DIR}") {
@@ -111,40 +112,21 @@ pipeline {
             }
         }
 
-        /* ────────────────────────────── Start Docker Services ─────────────────────────────── */
-        stage('Start Services') {
-            parallel {
-                stage('Start ChainTest Service') {
-                    steps {
-                        dir("${WORKING_DIR}") {
-                            script {
-                                echo "🔎 Verifying Docker daemon..."
-                                bat "docker info >nul 2>&1"
-                                echo "🚀 Starting ChainTest service..."
-                                bat "docker-compose -f docker-compose-h2.yml up -d"
-                                echo "⏳ Waiting ${WAIT_TIME_SEC}s for ChainTest..."
-                                bat "powershell -Command Start-Sleep -Seconds ${WAIT_TIME_SEC}"
-                            }
-                        }
-                    }
-                }
-
-                stage('Start Selenium Grid Service') {
-                    steps {
-                        dir("${WORKING_DIR}") {
-                            script {
-                                echo "🚀 Starting Selenium Grid..."
-                                bat "docker-compose -f docker-compose.yaml up -d"
-                                echo "⏳ Waiting ${WAIT_TIME_SEC}s for Selenium Grid..."
-                                bat "powershell -Command Start-Sleep -Seconds ${WAIT_TIME_SEC}"
-                            }
-                        }
+        // ──────────────── [4] Start Docker Services ────────────────
+        stage('Start Selenium Grid') {
+            steps {
+                dir("${WORKING_DIR}") {
+                    script {
+                        echo "🚀 Starting Selenium Grid..."
+                        bat "docker-compose -f docker-compose.yaml up -d"
+                        echo "⏳ Waiting ${WAIT_TIME_SEC}s for Selenium Grid..."
+                        bat "powershell -Command Start-Sleep -Seconds ${WAIT_TIME_SEC}"
                     }
                 }
             }
         }
 
-        /* ────────────────────────────── Run Tests ─────────────────────────────────────────── */
+        // ──────────────── [5] Run Tests ────────────────
         stage('Regression Automation Test') {
             steps {
                 dir("${WORKING_DIR}") {
@@ -167,44 +149,43 @@ pipeline {
             }
         }
 
-        /* ────────────────────────────── Publish Reports ───────────────────────────────────── */
-        stage('Publish Reports') {
+        // ──────────────── [6] Generate Allure Report ────────────────
+        stage('Allure Report Generation') {
             steps {
-                script {
-                    if (fileExists("${CHAIN_TEST_REPORT_DIR}/index.html")) {
-                        publishHTML([
-                            keepAll: true,
-                            alwaysLinkToLastBuild: true,
-                            reportDir   : "${CHAIN_TEST_REPORT_DIR}",
-                            reportFiles : 'index.html',
-                            reportName  : 'Chain Test Report'
-                        ])
-                    } else {
-                        echo "⚠️ Chain Test report not found."
-                    }
-
-                    if (fileExists("${OUTPUT_REPORT_DIR}/emailable-report.html")) {
-                        publishHTML([
-                            keepAll: true,
-                            alwaysLinkToLastBuild: true,
-                            reportDir   : "${OUTPUT_REPORT_DIR}",
-                            reportFiles : 'emailable-report.html',
-                            reportName  : 'HTML Extent Report'
-                        ])
-                    } else {
-                        echo "⚠️ Test execution report not found."
+                dir("${WORKING_DIR}") {
+                    timeout(time: 10, unit: 'MINUTES') {
+                        echo "📊 Generating Allure Report..."
+                        bat "allure generate allure-results --clean -o allure-report"
                     }
                 }
             }
         }
 
-        /* ────────────────────────────── Stop Services ─────────────────────────────────────── */
+        // ──────────────── [7] Publish Allure Report ────────────────
+        stage('Publish Reports') {
+            steps {
+                script {
+                    if (fileExists("${ALLURE_REPORT_DIR}/index.html")) {
+                        publishHTML([
+                            keepAll: true,
+                            alwaysLinkToLastBuild: true,
+                            reportDir   : "${ALLURE_REPORT_DIR}",
+                            reportFiles : 'index.html',
+                            reportName  : 'Allure Report'
+                        ])
+                    } else {
+                        echo "⚠️ Allure report not found."
+                    }
+                }
+            }
+        }
+
+        // ──────────────── [8] Stop Docker Services ────────────────
         stage('Stop Services') {
             steps {
                 dir("${WORKING_DIR}") {
                     script {
-                        echo "🛑 Stopping ChainTest & Selenium Grid services..."
-                        bat 'docker-compose -f docker-compose-h2.yml down'
+                        echo "🛑 Stopping Selenium Grid services..."
                         bat 'docker-compose -f docker-compose.yaml down'
                     }
                 }
@@ -212,12 +193,12 @@ pipeline {
         }
     }
 
-    /* ────────────────────────────── Notifications ───────────────────────────────────────── */
+    // ──────────────── [9] Post-Build Actions ────────────────
     post {
         failure {
             emailext(
                 mimeType: 'text/html',
-                to: 'issac.raja@cormsquare.com',
+                to: 'issac.raja@cormsquare.com, deepak.g@cormsquare.com, radhika.b@cormsquare.com, lijo.a@cormsquare.com',
                 subject: "❌ Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """<html>
                         <body style="font-family: Arial, sans-serif; line-height: 1.6;">
@@ -230,26 +211,21 @@ pipeline {
                             <hr/>
                             <p>📎 <strong>View Reports:</strong></p>
                             <ul>
-                                <li><a href="${env.BUILD_URL}Chain_Test_Report/">🔗 Chain Test Report</a></li>
-                                <li><a href="${env.BUILD_URL}HTML_Extent_Report/">🔗 TestNG Emailable Report</a></li>
+                                <li><a href="${env.BUILD_URL}Allure Report/">🔗 Allure Report</a></li>
                             </ul>
-                            <hr/>
                             <footer style="font-size: 12px; color: #888;">
-                                <p>Thanks and Regards,</p>
-                                <p><strong>Jenkins CI/CD System</strong></p>
-                                <p>This is an automated message. Please do not reply directly to this email.</p>
-                                <p>If you need assistance, please contact the <a href="mailto:issac.raja@cormsquare.com">QA Team</a>.</p>
+                                <p>Thanks and Regards,<br><strong>Jenkins CI/CD System</strong></p>
                             </footer>
                         </body>
                         </html>""",
-                attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${OUTPUT_REPORT_DIR}/emailable-report.html"
+                attachmentsPattern: "${ALLURE_REPORT_DIR}/index.html"
             )
         }
 
         success {
             emailext(
                 mimeType: 'text/html',
-                to: 'issac.raja@cormsquare.com',
+                to: 'issac.raja@cormsquare.com, deepak.g@cormsquare.com, radhika.b@cormsquare.com, lijo.a@cormsquare.com',
                 subject: "✔️ Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """<html>
                         <body style="font-family: Arial, sans-serif; line-height: 1.6;">
@@ -257,24 +233,18 @@ pipeline {
                             <p><strong>Build Number:</strong> ${env.BUILD_NUMBER}</p>
                             <p><strong>Status:</strong> <span style="color:green;">SUCCESS</span></p>
                             <p><strong>Time:</strong> ${new Date()}</p>
-                            <p>All tests have passed successfully. Please check the reports below.</p>
                             <p><a href="${env.BUILD_URL}">🔗 View Jenkins Job</a></p>
                             <hr/>
                             <p>📎 <strong>View Reports:</strong></p>
                             <ul>
-                                <li><a href="${env.BUILD_URL}Chain_Test_Report/">🔗 Chain Test Report</a></li>
-                                <li><a href="${env.BUILD_URL}HTML_Extent_Report/">🔗 TestNG Emailable Report</a></li>
+                                <li><a href="${env.BUILD_URL}Allure Report/">🔗 Allure Report</a></li>
                             </ul>
-                            <hr/>
                             <footer style="font-size: 12px; color: #888;">
-                                <p>Thanks and Regards,</p>
-                                <p><strong>Jenkins CI/CD System</strong></p>
-                                <p>This is an automated message. Please do not reply directly to this email.</p>
-                                <p>If you need assistance, please contact the <a href="mailto:issac.raja@cormsquare.com">QA Team</a>.</p>
+                                <p>Thanks and Regards,<br><strong>Jenkins CI/CD System</strong></p>
                             </footer>
                         </body>
                         </html>""",
-                attachmentsPattern: "${CHAIN_TEST_REPORT_DIR}/index.html, ${OUTPUT_REPORT_DIR}/emailable-report.html"
+                attachmentsPattern: "${ALLURE_REPORT_DIR}/index.html"
             )
         }
 

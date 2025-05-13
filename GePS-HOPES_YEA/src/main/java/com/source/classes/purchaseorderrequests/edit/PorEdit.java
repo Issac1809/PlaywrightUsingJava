@@ -61,6 +61,8 @@ public class PorEdit implements IPorEdit {
             Locator acceptLocator = page.locator(YES);
             acceptLocator.click();
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             PlaywrightFactory.attachScreenshotWithName("Purchase Order Request Edit", page);
 
             iLogout.performLogout();

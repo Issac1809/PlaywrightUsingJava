@@ -68,9 +68,9 @@ public class TechnicalEvaluationApprove implements ITeApprove {
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
-            PlaywrightFactory.attachScreenshotWithName("Technical Evaluation Approve", page);
+        PlaywrightFactory.attachScreenshotWithName("Technical Evaluation Approve", page);
 
-            iLogout.performLogout();
+        iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Technical Evaluation Approve Function: {}", exception.getMessage());
         }

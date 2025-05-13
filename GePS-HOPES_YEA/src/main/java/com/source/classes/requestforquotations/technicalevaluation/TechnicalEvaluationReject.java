@@ -69,9 +69,9 @@ public class TechnicalEvaluationReject implements ITeReject {
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
-            PlaywrightFactory.attachScreenshotWithName("Technical Evaluation Reject", page);
+        PlaywrightFactory.attachScreenshotWithName("Technical Evaluation Reject", page);
 
-            iLogout.performLogout();
+        iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Technical Evaluation Reject Function: {}", exception.getMessage());
         }

@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.invoices.woinvoices.IWoInvReturn;
 import com.source.interfaces.invoices.woinvoices.IWoInvSendForApproval;
 import com.source.interfaces.login.ILogin;
@@ -62,6 +63,8 @@ public class WoInvReturn implements IWoInvReturn {
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
             acceptButtonLocator.click();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             PlaywrightFactory.attachScreenshotWithName("Work Order Invoice Return", page);
 

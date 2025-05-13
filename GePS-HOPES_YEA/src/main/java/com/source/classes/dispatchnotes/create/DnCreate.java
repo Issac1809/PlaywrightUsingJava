@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.dispatchnotes.IDnCreate;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -105,6 +106,8 @@ public class DnCreate implements IDnCreate {
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
             acceptButtonLocator.click();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             PlaywrightFactory.attachScreenshotWithName("Dispatch Notes Create", page);
 

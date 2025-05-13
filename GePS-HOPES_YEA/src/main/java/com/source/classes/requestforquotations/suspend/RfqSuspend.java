@@ -121,9 +121,9 @@ public class RfqSuspend implements IRfqSuspend {
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
-            PlaywrightFactory.attachScreenshotWithName("Request For Quotation Suspend", page);
+        PlaywrightFactory.attachScreenshotWithName("Request For Quotation Suspend", page);
 
-            iLogout.performLogout();
+        iLogout.performLogout();
 
         iPrEdit.edit(type, purchaseType);
         iPrSendForApproval.sendForApproval(type, purchaseType);

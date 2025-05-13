@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.inspections.IInsAssign;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -62,6 +63,8 @@ public class InsAssign implements IInsAssign {
 
             Locator saveInspectorButtonLocator = page.locator(SAVE_INSPECTOR);
             saveInspectorButtonLocator.click();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             PlaywrightFactory.attachScreenshotWithName("Inspection Assign", page);
 

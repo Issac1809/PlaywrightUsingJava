@@ -69,9 +69,9 @@ public class Edit implements IPrEdit {
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
-            PlaywrightFactory.attachScreenshotWithName("Requisition Edit", page);
+        PlaywrightFactory.attachScreenshotWithName("Requisition Edit", page);
 
-            iLogout.performLogout();
+        iLogout.performLogout();
         }
         catch (Exception exception) {
             logger.error("Exception in Requisition Edit Function: {}", exception.getMessage());

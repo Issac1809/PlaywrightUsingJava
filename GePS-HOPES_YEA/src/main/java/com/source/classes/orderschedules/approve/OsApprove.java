@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.orderschedules.IOsApprove;
@@ -53,6 +54,8 @@ public class OsApprove implements IOsApprove {
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
             acceptButtonLocator.click();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             PlaywrightFactory.attachScreenshotWithName("Order Schedule Approve", page);
 

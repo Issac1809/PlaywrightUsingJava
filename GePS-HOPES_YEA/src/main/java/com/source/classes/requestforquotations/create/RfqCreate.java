@@ -87,6 +87,8 @@ public class RfqCreate implements IRfqCreate {
                 playwrightFactory.savePropertiesIntoJsonFile("requestForQuotation", "salesTransactionNumber", transactionId);
             }
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             PlaywrightFactory.attachScreenshotWithName("Request For Quotation Create", page);
 
             iLogout.performLogout();

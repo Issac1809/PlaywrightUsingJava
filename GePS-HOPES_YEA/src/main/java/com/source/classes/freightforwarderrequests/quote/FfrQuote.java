@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.freightforwarderrequests.IFfrQuote;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -61,6 +62,8 @@ public class FfrQuote implements IFfrQuote {
 
             Locator submitQuotationLocator = page.locator(SUBMIT_BUTTON);
             submitQuotationLocator.click();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             PlaywrightFactory.attachScreenshotWithName("Freight Forwarder Quote", page);
 

@@ -86,9 +86,9 @@ public class Requote implements IQuoRequote {
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
-            PlaywrightFactory.attachScreenshotWithName("Quotation Re-Quote", page);
+        PlaywrightFactory.attachScreenshotWithName("Quotation Re-Quote", page);
 
-            iLogout.performLogout();
+        iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Requote Function: {}", exception.getMessage());
         }

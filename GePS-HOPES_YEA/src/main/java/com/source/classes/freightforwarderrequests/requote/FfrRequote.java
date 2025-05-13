@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.freightforwarderrequests.IFfrQuote;
 import com.source.interfaces.freightforwarderrequests.IFfrRequote;
 import com.source.interfaces.login.ILogin;
@@ -52,6 +53,8 @@ public class FfrRequote implements IFfrRequote {
                     detailsButtonLocator.first().click();
                 }
             }
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             PlaywrightFactory.attachScreenshotWithName("Freight Forwarder Re-Quote", page);
 

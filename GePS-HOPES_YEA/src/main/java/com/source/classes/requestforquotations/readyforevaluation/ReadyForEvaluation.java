@@ -83,6 +83,8 @@ public class ReadyForEvaluation implements IReadyForEvalutation {
                 playwrightFactory.savePropertiesIntoJsonFile("requestForQuotation", "requestForQuotationId", requestForQuotationId);
             }
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             PlaywrightFactory.attachScreenshotWithName("Ready For Evaluation", page);
 
             iLogout.performLogout();

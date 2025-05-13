@@ -71,9 +71,9 @@ public class QuotationRegret implements IQuoRegret {
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
-            PlaywrightFactory.attachScreenshotWithName("Quotation Regret", page);
+        PlaywrightFactory.attachScreenshotWithName("Quotation Regret", page);
 
-            iLogout.performLogout();
+        iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Quotation Regret Function: {}", exception.getMessage());
         }
