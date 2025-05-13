@@ -28,6 +28,7 @@ pipeline {
         ALLURE_REPORT_DIR      = "${WORKING_DIR}/allure-report"
 
         // ─────────────────────────── Misc ──────────────────────────────
+        GOOGLE_DRIVE_FOLDER_ID = '1x5EFroTJppExZpiNUD1xdNnv1Odpln2t'
         WAIT_TIME_SEC      = '20'
     }
 
@@ -181,7 +182,25 @@ pipeline {
             }
         }
 
-        // ──────────────── [8] Stop Docker Services ────────────────
+        // ──────────────── [8] Upload Allure Report to Google Drive ────────────────
+        stage('Upload Allure Report to Google Drive') {
+            steps {
+                dir("${WORKING_DIR}") {
+                    script {
+                        echo "☁️ Uploading Allure Report to Google Drive via rclone..."
+
+                        def gdriveFolderName = "Build_${env.BUILD_NUMBER}"
+
+                        bat """
+                            rclone mkdir gdrive:${gdriveFolderName} --drive-root-folder-id ${GOOGLE_DRIVE_FOLDER_ID}
+                            rclone copy allure-report gdrive:${gdriveFolderName} --drive-root-folder-id ${GOOGLE_DRIVE_FOLDER_ID} --create-empty-src-dirs
+                        """
+                    }
+                }
+            }
+        }
+
+        // ──────────────── [9] Stop Docker Services ────────────────
         stage('Stop Services') {
             steps {
                 dir("${WORKING_DIR}") {
@@ -194,12 +213,12 @@ pipeline {
         }
     }
 
-    // ──────────────── [9] Post-Build Actions ────────────────
+    // ──────────────── [10] Post-Build Actions ────────────────
     post {
         failure {
             emailext(
                 mimeType: 'text/html',
-                to: 'issac.raja@cormsquare.com, deepak.g@cormsquare.com, radhika.b@cormsquare.com, lijo.a@cormsquare.com',
+                to: 'issac.raja@cormsquare.com, lijo.a@cormsquare.com',
                 subject: "❌ CI/CD Pipeline Alert - Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """<html>
                         <body style="font-family: Arial, sans-serif; line-height: 1.6;">
@@ -210,6 +229,10 @@ pipeline {
                             <p><strong>Time:</strong> ${new Date()}</p>
 
                             <p>🔗 <strong>Jenkins Job:</strong> <a href="${env.BUILD_URL}">View Build #${env.BUILD_NUMBER}</a></p>
+
+                            <p>📂 <strong>Allure Report on Google Drive:</strong>
+                            <a href="https://drive.google.com/drive/folders/${GOOGLE_DRIVE_FOLDER_ID}" target="_blank">
+                            Click here (Build_${env.BUILD_NUMBER})</a></p>
 
                             <hr style="border-top: 1px solid #ccc;"/>
 
@@ -240,7 +263,7 @@ pipeline {
         success {
             emailext(
                 mimeType: 'text/html',
-                to: 'issac.raja@cormsquare.com, deepak.g@cormsquare.com, radhika.b@cormsquare.com, lijo.a@cormsquare.com',
+                to: 'issac.raja@cormsquare.com, lijo.a@cormsquare.com',
                 subject: "✅ CI/CD Pipeline Success - Build PASSED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """<html>
                         <body style="font-family: Arial, sans-serif; line-height: 1.6;">
@@ -251,6 +274,10 @@ pipeline {
                             <p><strong>Time:</strong> ${new Date()}</p>
 
                             <p>🔗 <strong>Jenkins Job:</strong> <a href="${env.BUILD_URL}">View Build #${env.BUILD_NUMBER}</a></p>
+
+                            <p>📂 <strong>Allure Report on Google Drive:</strong>
+                            <a href="https://drive.google.com/drive/folders/${GOOGLE_DRIVE_FOLDER_ID}" target="_blank">
+                            Click here (Build_${env.BUILD_NUMBER})</a></p>
 
                             <hr style="border-top: 1px solid #ccc;"/>
 
