@@ -25,7 +25,7 @@ pipeline {
         // ─────────────────────────── Reports ────────────────────────────
         OUTPUT_REPORT_DIR      = "${WORKING_DIR}/test-output"
         ALLURE_RESULT_DIR      = "${WORKING_DIR}/allure-results"
-        ALLURE_REPORT_DIR      = "${WORKING_DIR}/allure-results"
+        ALLURE_REPORT_DIR      = "${WORKING_DIR}/allure-report"
 
         // ─────────────────────────── Misc ──────────────────────────────
         WAIT_TIME_SEC      = '20'
