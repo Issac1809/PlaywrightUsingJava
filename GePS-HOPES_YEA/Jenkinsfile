@@ -156,7 +156,7 @@ pipeline {
                     timeout(time: 10, unit: 'MINUTES') {
                         echo "📊 Generating Allure Report..."
                         bat "allure generate allure-results --clean -o allure-report"
-                        bat "powershell Compress-Archive -Path '${ALLURE_REPORT_DIR}\\*' -DestinationPath '${WORKING_DIR}\\AllureReport.zip'"
+                        bat "powershell Compress-Archive -Path 'allure-report\\*' -DestinationPath 'AllureReport.zip'"
                     }
                 }
             }
@@ -209,7 +209,7 @@ pipeline {
                             <p><strong>Status:</strong> <span style="color:red;">FAILED</span></p>
                             <p><strong>Time:</strong> ${new Date()}</p>
 
-                            <p>🔗 <strong>Jenkins Job:</strong> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                            <p>🔗 <strong>Jenkins Job:</strong> <a href="${env.BUILD_URL}">View Build #${env.BUILD_NUMBER}</a></p>
 
                             <hr style="border-top: 1px solid #ccc;"/>
 
@@ -250,7 +250,7 @@ pipeline {
                             <p><strong>Status:</strong> <span style="color:green;">SUCCESS</span></p>
                             <p><strong>Time:</strong> ${new Date()}</p>
 
-                            <p>🔗 <strong>Jenkins Job:</strong> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                            <p>🔗 <strong>Jenkins Job:</strong> <a href="${env.BUILD_URL}">View Build #${env.BUILD_NUMBER}</a></p>
 
                             <hr style="border-top: 1px solid #ccc;"/>
 
