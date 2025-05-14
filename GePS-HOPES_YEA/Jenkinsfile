@@ -195,7 +195,7 @@ pipeline {
 
                         bat """
                             "${rclonePath}" mkdir gdrive:${gdriveFolderName} --drive-root-folder-id ${GOOGLE_DRIVE_FOLDER_ID} --config "${rcloneConfig}"
-                            "${rclonePath}" copy allure-report gdrive:${gdriveFolderName} --drive-root-folder-id ${GOOGLE_DRIVE_FOLDER_ID} --config "${rcloneConfig}" --create-empty-src-dirs
+                            "${rclonePath}" copy AllureReport.zip gdrive:${gdriveFolderName} --drive-root-folder-id ${GOOGLE_DRIVE_FOLDER_ID} --config "${rcloneConfig}" --create-empty-src-dirs
                         """
                     }
                 }
@@ -220,7 +220,7 @@ pipeline {
         failure {
             emailext(
                 mimeType: 'text/html',
-                to: 'issac.raja@cormsquare.com, lijo.a@cormsquare.com',
+                to: 'issac.raja@cormsquare.com, deepak.g@cormsquare.com, radhika.b@cormsquare.com, lijo.a@cormsquare.com',
                 subject: "❌ CI/CD Pipeline Alert - Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """<html>
                         <body style="font-family: Arial, sans-serif; line-height: 1.6;">
@@ -265,7 +265,7 @@ pipeline {
         success {
             emailext(
                 mimeType: 'text/html',
-                to: 'issac.raja@cormsquare.com, lijo.a@cormsquare.com',
+                to: 'issac.raja@cormsquare.com, deepak.g@cormsquare.com, radhika.b@cormsquare.com, lijo.a@cormsquare.com',
                 subject: "✅ CI/CD Pipeline Success - Build PASSED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """<html>
                         <body style="font-family: Arial, sans-serif; line-height: 1.6;">
