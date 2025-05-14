@@ -154,19 +154,18 @@ pipeline {
         stage('Allure Report Generation') {
             steps {
                 dir("${WORKING_DIR}") {
-                    timeout(time: 10, unit: 'MINUTES') {
+                    timeout(time: 5, unit: 'MINUTES') {
                         echo "📊 Generating Allure Report..."
-
+                        bat 'dir allure-results'
                         bat 'rmdir /S /Q allure-report'
-
-                        bat "allure generate allure-results --clean -o allure-report"
+                        bat "allure generate allure-results --clean -o allure-report || echo 'Allure generate failed!'"
                         bat "powershell Compress-Archive -Path 'allure-report\\*' -DestinationPath 'AllureReport.zip'"
                     }
                 }
             }
         }
 
-        // ──────────────── [7] Publish Allure Report ────────────────
+        // ──────────────── [7] Publish Reports ────────────────
         stage('Publish Reports') {
             steps {
                 script {
@@ -184,6 +183,7 @@ pipeline {
                 }
             }
         }
+
 
         // ──────────────── [8] Upload Allure Report to Google Drive ────────────────
         stage('Upload Allure Report to Google Drive') {
