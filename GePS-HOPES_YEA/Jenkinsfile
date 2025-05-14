@@ -156,6 +156,10 @@ pipeline {
                 dir("${WORKING_DIR}") {
                     timeout(time: 10, unit: 'MINUTES') {
                         echo "📊 Generating Allure Report..."
+
+                        bat 'rmdir /S /Q allure-report'
+                        bat 'rmdir /S /Q allure-results'
+
                         bat "allure generate allure-results --clean -o allure-report"
                         bat "powershell Compress-Archive -Path 'allure-report\\*' -DestinationPath 'AllureReport.zip'"
                     }
