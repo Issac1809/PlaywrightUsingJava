@@ -223,7 +223,7 @@ pipeline {
         failure {
             emailext(
                 mimeType: 'text/html',
-                to: 'issac.raja@cormsquare.com, deepak.g@cormsquare.com, radhika.b@cormsquare.com, lijo.a@cormsquare.com',
+                to: 'issac.raja@cormsquare.com, darshan.dm@cormsquare.com, deepak.g@cormsquare.com, radhika.b@cormsquare.com',
                 subject: "❌ CI/CD Pipeline Alert - Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """<html>
                     <body style="font-family: Arial, sans-serif; line-height: 1.6;">
@@ -259,7 +259,7 @@ pipeline {
         success {
             emailext(
                 mimeType: 'text/html',
-                to: 'issac.raja@cormsquare.com, deepak.g@cormsquare.com, radhika.b@cormsquare.com, lijo.a@cormsquare.com',
+                to: 'issac.raja@cormsquare.com, darshan.dm@cormsquare.com, deepak.g@cormsquare.com, radhika.b@cormsquare.com',
                 subject: "✅ CI/CD Pipeline Success - Build PASSED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """<html>
                     <body style="font-family: Arial, sans-serif; line-height: 1.6;">
