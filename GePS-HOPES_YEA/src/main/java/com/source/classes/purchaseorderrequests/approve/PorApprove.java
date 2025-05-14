@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.purchaseorderrequests.IPorApprove;
@@ -30,6 +31,7 @@ public class PorApprove implements IPorApprove {
     ILogin iLogin;
     ILogout iLogout;
     IPorSendForApproval iPorSendForApproval;
+    String appUrl;
 
     private PorApprove() {
     }
@@ -45,6 +47,7 @@ public class PorApprove implements IPorApprove {
         this.iPorSendForApproval = iPorSendForApproval;
         this.msaFlow = msaFlow;
         this.logger = LoggerUtil.getLogger(PorApprove.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
     public void savePorAprovers(String type, String purchaseType) {
@@ -163,7 +166,8 @@ public class PorApprove implements IPorApprove {
         }
     }
 
-    public void approve(String type, String purchaseType){
+    public int approve(String type, String purchaseType){
+        int status = 0;
         try {
             savePorAprovers(type, purchaseType);
             JsonNode approvers = jsonNode.get("purchaseOrderRequests").get("approvers");
@@ -186,13 +190,19 @@ public class PorApprove implements IPorApprove {
                 approveButtonLocator.click();
 
                 Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
-                acceptButtonLocator.click();
+
+                String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
+
+                Response approveResponse = page.waitForResponse(
+                        response -> response.url().startsWith(appUrl + porType) && response.status() == 200,
+                        acceptButtonLocator::click
+                );
+                status = approveResponse.status();
 
                 if(i == approvers.size() - 1) {
                     page.waitForLoadState(LoadState.NETWORKIDLE);
 
                     String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
-                    String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
 
                     String url = page.url();
                     String[] urlArray = url.split("=");
@@ -223,5 +233,6 @@ public class PorApprove implements IPorApprove {
         } catch (Exception exception) {
             logger.error("Exception in POR Approve function: {}", exception.getMessage());
         }
+        return status;
     }
 }

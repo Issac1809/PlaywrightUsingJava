@@ -15,8 +15,10 @@ public class SuspendEditTest extends BaseTest {
     @Parameters({"type", "purchaseType"})
     public void suspend(String type, String purchaseType) {
         try {
-            iPorSuspend.suspendPorEdit(type, purchaseType);
-            iPorSuspend.suspendRfqOrPrEdit(type, purchaseType);
+            int status = iPorSuspend.suspendPorEdit(type, purchaseType);
+            Assert.assertEquals(200, status, "POR Suspend was not Successful");
+            status = iPorSuspend.suspendRfqOrPrEdit(type, purchaseType);
+            Assert.assertEquals(200, status, "POR Suspend was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Suspend Edit Test Function: {}", exception.getMessage());
             Assert.fail("Exception in POR Suspend Edit Test Function: " + exception.getMessage());

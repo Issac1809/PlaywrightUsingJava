@@ -37,9 +37,9 @@ public class MSA_FTPHelper {
     public String downloadFile(String remotePath, String localPath, String porReferenceNumber, JsonNode jsonNode) {
         try {
             File localDir = new File(localPath);
-            if (!localDir.exists() && !localDir.mkdirs());
+            if (!localDir.exists() && !localDir.mkdirs());{}
 
-            boolean porRevisionFlag = jsonNode.get("porRevision").asBoolean();
+            boolean porRevisionFlag = jsonNode.get("purchaseOrders").get("porRevision").asBoolean();
             if (porRevisionFlag) {
                 excelFileName = porReferenceNumber + "_PT1_GePS-HOPES_R1.xls";
             } else {

@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.purchaseorderrequests.IPorEdit;
 import com.source.interfaces.login.ILogin;
@@ -19,6 +20,7 @@ public class PorEdit implements IPorEdit {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    String appUrl;
 
     private PorEdit(){
     }
@@ -30,9 +32,11 @@ public class PorEdit implements IPorEdit {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(PorEdit.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void porEdit(String type, String purchaseType) {
+    public int porEdit(String type, String purchaseType) {
+        int status = 0;
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
 
@@ -59,7 +63,14 @@ public class PorEdit implements IPorEdit {
             remarksInputLocator.fill("Updated");
 
             Locator acceptLocator = page.locator(YES);
-            acceptLocator.click();
+
+            String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
+
+            Response editResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + porType) && response.status() == 200,
+                    acceptLocator::click
+            );
+            status = editResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -69,5 +80,6 @@ public class PorEdit implements IPorEdit {
         } catch (Exception exception) {
             logger.error("Exception in POR Edit function: {}", exception.getMessage());
         }
+        return status;
     }
 }

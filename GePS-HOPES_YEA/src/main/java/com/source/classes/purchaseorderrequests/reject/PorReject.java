@@ -2,6 +2,7 @@ package com.source.classes.purchaseorderrequests.reject;
 import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.purchaseorderrequests.IPorSendForApproval;
 import com.microsoft.playwright.Page;
@@ -23,6 +24,8 @@ public class PorReject implements IPorReject {
     Page page;
     IPorEdit iPorEdit;
     IPorSendForApproval iPorSendForApproval;
+    String appUrl;
+
 
     private PorReject(){
     }
@@ -35,9 +38,11 @@ public class PorReject implements IPorReject {
         this.iLogout = iLogout;
         this.iPorEdit = iPorEdit;
         this.iPorSendForApproval = iPorSendForApproval;
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void porReject(String type, String purchaseType) {
+    public int porReject(String type, String purchaseType) {
+        int status = 0;
         try {
             String approver = jsonNode.get("purchaseOrderRequests").get("approvers").asText();
 
@@ -59,7 +64,13 @@ public class PorReject implements IPorReject {
             remarksInputLocator.fill("Updated");
 
             Locator acceptLocator = page.locator(YES);
-            acceptLocator.click();
+            String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
+
+            Response rejectResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + porType) && response.status() == 200,
+                    acceptLocator::click
+            );
+            status = rejectResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -69,5 +80,6 @@ public class PorReject implements IPorReject {
         } catch (Exception exception) {
             logger.error("Exception in POR Reject function: {}", exception.getMessage());
         }
+        return status;
     }
 }

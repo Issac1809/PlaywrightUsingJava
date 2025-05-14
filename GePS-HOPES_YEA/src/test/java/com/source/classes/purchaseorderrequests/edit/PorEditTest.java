@@ -15,7 +15,8 @@ public class PorEditTest extends BaseTest {
     @Parameters({"type", "purchaseType"})
     public void edit(String type, String purchaseType) {
         try {
-            iPorEdit.porEdit(type, purchaseType);
+            int status = iPorEdit.porEdit(type, purchaseType);
+            Assert.assertEquals(200, status, "POR Edit was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in POR Edit Test Function: {}", exception.getMessage());
             Assert.fail("Exception in POR Edit Test Function: " + exception.getMessage());

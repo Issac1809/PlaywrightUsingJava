@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -33,6 +34,8 @@ public class PorSuspend implements IPorSuspend {
     IPorCreate iPorCreate;
     IPorEdit iPorEdit;
     ICeCreate iCeCreate;
+    String appUrl;
+
 
     private PorSuspend(){
     }
@@ -51,20 +54,25 @@ public class PorSuspend implements IPorSuspend {
         this.iPorEdit = iPorEdit;
         this.iCeCreate = iCeCreate;
         this.logger = LoggerUtil.getLogger(PorSuspend.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
+
     }
 
-    public void suspendPorEdit(String type, String purchaseType){
+    public int suspendPorEdit(String type, String purchaseType){
+        int status = 0;
         try {
-            suspend(type, purchaseType);
+            status = suspend(type, purchaseType);
             iPorEdit.porEdit(type, purchaseType);
         } catch (Exception exception) {
             logger.error("Exception in POR Suspend Edit function: {}", exception.getMessage());
         }
+        return status;
     }
 
-    public void suspendRfqOrPrEdit(String type, String purchaseType){
+    public int suspendRfqOrPrEdit(String type, String purchaseType){
+        int status = 0;
         try {
-            suspend(type, purchaseType);
+            status = suspend(type, purchaseType);
             if(purchaseType.equalsIgnoreCase("Catalog")) {
                 iPrEdit.edit(type, purchaseType);
                 iPrSendForApproval.sendForApproval(type, purchaseType);
@@ -82,9 +90,11 @@ public class PorSuspend implements IPorSuspend {
         } catch (Exception exception) {
             logger.error("Exception in POR Suspend RFQ or PR Edit function: {}", exception.getMessage());
         }
+        return status;
     }
 
-    public void suspend(String type, String purchaseType){
+    public int suspend(String type, String purchaseType) {
+        int status = 0;
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
 
@@ -106,7 +116,14 @@ public class PorSuspend implements IPorSuspend {
             remarksLocator.fill("Suspended");
 
             Locator acceptLocator = page.locator(YES);
-            acceptLocator.click();
+
+            String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
+
+            Response rejectResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + porType) && response.status() == 200,
+                    acceptLocator::click
+            );
+            status = rejectResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -116,5 +133,6 @@ public class PorSuspend implements IPorSuspend {
         } catch (Exception exception) {
             logger.error("Exception in POR Suspend function: {}", exception.getMessage());
         }
+        return status;
     }
 }
