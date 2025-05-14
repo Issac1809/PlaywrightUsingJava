@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -23,6 +24,7 @@ public class PorSendForApproval implements IPorSendForApproval {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    String appUrl;
 
     private PorSendForApproval() {
     }
@@ -36,9 +38,11 @@ public class PorSendForApproval implements IPorSendForApproval {
         this.objectMapper = objectMapper;
         this.playwrightFactory = playwrightFactory;
         this.logger = LoggerUtil.getLogger(PorSendForApproval.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public String sendForApproval(String type, String purchaseType) {
+    public int sendForApproval(String type, String purchaseType) {
+        int status = 0;
         String email = "";
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
@@ -55,7 +59,14 @@ public class PorSendForApproval implements IPorSendForApproval {
             titleLocator.first().click();
 
             Locator sendForApprovalButtonLocator = page.locator(SEND_FOR_APPROVAL__BUTTON);
-            sendForApprovalButtonLocator.click();
+
+            String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
+
+            Response sendForApprovalResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + porType) && response.status() == 200,
+                    sendForApprovalButtonLocator::click
+            );
+            status = sendForApprovalResponse.status();
 
             page.waitForLoadState(LoadState.DOMCONTENTLOADED);
             page.waitForLoadState(LoadState.NETWORKIDLE);
@@ -107,6 +118,6 @@ public class PorSendForApproval implements IPorSendForApproval {
         } catch (Exception exception) {
             logger.error("Exception in POR Send For Approval function: {}", exception.getMessage());
         }
-        return email;
+        return status;
     }
 }

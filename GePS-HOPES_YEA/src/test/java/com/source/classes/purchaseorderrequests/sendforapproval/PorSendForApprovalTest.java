@@ -15,7 +15,8 @@ public class PorSendForApprovalTest extends BaseTest {
     @Parameters({"type", "purchaseType"})
     public void sendForApproval(String type, String purchaseType) {
         try {
-            iPorSendForApproval.sendForApproval(type, purchaseType);
+            int status = iPorSendForApproval.sendForApproval(type, purchaseType);
+            Assert.assertEquals(200, status, "POR Send For Approval was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in POR Send For Approval Test function: {}", exception.getMessage());
             Assert.fail("Exception in POR Send For Approval Test Function: " + exception.getMessage());

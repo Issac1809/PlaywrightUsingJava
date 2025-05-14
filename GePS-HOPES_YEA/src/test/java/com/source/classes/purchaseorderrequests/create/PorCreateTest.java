@@ -16,7 +16,7 @@ public class PorCreateTest extends BaseTest {
     public void create(String type, String purchaseType){
         try {
             int status = iPorCreate.porCreate(type, purchaseType);
-            Assert.assertEquals(200, status, "Requisition Create was not Successful");
+            Assert.assertEquals(200, status, "POR Create was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in POR Create Test Function: {}", exception.getMessage());
             Assert.fail("Exception in POR Create Test Function: " + exception.getMessage());
