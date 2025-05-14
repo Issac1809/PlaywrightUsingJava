@@ -190,10 +190,12 @@ pipeline {
                         echo "☁️ Uploading Allure Report to Google Drive via rclone..."
 
                         def gdriveFolderName = "Build_${env.BUILD_NUMBER}"
+                        def rclonePath = "D:\\rclone-v1.69.2-windows-amd64\\rclone-v1.69.2-windows-amd64\\rclone.exe"
+                        def rcloneConfig = "C:\\Users\\issac\\AppData\\Roaming\\rclone\\rclone.conf"
 
                         bat """
-                            rclone mkdir gdrive:${gdriveFolderName} --drive-root-folder-id ${GOOGLE_DRIVE_FOLDER_ID}
-                            rclone copy allure-report gdrive:${gdriveFolderName} --drive-root-folder-id ${GOOGLE_DRIVE_FOLDER_ID} --create-empty-src-dirs
+                            "${rclonePath}" mkdir gdrive:${gdriveFolderName} --drive-root-folder-id ${GOOGLE_DRIVE_FOLDER_ID} --config "${rcloneConfig}"
+                            "${rclonePath}" copy allure-report gdrive:${gdriveFolderName} --drive-root-folder-id ${GOOGLE_DRIVE_FOLDER_ID} --config "${rcloneConfig}" --create-empty-src-dirs
                         """
                     }
                 }
