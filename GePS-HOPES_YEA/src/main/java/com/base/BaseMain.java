@@ -260,7 +260,7 @@ public class BaseMain {
             iPoSendForVendor = new SendForVendor(iLogin, jsonNode, page, iLogout, playwrightFactory, objectMapper);
 
 //TODO Purchase Order Request Revision
-            iPorRevision = new PorRevision(iLogin, jsonNode, page, iLogout, iPorSendForApproval, iPorApprove, iPoSendForVendor);
+            iPorRevision = new PorRevision(iLogin, jsonNode, page, iLogout, iPorSendForApproval, iPorApprove);
 
 //TODO Order Schedules
             iOsCreate = new OsCreate(iLogin, jsonNode, page, iLogout, playwrightFactory);

@@ -7,7 +7,7 @@ public class LPorRevision {
     public static final String JUSTIFICATION_REQUIRED_TEXT_BOX = ".bootbox-input";
     public static final String ACCEPT_BUTTON = ".bootbox-accept";
     public static final String EDIT_BUTTON = "#btnEdit";
-    public static final String ADD_ADDITIONAL_ITEM = "##addServiceLineItems";
+    public static final String ADD_ADDITIONAL_ITEM = "#addServiceLineItems";
     public static final String ITEM_NAME_DROPDOWN = "#select2-ItemName-container";
     public static final String ITEM_NAME_SEARCH = ".select2-search__field";
     public static final String RATE = "#rate";

@@ -212,10 +212,13 @@ public class PorApprove implements IPorApprove {
                     APIResponse apiResponse = page.request().fetch(appUrl + porType + getUid, RequestOptions.create());
                     JsonNode jsonNode = objectMapper.readTree(apiResponse.body());
                     String purchaseOrderRequestId = jsonNode.get("id").asText();
+                    String poProcessed = jsonNode.get("poProcessed").asText();
                     String porStatus = jsonNode.get("status").asText();
                     String porReferenceNumber = jsonNode.get("referenceId").asText();
                     playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "purchaseOrderRequestId", purchaseOrderRequestId);
                     playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "porReferenceNumber", porReferenceNumber);
+                    playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "porStatus", porStatus);
+                    playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "poProcessed", poProcessed);
 
                     if(porStatus.equalsIgnoreCase("ProcessingPO")) {
                         msaFlow.msaFlow();

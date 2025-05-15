@@ -39,11 +39,11 @@ public class MSA_FTPHelper {
             File localDir = new File(localPath);
             if (!localDir.exists() && !localDir.mkdirs());{}
 
-            boolean porRevisionFlag = jsonNode.get("purchaseOrders").get("porRevision").asBoolean();
-            if (porRevisionFlag) {
-                excelFileName = porReferenceNumber + "_PT1_GePS-HOPES_R1.xls";
-            } else {
+            boolean poProcessed = jsonNode.get("purchaseOrderRequests").get("poProcessed").asBoolean();
+            if (!poProcessed) {
                 excelFileName = porReferenceNumber + "_PT1_GePS-HOPES_R0.xls";
+            } else {
+                excelFileName = porReferenceNumber + "_PT1_GePS-HOPES_R1.xls";
             }
 
             excelRemoteFilePath = remotePath + excelFileName;

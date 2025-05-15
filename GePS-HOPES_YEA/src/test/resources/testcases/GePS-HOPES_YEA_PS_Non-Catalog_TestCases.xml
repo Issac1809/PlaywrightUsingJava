@@ -206,6 +206,14 @@
 <!--        </classes>-->
 <!--    </test>-->
 
+<!--    <test name="Purchase Order Request Revision Request">-->
+<!--        <parameter name="type" value="PS"/>-->
+<!--        <parameter name="purchaseType" value="NonCatalog"/>-->
+<!--        <classes>-->
+<!--            <class name="com.source.classes.purchaseorderrequests.revision.PorRevisionTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
 <!--    <test name="Purchase Order Send For Vendor">-->
 <!--        <parameter name="type" value="PS"/>-->
 <!--        <parameter name="purchaseType" value="NonCatalog"/>-->
@@ -214,13 +222,6 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="Purchase Order Request Revision Request">-->
-<!--        <parameter name="type" value="PS"/>-->
-<!--        <parameter name="purchaseType" value="NonCatalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.purchaseorderrequests.revision.PorRevisionTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
 
 <!--    <test name="Order Schedule Create">-->
     <!--        <parameter name="type" value="PS"/>-->

@@ -10,6 +10,7 @@ import com.source.interfaces.purchaseorderrequests.IPorReject;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.purchaseorderrequests.IPorEdit;
+import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
 import static com.constants.purchaseorderrequests.LPorReject.*;
@@ -39,6 +40,7 @@ public class PorReject implements IPorReject {
         this.iPorEdit = iPorEdit;
         this.iPorSendForApproval = iPorSendForApproval;
         this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
+        this.logger = LoggerUtil.getLogger(PorReject.class);
     }
 
     public int porReject(String type, String purchaseType) {

@@ -76,6 +76,10 @@ public class SendForApproval implements IPrSendForApproval {
         );
         approvalStatus = sendResponse.status();
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            PlaywrightFactory.attachScreenshotWithName("Requisition Send For Approval", page);
+
         APIResponse requisitionResponse = page.request().fetch(appUrl + reqType + getUid, RequestOptions.create());
         JsonNode requisitionJson = objectMapper.readTree(requisitionResponse.body());
         int requisitionId = requisitionJson.get("requisitionId").asInt();
@@ -98,10 +102,6 @@ public class SendForApproval implements IPrSendForApproval {
                 playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionApprovers", approver);
             }
         }
-
-            page.waitForLoadState(LoadState.NETWORKIDLE);
-
-            PlaywrightFactory.attachScreenshotWithName("Requisition Send For Approval", page);
 
             iLogout.performLogout();
         } catch (Exception exception) {

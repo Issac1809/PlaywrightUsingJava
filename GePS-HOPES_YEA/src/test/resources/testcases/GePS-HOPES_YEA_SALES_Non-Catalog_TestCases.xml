@@ -206,19 +206,19 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="Purchase Order Send For Vendor">-->
-<!--        <parameter name="type" value="Sales"/>-->
-<!--        <parameter name="purchaseType" value="NonCatalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.purchaseorders.PoSendForVendorTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-
 <!--    <test name="Purchase Order Request Revision Request">-->
 <!--        <parameter name="type" value="Sales"/>-->
 <!--        <parameter name="purchaseType" value="NonCatalog"/>-->
 <!--        <classes>-->
 <!--            <class name="com.source.classes.purchaseorderrequests.revision.PorRevisionTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+<!--    <test name="Purchase Order Send For Vendor">-->
+<!--        <parameter name="type" value="Sales"/>-->
+<!--        <parameter name="purchaseType" value="NonCatalog"/>-->
+<!--        <classes>-->
+<!--            <class name="com.source.classes.purchaseorders.PoSendForVendorTest"/>-->
 <!--        </classes>-->
 <!--    </test>-->
 

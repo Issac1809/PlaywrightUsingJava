@@ -15,10 +15,11 @@ public class PorRevisionTest extends BaseTest {
     @Parameters({"type", "purchaseType"})
     public void porRevision(String type, String purchaseType) {
         try {
-            iPorRevision.porRevision(type, purchaseType);
+            int status = iPorRevision.porRevision(type, purchaseType);
+            Assert.assertEquals(200, status, "POR Revision was not Successful");
         } catch (Exception exception) {
-            logger.error("Exception in Send For Vendor Test function: {}", exception.getMessage());
-            Assert.fail("Exception in PO Send For Vendor Test Function: " + exception.getMessage());
+            logger.error("Exception in POR Revision Test function: {}", exception.getMessage());
+            Assert.fail("Exception in POR Revision Test Function: " + exception.getMessage());
         }
     }
 }

@@ -1,15 +1,17 @@
 package com.source.classes.purchaseorderrequests.revision;
 import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.purchaseorderrequests.IPorApprove;
 import com.source.interfaces.purchaseorderrequests.IPorRevision;
 import com.source.interfaces.purchaseorderrequests.IPorSendForApproval;
-import com.source.interfaces.purchaseorders.IPoSendForVendor;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import static com.constants.purchaseorderrequests.LPorRevision.*;
@@ -24,120 +26,137 @@ public class PorRevision implements IPorRevision {
     ILogout iLogout;
     IPorSendForApproval iPorSendForApproval;
     IPorApprove iPorApprove;
-    IPoSendForVendor iPoSendForVendor;
+    String appUrl;
 
     private PorRevision(){
     }
 
 //TODO Constructor
-    public PorRevision(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout, IPorSendForApproval iPorSendForApproval, IPorApprove iPorApprove, IPoSendForVendor iPoSendForVendor) {
+    public PorRevision(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout, IPorSendForApproval iPorSendForApproval, IPorApprove iPorApprove) {
         this.iLogin = iLogin;
         this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
         this.iPorSendForApproval = iPorSendForApproval;
         this.iPorApprove = iPorApprove;
-        this.iPoSendForVendor = iPoSendForVendor;
         this.logger = LoggerUtil.getLogger(PorRevision.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void porRevision(String type, String purchaseType) {
+    public int porRevision(String type, String purchaseType) {
+        int status = 0;
         try {
-            Locator porNavigationBarLocator = page.locator(POR_NAVIGATION_BAR);
-            porNavigationBarLocator.click();
+            String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
+            String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
+            iLogin.performLogin(buyerMailId);
 
-            String title = getTransactionTitle(type, purchaseType);
-            Locator titleLocator = page.locator(getTitle(title));
-            titleLocator.first().click();
+            String porStatus = jsonNode.get("purchaseOrderRequests").get("porStatus").asText();
+            if (!porStatus.equalsIgnoreCase("POCreated")) {
+                throw new Exception("POR Status is not PO Created");
+            } else {
+                Locator porNavigationBarLocator = page.locator(POR_NAVIGATION_BAR);
+                porNavigationBarLocator.click();
 
-            Locator revisionRequestButton = page.locator(REQUEST_REVISION_BUTTON);
-            revisionRequestButton.click();
+                String title = getTransactionTitle(type, purchaseType);
+                Locator titleLocator = page.locator(getTitle(title));
+                titleLocator.first().click();
 
-            Locator justificationRequiredTextBoxLocator = page.locator(JUSTIFICATION_REQUIRED_TEXT_BOX);
-            justificationRequiredTextBoxLocator.fill("POR Revision");
+                Locator revisionRequestButton = page.locator(REQUEST_REVISION_BUTTON);
+                revisionRequestButton.click();
 
-            Locator submitButtonLocator = page.locator(ACCEPT_BUTTON);
-            submitButtonLocator.click();
+                Locator justificationRequiredTextBoxLocator = page.locator(JUSTIFICATION_REQUIRED_TEXT_BOX);
+                justificationRequiredTextBoxLocator.fill("POR Revision");
 
-            Locator editButtonLocator = page.locator(EDIT_BUTTON);
-            editButtonLocator.click();
+                Locator submitButtonLocator = page.locator(ACCEPT_BUTTON);
+                submitButtonLocator.click();
 
-            page.waitForLoadState(LoadState.NETWORKIDLE);
+                Locator editButtonLocator = page.locator(EDIT_BUTTON);
+                editButtonLocator.click();
 
-            Locator addAdditionalItemsLocator = page.locator(ADD_ADDITIONAL_ITEM);
-            addAdditionalItemsLocator.click();
+                page.waitForLoadState(LoadState.NETWORKIDLE);
 
-            String itemName = jsonNode.get("purchaseOrderRequests").get("additionalItemName").asText();
-            String rate = jsonNode.get("purchaseOrderRequests").get("rate").asText();
-            String hsCode  = jsonNode.get("purchaseOrderRequests").get("hsCode").asText();
-            String make = jsonNode.get("purchaseOrderRequests").get("make").asText();
-            String model = jsonNode.get("purchaseOrderRequests").get("model").asText();
-            String partNumber = jsonNode.get("purchaseOrderRequests").get("partNumber").asText();
-            String countryOfOrigin = jsonNode.get("purchaseOrderRequests").get("countryOfOrigin").asText();
-            String leadTime = jsonNode.get("purchaseOrderRequests").get("leadTime").asText();
-            String shippingPoint = jsonNode.get("purchaseOrderRequests").get("shippingPoint").asText();
+                Locator addAdditionalItemsLocator = page.locator(ADD_ADDITIONAL_ITEM);
+                addAdditionalItemsLocator.click();
 
-            Locator additionalItemNameDropDownLocator = page.locator(ITEM_NAME_DROPDOWN);
-            additionalItemNameDropDownLocator.click();
+                String itemName = jsonNode.get("purchaseOrderRequests").get("additionalItemName").asText();
+                String rate = jsonNode.get("purchaseOrderRequests").get("rate").asText();
+                String hsCode = jsonNode.get("purchaseOrderRequests").get("hsCode").asText();
+                String make = jsonNode.get("purchaseOrderRequests").get("make").asText();
+                String model = jsonNode.get("purchaseOrderRequests").get("model").asText();
+                String partNumber = jsonNode.get("purchaseOrderRequests").get("partNumber").asText();
+                String countryOfOrigin = jsonNode.get("purchaseOrderRequests").get("countryOfOrigin").asText();
+                String leadTime = jsonNode.get("purchaseOrderRequests").get("leadTime").asText();
+                String shippingPoint = jsonNode.get("purchaseOrderRequests").get("shippingPoint").asText();
 
-            Locator additionalItemNameSearchLocator = page.locator(ITEM_NAME_SEARCH);
-            additionalItemNameSearchLocator.fill(itemName);
+                Locator additionalItemNameDropDownLocator = page.locator(ITEM_NAME_DROPDOWN);
+                additionalItemNameDropDownLocator.click();
 
-            String additionalItemNameSelect = getItemName(itemName);
-            Locator additionalItemNameSelectLocator = page.locator(additionalItemNameSelect);
-            additionalItemNameSelectLocator.click();
+                Locator additionalItemNameSearchLocator = page.locator(ITEM_NAME_SEARCH);
+                additionalItemNameSearchLocator.fill(itemName);
 
-            Locator rateLocator = page.locator(RATE);
-            rateLocator.fill(rate);
+                String additionalItemNameSelect = getItemName(itemName);
+                Locator additionalItemNameSelectLocator = page.locator(additionalItemNameSelect);
+                additionalItemNameSelectLocator.click();
 
-            Locator hsCodeLocator = page.locator(HS_CODE);
-            hsCodeLocator.fill(hsCode);
+                Locator rateLocator = page.locator(RATE);
+                rateLocator.fill(rate);
 
-            Locator makeLocator = page.locator(MAKE);
-            makeLocator.fill(make);
+                Locator hsCodeLocator = page.locator(HS_CODE);
+                hsCodeLocator.fill(hsCode);
 
-            Locator modelLocator = page.locator(MODEL);
-            modelLocator.fill(model);
+                Locator makeLocator = page.locator(MAKE);
+                makeLocator.fill(make);
 
-            Locator partNumberLocator = page.locator(PART_NUMBER);
-            partNumberLocator.fill(partNumber);
+                Locator modelLocator = page.locator(MODEL);
+                modelLocator.fill(model);
 
-            Locator countryOfOriginLocator = page.locator(COUNTRY_OF_ORIGIN);
-            countryOfOriginLocator.fill(countryOfOrigin);
+                Locator partNumberLocator = page.locator(PART_NUMBER);
+                partNumberLocator.fill(partNumber);
 
-            Locator leadTimeLocator = page.locator(LEAD_TIME);
-            leadTimeLocator.fill(leadTime);
+                Locator countryOfOriginLocator = page.locator(COUNTRY_OF_ORIGIN);
+                countryOfOriginLocator.fill(countryOfOrigin);
 
-            Locator shippingPointDropDownLocator = page.locator(SHIPPING_POINT_DROPDOWN);
-            shippingPointDropDownLocator.click();
+                Locator leadTimeLocator = page.locator(LEAD_TIME);
+                leadTimeLocator.fill(leadTime);
 
-            Locator shippingPointSearchLocator = page.locator(SHIPPING_POINT_SEARCH);
-            shippingPointSearchLocator.fill(itemName);
+                Locator shippingPointDropDownLocator = page.locator(SHIPPING_POINT_DROPDOWN);
+                shippingPointDropDownLocator.click();
 
-            String shippingPointSelect = getShippingPoint(shippingPoint);
-            Locator shippingPointSelectSelectLocator = page.locator(shippingPointSelect);
-            shippingPointSelectSelectLocator.click();
+                Locator shippingPointSearchLocator = page.locator(SHIPPING_POINT_SEARCH);
+                shippingPointSearchLocator.fill(shippingPoint);
 
-            Locator submitButtonLocator1 = page.locator(SUBMIT_BUTTON);
-            submitButtonLocator1.click();
+                String shippingPointSelect = getShippingPoint(shippingPoint);
+                Locator shippingPointSelectSelectLocator = page.locator(shippingPointSelect);
+                shippingPointSelectSelectLocator.click();
 
-            Locator updateButtonLocator = page.locator(UPDATE_BUTTON);
-            updateButtonLocator.click();
+                Locator submitButtonLocator1 = page.locator(SUBMIT_BUTTON);
+                submitButtonLocator1.click();
 
-            Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
-            acceptButtonLocator.click();
+                Locator updateButtonLocator = page.locator(UPDATE_BUTTON);
+                updateButtonLocator.click();
 
-            page.waitForLoadState(LoadState.NETWORKIDLE);
+                Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
 
-            PlaywrightFactory.attachScreenshotWithName("Purchase Order Request Revision", page);
+                String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
 
-            iLogout.performLogout();
+                Response porRevisionResponse = page.waitForResponse(
+                        response -> response.url().startsWith(appUrl + porType) && response.status() == 200,
+                        acceptButtonLocator::click
+                );
+                status = porRevisionResponse.status();
 
-            iPorSendForApproval.sendForApproval(type, purchaseType);
-            iPorApprove.approve(type, purchaseType);
-            iPoSendForVendor.sendPoForVendor(type, purchaseType);
+                page.waitForLoadState(LoadState.NETWORKIDLE);
+
+                PlaywrightFactory.attachScreenshotWithName("Purchase Order Request Revision", page);
+
+                iLogout.performLogout();
+
+                iPorSendForApproval.sendForApproval(type, purchaseType);
+                iPorApprove.approve(type, purchaseType);
+            }
         } catch (Exception exception) {
             logger.error("Exception in POR Edit function: {}", exception.getMessage());
         }
+        return status;
     }
 }
