@@ -6,13 +6,13 @@
         <listener class-name="com.listeners.FailFastListener"/>
     </listeners>
 
-    <test name="Requisition Create">
-        <parameter name="type" value="Sales"/>
-        <parameter name="purchaseType" value="NonCatalog"/>
-        <classes>
-            <class name="com.source.classes.requisitions.create.CreateTest"/>
-        </classes>
-    </test>
+<!--    <test name="Requisition Create">-->
+<!--        <parameter name="type" value="Sales"/>-->
+<!--        <parameter name="purchaseType" value="NonCatalog"/>-->
+<!--        <classes>-->
+<!--            <class name="com.source.classes.requisitions.create.CreateTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
 <!--    <test name="Requisition Edit">-->
 <!--        <parameter name="type" value="Sales"/>-->
@@ -158,13 +158,13 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="Purchase Order Request Create">-->
-<!--        <parameter name="type" value="Sales"/>-->
-<!--        <parameter name="purchaseType" value="NonCatalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.purchaseorderrequests.create.PorCreateTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Purchase Order Request Create">
+        <parameter name="type" value="Sales"/>
+        <parameter name="purchaseType" value="NonCatalog"/>
+        <classes>
+            <class name="com.source.classes.purchaseorderrequests.create.PorCreateTest"/>
+        </classes>
+    </test>
 
 <!--    <test name="Purchase Order Request Edit">-->
 <!--        <parameter name="type" value="Sales"/>-->

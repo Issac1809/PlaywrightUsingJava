@@ -68,7 +68,14 @@ public class SendForApproval implements IPrSendForApproval {
 
         Locator yesButtonLocator = page.locator(YES);
 
-        String reqType = type.equalsIgnoreCase("PS") ? "/api/Requisitions/" : "/api/RequisitionsSales/";
+            String reqType;
+            if(type.equalsIgnoreCase("sales")){
+                reqType = "/api/RequisitionsSales/";
+            } else if(type.equalsIgnoreCase("ps")){
+                reqType = "/api/Requisitions/";
+            } else {
+                reqType = "/api/RequisitionsNonPoc/";
+            }
 
         Response sendResponse = page.waitForResponse(
                 response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,

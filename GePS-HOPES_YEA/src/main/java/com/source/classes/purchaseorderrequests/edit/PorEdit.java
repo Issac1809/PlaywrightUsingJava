@@ -55,6 +55,7 @@ public class PorEdit implements IPorEdit {
             editButtonLocator.click();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
+            Thread.sleep(1000);
 
             Locator updateButtonLocator = page.locator(UPDATE_BUTTON);
             updateButtonLocator.click();

@@ -447,7 +447,7 @@ public class BaseTest {
             poSendForVendorTest = new PoSendForVendorTest();
 
 //TODO Purchase Order Request Revision
-            iPorRevision = new PorRevision(iLogin, jsonNode, page, iLogout, iPorSendForApproval, iPorApprove);
+            iPorRevision = new PorRevision(iLogin, jsonNode, page, iLogout, iPorSendForApproval, iPorApprove, playwrightFactory, objectMapper);
             porRevisionTest = new PorRevisionTest();
 
 //TODO Order Schedule

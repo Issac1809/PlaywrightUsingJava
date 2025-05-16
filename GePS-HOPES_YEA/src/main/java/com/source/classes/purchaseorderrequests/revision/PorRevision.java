@@ -1,6 +1,7 @@
 package com.source.classes.purchaseorderrequests.revision;
 import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -21,6 +22,8 @@ public class PorRevision implements IPorRevision {
 
     Logger logger;
     JsonNode jsonNode;
+    PlaywrightFactory playwrightFactory;
+    ObjectMapper objectMapper;
     Page page;
     ILogin iLogin;
     ILogout iLogout;
@@ -32,13 +35,15 @@ public class PorRevision implements IPorRevision {
     }
 
 //TODO Constructor
-    public PorRevision(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout, IPorSendForApproval iPorSendForApproval, IPorApprove iPorApprove) {
+    public PorRevision(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout, IPorSendForApproval iPorSendForApproval, IPorApprove iPorApprove, PlaywrightFactory playwrightFactory, ObjectMapper objectMapper) {
         this.iLogin = iLogin;
         this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
         this.iPorSendForApproval = iPorSendForApproval;
         this.iPorApprove = iPorApprove;
+        this.playwrightFactory = playwrightFactory;
+        this.objectMapper = objectMapper;
         this.logger = LoggerUtil.getLogger(PorRevision.class);
         this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
@@ -48,19 +53,38 @@ public class PorRevision implements IPorRevision {
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
+            String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
             iLogin.performLogin(buyerMailId);
 
-            String porStatus = jsonNode.get("purchaseOrderRequests").get("porStatus").asText();
-            if (!porStatus.equalsIgnoreCase("POCreated")) {
+            Locator porNavigationBarLocator = page.locator(POR_NAVIGATION_BAR);
+            porNavigationBarLocator.click();
+
+            String title = getTransactionTitle(type, purchaseType);
+            Locator titleLocator = page.locator(getTitle(title));
+            titleLocator.first().click();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            String url = page.url();
+            String[] urlArray = url.split("=");
+            String getUid = urlArray[1];
+
+            APIResponse apiResponse = page.request().fetch(appUrl + porType + getUid, RequestOptions.create());
+            JsonNode jsonNode1 = objectMapper.readTree(apiResponse.body());
+            JsonNode purchaseOrders = jsonNode1.get("purchaseOrders");
+            boolean poProcessed;
+            if (purchaseOrders != null && purchaseOrders.isArray() && purchaseOrders.size() > 0) {
+                poProcessed = true;
+            } else {
+                poProcessed = false;
+            }
+
+            playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "poProcessed", String.valueOf(poProcessed));
+
+            boolean poProcessedFlag = jsonNode.get("purchaseOrderRequests").get("poProcessed").asBoolean();
+            if (!poProcessedFlag) {
                 throw new Exception("POR Status is not PO Created");
             } else {
-                Locator porNavigationBarLocator = page.locator(POR_NAVIGATION_BAR);
-                porNavigationBarLocator.click();
-
-                String title = getTransactionTitle(type, purchaseType);
-                Locator titleLocator = page.locator(getTitle(title));
-                titleLocator.first().click();
-
                 Locator revisionRequestButton = page.locator(REQUEST_REVISION_BUTTON);
                 revisionRequestButton.click();
 
@@ -137,8 +161,6 @@ public class PorRevision implements IPorRevision {
 
                 Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
 
-                String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
-
                 Response porRevisionResponse = page.waitForResponse(
                         response -> response.url().startsWith(appUrl + porType) && response.status() == 200,
                         acceptButtonLocator::click
@@ -151,11 +173,10 @@ public class PorRevision implements IPorRevision {
 
                 iLogout.performLogout();
 
-                iPorSendForApproval.sendForApproval(type, purchaseType);
                 iPorApprove.approve(type, purchaseType);
             }
         } catch (Exception exception) {
-            logger.error("Exception in POR Edit function: {}", exception.getMessage());
+            logger.error("Exception in POR Revision function: {}", exception.getMessage());
         }
         return status;
     }

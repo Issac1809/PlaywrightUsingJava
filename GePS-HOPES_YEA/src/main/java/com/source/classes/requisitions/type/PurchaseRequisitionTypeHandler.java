@@ -34,9 +34,13 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                 iPrCreate.departmentPic();
                 iPrCreate.buyerManager();
                 iPrCreate.salesReferenceId();
-            } else {
+            } else if(type.equalsIgnoreCase("PS")) {
                 List<String> getWbsJson = iPrCreate.project();
                 iPrCreate.wbs(getWbsJson);
+            } else {
+                List<String> serviceOrders = iPrCreate.salesOrder();
+                iPrCreate.departmentPic();
+                iPrCreate.serviceOrder(serviceOrders);
             }
 
             switch (purchaseType.toLowerCase()) {
@@ -47,7 +51,11 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                     iPrCreate.shippingMode(purchaseType);
                     iPrCreate.expectedPOIssue(purchaseType);
                     iPrCreate.expectedDelivery(purchaseType);
-                    if(type.equalsIgnoreCase("sales")){
+                    if(type.equalsIgnoreCase("SD")){
+                        iPrCreate.billableToCustomer();
+                        iPrCreate.caseMarking();
+                        iPrCreate.messageToSourcing();
+                        iPrCreate.buyerManager();
                     }
                     if(type.equalsIgnoreCase("PS")) {
                         iPrCreate.buyerManager();
@@ -63,6 +71,12 @@ public class PurchaseRequisitionTypeHandler implements IPrType {
                     iPrCreate.incoterm();
                     iPrCreate.shippingAddress();
                     iPrCreate.shippingMode(purchaseType);
+                    if(type.equalsIgnoreCase("SD")){
+                        iPrCreate.billableToCustomer();
+                        iPrCreate.caseMarking();
+                        iPrCreate.messageToSourcing();
+                        iPrCreate.buyerManager();
+                    }
                     iPrCreate.quotationRequiredBy();
                     iPrCreate.expectedPOIssue(purchaseType);
                     iPrCreate.expectedDelivery(purchaseType);

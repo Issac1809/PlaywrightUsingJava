@@ -13,7 +13,12 @@ public interface IPrCreate {
     void salesReferenceId();
     List<String> project();
     void wbs(List<String> wbs);
+    List<String> salesOrder();
+    void serviceOrder(List<String> serviceOrder);
     void departmentPic();
+    void billableToCustomer();
+    void caseMarking();
+    void messageToSourcing();
     Map<String, String> vendor();
     List<String> rateContract(Map<String, String> rateContractArray);
     void incoterm();

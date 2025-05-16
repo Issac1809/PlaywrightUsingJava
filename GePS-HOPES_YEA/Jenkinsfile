@@ -223,7 +223,7 @@ pipeline {
         failure {
             emailext(
                 mimeType: 'text/html',
-                to: 'issac.raja@cormsquare.com, darshan.dm@cormsquare.com, deepak.g@cormsquare.com, radhika.b@cormsquare.com',
+                to: 'test.troops@cormsquare.com',
                 subject: "❌ CI/CD Pipeline Alert - Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """<html>
                     <body style="font-family: Arial, sans-serif; line-height: 1.6;">
@@ -247,7 +247,7 @@ pipeline {
                         <footer style="font-size: 12px; color: #888;">
                             <p>Warm Regards,</p>
                             <p><strong>Jenkins CI/CD System</strong><br>
-                            Cormsquare Quality Engineering</p>
+                            QA-Team</p>
                             <p style="margin-top: 10px;"><em>📩 For any doubts or clarifications, please contact the QA team directly.</em></p>
                             <p><em>🚫 Please do not reply to this automated email.</em></p>
                         </footer>
@@ -259,7 +259,7 @@ pipeline {
         success {
             emailext(
                 mimeType: 'text/html',
-                to: 'issac.raja@cormsquare.com, darshan.dm@cormsquare.com, deepak.g@cormsquare.com, radhika.b@cormsquare.com',
+                to: 'test.troops@cormsquare.com',
                 subject: "✅ CI/CD Pipeline Success - Build PASSED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """<html>
                     <body style="font-family: Arial, sans-serif; line-height: 1.6;">
@@ -283,7 +283,7 @@ pipeline {
                         <footer style="font-size: 12px; color: #888;">
                             <p>Warm Regards,</p>
                             <p><strong>Jenkins CI/CD System</strong><br>
-                            Cormsquare Quality Engineering</p>
+                            QA-Team</p>
                             <p style="margin-top: 10px;"><em>📩 For any doubts or clarifications, please contact the QA team directly.</em></p>
                             <p><em>🚫 Please do not reply to this automated email.</em></p>
                         </footer>

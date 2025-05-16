@@ -77,14 +77,20 @@ public class Assign implements IPrAssign {
             String assign = "";
             if(type.equalsIgnoreCase("sales")){
                 assign = SAVE_USER_SALES;
-            }
-            else if (type.equalsIgnoreCase("ps")){
+            } else {
                 assign = SAVE_USER;
             }
 
             Locator saveUser = page.locator(assign);
 
-            String reqType = type.equalsIgnoreCase("PS") ? "/api/Requisitions/" : "/api/RequisitionsSales/";
+            String reqType;
+            if(type.equalsIgnoreCase("sales")){
+                reqType = "/api/RequisitionsSales/";
+            } else if(type.equalsIgnoreCase("ps")){
+                reqType = "/api/Requisitions/";
+            } else {
+                reqType = "/api/RequisitionsNonPoc/";
+            }
 
             Response assignResponse = page.waitForResponse(
                     response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,

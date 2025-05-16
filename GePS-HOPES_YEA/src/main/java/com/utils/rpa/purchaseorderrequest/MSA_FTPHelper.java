@@ -37,7 +37,7 @@ public class MSA_FTPHelper {
     public String downloadFile(String remotePath, String localPath, String porReferenceNumber, JsonNode jsonNode) {
         try {
             File localDir = new File(localPath);
-            if (!localDir.exists() && !localDir.mkdirs());{}
+            if (!localDir.exists() && !localDir.mkdirs());
 
             boolean poProcessed = jsonNode.get("purchaseOrderRequests").get("poProcessed").asBoolean();
             if (!poProcessed) {
@@ -59,12 +59,17 @@ public class MSA_FTPHelper {
         return excelLocalFile.getAbsolutePath();
     }
 
-    public void connectionEstablishAndUploadFiles(String server, int port, String user, String password, String localPoFilePath, String localXLSFilePath, int poNumber, String remotePathPO, String remotePathXLS, String porReferenceNumber) {
+    public void connectionEstablishAndUploadFiles(String server, int port, String user, String password, String localPoFilePath, String localXLSFilePath, int poNumber, String remotePathPO, String remotePathXLS, JsonNode jsonNode) {
         try {
             connectionEstablish(server, port, user, password);
 
 //TODO PO File Upload
-            uploadFile(localPoFilePath, remotePathPO + "PO_" + poNumber + ".pdf");
+            boolean poProcessed = jsonNode.get("purchaseOrderRequests").get("poProcessed").asBoolean();
+            if (!poProcessed) {
+                uploadFile(localPoFilePath, remotePathPO + "PO_" + poNumber + ".pdf");
+            } else {
+                uploadFile(localPoFilePath, remotePathPO + "PO_" + poNumber + "_001.pdf");
+            }
 
 //TODO XLS File Upload
             uploadFile(localXLSFilePath, remotePathXLS + excelFileName);

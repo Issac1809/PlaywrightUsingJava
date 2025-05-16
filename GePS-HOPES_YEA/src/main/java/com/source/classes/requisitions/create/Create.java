@@ -61,8 +61,10 @@ public class Create implements IPrCreate {
             String prTypeLocator;
             if(type.equalsIgnoreCase("sales")){
                 prTypeLocator = getSalesPrType(purchaseType);
-            } else {
+            } else if(type.equalsIgnoreCase("ps")){
                 prTypeLocator = getPsType(purchaseType);
+            } else {
+                prTypeLocator = getSdPrType(purchaseType);
             }
             Locator prType = page.locator(prTypeLocator);
             prType.click();
@@ -139,6 +141,74 @@ public class Create implements IPrCreate {
         return wbsValues;
     }
 
+    public List<String> salesOrder() {
+        List<String> serviceOrders = new ArrayList<>();
+        try {
+            String salesOrderValue = jsonNode.get("requisition").get("salesOrder").asText();
+
+            Locator salesOrder = page.locator(SALES_ORDER);
+            salesOrder.click();
+
+            Locator salesOrderLocator = page.locator(SALES_ORDER_SEARCH);
+            salesOrderLocator.fill(salesOrderValue);
+
+            String salesOrderSelectLocator = getLocator(salesOrderValue);
+            Locator salesOrderSelect = page.locator(salesOrderSelectLocator);
+            salesOrderSelect.click();
+
+            APIResponse salesOrderResponse = page.request().fetch(appUrl + "/api/SalesOrders/search?keyword=" + salesOrderValue, RequestOptions.create());
+            JsonNode salesOrderJson = objectMapper.readTree(salesOrderResponse.body());
+            JsonNode firstSalesOrderObject = salesOrderJson.get(0);
+            String salesOrderId = firstSalesOrderObject.get("id").asText();
+            String companyId = firstSalesOrderObject.get("companyId").asText();
+
+            APIResponse departmentPicResponse = page.request().fetch(appUrl + "/api/GetDepartmentPICsByCompanyId?companyId=" + companyId, RequestOptions.create());
+            JsonNode departmentPicJson = objectMapper.readTree(departmentPicResponse.body());
+
+            for(JsonNode departmentPic : departmentPicJson){
+                if(departmentPic.has("picName")){
+                    String departmentPicMail = departmentPic.get("picName").asText();
+                    playwrightFactory.savePropertiesIntoJsonFile("requisition", "sdDepartmentPic", departmentPicMail);
+                }
+            }
+
+            APIResponse serviceOrderResponse = page.request().fetch(appUrl + "/api/ServiceOrders/search?salesOrderId=" + salesOrderId, RequestOptions.create());
+            JsonNode serviceOrderJson = objectMapper.readTree(serviceOrderResponse.body());
+
+            for(JsonNode serviceOrder : serviceOrderJson){
+                if(serviceOrder.has("text")){
+                    serviceOrders.add(serviceOrder.get("text").asText());
+                }
+            }
+        } catch (Exception exception) {
+            logger.error("Exception in Sales Order Function: {}", exception.getMessage());
+        }
+        return serviceOrders;
+    }
+
+    public void serviceOrder(List<String> serviceOrders) {
+        try {
+            String serviceOrdersFromProperties = jsonNode.get("requisition").get("serviceOrder").asText();
+
+            for(String getServiceOrders : serviceOrders) {
+                if (getServiceOrders.equals(serviceOrdersFromProperties)) {
+                    Locator serviceOrderLocator = page.locator(SERVICE_ORDER);
+                    serviceOrderLocator.click();
+
+                    Locator serviceOrderSearch = page.locator(SERVICE_ORDER_SEARCH);
+                    serviceOrderSearch.fill(serviceOrdersFromProperties);
+
+                    String serviceOrderSelectLocator = getLocator(serviceOrdersFromProperties);
+                    Locator serviceOrderSelect = page.locator(serviceOrderSelectLocator);
+                    serviceOrderSelect.click();
+                    break;
+                }
+            }
+        } catch (Exception exception) {
+            logger.error("Exception in Service Order Function: {}", exception.getMessage());
+        }
+    }
+
     public void departmentPic(){
         try {
             String departmentPic = jsonNode.get("requisition").get("departmentPic").asText();
@@ -196,6 +266,51 @@ public class Create implements IPrCreate {
             page.waitForLoadState(LoadState.NETWORKIDLE);
         } catch (Exception exception) {
             logger.error("Exception in Company Function: {}", exception.getMessage());
+        }
+    }
+
+    public void billableToCustomer() {
+        try {
+            String billableTocustomer = jsonNode.get("requisition").get("billableTocustomer").asText();
+
+            Locator billableTocustomerLocator = page.locator(BILLABLE_TO_CUSTOMER);
+            billableTocustomerLocator.click();
+
+            Locator billableTocustomerSearch = page.locator(BILLABLE_TO_CUSTOMER_SEARCH);
+            billableTocustomerSearch.fill(billableTocustomer);
+
+            String billableTocustomerSelectLocator = getLocator(billableTocustomer);
+            Locator billableTocustomerSelect = page.locator(billableTocustomerSelectLocator);
+            billableTocustomerSelect.click();
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+        } catch (Exception exception) {
+            logger.error("Exception in Billable To Customer Function: {}", exception.getMessage());
+        }
+    }
+
+    public void caseMarking() {
+        try {
+            String caseMarking = jsonNode.get("requisition").get("caseMarking").asText();
+
+            Locator caseMarkingLocator = page.locator(CASE_MARKING);
+            caseMarkingLocator.click();
+            caseMarkingLocator.fill(caseMarking);
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+        } catch (Exception exception) {
+            logger.error("Exception in Case Marking Function: {}", exception.getMessage());
+        }
+    }
+
+    public void messageToSourcing() {
+        try {
+            String messageToSourcing = jsonNode.get("requisition").get("messageToSourcing").asText();
+
+            Locator messageToSourcingLocator = page.locator(MESSAGE_TO_SOURCING);
+            messageToSourcingLocator.click();
+            messageToSourcingLocator.fill(messageToSourcing);
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+        } catch (Exception exception) {
+            logger.error("Exception in Message To Sourcing Function: {}", exception.getMessage());
         }
     }
 
@@ -264,11 +379,10 @@ public class Create implements IPrCreate {
         try {
             String warrantyRequirement = jsonNode.get("requisition").get("warrantyRequirement").asText();
 
-            if(type.equalsIgnoreCase("PS")) {
+            if(type.equalsIgnoreCase("PS") || type.equalsIgnoreCase("SD")) {
                 Locator warrantyRequirements = page.locator(WARRANTY_REQUIREMENTS);
                 warrantyRequirements.click();
-            }
-            else {
+            } else {
                 Locator salesWarrantyRequirements = page.locator(SALES_WARRANTY_REQUIREMENTS);
                 salesWarrantyRequirements.click();
             }
@@ -287,7 +401,7 @@ public class Create implements IPrCreate {
         try {
             String priceValidity = jsonNode.get("requisition").get("priceValidity").asText();
 
-            if(type.equalsIgnoreCase("PS")) {
+            if(type.equalsIgnoreCase("PS") || type.equalsIgnoreCase("SD")) {
                 Locator priceValidityLocator = page.locator(PRICE_VALIDITY);
                 priceValidityLocator.click();
             } else {
@@ -424,10 +538,9 @@ public class Create implements IPrCreate {
             if (isInspectionRequired.equalsIgnoreCase("yes")) {
                 if (purchaseType.equalsIgnoreCase("catalog")){
                     inspectionRequiredLocator = page.locator(CATALOG_INSPECTION_REQUIRED);
-                } else if (type.equals("PS")) {
+                } else if (type.equals("PS") || type.equals("SD")) {
                     inspectionRequiredLocator = page.locator(NON_CATALOG_INSPECTION_REQUIRED);
-                }
-                else {
+                } else {
                     inspectionRequiredLocator = page.locator(SALES_NON_CATALOG_INSPECTION_REQUIRED);
                 }
                 inspectionRequiredLocator.click();
@@ -461,7 +574,7 @@ public class Create implements IPrCreate {
     public void orderIntake(String type){
         try {
             String orderIntake = jsonNode.get("requisition").get("orderIntake").asText();
-            if(type.equals("PS")) {
+            if(type.equalsIgnoreCase("PS") || type.equalsIgnoreCase("SD")) {
                 Locator orderIntakeLocator = page.locator(ORDER_INTAKE);
                 orderIntakeLocator.fill(orderIntake);
             } else {
@@ -477,7 +590,7 @@ public class Create implements IPrCreate {
         try {
             if (purchaseType.equalsIgnoreCase("NonCatalog")) {
                 String targetPrice = jsonNode.get("requisition").get("targetPrice").asText();
-                if(type.equalsIgnoreCase("PS")) {
+                if(type.equalsIgnoreCase("PS") || type.equalsIgnoreCase("SD")) {
                     Locator targetPriceLocator = page.locator(TARGET_PRICE);
                     targetPriceLocator.fill(targetPrice);
                 } else {
@@ -848,7 +961,14 @@ public class Create implements IPrCreate {
 
             Locator yesButton = page.locator(YES);
 
-            String reqType = type.equalsIgnoreCase("PS") ? "/api/Requisitions/" : "/api/RequisitionsSales/";
+            String reqType;
+            if(type.equalsIgnoreCase("sales")){
+                reqType = "/api/RequisitionsSales/";
+            } else if(type.equalsIgnoreCase("ps")){
+                reqType = "/api/Requisitions/";
+            } else {
+                reqType = "/api/RequisitionsNonPoc/";
+            }
 
             Response statusResponse = page.waitForResponse(
                     response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
@@ -880,13 +1000,20 @@ public class Create implements IPrCreate {
                 String transactionId = jsonNode1.get("transactionId").asText();
                 playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionId", requisitionId);
                 playwrightFactory.savePropertiesIntoJsonFile("requisition", "salesTransactionNumber", transactionId);
-            } else {
+            } else if(type.equalsIgnoreCase("PS")) {
                 APIResponse apiResponse = page.request().fetch(appUrl + "/api/Requisitions/" + getUid, RequestOptions.create());
                 JsonNode jsonNode1 = objectMapper.readTree(apiResponse.body());
                 String requisitionId = jsonNode1.get("requisitionId").asText();
                 String transactionId = jsonNode1.get("transactionId").asText();
                 playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionId", requisitionId);
                 playwrightFactory.savePropertiesIntoJsonFile("requisition", "psTransactionNumber", transactionId);
+            } else {
+                APIResponse apiResponse = page.request().fetch(appUrl + "/api/RequisitionsNonPoc/" + getUid, RequestOptions.create());
+                JsonNode jsonNode1 = objectMapper.readTree(apiResponse.body());
+                String requisitionId = jsonNode1.get("requisitionId").asText();
+                String transactionId = jsonNode1.get("transactionId").asText();
+                playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionId", requisitionId);
+                playwrightFactory.savePropertiesIntoJsonFile("requisition", "sdTransactionNumber", transactionId);
             }
 
             page.waitForLoadState(LoadState.NETWORKIDLE);

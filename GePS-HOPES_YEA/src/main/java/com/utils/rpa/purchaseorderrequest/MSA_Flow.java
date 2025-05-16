@@ -54,7 +54,7 @@ public class MSA_Flow {
             String localPoFilePath = msaPoPdfHelper.poPdfFileNameUpdate(poNumber, localPath, jsonNode2);
 
 //TODO Step 4: Upload the Updated File
-            msaFtpHelper.connectionEstablishAndUploadFiles(ftpHost, ftpPort, ftpUser, ftpPassword, localPoFilePath, localExcelFilePath, poNumber, remotePOFilePathPO, remoteHopesToGepsPathXLS, porReferenceNumber);
+            msaFtpHelper.connectionEstablishAndUploadFiles(ftpHost, ftpPort, ftpUser, ftpPassword, localPoFilePath, localExcelFilePath, poNumber, remotePOFilePathPO, remoteHopesToGepsPathXLS, jsonNode2);
 
 //TODO Step 5: Call API to Update Status
             MSA_APIHelper msaApiHelper = new MSA_APIHelper(page);

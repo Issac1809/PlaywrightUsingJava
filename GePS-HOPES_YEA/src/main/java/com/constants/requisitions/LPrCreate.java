@@ -12,6 +12,14 @@ public class LPrCreate {
     public static final String SALES_REFERENCE_ID = "#crmReference";
     public static final String PROJECT = "#select2-projectId-container";
     public static final String PROJECT_SEARCH = ".select2-search__field";
+    public static final String SALES_ORDER = "#select2-salesOrderId-container";
+    public static final String SALES_ORDER_SEARCH = ".select2-search__field";
+    public static final String SERVICE_ORDER = "#select2-serviceOrder-container";
+    public static final String SERVICE_ORDER_SEARCH = ".select2-search__field";
+    public static final String BILLABLE_TO_CUSTOMER = "#select2-billableToCustomer-container";
+    public static final String BILLABLE_TO_CUSTOMER_SEARCH = ".select2-search__field";
+    public static final String CASE_MARKING = "#caseMarking";
+    public static final String MESSAGE_TO_SOURCING = "#messageToSourcing";
     public static final String DEPT_PIC = "#select2-departmentPicId-container";
     public static final String DEPT_PIC_SEARCH = ".select2-search__field";
     public static final String WBS = "#select2-wbsId-container";
@@ -98,6 +106,10 @@ public class LPrCreate {
 
     public static String getSalesPrType(String type) {
         return "//a[@href='/Procurement/Requisitions/Sales_" + type + "_Create']";
+    }
+
+    public static String getSdPrType(String type) {
+        return "//a[@href='/Procurement/Requisitions/NonPOC_" + type + "_Create']";
     }
 
     public static String getLocator(String locator) {

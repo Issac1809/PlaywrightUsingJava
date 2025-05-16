@@ -23,7 +23,7 @@ public class MSA_PO_PDF_Helper {
 
             String newFileName;
             boolean poProcessed = jsonNode.get("purchaseOrderRequests").get("poProcessed").asBoolean();
-            if (poProcessed) {
+            if (!poProcessed) {
                 newFileName = "PO_" + newPoNumber + ".PDF";
             } else {
                 newFileName = "PO_" + newPoNumber + "_001.PDF";
