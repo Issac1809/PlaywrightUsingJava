@@ -53,7 +53,14 @@ public class PorRevision implements IPorRevision {
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
-            String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
+            String porType;
+            if(type.equalsIgnoreCase("sales")){
+                porType = "/api/PurchaseOrderRequestsSales/";
+            } else if(type.equalsIgnoreCase("ps")){
+                porType = "/api/PurchaseOrderRequests/";
+            } else {
+                porType = "/api/PurchaseOrderRequestsNonPOC/";
+            }
             iLogin.performLogin(buyerMailId);
 
             Locator porNavigationBarLocator = page.locator(POR_NAVIGATION_BAR);

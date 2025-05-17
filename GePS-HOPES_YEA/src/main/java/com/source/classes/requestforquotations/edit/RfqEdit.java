@@ -64,10 +64,17 @@ public class RfqEdit implements IRfqEdit {
 
         Locator acceptLocator = page.locator(ACCEPT_REMARKS_POP_UP);
 
-        String reqType = type.equalsIgnoreCase("PS") ? "/api/RequestForQuotations/" : "/api/RequestForQuotationsOthers/";
+            String rfqType;
+            if(type.equalsIgnoreCase("sales")) {
+                rfqType = "/api/RequestForQuotationsOthers/";
+            } else if (type.equalsIgnoreCase("ps")) {
+                rfqType = "/api/RequestForQuotations/";
+            } else {
+                rfqType = "/api/RequestForQuotationsNonPoc/";
+            }
 
         Response editResponse = page.waitForResponse(
-                response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                response -> response.url().startsWith(appUrl + rfqType) && response.status() == 200,
                 acceptLocator::click
         );
         status = editResponse.status();

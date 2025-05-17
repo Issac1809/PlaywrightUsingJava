@@ -8,6 +8,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
+import com.microsoft.playwright.options.WaitForSelectorState;
 import com.source.interfaces.purchaseorderrequests.IPorApprove;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -78,89 +79,66 @@ public class PorApprove implements IPorApprove {
             Locator projectManagerDropDownLocator = page.locator(PROJECT_MANAGER_DROP_DOWN);
             Locator departmentManagerDropDown = page.locator(DEPARTMENT_MANAGER_DROP_DOWN);
             Locator divisionManagerDropDown = page.locator(DIVISION_MANAGER);
+            Locator approvalPopupLocator = page.locator(APPROVAL_POP_UP);
 
-            if (projectManagerDropDownLocator.isEnabled() && projectManagerDropDownLocator.isVisible() ||
-                    departmentManagerDropDown.isEnabled() && departmentManagerDropDown.isVisible() ||
-                    divisionManagerDropDown.isEnabled() && divisionManagerDropDown.isVisible()) {
-                if (projectManagerDropDownLocator.isEnabled()) {
-                    projectManagerDropDownLocator.click();
-
-                    String groupB = jsonNode.get("mailIds").get("prApproverGroupBEmail").asText();
-                    Locator searchFieldLocator = page.locator(SEARCH_FIELD);
-                    searchFieldLocator.fill(groupB);
-
-                    Locator groupBLocator = page.locator(getGroupB(groupB));
-                    groupBLocator.first().click();
+            try {
+                approvalPopupLocator.last().waitFor(
+                        new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(2000));
+                if (approvalPopupLocator.last().isEnabled() && approvalPopupLocator.last().isVisible()) {
+                    if (projectManagerDropDownLocator.count() > 0 && projectManagerDropDownLocator.isEnabled() && projectManagerDropDownLocator.isVisible()) {
+                        projectManagerDropDownLocator.click();
+                        String groupB = jsonNode.get("mailIds").get("prApproverGroupBEmail").asText();
+                        Locator searchFieldLocator = page.locator(SEARCH_FIELD);
+                        searchFieldLocator.fill(groupB);
+                        Locator groupBLocator = page.locator(getGroupB(groupB));
+                        groupBLocator.first().click();
+                    }
+                    if (departmentManagerDropDown.count() > 0 && departmentManagerDropDown.isEnabled() && departmentManagerDropDown.isVisible()) {
+                        departmentManagerDropDown.click();
+                        String groupC = jsonNode.get("mailIds").get("prApproverGroupCEmail").asText();
+                        Locator searchFieldLocator = page.locator(SEARCH_FIELD);
+                        searchFieldLocator.fill(groupC);
+                        Locator groupCLocator = page.locator(getGroupC(groupC));
+                        groupCLocator.first().click();
+                    }
+                    if (divisionManagerDropDown.count() > 0 && divisionManagerDropDown.isEnabled() && divisionManagerDropDown.isVisible()) {
+                        divisionManagerDropDown.click();
+                        String groupD = jsonNode.get("mailIds").get("prApproverGroupDEmail").asText();
+                        Locator searchFieldLocator = page.locator(SEARCH_FIELD);
+                        searchFieldLocator.fill(groupD);
+                        Locator groupDLocator = page.locator(getGroupD(groupD));
+                        groupDLocator.first().click();
+                    }
+                    Locator saveUsersLocator = page.locator(SAVE_APPROVAL_USERS);
+                    saveUsersLocator.click();
                 }
-                if (departmentManagerDropDown.isEnabled()) {
-                    departmentManagerDropDown.click();
-
-                    String groupC = jsonNode.get("mailIds").get("prApproverGroupCEmail").asText();
-                    Locator searchFieldLocator = page.locator(SEARCH_FIELD);
-                    searchFieldLocator.fill(groupC);
-
-                    Locator groupCLocator = page.locator(getGroupC(groupC));
-                    groupCLocator.first().click();
-                }
-                if (divisionManagerDropDown.isEnabled()) {
-                    divisionManagerDropDown.click();
-
-                    String groupD = jsonNode.get("mailIds").get("prApproverGroupDEmail").asText();
-                    Locator searchFieldLocator = page.locator(SEARCH_FIELD);
-                    searchFieldLocator.fill(groupD);
-
-                    Locator groupDLocator = page.locator(getGroupD(groupD));
-                    groupDLocator.first().click();
-                }
-                Locator saveUsersLocator = page.locator(SAVE_APPROVAL_USERS);
-                saveUsersLocator.click();
-
-                Locator approveButtonLocator = page.locator(APPROVE_BUTTON);
-                approveButtonLocator.click();
-
-                Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
-                acceptButtonLocator.click();
-
-                page.waitForLoadState(LoadState.NETWORKIDLE);
-
-                APIResponse apiResponse = page.request().fetch(appUrl + "/api/Approvals?entityId=" + id + "&approvalTypeEnum=PurchaseOrderRequest");
-                JsonNode jsonNode = objectMapper.readTree(apiResponse.body());
-                JsonNode approvers = jsonNode.get("approvers");
-
-                for (JsonNode approver : approvers) {
-                    String porApprover = approver.get("email").asText();
-                    porApprovers.add(porApprover);
-                }
-
-                playwrightFactory.savePorApproversIntoJsonFile("purchaseOrderRequests", "approvers", porApprovers);
-
-                page.waitForLoadState(LoadState.NETWORKIDLE);
-
-                iLogout.performLogout();
-            } else {
-                Locator approveButtonLocator = page.locator(APPROVE_BUTTON);
-                approveButtonLocator.click();
-
-                Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
-                acceptButtonLocator.click();
-
-                page.waitForLoadState(LoadState.NETWORKIDLE);
-
-                APIResponse apiResponse = page.request().fetch(appUrl + "/api/Approvals?entityId=" + id + "&approvalTypeEnum=PurchaseOrderRequest");
-                JsonNode jsonNode = objectMapper.readTree(apiResponse.body());
-                JsonNode approvers = jsonNode.get("approvers");
-
-                for (JsonNode approver : approvers) {
-                    String porApprover = approver.get("email").asText();
-                    porApprovers.add(porApprover);
-                }
-
-                playwrightFactory.savePorApproversIntoJsonFile("purchaseOrderRequests", "approvers", porApprovers);
-
-                page.waitForLoadState(LoadState.NETWORKIDLE);
-
-                iLogout.performLogout();
+            } catch (Exception exception) {
+                System.out.println("Approval Popup not found");
             }
+
+            Locator approveButtonLocator = page.locator(APPROVE_BUTTON);
+            approveButtonLocator.click();
+
+            Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
+            acceptButtonLocator.click();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            APIResponse apiResponse = page.request().fetch(appUrl + "/api/Approvals?entityId=" + id + "&approvalTypeEnum=PurchaseOrderRequest");
+            JsonNode responseNode = objectMapper.readTree(apiResponse.body());
+            JsonNode approvers = responseNode.get("approvers");
+
+            for (JsonNode approver : approvers) {
+                String porApprover = approver.get("email").asText();
+                porApprovers.add(porApprover);
+            }
+
+            playwrightFactory.savePorApproversIntoJsonFile("purchaseOrderRequests", "approvers", porApprovers);
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            iLogout.performLogout();
+
         } catch (Exception exception) {
             logger.error("Exception in POR Save Approvers function: {}", exception.getMessage());
         }
@@ -191,7 +169,14 @@ public class PorApprove implements IPorApprove {
 
                 Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
 
-                String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
+                String porType;
+                if(type.equalsIgnoreCase("sales")){
+                    porType = "/api/PurchaseOrderRequestsSales/";
+                } else if(type.equalsIgnoreCase("ps")){
+                    porType = "/api/PurchaseOrderRequests/";
+                } else {
+                    porType = "/api/PurchaseOrderRequestsNonPOC/";
+                }
 
                 Response approveResponse = page.waitForResponse(
                         response -> response.url().startsWith(appUrl + porType) && response.status() == 200,

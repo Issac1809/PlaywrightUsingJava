@@ -407,7 +407,14 @@ public class PorCreate implements IPorCreate {
 
             Locator yesButtonLocator = page.locator(YES);
 
-            String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
+            String porType;
+            if(type.equalsIgnoreCase("sales")){
+                porType = "/api/PurchaseOrderRequestsSales/";
+            } else if(type.equalsIgnoreCase("ps")){
+                porType = "/api/PurchaseOrderRequests/";
+            } else {
+                porType = "/api/PurchaseOrderRequestsNonPOC/";
+            }
 
             Response createResponse = page.waitForResponse(
                     response -> response.url().startsWith(appUrl + porType) && response.status() == 200,

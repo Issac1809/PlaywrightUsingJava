@@ -881,7 +881,7 @@ public class Create implements IPrCreate {
                     itemSelect.click();
 
                     Locator quantity = page.locator(QUANTITY);
-                    quantity.fill(String.valueOf(i + 10));
+                    quantity.fill(String.valueOf(i + 10000));
 
                     String shippingPoint = jsonNode.get("requisition").get("shippingPoint").asText();
                     Locator shippingPointLocator = page.locator(SHIPPING_POINT_LOCATOR);

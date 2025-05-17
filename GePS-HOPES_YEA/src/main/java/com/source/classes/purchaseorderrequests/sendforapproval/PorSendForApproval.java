@@ -7,6 +7,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.WaitForSelectorState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.purchaseorderrequests.IPorSendForApproval;
@@ -60,7 +61,14 @@ public class PorSendForApproval implements IPorSendForApproval {
 
             Locator sendForApprovalButtonLocator = page.locator(SEND_FOR_APPROVAL__BUTTON);
 
-            String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
+            String porType;
+            if(type.equalsIgnoreCase("sales")){
+                porType = "/api/PurchaseOrderRequestsSales/";
+            } else if(type.equalsIgnoreCase("ps")){
+                porType = "/api/PurchaseOrderRequests/";
+            } else {
+                porType = "/api/PurchaseOrderRequestsNonPOC/";
+            }
 
             Response sendForApprovalResponse = page.waitForResponse(
                     response -> response.url().startsWith(appUrl + porType) && response.status() == 200,
@@ -73,28 +81,48 @@ public class PorSendForApproval implements IPorSendForApproval {
 
             Locator approvalPopupLocator = page.locator(APPROVAL_POP_UP);
 
-            if(approvalPopupLocator.first().isEnabled() && approvalPopupLocator.first().isVisible() || !approvalPopupLocator.first().isHidden()) {
-                String cfoMailId = jsonNode.get("mailIds").get("cfoEmail").asText();
-                Locator cfoDropdownLocator = page.locator(CFO_DROPDOWN_LOCATOR);
-                String presidentMailId = jsonNode.get("mailIds").get("presidentDirectorCorporateEmail").asText();
-                Locator presidentDropdownLocator = page.locator(PRESIDENT_DROPDOWN_LOCATOR);
+            try {
+                approvalPopupLocator.first().waitFor(
+                        new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(2000));
+                if (approvalPopupLocator.first().isEnabled()) {
+                    String cfoMailId = jsonNode.get("mailIds").get("cfoEmail").asText();
+                    Locator cfoDropdownLocator1 = page.locator(CFO1_DROPDOWN_LOCATOR);
+                    Locator cfoDropdownLocator2 = page.locator(CFO2_DROPDOWN_LOCATOR);
+                    String presidentMailId = jsonNode.get("mailIds").get("presidentDirectorCorporateEmail").asText();
+                    Locator presidentDropdownLocator = page.locator(PRESIDENT_DROPDOWN_LOCATOR);
 
-                if (cfoDropdownLocator.isVisible()) {
-                    cfoDropdownLocator.click();
-                    Locator cfoIdLocator = page.locator(getCfoId(cfoMailId));
-                    cfoIdLocator.click();
-                } if (presidentDropdownLocator.isVisible()) {
-                    presidentDropdownLocator.click();
-                    Locator presidentIdLocator = page.locator(getPresidentId(presidentMailId));
-                    presidentIdLocator.click();
+                    if (cfoDropdownLocator1.count() > 0 && cfoDropdownLocator1.isEnabled() && cfoDropdownLocator1.isVisible()) {
+                        cfoDropdownLocator1.click();
+                        Locator searchFieldLocator = page.locator(SEARCH_FIELD);
+                        searchFieldLocator.fill(cfoMailId);
+                        Locator cfoIdLocator = page.locator(getCfoId(cfoMailId));
+                        cfoIdLocator.click();
+                    }
+                    if (cfoDropdownLocator2.count() > 0 && cfoDropdownLocator2.isEnabled() && cfoDropdownLocator2.isVisible()) {
+                        cfoDropdownLocator2.click();
+                        Locator searchFieldLocator = page.locator(SEARCH_FIELD);
+                        searchFieldLocator.fill(cfoMailId);
+                        Locator cfoIdLocator = page.locator(getCfoId(cfoMailId));
+                        cfoIdLocator.click();
+                    }
+                    if (presidentDropdownLocator.count() > 0 && presidentDropdownLocator.isEnabled() && presidentDropdownLocator.isVisible()) {
+                        presidentDropdownLocator.click();
+                        Locator searchFieldLocator = page.locator(SEARCH_FIELD);
+                        searchFieldLocator.fill(presidentMailId);
+                        Locator presidentIdLocator = page.locator(getPresidentId(presidentMailId));
+                        presidentIdLocator.click();
+                    }
+
+                    page.waitForLoadState(LoadState.NETWORKIDLE);
+
+                    Locator submitButtonLocator = page.locator(SUBMIT_BUTTON);
+                    submitButtonLocator.click();
+
+                    page.waitForLoadState(LoadState.NETWORKIDLE);
                 }
-
-                Locator submitButtonLocator = page.locator(SUBMIT_BUTTON);
-                submitButtonLocator.click();
-
-                page.waitForLoadState(LoadState.NETWORKIDLE);
+            } catch (Exception exception) {
+                System.out.println("Approval Popup not found");
             }
-            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
             String id = jsonNode.get("purchaseOrderRequests").get("purchaseOrderRequestId").asText();

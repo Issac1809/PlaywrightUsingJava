@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.WaitForSelectorState;
 import com.source.interfaces.purchaseorderrequests.IPorSendForApproval;
 import com.microsoft.playwright.Page;
 import com.source.interfaces.purchaseorderrequests.IPorReject;
@@ -12,7 +13,7 @@ import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.purchaseorderrequests.IPorEdit;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-import java.util.List;
+import static com.constants.purchaseorderrequests.LPorApprove.ADD_APPROVERS;
 import static com.constants.purchaseorderrequests.LPorReject.*;
 import static com.utils.GetTitleUtil.getTransactionTitle;
 
@@ -59,14 +60,66 @@ public class PorReject implements IPorReject {
             Locator titleLocator = page.locator(getTitle(title));
             titleLocator.first().click();
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            Locator addApproversLocator = page.locator(ADD_APPROVERS);
+            addApproversLocator.click();
+
+            Locator projectManagerDropDownLocator = page.locator(PROJECT_MANAGER_DROP_DOWN);
+            Locator departmentManagerDropDown = page.locator(DEPARTMENT_MANAGER_DROP_DOWN);
+            Locator divisionManagerDropDown = page.locator(DIVISION_MANAGER);
+            Locator approvalPopupLocator = page.locator(APPROVAL_POP_UP);
+
+            try {
+                approvalPopupLocator.last().waitFor(
+                        new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(2000));
+                if (approvalPopupLocator.last().isEnabled()) {
+                    if (projectManagerDropDownLocator.count() > 0 && projectManagerDropDownLocator.isEnabled() && projectManagerDropDownLocator.isVisible()) {
+                        projectManagerDropDownLocator.click();
+                        String groupB = jsonNode.get("mailIds").get("prApproverGroupBEmail").asText();
+                        Locator searchFieldLocator = page.locator(SEARCH_FIELD);
+                        searchFieldLocator.fill(groupB);
+                        Locator groupBLocator = page.locator(getGroupB(groupB));
+                        groupBLocator.first().click();
+                    }
+                    if (departmentManagerDropDown.count() > 0 && departmentManagerDropDown.isEnabled() && departmentManagerDropDown.isVisible()) {
+                        departmentManagerDropDown.click();
+                        String groupC = jsonNode.get("mailIds").get("prApproverGroupCEmail").asText();
+                        Locator searchFieldLocator = page.locator(SEARCH_FIELD);
+                        searchFieldLocator.fill(groupC);
+                        Locator groupCLocator = page.locator(getGroupC(groupC));
+                        groupCLocator.first().click();
+                    }
+                    if (divisionManagerDropDown.count() > 0 && divisionManagerDropDown.isEnabled() && divisionManagerDropDown.isVisible()) {
+                        divisionManagerDropDown.click();
+                        String groupD = jsonNode.get("mailIds").get("prApproverGroupDEmail").asText();
+                        Locator searchFieldLocator = page.locator(SEARCH_FIELD);
+                        searchFieldLocator.fill(groupD);
+                        Locator groupDLocator = page.locator(getGroupD(groupD));
+                        groupDLocator.first().click();
+                    }
+                    Locator saveUsersLocator = page.locator(SAVE_APPROVAL_USERS);
+                    saveUsersLocator.click();
+                }
+            } catch (Exception exception) {
+                System.out.println("Approval Popup not found");
+            }
+
             Locator rejectButtonLocator = page.locator(REJECT_BUTTON);
             rejectButtonLocator.click();
 
             Locator remarksInputLocator = page.locator(REMARKS_INPUT);
-            remarksInputLocator.fill("Updated");
+            remarksInputLocator.fill("Rejected");
 
             Locator acceptLocator = page.locator(YES);
-            String porType = type.equalsIgnoreCase("PS") ? "/api/PurchaseOrderRequests/" : "/api/PurchaseOrderRequestsSales/";
+            String porType;
+            if(type.equalsIgnoreCase("sales")){
+                porType = "/api/PurchaseOrderRequestsSales/";
+            } else if(type.equalsIgnoreCase("ps")){
+                porType = "/api/PurchaseOrderRequests/";
+            } else {
+                porType = "/api/PurchaseOrderRequestsNonPOC/";
+            }
 
             Response rejectResponse = page.waitForResponse(
                     response -> response.url().startsWith(appUrl + porType) && response.status() == 200,

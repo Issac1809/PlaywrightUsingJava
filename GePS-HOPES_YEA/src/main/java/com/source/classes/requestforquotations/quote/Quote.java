@@ -67,13 +67,7 @@ public class Quote implements IQuoSubmit {
             inviteVendorButtonLocator.click();
 
             Locator vendorEmailPopUpLocator = page.locator(VENDOR_EMAIL_POP_UP);
-
-            String reqType = type.equalsIgnoreCase("PS") ? "/api/RequestForQuotations/" : "/api/RequestForQuotationsOthers/";
-
-            Response suspendResponse = page.waitForResponse(
-                    response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
-                    vendorEmailPopUpLocator::click
-            );
+            vendorEmailPopUpLocator.click();
 
         iLogout.performLogout();
         } catch (Exception exception) {
@@ -256,10 +250,17 @@ public class Quote implements IQuoSubmit {
 
             Locator acceptLocator = page.locator(ACCEPT_BUTTON_LOCATOR);
 
-            String reqType = type.equalsIgnoreCase("PS") ? "/api/Vp/Quotation/" : "/api/Vp/QuotationSales/";
+            String rfqType;
+            if(type.equalsIgnoreCase("sales")) {
+                rfqType = "/api/Vp/QuotationSales/";
+            } else if (type.equalsIgnoreCase("ps")) {
+                rfqType = "/api/Vp/Quotation/";
+            } else {
+                rfqType = "/api/Vp/QuotationNonPOC/";
+            }
 
             Response submitResponse = page.waitForResponse(
-                    response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                    response -> response.url().startsWith(appUrl + rfqType) && response.status() == 200,
                     acceptLocator::click
             );
             status = submitResponse.status();

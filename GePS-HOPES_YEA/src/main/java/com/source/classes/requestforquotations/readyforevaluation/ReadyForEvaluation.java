@@ -60,10 +60,17 @@ public class ReadyForEvaluation implements IReadyForEvalutation {
 
         Locator acceptLocator = page.locator(YES);
 
-        String reqType = type.equalsIgnoreCase("PS") ? "/api/RequestForQuotations/" : "/api/RequestForQuotationsOthers/";
+            String rfqType;
+            if(type.equalsIgnoreCase("sales")) {
+                rfqType = "/api/RequestForQuotationsOthers/";
+            } else if (type.equalsIgnoreCase("ps")) {
+                rfqType = "/api/RequestForQuotations/";
+            } else {
+                rfqType = "/api/RequestForQuotationsNonPoc/";
+            }
 
         Response submitResponse = page.waitForResponse(
-                response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                response -> response.url().startsWith(appUrl + rfqType) && response.status() == 200,
                 acceptLocator::click
         );
         status = submitResponse.status();

@@ -74,12 +74,17 @@ public class Requote implements IQuoRequote {
         Locator updateButtonLocator = page.locator(UPDATE_BUTTON);
         updateButtonLocator.click();
 
-        Locator acceptLocator1 = page.locator(ACCEPT_REMARKS_POP_UP);
-
-        String reqType = type.equalsIgnoreCase("PS") ? "/api/Vp/Quotation/" : "/api/Vp/QuotationSales/";
+            String rfqType;
+            if(type.equalsIgnoreCase("sales")) {
+                rfqType = "/api/Vp/QuotationSales/";
+            } else if (type.equalsIgnoreCase("ps")) {
+                rfqType = "/api/Vp/Quotation/";
+            } else {
+                rfqType = "/api/Vp/QuotationNonPOC/";
+            }
 
         Response submitResponse = page.waitForResponse(
-                response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                response -> response.url().startsWith(appUrl + rfqType) && response.status() == 200,
                 acceptLocator::click
         );
         status = submitResponse.status();

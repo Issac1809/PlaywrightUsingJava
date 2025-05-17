@@ -61,10 +61,17 @@ public class QuotationRegret implements IQuoRegret {
 
         Locator acceptLocator = page.locator(ACCEPT_REMARKS_POP_UP);
 
-        String reqType = type.equalsIgnoreCase("PS") ? "/api/VP/RequestForQuotations/" : "/api/VP/RequestForQuotationsSales/";
+            String rfqType;
+            if(type.equalsIgnoreCase("sales")) {
+                rfqType = "/api/RequestForQuotationsOthers/";
+            } else if (type.equalsIgnoreCase("ps")) {
+                rfqType = "/api/RequestForQuotations/";
+            } else {
+                rfqType = "/api/RequestForQuotationsNonPoc/";
+            }
 
         Response regretResponse = page.waitForResponse(
-                response -> response.url().startsWith(appUrl + reqType) && response.status() == 200,
+                response -> response.url().startsWith(appUrl + rfqType) && response.status() == 200,
                 acceptLocator::click
         );
         status = regretResponse.status();
