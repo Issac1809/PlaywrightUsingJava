@@ -990,6 +990,7 @@ public class Create implements IPrCreate {
             String[] urlArray = url.split("=");
             String getUid = urlArray[1];
             playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionUid", getUid);
+            playwrightFactory.savePropertiesIntoJsonFile("requisition", "purchaseType", type);
 
             //Save Transaction number
             if (type.equalsIgnoreCase("sales"))
