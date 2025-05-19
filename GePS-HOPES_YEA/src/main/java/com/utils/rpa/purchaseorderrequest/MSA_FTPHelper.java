@@ -34,16 +34,19 @@ public class MSA_FTPHelper {
         }
     }
 
-    public String downloadFile(String remotePath, String localPath, String porReferenceNumber, JsonNode jsonNode) {
+    public String downloadFile(String remotePath, String localPath, String porReferenceNumber, JsonNode jsonNode, String type) {
         try {
             File localDir = new File(localPath);
             if (!localDir.exists() && !localDir.mkdirs());
 
             boolean poProcessed = jsonNode.get("purchaseOrderRequests").get("poProcessed").asBoolean();
             if (!poProcessed) {
-                excelFileName = porReferenceNumber + "_PT1_GePS-HOPES_R0.xls";
+
+                String fileName = type.equalsIgnoreCase("SD") ? "_NPT1_GePS-HOPES_R0.xls" : "_PT1_GePS-HOPES_R0.xls";
+                excelFileName = porReferenceNumber + fileName;
             } else {
-                excelFileName = porReferenceNumber + "_PT1_GePS-HOPES_R1.xls";
+                String fileName = type.equalsIgnoreCase("SD") ? "_NPT1_GePS-HOPES_R1.xls" : "_PT1_GePS-HOPES_R1.xls";
+                excelFileName = porReferenceNumber + fileName;
             }
 
             excelRemoteFilePath = remotePath + excelFileName;
