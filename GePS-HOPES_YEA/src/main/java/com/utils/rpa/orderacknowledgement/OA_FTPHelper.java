@@ -58,7 +58,7 @@ public class OA_FTPHelper {
         try {
             connectionEstablish(server, port, user, password);
 
-//TODO IV File Upload
+//TODO OA File Upload
             uploadIvFile(localOaUploadFilePath, remoteOaUploadFilePath);
         } catch (Exception exception) {
             logger.error("Exception in call upload file function: {}", exception.getMessage());

@@ -117,12 +117,16 @@ public class PorSendForApproval implements IPorSendForApproval {
 
                     Locator submitButtonLocator = page.locator(SUBMIT_BUTTON);
                     submitButtonLocator.click();
+
+                    Thread.sleep(2000);
                 } else {
                     System.out.println("Approval Popup not found");
                 }
             } catch (Exception exception) {
                 System.out.println(exception.getMessage());
             }
+
+            Thread.sleep(2000);
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 

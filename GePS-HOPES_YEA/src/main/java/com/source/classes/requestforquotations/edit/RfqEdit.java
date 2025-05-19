@@ -79,8 +79,6 @@ public class RfqEdit implements IRfqEdit {
         );
         status = editResponse.status();
 
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-
         PlaywrightFactory.attachScreenshotWithName("Request For Quotation Edit", page);
 
         iLogout.performLogout();

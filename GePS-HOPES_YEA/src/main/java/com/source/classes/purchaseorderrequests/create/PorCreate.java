@@ -18,7 +18,12 @@ import com.utils.LoggerUtil;
 import com.utils.rpa.salesordersync.PR_List_Flow;
 import org.apache.logging.log4j.Logger;
 import static com.constants.purchaseorderrequests.LPorCreate.*;
+import static com.constants.requestforquotations.LCeCreate.*;
+import static com.constants.requestforquotations.LCeCreate.CREATE_BUTTON;
+import static com.constants.requestforquotations.LCeCreate.SUBMIT_BUTTON;
 import static com.constants.requestforquotations.LQuoRequote.*;
+import static com.constants.requestforquotations.LQuoSubmit.RFQ_NAVIGATION_BAR;
+import static com.constants.requisitions.LPrEdit.YES;
 import static com.utils.GetTitleUtil.*;
 
 public class PorCreate implements IPorCreate {
@@ -92,9 +97,17 @@ public class PorCreate implements IPorCreate {
                 Locator updateButtonLocator = page.locator(LPorCreate.UPDATE_BUTTON);
                 updateButtonLocator.click();
 
+                Thread.sleep(2000);
+
                 Locator quantityMismatchPopup = page.locator(QUANTITY_MISMATCH_POPUP);
-                if(quantityMismatchPopup.isVisible()) {
+                if(quantityMismatchPopup.isEnabled()) {
                     yesButtonLocator.click();
+
+                    iLogout.performLogout();
+
+                    iLogin.performLogin(requesterMailId);
+
+                    titleLocator.first().click();
 
                     Locator editButtonLocator = page.locator(LPrEdit.EDIT_BUTTON);
                     editButtonLocator.click();
@@ -107,8 +120,6 @@ public class PorCreate implements IPorCreate {
                     Locator submitButtonLocator = page.locator(LPorCreate.SUBMIT_BUTTON);
                     submitButtonLocator.click();
 
-                    page.waitForLoadState(LoadState.NETWORKIDLE);
-
                     iLogout.performLogout();
 
                     iLogin.performLogin(buyerMailId);
@@ -119,8 +130,6 @@ public class PorCreate implements IPorCreate {
                     porCreateButtonLocator.first().click();
                 } else {
                     page.waitForLoadState(LoadState.NETWORKIDLE);
-
-                    yesButtonLocator.click();
 
                     page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -196,8 +205,10 @@ public class PorCreate implements IPorCreate {
                 Locator updateButtonLocator = page.locator(LPorCreate.RFQ_UPDATE_BUTTON);
                 updateButtonLocator.click();
 
+                Thread.sleep(2000);
+
                 Locator quantityMismatchPopup = page.locator(QUANTITY_MISMATCH_POPUP);
-                if(quantityMismatchPopup.isVisible()) {
+                if(quantityMismatchPopup.isEnabled()) {
                     yesButtonLocator.click();
 
                     page.waitForLoadState(LoadState.NETWORKIDLE);
@@ -213,8 +224,11 @@ public class PorCreate implements IPorCreate {
                     Locator requoteButtonLocator = page.locator(LQuoRequote.REQUOTE_BUTTON);
                     requoteButtonLocator.click();
 
-                    Locator submitButtonLocator = page.locator(LPorCreate.SUBMIT_BUTTON);
+                    Locator submitButtonLocator = page.locator(LQuoRequote.ACCEPT_REMARKS_POP_UP);
                     submitButtonLocator.click();
+
+                    Locator emailSubmitButtonLocator = page.locator(EMAIL_POP_UP);
+                    emailSubmitButtonLocator.click();
 
                     page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -246,13 +260,22 @@ public class PorCreate implements IPorCreate {
 
                     titleLocator.first().click();
 
+                    Locator createButtonLocator = page.locator(CE_CREATE_BUTTON);
+                    createButtonLocator.click();
+
+                    Locator selectionStatusLocator = page.locator(SELECTION_CRITERIA);
+                    selectionStatusLocator.click();
+                    selectionStatusLocator.selectOption(OPTION);
+
+                    Locator submitButtonLocator1 = page.locator(SUBMIT_BUTTON);
+                    submitButtonLocator1.click();
+
+                    Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
+                    acceptButtonLocator.click();
+
                     Locator porCreateButtonLocator = page.locator(NON_CATALOG_POR_CREATE_BUTTON);
                     porCreateButtonLocator.first().click();
                 } else {
-                    page.waitForLoadState(LoadState.NETWORKIDLE);
-
-                    yesButtonLocator.click();
-
                     page.waitForLoadState(LoadState.NETWORKIDLE);
 
                     iLogout.performLogout();
@@ -402,7 +425,7 @@ public class PorCreate implements IPorCreate {
     public int createButton(String type){
         int status = 0;
         try {
-            Locator createButtonLocator = page.locator(CREATE_BUTTON);
+            Locator createButtonLocator = page.locator(POR_CREATE_BUTTON);
             createButtonLocator.click();
 
             Locator yesButtonLocator = page.locator(YES);

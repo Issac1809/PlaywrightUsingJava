@@ -52,7 +52,9 @@ public class RfqCreate implements IRfqCreate {
             Locator titleLocator = page.locator(LCeCreate.getTitle(title));
             titleLocator.first().click();
 
-            page.locator(CREATE_RFQ_BUTTON).click();
+            Locator rfqCreateButton = page.locator(CREATE_RFQ_BUTTON);
+            rfqCreateButton.click();
+
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
             Locator notesLocator = page.locator(NOTES);
@@ -85,8 +87,7 @@ public class RfqCreate implements IRfqCreate {
             playwrightFactory.savePropertiesIntoJsonFile("requestForQuotation", "requestForQuotationUid", getUid);
 
             //TODO Save Id for PR List
-            if (type.equalsIgnoreCase("sales"))
-            {
+            if (type.equalsIgnoreCase("sales")) {
                 APIResponse apiResponse = page.request().fetch(appUrl + "/api/RequestForQuotationsOthers/" + getUid, RequestOptions.create());
                 JsonNode jsonNode1 = objectMapper.readTree(apiResponse.body());
                 String requestForQuotationId = jsonNode.get("baseId").asText();

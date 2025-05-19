@@ -36,12 +36,12 @@
     "cancelRemarks" : "Cancelled"
   },
   "requisition" : {
-    "purchaseType" : "Catalog",
+    "purchaseType" : "Sales",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-263.0",
-    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-839.0",
-    "salesCatalogTitle" : "SD-AUTOMATION-CATALOG-280.0",
-    "salesNonCatalogTitle" : "SD-AUTOMATION-NONCATALOG-745.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-653.0",
+    "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-432.0",
+    "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-872.0",
+    "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-71.0",
     "sdCatalogTitle" : "",
     "sdNonCatalogTitle" : "",
     "departmentPic" : "requester@cormsquare.com",
@@ -81,17 +81,17 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "requester@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "00d45380-1c7f-4aca-be58-d45f54157c33",
+    "requisitionUid" : "7c7086d7-1725-4f38-964e-e51d90ea198f",
     "itemImport" : false,
     "requisitionItemCount" : "3",
-    "psTransactionNumber" : "240025TRN03462",
-    "salesTransactionNumber" : "240025TRN03422",
-    "sdTransactionNumber" : "240025TRN03464",
-    "requisitionId" : "23245"
+    "psTransactionNumber" : "240025TRN03467",
+    "salesTransactionNumber" : "240025TRN03498",
+    "sdTransactionNumber" : "240025TRN03469",
+    "requisitionId" : "23376"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
-    "requestForQuotationUid" : "70a08e69-e5da-4278-99f2-ec365aa48021",
+    "requestForQuotationUid" : "9315b2a9-2b0a-418a-a1bb-197ac9177357",
     "incotermLocation" : "Bengaluru",
     "countryOfOrigin" : "India",
     "hsCode" : "1234",
@@ -106,7 +106,7 @@
     "discountType" : "Percentage",
     "gstPercentage" : 8,
     "salesTransactionNumber" : "240025TRN03213",
-    "requestForQuotationId" : "3619"
+    "requestForQuotationId" : "3675"
   },
   "purchaseOrderRequests" : {
     "advancePaymentFlag" : true,
@@ -116,10 +116,10 @@
     "milestonePaymentCount" : 2,
     "taxCode" : "PZ-Zero Rated Purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "c218961f-9a61-4572-b6c9-8a526b0e0280",
-    "purchaseOrderRequestId" : "8493",
+    "purchaseOrderRequestUid" : "8e790dfc-6db2-4728-97d9-70ebf968707b",
+    "purchaseOrderRequestId" : "8531",
     "approvers" : [ "requester@cormsquare.com", "buyermanager@cormsquare.com", "admin@cormsquare.com" ],
-    "porReferenceNumber" : "240025POR01672",
+    "porReferenceNumber" : "240025POR01684",
     "integrationStatus" : "SOSynced",
     "additionalItemName" : "Packing Charges",
     "rate" : "200.45",
@@ -131,11 +131,11 @@
     "leadTime" : "10",
     "shippingPoint" : "NA",
     "porStatus" : "ProcessingPO",
-    "poProcessed" : "false"
+    "poProcessed" : "true"
   },
   "purchaseOrders" : {
     "poReferenceId" : "6516",
-    "purchaseOrderRequestUid" : "d42b6f48-3963-4287-a329-c177773140ac",
+    "purchaseOrderRequestUid" : "2e45ae3f-eb67-47dd-9025-b5f2d485218d",
     "poRevisionNumber" : "",
     "porRevision" : "",
     "poValue" : 9000,

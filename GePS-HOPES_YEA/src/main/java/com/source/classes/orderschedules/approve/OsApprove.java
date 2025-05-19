@@ -9,7 +9,6 @@ import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.orderschedules.IOsApprove;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-import java.util.List;
 import static com.constants.orderschedules.LOsApprove.*;
 import static com.constants.orderschedules.LOsReject.getTitle;
 import static com.utils.GetTitleUtil.getTransactionTitle;
