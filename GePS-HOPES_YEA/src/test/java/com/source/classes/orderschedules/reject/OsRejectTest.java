@@ -15,7 +15,8 @@ public class OsRejectTest extends BaseTest {
     @Parameters({"type", "purchaseType"})
     public void reject(String type, String purchaseType) {
         try {
-            iOsReject.reject(type, purchaseType);
+            int status = iOsReject.reject(type, purchaseType);
+            Assert.assertEquals(200, status, "OS Reject was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in OS Reject Test Function: {}", exception.getMessage());
             Assert.fail("Exception in OS Reject Test Function: " + exception.getMessage());

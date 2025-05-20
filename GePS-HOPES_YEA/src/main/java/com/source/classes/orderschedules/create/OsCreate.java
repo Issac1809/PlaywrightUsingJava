@@ -3,12 +3,16 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.orderschedules.IOsCreate;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
+
+import java.util.List;
+
 import static com.constants.orderschedules.LOsCreate.*;
 import static com.utils.GetTitleUtil.getTransactionTitle;
 
@@ -20,6 +24,7 @@ public class OsCreate implements IOsCreate {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    String appUrl;
 
     private OsCreate() {
     }
@@ -32,9 +37,11 @@ public class OsCreate implements IOsCreate {
         this.iLogout = iLogout;
         this.playwrightFactory = playwrightFactory;
         this.logger = LoggerUtil.getLogger(OsCreate.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void create(String type, String purchaseType) {
+    public int create(String type, String purchaseType) {
+        int status =0;
         try {
             String vendorMailId = jsonNode.get("mailIds").get("vendorEmail").asText();
             iLogin.performLogin(vendorMailId);
@@ -64,8 +71,25 @@ public class OsCreate implements IOsCreate {
             createButtonLocator.click();
 
             Locator acceptLocator = page.locator(ACCEPT_BUTTON);
-            acceptLocator.click();
+            Response createResponse = page.waitForResponse(
+                    response -> response.url().equals(appUrl + "/api/VP/OrderSchedules/Listing") && response.status() == 200,
+                    acceptLocator.first()::click
+            );
 
+            String poNumber = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
+            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
+            for (String tr : containerList) {
+                if (tr.contains(poNumber)) {
+                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
+
+                    Response osResponse = page.waitForResponse(
+                            response -> response.url().startsWith(appUrl + "/api/VP/OrderSchedules/") && response.status() == 200,
+                            detailsButtonLocator.first()::click
+                    );
+                    status = osResponse.status();
+                    break;
+                }
+            }
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
             PlaywrightFactory.attachScreenshotWithName("Order Schedule Create", page);
@@ -74,5 +98,6 @@ public class OsCreate implements IOsCreate {
         } catch (Exception exception) {
             logger.error("Exception in OS Create Function: {}", exception.getMessage());
         }
+        return status;
     }
 }
