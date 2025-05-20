@@ -59,7 +59,7 @@ public class WoCreate implements IWoCreate {
             Locator selectFreightForwarderLocator = page.locator(FREIGHT_FORWARDER_DROPDOWN);
             selectFreightForwarderLocator.first().click();
 
-            String vendorId = jsonNode.get("mailIds").get("vendorEmail").asText();
+            String vendorId = jsonNode.get("dispatchNotes").get("freightForwarder").asText();
             Locator searchField = page.locator(SEARCH_FIELD);
             searchField.fill(vendorId);
 

@@ -10,10 +10,10 @@ public class LWoCreate {
     public static final String FREIGHT_FORWARDER_DROPDOWN = "#select2-freightForwarderId-container";
     public static final String SEARCH_FIELD = ".select2-search__field";
     public static final String PRIORITY_DROPDOWN = "#select2-priority-container";
-    public static final String DATE_LOCATOR = "Select Date";
+    public static final String DATE_LOCATOR = "//input[@placeholder=\"Select Date\"]";
     public static final String TODAY = "//span[@class='flatpickr-day today']";
     public static final String DESTINATION_FIELD = "#destinationTermLocationId";
-    public static final String PROCEED_BUTTON = "//*[contains(text(), 'Proceed')]";
+    public static final String PROCEED_BUTTON = "//button[contains(text(), 'Proceed')]";
     public static final String SEND_MAIL_BUTTON = "#vendorSendMailBtnId";
     public static final String ACCEPT_BUTTON = ".bootbox-accept";
 

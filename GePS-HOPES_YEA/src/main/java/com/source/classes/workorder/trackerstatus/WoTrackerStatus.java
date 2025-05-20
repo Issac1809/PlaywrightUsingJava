@@ -50,6 +50,7 @@ public class WoTrackerStatus implements IWoTrackerStatus {
                 if(tr.contains(poReferenceId)){
                     Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
                     detailsButtonLocator.first().click();
+                    break;
                 }
             }
 
@@ -76,6 +77,8 @@ public class WoTrackerStatus implements IWoTrackerStatus {
 
                 Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
                 acceptButtonLocator.click();
+
+                page.waitForLoadState(LoadState.NETWORKIDLE);
             }
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
