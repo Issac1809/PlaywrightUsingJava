@@ -46,8 +46,23 @@ public class InsCreate implements IInsCreate {
                 if(tr.contains(poReferenceId)){
                     Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
                     detailsButtonLocator.first().click();
+                    break;
                 }
             }
+            Locator assignButtonLocator = page.locator(ASSIGN_INSPECTOR_BUTTON);
+            assignButtonLocator.click();
+
+            Locator dropDownLocator = page.locator(SELECT_INSPECTOR_DROP_DOWN);
+            dropDownLocator.click();
+
+            Locator searchFieldLocator = page.locator(SEARCH_FIELD);
+            searchFieldLocator.fill(mailId);
+
+            Locator requesterMailIdLocator = page.locator(getRequestorId(mailId));
+            requesterMailIdLocator.first().click();
+
+            Locator saveInspectorButtonLocator = page.locator(SAVE_INSPECTOR);
+            saveInspectorButtonLocator.click();
 
             Locator createButtonLocator = page.locator(CREATE_INSPECTION_BUTTON);
             createButtonLocator.click();

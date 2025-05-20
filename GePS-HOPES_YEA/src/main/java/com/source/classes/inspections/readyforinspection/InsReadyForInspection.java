@@ -47,6 +47,7 @@ public class InsReadyForInspection implements IInsReadyForInspection {
                 if(tr.contains(poReferenceId)){
                     Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
                     detailsButtonLocator.first().click();
+                    break;
                 }
             }
 
@@ -62,7 +63,7 @@ public class InsReadyForInspection implements IInsReadyForInspection {
 
             iLogout.performLogout();
         } catch (Exception exception) {
-            logger.error("Exception in Ready for Insepction function: {}", exception.getMessage());
+            logger.error("Exception in Ready for Inspection function: {}", exception.getMessage());
         }
     }
 }

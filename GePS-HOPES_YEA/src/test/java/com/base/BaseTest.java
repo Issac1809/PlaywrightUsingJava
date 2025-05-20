@@ -483,7 +483,7 @@ public class BaseTest {
             dnAssignTest = new DnAssignTest();
 
 //TODO Freight Forwarder Request
-            iFfrInvite = new FfrInvite(iLogin, jsonNode, page, iLogout);
+            iFfrInvite = new FfrInvite(iLogin, jsonNode, page, iLogout, iDnAssign);
             ffrInviteTest = new FfrInviteTest();
             iFfrQuote = new FfrQuote(iLogin, jsonNode, page, iLogout);
             ffrQuoteTest = new FfrQuoteTest();

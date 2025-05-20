@@ -64,7 +64,10 @@ public class SendForVendor implements IPoSendForVendor {
             APIResponse apiResponse = page.request().fetch(appUrl + "/api/PurchaseOrders/" + getUid, RequestOptions.create());
             JsonNode jsonNode = objectMapper.readTree(apiResponse.body());
             String purchaseOrderRevisionNumber = jsonNode.get("revisionNumber").asText();
-            String orderScheduleStatus = jsonNode.get("orderSchedule").get(0).get("status").asText();
+            String orderScheduleStatus = "";
+            if(jsonNode.get("orderSchedule").get(0) != null){
+                jsonNode.get("orderSchedule").get(0).asText();
+            }
             String porRevision = "true"; //TODO Set to true for revision
             playwrightFactory.savePropertiesIntoJsonFile("purchaseOrders", "porRevision", porRevision);
             playwrightFactory.savePropertiesIntoJsonFile("purchaseOrders", "poRevisionNumber", purchaseOrderRevisionNumber);

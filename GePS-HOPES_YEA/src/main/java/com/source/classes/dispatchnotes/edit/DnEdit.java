@@ -47,6 +47,7 @@ public class DnEdit implements IDnEdit {
                 if(tr.contains(poReferenceId)){
                     Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
                     detailsButtonLocator.first().click();
+                    break;
                 }
             }
 

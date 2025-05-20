@@ -46,6 +46,7 @@ public class FfrQuote implements IFfrQuote {
                 if(tr.contains(dnReferenceId)){
                     Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
                     detailsButtonLocator.first().click();
+                    break;
                 }
             }
 
