@@ -37,7 +37,7 @@ public class InvCancel implements IInvCancel {
         this.logger = LoggerUtil.getLogger(InvCancel.class);
     }
 
-    public void cancel(){
+    public void cancel(String type){
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             iLogin.performLogin(buyerMailId);
@@ -69,9 +69,7 @@ public class InvCancel implements IInvCancel {
 
             iLogout.performLogout();
 
-            iInvCreate.create();
-            double finalGSTPercentage = iInvCreate.gst();
-            iInvCreate.ifSgdEnable(finalGSTPercentage);
+            iInvCreate.invoiceTypeHandler(type);
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Cancel function: {}", exception.getMessage());
         }

@@ -1,8 +1,9 @@
 package com.source.classes.currencyexchangerate;
 import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Page;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.microsoft.playwright.*;
+import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.currencyexchangerate.ICurrencyExchangeRate;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -33,30 +34,41 @@ public class CurrencyExchangeRate implements ICurrencyExchangeRate {
     }
 
     public double findCurrency() {
-        page = playwrightFactory.initializePage(jsonNode);
-        String adminMailId = jsonNode.get("mailIds").get("adminEmail").asText();
-        iLogin.performLogin(adminMailId, page);
+        double rate = 0;
+        try {
+            page = playwrightFactory.getCurrencyExchangeRate();
 
-        Locator setingsNavigationBarLocator = page.locator(SETTING_NAVIGATION_BAR_LOCATOR);
-        setingsNavigationBarLocator.click();
+            String adminMailId = jsonNode.get("mailIds").get("adminEmail").asText();
+            iLogin.performLogin(adminMailId, page);
+
+            Locator setingsNavigationBarLocator = page.locator(SETTING_NAVIGATION_BAR_LOCATOR);
+            setingsNavigationBarLocator.click();
 
 //TODO CurrencyExchangeRate
-        Locator currencyExchangeRateLocator = page.locator(CURRENCY_EXCHANGE_RATE_LOCATOR);
-        currencyExchangeRateLocator.click();
+            Locator currencyExchangeRateLocator = page.locator(CURRENCY_EXCHANGE_RATE_LOCATOR);
+            currencyExchangeRateLocator.click();
 
 //TODO SearchBoxCurrencyCode
-        String fromCode = jsonNode.get("configSettings").get("currencyCode").asText();
-        String invoiceCurrencyCode = fromCode + " " + "SGD";
-        Locator searchBoxLocator = page.locator(SEARCH_BOX);
-        searchBoxLocator.click();
-        searchBoxLocator.fill(invoiceCurrencyCode);
+            String fromCode = jsonNode.get("configSettings").get("currencyCode").asText();
+            ObjectMapper objectMapper = new ObjectMapper();
+            APIResponse apiResponse = page.request().fetch("https://geps_hopes_yea.cormsquare.com/api/currencyExchangeRate/GetActiveCERates?_=1747756714967");
+            JsonNode responseNode = objectMapper.readTree(apiResponse.body());
 
-        List<String> currencyExchangeTable = page.locator(LIST_CONTAINER).allTextContents();
-//TODO Removing 1st and last td element => td:nth-child(n+2):nth-child(-n+4)
+            for (JsonNode node : responseNode) {
+                if (fromCode.equals(node.get("fromCode").asText()) && "SGD".equals(node.get("toCode").asText())) {
+                    rate = node.get("rate").asDouble();
+                    break;
+                }
+            }
 
-        double getCurrencyExchangeRate = Double.parseDouble(currencyExchangeTable.get(3));
-        iLogout.performLogout(page);
-        playwrightFactory.tearDown(page);
-        return getCurrencyExchangeRate;
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            iLogout.performLogout(page);
+
+            playwrightFactory.tearDown(page);
+        } catch (Exception exception) {
+            logger.error("Exception in Find Currency Function: {}", exception.getMessage());
+        }
+        return rate;
     }
 }

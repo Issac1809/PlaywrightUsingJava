@@ -192,9 +192,21 @@ public class PlaywrightFactory {
         }
     }
 
+    public Page getCurrencyExchangeRate() {
+        Page page = null;
+        try {
+            BrowserContext browserContext = getBrowser().newContext();
+            page = browserContext.newPage();
+            page.navigate(jsonNode.get("configSettings").get("appUrl").asText().trim());
+        } catch (Exception exception) {
+            logger.error("Exception in Get Currency Exchange Rate: {}", exception.getMessage());
+        }
+        return page;
+    }
+
     public void tearDown(Page page) {
         try {
-            getPage().context().browser().close();
+            page.context().close();
         } catch (Exception exception) {
             logger.error("Error in Tear Down Function: {}", exception.getMessage());
         }

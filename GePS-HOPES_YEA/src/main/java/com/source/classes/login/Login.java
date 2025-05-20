@@ -49,11 +49,16 @@ public class Login implements ILogin {
     //TODO This function is only used for currency Exchange Rate
     public void performLogin(String emailId, Page page) {
         try {
+            String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
             String password = jsonNode.get("configSettings").get("loginPassword").asText();
 
             page.locator(EMAIL).fill(emailId);
             page.locator(PASSWORD).fill(password);
             page.locator(LOGIN_BUTTON).click();
+
+            page.request().fetch(appUrl + "/api/users/current");
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
         } catch (Exception exception) {
             logger.error("Error in Perform Login Function for Admin (Currency Exchange Rate): {}", exception.getMessage());
         }

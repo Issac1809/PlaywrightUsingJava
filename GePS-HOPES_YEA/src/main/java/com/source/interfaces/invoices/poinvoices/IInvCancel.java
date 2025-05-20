@@ -2,5 +2,5 @@ package com.source.interfaces.invoices.poinvoices;
 
 public interface IInvCancel {
 
-    void cancel();
+    void cancel(String type);
 }

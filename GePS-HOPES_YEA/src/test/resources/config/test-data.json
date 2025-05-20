@@ -4,7 +4,7 @@
     "runHeadless" : false,
     "appUrl" : "https://geps_hopes_yea.cormsquare.com",
     "loginPassword" : "Admin@123",
-    "currencyCode" : "",
+    "currencyCode" : "CAD",
     "internalAttachmentFilePath" : "documents/Internal Requisition Attachments.xlsx",
     "externalAttachmentFilePath" : "documents/External Requisition Attachments.xlsx",
     "tcasFilePath" : "documents/TCAS_File.xlsx",
@@ -134,7 +134,7 @@
     "poProcessed" : "false"
   },
   "purchaseOrders" : {
-    "poReferenceId" : "",
+    "poReferenceId" : "8483",
     "purchaseOrderRequestUid" : "46fe24c0-e2ad-44df-bda9-6e35da54bcbb",
     "poRevisionNumber" : "0",
     "porRevision" : "true",
