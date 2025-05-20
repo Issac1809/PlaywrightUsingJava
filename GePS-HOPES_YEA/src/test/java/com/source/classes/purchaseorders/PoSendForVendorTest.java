@@ -15,7 +15,8 @@ public class PoSendForVendorTest extends BaseTest {
     @Parameters({"type", "purchaseType"})
     public void sendForVendor(String type, String purchaseType) {
         try {
-            iPoSendForVendor.sendPoForVendor(type, purchaseType);
+            int status = iPoSendForVendor.sendPoForVendor(type, purchaseType);
+            Assert.assertEquals(200, status, "PO Send to Vendor was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Send For Vendor Test function: {}", exception.getMessage());
             Assert.fail("Exception in PO Send For Vendor Test Function: " + exception.getMessage());

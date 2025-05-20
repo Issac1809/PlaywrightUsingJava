@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
@@ -26,6 +27,7 @@ public class SendForVendor implements IPoSendForVendor {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    String appUrl;
 
     private SendForVendor(){
     }
@@ -39,9 +41,11 @@ public class SendForVendor implements IPoSendForVendor {
         this.playwrightFactory = playwrightFactory;
         this.objectMapper = objectMapper;
         this.logger = LoggerUtil.getLogger(SendForVendor.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void sendPoForVendor(String type, String purchaseType){
+    public int sendPoForVendor(String type, String purchaseType){
+        int status =0;
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
@@ -79,7 +83,13 @@ public class SendForVendor implements IPoSendForVendor {
             sendForVendorButtonLocator.click();
 
             Locator emailPopUpLocator = page.locator(EMAIL_POP_UP);
-            emailPopUpLocator.click();
+
+            Response sendResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/PurchaseOrders/") && response.status() == 200,
+                            emailPopUpLocator::click
+            );
+
+            status = sendResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -89,5 +99,6 @@ public class SendForVendor implements IPoSendForVendor {
         } catch (Exception exception) {
             logger.error("Exception in Send PO For Vendor function: {}", exception.getMessage());
         }
+        return status;
     }
 }

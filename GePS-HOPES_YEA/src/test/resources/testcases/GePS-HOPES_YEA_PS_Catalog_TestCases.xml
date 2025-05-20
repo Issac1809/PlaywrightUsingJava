@@ -6,13 +6,13 @@
         <listener class-name="com.listeners.FailFastListener"/>
     </listeners>
 
-<!--    <test name="Requisition Create">-->
-<!--        <parameter name="type" value="PS"/>-->
-<!--        <parameter name="purchaseType" value="Catalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.requisitions.create.CreateTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Requisition Create">
+        <parameter name="type" value="PS"/>
+        <parameter name="purchaseType" value="Catalog"/>
+        <classes>
+            <class name="com.source.classes.requisitions.create.CreateTest"/>
+        </classes>
+    </test>
 
 <!--    <test name="Requisition Edit">-->
 <!--        <parameter name="type" value="PS"/>-->
@@ -22,13 +22,13 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="Requisition Send For Approval">-->
-<!--        <parameter name="type" value="PS"/>-->
-<!--        <parameter name="purchaseType" value="Catalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.requisitions.sendforapproval.SendForApprovalTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Requisition Send For Approval">
+        <parameter name="type" value="PS"/>
+        <parameter name="purchaseType" value="Catalog"/>
+        <classes>
+            <class name="com.source.classes.requisitions.sendforapproval.SendForApprovalTest"/>
+        </classes>
+    </test>
 
 <!--    <test name="Requisition Reject">-->
 <!--        <parameter name="type" value="PS"/>-->
@@ -38,21 +38,21 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="Requisition Approve">-->
-<!--        <parameter name="type" value="PS"/>-->
-<!--        <parameter name="purchaseType" value="Catalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.requisitions.approve.ApproveTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Requisition Approve">
+        <parameter name="type" value="PS"/>
+        <parameter name="purchaseType" value="Catalog"/>
+        <classes>
+            <class name="com.source.classes.requisitions.approve.ApproveTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="Requisition Buyer Manager Suspend">-->
-<!--        <parameter name="type" value="PS"/>-->
-<!--        <parameter name="purchaseType" value="Catalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.requisitions.suspend.BuyerManagerSuspendTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Requisition Buyer Manager Suspend">
+        <parameter name="type" value="PS"/>
+        <parameter name="purchaseType" value="Catalog"/>
+        <classes>
+            <class name="com.source.classes.requisitions.suspend.BuyerManagerSuspendTest"/>
+        </classes>
+    </test>
 
 <!--    <test name="Requisition Buyer Suspend">-->
 <!--        <parameter name="type" value="PS"/>-->
@@ -62,13 +62,13 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="Purchase Order Request Create">-->
-<!--        <parameter name="type" value="PS"/>-->
-<!--        <parameter name="purchaseType" value="Catalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.purchaseorderrequests.create.PorCreateTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Purchase Order Request Create">
+        <parameter name="type" value="PS"/>
+        <parameter name="purchaseType" value="Catalog"/>
+        <classes>
+            <class name="com.source.classes.purchaseorderrequests.create.PorCreateTest"/>
+        </classes>
+    </test>
 
 <!--    <test name="Purchase Order Request Edit">-->
 <!--        <parameter name="type" value="PS"/>-->
@@ -102,13 +102,13 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="Purchase Order Request Approve">-->
-<!--        <parameter name="type" value="PS"/>-->
-<!--        <parameter name="purchaseType" value="Catalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.purchaseorderrequests.approve.PorApproveTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Purchase Order Request Approve">
+        <parameter name="type" value="PS"/>
+        <parameter name="purchaseType" value="Catalog"/>
+        <classes>
+            <class name="com.source.classes.purchaseorderrequests.approve.PorApproveTest"/>
+        </classes>
+    </test>
 
 <!--    <test name="Purchase Order Request Revision Request">-->
 <!--        <parameter name="type" value="PS"/>-->
@@ -118,43 +118,43 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="Purchase Order Send For Vendor">-->
-<!--        <parameter name="type" value="PS"/>-->
-<!--        <parameter name="purchaseType" value="Catalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.purchaseorders.PoSendForVendorTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Purchase Order Send For Vendor">
+        <parameter name="type" value="PS"/>
+        <parameter name="purchaseType" value="Catalog"/>
+        <classes>
+            <class name="com.source.classes.purchaseorders.PoSendForVendorTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="Order Schedule Create">-->
-<!--        <parameter name="type" value="PS"/>-->
-<!--        <parameter name="purchaseType" value="Catalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.orderschedules.create.OsCreateTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Order Schedule Create">
+        <parameter name="type" value="PS"/>
+        <parameter name="purchaseType" value="Catalog"/>
+        <classes>
+            <class name="com.source.classes.orderschedules.create.OsCreateTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="Order Schedule Reject">-->
-<!--        <parameter name="type" value="PS"/>-->
-<!--        <parameter name="purchaseType" value="Catalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.orderschedules.reject.OsRejectTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Order Schedule Reject">
+        <parameter name="type" value="PS"/>
+        <parameter name="purchaseType" value="Catalog"/>
+        <classes>
+            <class name="com.source.classes.orderschedules.reject.OsRejectTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="Order Schedule Edit">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.orderschedules.edit.OsEditTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Order Schedule Edit">
+        <classes>
+            <class name="com.source.classes.orderschedules.edit.OsEditTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="Order Schedule Approve">-->
-<!--        <parameter name="type" value="PS"/>-->
-<!--        <parameter name="purchaseType" value="Catalog"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.orderschedules.approval.OsApproveTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Order Schedule Approve">
+        <parameter name="type" value="PS"/>
+        <parameter name="purchaseType" value="Catalog"/>
+        <classes>
+            <class name="com.source.classes.orderschedules.approval.OsApproveTest"/>
+        </classes>
+    </test>
 
 <!--    <test name="Ready For Inspection">-->
 <!--        <classes>-->
@@ -232,11 +232,11 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-    <test name="Work Order Create">
-        <classes>
-            <class name="com.source.classes.workorders.create.WoCreateTest"/>
-        </classes>
-    </test>
+<!--    <test name="Work Order Create">-->
+<!--        <classes>-->
+<!--            <class name="com.source.classes.workorders.create.WoCreateTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
 <!--    <test name="Work Order Tracker Status">-->
 <!--        <classes>-->

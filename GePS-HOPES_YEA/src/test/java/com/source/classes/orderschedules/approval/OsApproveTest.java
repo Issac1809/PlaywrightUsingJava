@@ -15,7 +15,8 @@ public class OsApproveTest extends BaseTest {
     @Parameters({"type", "purchaseType"})
     public void approve(String type, String purchaseType) {
         try {
-            iOsApprove.approve(type, purchaseType);
+            int status = iOsApprove.approve(type, purchaseType);
+            Assert.assertEquals(200, status, "OS Approve was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in OS Approve Test Function: {}", exception.getMessage());
             Assert.fail("Exception in OS Approve Test Function: " + exception.getMessage());

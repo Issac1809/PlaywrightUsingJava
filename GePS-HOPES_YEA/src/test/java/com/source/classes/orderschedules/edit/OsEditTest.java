@@ -13,7 +13,8 @@ public class OsEditTest extends BaseTest {
     @Test(description = "Order Schedule Edit Test")
     public void edit() {
         try {
-            iOsEdit.edit();
+            int status = iOsEdit.edit();
+            Assert.assertEquals(200, status, "OS Edit was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in OS Edit Test Function: {}", exception.getMessage());
             Assert.fail("Exception in OS Edit Test Function: " + exception.getMessage());

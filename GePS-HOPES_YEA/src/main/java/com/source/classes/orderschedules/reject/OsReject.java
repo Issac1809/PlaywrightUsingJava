@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -19,6 +20,7 @@ public class OsReject implements IOsReject {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    String appUrl;
 
     private OsReject(){
     }
@@ -30,9 +32,11 @@ public class OsReject implements IOsReject {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(OsReject.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void reject(String type, String purchaseType){
+    public int reject(String type, String purchaseType){
+        int status =0;
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             iLogin.performLogin(buyerMailId);
@@ -54,7 +58,12 @@ public class OsReject implements IOsReject {
             remarksInoutLocator.fill("Rejected");
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
-            acceptButtonLocator.click();
+
+            Response rejectResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/PurchaseOrders/GetOrderSchedules/") && response.status() == 200,
+                        acceptButtonLocator::click
+            );
+            status = rejectResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -64,5 +73,6 @@ public class OsReject implements IOsReject {
         } catch (Exception exception) {
             logger.error("Exception in OS Reject Function: {}", exception.getMessage());
         }
+        return status;
     }
 }

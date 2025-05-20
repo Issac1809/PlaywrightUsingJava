@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -10,6 +11,9 @@ import com.source.interfaces.orderschedules.IOsEdit;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
+
+import static com.constants.orderschedules.LOsCreate.DETAILS_BUTTON;
+import static com.constants.orderschedules.LOsCreate.LIST_CONTAINER;
 import static com.constants.orderschedules.LOsEdit.*;
 
 public class OsEdit implements IOsEdit {
@@ -19,6 +23,7 @@ public class OsEdit implements IOsEdit {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    String appUrl;
 
     private OsEdit(){
     }
@@ -30,9 +35,11 @@ public class OsEdit implements IOsEdit {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(OsEdit.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void edit(){
+    public int edit(){
+        int status =0;
         try {
             String vendorMailId = jsonNode.get("mailIds").get("vendorEmail").asText();
             iLogin.performLogin(vendorMailId);
@@ -57,7 +64,25 @@ public class OsEdit implements IOsEdit {
             updateButtonLocator.click();
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
-            acceptButtonLocator.click();
+            Response createResponse = page.waitForResponse(
+                    response -> response.url().equals(appUrl + "/api/VP/OrderSchedules/Listing") && response.status() == 200,
+                    acceptButtonLocator.first()::click
+            );
+
+            String poNumber = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
+            List<String> containerList1 = page.locator(LIST_CONTAINER).allTextContents();
+            for (String tr : containerList1) {
+                if (tr.contains(poNumber)) {
+                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
+
+                    Response osResponse = page.waitForResponse(
+                            response -> response.url().startsWith(appUrl + "/api/VP/OrderSchedules/") && response.status() == 200,
+                            detailsButtonLocator.first()::click
+                    );
+                    status = osResponse.status();
+                    break;
+                }
+            }
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -67,5 +92,6 @@ public class OsEdit implements IOsEdit {
         } catch (Exception exception) {
             logger.error("Exception in OS Edit Function: {}", exception.getMessage());
         }
+        return status;
     }
 }
