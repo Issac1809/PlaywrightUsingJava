@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
+import com.source.interfaces.dispatchnotes.IDnAssign;
 import com.source.interfaces.freightforwarderrequests.IFfrInvite;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -21,21 +22,25 @@ public class FfrInvite implements IFfrInvite {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    IDnAssign iDnAssign;
 
     private FfrInvite(){
     }
 
 //TODO Constructor
-    public FfrInvite(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout){
+    public FfrInvite(ILogin iLogin, JsonNode jsonNode, Page page, ILogout iLogout, IDnAssign iDnAssign){
         this.iLogin = iLogin;
         this.jsonNode = jsonNode;
         this.page = page;
         this.iLogout = iLogout;
+        this.iDnAssign = iDnAssign;
         this.logger = LoggerUtil.getLogger(FfrInvite.class);
     }
 
     public void invite() {
         try {
+            iDnAssign.assign();
+
             String logisticsManager = jsonNode.get("mailIds").get("logisticsManagerEmail").asText();
             iLogin.performLogin(logisticsManager);
 
@@ -48,6 +53,7 @@ public class FfrInvite implements IFfrInvite {
                 if(tr.contains(poReferenceId)){
                     Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
                     detailsButtonLocator.first().click();
+                    break;
                 }
             }
 
@@ -57,7 +63,7 @@ public class FfrInvite implements IFfrInvite {
             Locator dropDownLocator = page.locator(DROP_DOWN);
             dropDownLocator.click();
 
-            String freightVendor = jsonNode.get("mailIds").get("vendorEmail").asText();
+            String freightVendor = jsonNode.get("dispatchNotes").get("freightForwarder").asText();
             Locator searchFieldLocator = page.locator(SEARCH_FIELD);
             searchFieldLocator.fill(freightVendor);
 

@@ -36,9 +36,9 @@
     "cancelRemarks" : "Cancelled"
   },
   "requisition" : {
-    "purchaseType" : "Sales",
+    "purchaseType" : "PS",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-653.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-879.0",
     "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-432.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-872.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-71.0",
@@ -79,15 +79,15 @@
     "requisitionStatus" : "Draft",
     "requisitionNotes" : "Requisition Notes and Attachments",
     "requisitionFileType" : "Internal",
-    "requisitionApprovers" : "requester@cormsquare.com",
+    "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "7c7086d7-1725-4f38-964e-e51d90ea198f",
+    "requisitionUid" : "698d6937-e4a2-42fb-b1a3-54fba0106d0a",
     "itemImport" : false,
     "requisitionItemCount" : "3",
-    "psTransactionNumber" : "240025TRN03467",
+    "psTransactionNumber" : "240025TRN03500",
     "salesTransactionNumber" : "240025TRN03498",
     "sdTransactionNumber" : "240025TRN03469",
-    "requisitionId" : "23376"
+    "requisitionId" : "23386"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
@@ -116,10 +116,10 @@
     "milestonePaymentCount" : 2,
     "taxCode" : "PZ-Zero Rated Purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "8e790dfc-6db2-4728-97d9-70ebf968707b",
-    "purchaseOrderRequestId" : "8531",
-    "approvers" : [ "requester@cormsquare.com", "buyermanager@cormsquare.com", "admin@cormsquare.com" ],
-    "porReferenceNumber" : "240025POR01684",
+    "purchaseOrderRequestUid" : "daa307f6-35b0-49ff-b24f-9fe8c1a344b4",
+    "purchaseOrderRequestId" : "8540",
+    "approvers" : [ "projectmanager@cormsquare.com", "projectmanager3@cormsquare.com", "requester2@cormsquare.com", "requester@cormsquare.com", "buyer@cormsquare.com", "buyermanager@cormsquare.com", "cfo@cormsquare.com", "Achyuth@sharklasers.com" ],
+    "porReferenceNumber" : "240025POR01686",
     "integrationStatus" : "SOSynced",
     "additionalItemName" : "Packing Charges",
     "rate" : "200.45",
@@ -131,13 +131,13 @@
     "leadTime" : "10",
     "shippingPoint" : "NA",
     "porStatus" : "ProcessingPO",
-    "poProcessed" : "true"
+    "poProcessed" : "false"
   },
   "purchaseOrders" : {
-    "poReferenceId" : "6516",
-    "purchaseOrderRequestUid" : "2e45ae3f-eb67-47dd-9025-b5f2d485218d",
-    "poRevisionNumber" : "",
-    "porRevision" : "",
+    "poReferenceId" : "",
+    "purchaseOrderRequestUid" : "46fe24c0-e2ad-44df-bda9-6e35da54bcbb",
+    "poRevisionNumber" : "0",
+    "porRevision" : "true",
     "poValue" : 9000,
     "unitRate" : 200
   },
@@ -150,10 +150,11 @@
     "destinationCountry" : "India",
     "packageType" : "Drum",
     "grossWeightKg" : 20,
-    "netWeightKg" : 35,
-    "totalChargeableWeightKg" : 200,
-    "volumeCm3" : 50,
-    "unitRate" : 300
+    "netWeightKg" : 20,
+    "totalChargeableWeightKg" : 20,
+    "volumeCm3" : 20,
+    "unitRate" : 300,
+    "freightForwarder" : "Alpha Limited"
   },
   "workOrders" : {
     "sourceCountry" : "India",

@@ -282,7 +282,7 @@ public class BaseMain {
             iDnCancel = new DnCancel(iLogin, jsonNode, page, iLogout, iDnCreate);
 
 //TODO Freight Forwarder Requests
-            iFfrInvite = new FfrInvite(iLogin, jsonNode, page, iLogout);
+            iFfrInvite = new FfrInvite(iLogin, jsonNode, page, iLogout, iDnAssign);
             iFfrQuote = new FfrQuote(iLogin, jsonNode, page, iLogout);
             iFfrRequote = new FfrRequote(iLogin, jsonNode, iFfrQuote, iLogout, page);
 
