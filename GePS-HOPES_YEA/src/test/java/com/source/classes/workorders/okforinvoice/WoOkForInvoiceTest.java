@@ -13,7 +13,8 @@ public class WoOkForInvoiceTest extends BaseTest {
     @Test(description = "Work Order Ok For Invoice")
     public void okForInvoice(){
         try {
-            iWoOkForInvoice.okForInvoice();
+            int status = iWoOkForInvoice.okForInvoice();
+            Assert.assertEquals(200, status, "Work Order OK for Invoice was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Work Order Ok For Invoice Test function: {}", exception.getMessage());
             Assert.fail("Exception in WO Ok For Invoice Test Function: " + exception.getMessage());

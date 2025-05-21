@@ -15,7 +15,7 @@ import java.util.Properties;
 
 import static com.constants.dispatchnotes.LDnCreate.*;
 import static com.utils.GetTitleUtil.getTransactionTitle;
-import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
+import static com.utils.saveReferenceIdUtil.saveReferenceIdFromResponse;
 
 public class DnCreate implements IDnCreate {
 

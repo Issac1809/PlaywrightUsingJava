@@ -153,16 +153,19 @@
     "packageType" : "Drum",
     "grossWeightKg" : 20,
     "netWeightKg" : 20,
+    "volumeCm3" : 20
+  },
+  "freightForwarderRequests" : {
+    "freightForwarder" : "Alpha Limited",
+    "freightForwarderReferenceId" : "240025FFR00168",
     "totalChargeableWeightKg" : 20,
-    "volumeCm3" : 20,
-    "unitRate" : 300,
-    "freightForwarder" : "Alpha Limited"
+    "unitRate" : 300
   },
   "workOrders" : {
     "sourceCountry" : "India",
     "priority" : "High",
     "destinationCountry" : "India",
-    "workOrderReferenceId" : ""
+    "workOrderReferenceId" : "240025WO00189"
   },
   "invoices" : {
     "vendorReferenceId" : "",

@@ -13,7 +13,9 @@ public class FfrRequoteTest extends BaseTest {
     @Test(description = "Freight Forwarder Re-Quote Test")
     public void requote(){
         try {
-            iFfrRequote.requote();
+            int[] status = iFfrRequote.requote();
+            Assert.assertEquals(200, status[0], "FFR Requote Request was not Successful");
+            Assert.assertEquals(200, status[1], "FFR Requote Submit was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Freight Forwarder Requests Requote Test function: {}", exception.getMessage());
             Assert.fail("Exception in FFR Requote Test Function: " + exception.getMessage());

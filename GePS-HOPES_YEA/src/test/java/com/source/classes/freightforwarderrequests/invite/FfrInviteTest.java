@@ -13,7 +13,8 @@ public class FfrInviteTest extends BaseTest {
     @Test(description = "Freight Forwarder Invite Test")
     public void invite(){
         try {
-            iFfrInvite.invite();
+            int status = iFfrInvite.invite();
+            Assert.assertEquals(200, status, "FFR Invite was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Freight Forwarder Requests Invite Test function: {}", exception.getMessage());
             Assert.fail("Exception in FFR Invite Test Function: " + exception.getMessage());

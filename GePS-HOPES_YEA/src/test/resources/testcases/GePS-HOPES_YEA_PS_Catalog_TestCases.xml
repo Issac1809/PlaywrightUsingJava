@@ -202,17 +202,17 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-    <test name="Dispatch Note Return">
-        <classes>
-            <class name="com.source.classes.dispatchnotes.dnreturn.DnReturnTest"/>
-        </classes>
-    </test>
+<!--    <test name="Dispatch Note Return">-->
+<!--        <classes>-->
+<!--            <class name="com.source.classes.dispatchnotes.dnreturn.DnReturnTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
-    <test name="Dispatch Note Edit">
-        <classes>
-            <class name="com.source.classes.dispatchnotes.edit.DnEditTest"/>
-        </classes>
-    </test>
+<!--    <test name="Dispatch Note Edit">-->
+<!--        <classes>-->
+<!--            <class name="com.source.classes.dispatchnotes.edit.DnEditTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
 <!--    <test name="Freight Forwarder Invite">-->
 <!--        <classes>-->
@@ -250,11 +250,11 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="Work Order Ok For Invoice">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.workorders.okforinvoice.WoOkForInvoiceTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Work Order Ok For Invoice">
+        <classes>
+            <class name="com.source.classes.workorders.okforinvoice.WoOkForInvoiceTest"/>
+        </classes>
+    </test>
 
 <!--    <test name="PO Invoice Create">-->
 <!--        <parameter name="type" value="PS"/>-->

@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.dispatchnotes.IDnAssign;
 import com.source.interfaces.freightforwarderrequests.IFfrInvite;
@@ -10,10 +11,10 @@ import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-import java.util.List;
-import static com.constants.dispatchnotes.LDnAssign.DETAILS_BUTTON;
-import static com.constants.dispatchnotes.LDnAssign.LIST_CONTAINER;
+
 import static com.constants.freightforwarderrequests.LFfrInvite.*;
+import static com.constants.inspections.LInsCreate.getTitle;
+import static com.utils.saveReferenceIdUtil.saveReferenceIdFromResponse;
 
 public class FfrInvite implements IFfrInvite {
 
@@ -23,6 +24,7 @@ public class FfrInvite implements IFfrInvite {
     ILogin iLogin;
     ILogout iLogout;
     IDnAssign iDnAssign;
+    String appUrl;
 
     private FfrInvite(){
     }
@@ -35,9 +37,11 @@ public class FfrInvite implements IFfrInvite {
         this.iLogout = iLogout;
         this.iDnAssign = iDnAssign;
         this.logger = LoggerUtil.getLogger(FfrInvite.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void invite() {
+    public int invite() {
+        int status = 0;
         try {
             iDnAssign.assign();
 
@@ -47,15 +51,9 @@ public class FfrInvite implements IFfrInvite {
             Locator dnNavigationBarLocator = page.locator(DN_NAVIGATION_BAR);
             dnNavigationBarLocator.click();
 
-            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : containerList){
-                if(tr.contains(poReferenceId)){
-                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
-                    detailsButtonLocator.first().click();
-                    break;
-                }
-            }
+            String dnRefId = jsonNode.get("dispatchNotes").get("dispatchNoteReferenceId").asText();
+            Locator dnTitle = page.locator(getTitle(dnRefId));
+            dnTitle.click();
 
             Locator inviteFreightForwarderButtonLocator = page.locator(INVITE_VENDOR_BUTTON);
             inviteFreightForwarderButtonLocator.click();
@@ -63,7 +61,7 @@ public class FfrInvite implements IFfrInvite {
             Locator dropDownLocator = page.locator(DROP_DOWN);
             dropDownLocator.click();
 
-            String freightVendor = jsonNode.get("dispatchNotes").get("freightForwarder").asText();
+            String freightVendor = jsonNode.get("freightForwarderRequests").get("freightForwarder").asText();
             Locator searchFieldLocator = page.locator(SEARCH_FIELD);
             searchFieldLocator.fill(freightVendor);
 
@@ -74,7 +72,14 @@ public class FfrInvite implements IFfrInvite {
             saveButtonLocator.click();
 
             Locator emailPopUpLocator = page.locator(EMAIL_POP_UP);
-            emailPopUpLocator.click();
+
+            Response dnResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/DispatchNotes/") && response.status() == 200,
+                    emailPopUpLocator.first()::click
+            );
+            status = dnResponse.status();
+
+            saveReferenceIdFromResponse(dnResponse, "freightForwarderRequests","freightForwarderRequests", "freightForwarderReferenceId");
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -84,5 +89,6 @@ public class FfrInvite implements IFfrInvite {
         } catch (Exception exception) {
             logger.error("Exception in Freight Forwarder Requests Invite function: {}", exception.getMessage());
         }
+        return status;
     }
 }

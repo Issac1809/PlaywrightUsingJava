@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -10,6 +11,8 @@ import com.source.interfaces.workorders.IWoOkForInvoice;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
+
+import static com.constants.inspections.LInsCreate.getTitle;
 import static com.constants.workorders.LOkForInvoice.*;
 
 public class WoOkForInvoice implements IWoOkForInvoice {
@@ -20,6 +23,7 @@ public class WoOkForInvoice implements IWoOkForInvoice {
     ILogin iLogin;
     ILogout iLogout;
     PlaywrightFactory playwrightFactory;
+    String appUrl;
 
     private WoOkForInvoice(){
     }
@@ -32,9 +36,11 @@ public class WoOkForInvoice implements IWoOkForInvoice {
         this.iLogout = iLogout;
         this.playwrightFactory = playwrightFactory;
         this.logger = LoggerUtil.getLogger(WoOkForInvoice.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void okForInvoice() {
+    public int okForInvoice() {
+        int status = 0;
         try {
             String logisticsManagerMailId = jsonNode.get("mailIds").get("logisticsManagerEmail").asText();
             iLogin.performLogin(logisticsManagerMailId);
@@ -42,21 +48,21 @@ public class WoOkForInvoice implements IWoOkForInvoice {
             Locator workOrderNavigationBarLocator = page.locator(WO_NAVIGATION_BAR);
             workOrderNavigationBarLocator.click();
 
-            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : containerList){
-                if(tr.contains(poReferenceId)){
-                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
-                    detailsButtonLocator.first().click();
-                    break;
-                }
-            }
+            String woRefId = jsonNode.get("workOrders").get("workOrderReferenceId").asText();
+            Locator title = page.locator(getTitle(woRefId));
+            title.click();
 
             Locator okForInvoiceButton = page.locator(OK_FOR_INVOICE_BUTTON);
             okForInvoiceButton.click();
 
             Locator yesButtonLocator = page.locator(YES_BUTTON);
-            yesButtonLocator.click();
+
+            Response woResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/WorkOrder/") && response.request().method().equals("GET") && response.status() == 200,
+                    yesButtonLocator::click
+            );
+
+            status = woResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -66,5 +72,6 @@ public class WoOkForInvoice implements IWoOkForInvoice {
         } catch (Exception exception) {
             logger.error("Exception in Work Order Edit Function: {}", exception.getMessage());
         }
+        return status;
     }
 }

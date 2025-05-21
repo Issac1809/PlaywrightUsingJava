@@ -13,7 +13,8 @@ public class WoTrackerStatusTest extends BaseTest {
     @Test(description = "Work Order Tracker Status Test")
     public void trackerStatus(){
         try {
-            iWoTrackerStatus.trackerStatus();
+            int status = iWoTrackerStatus.trackerStatus();
+            Assert.assertEquals(200, status, "Work Order Tracker Status was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Work Order Tracker Status Test function: {}", exception.getMessage());
             Assert.fail("Exception in WO Tracker Status Test Function: " + exception.getMessage());
