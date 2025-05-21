@@ -10,9 +10,6 @@ import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.orderschedules.IOsCreate;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-
-import java.util.List;
-
 import static com.constants.orderschedules.LOsCreate.*;
 import static com.utils.GetTitleUtil.getTransactionTitle;
 import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
@@ -53,11 +50,6 @@ public class OsCreate implements IOsCreate {
             String title = getTransactionTitle(type, purchaseType);
             Locator titleLocator = page.locator(getTitle(title));
             titleLocator.first().click();
-
-            Locator poReferenceId = page.locator(PO_REFERENCE_ID);
-            String getPoRefId = poReferenceId.textContent();
-
-            playwrightFactory.savePropertiesIntoJsonFile("purchaseOrders", "poReferenceId", getPoRefId);
 
             Locator createOsButtonLocator = page.locator(CREATE_OS_BUTTON);
             createOsButtonLocator.click();

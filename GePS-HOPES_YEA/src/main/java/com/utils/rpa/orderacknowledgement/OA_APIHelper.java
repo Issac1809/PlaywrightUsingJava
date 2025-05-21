@@ -15,10 +15,9 @@ public class OA_APIHelper {
         this.logger = LoggerUtil.getLogger(OA_APIHelper.class);
     }
 
-    public void updateStatus(String apiUrl) {
+    public void updateStatus(String apiUrl, String poId) {
         try {
-            page.request().fetch(apiUrl + "7808", RequestOptions.create());
-            page.close();
+            page.request().fetch(apiUrl + poId, RequestOptions.create());
         } catch (Exception exception) {
             logger.error("Exception in Update Status Function: {}", exception.getMessage());
         }

@@ -54,6 +54,8 @@ public class DnEdit implements IDnEdit {
             Locator editButtonLocator = page.locator(EDIT_BUTTON);
             editButtonLocator.click();
 
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
             Locator updateButtonLocator = page.locator(UPDATE_BUTTON);
             updateButtonLocator.click();
 

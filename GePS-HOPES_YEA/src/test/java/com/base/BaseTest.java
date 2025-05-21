@@ -380,7 +380,7 @@ public class BaseTest {
             playwrightFactory.startTracing(browserContext, traceFileName);
             toastrUtil = new ToastrUtil(page);
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
-            saveToTestDataJsonUtil = new SaveToTestDataJsonUtil(playwrightFactory, jsonNode, logger, objectMapper);
+            saveToTestDataJsonUtil = new SaveToTestDataJsonUtil(playwrightFactory, objectMapper);
 
         } catch (Exception exception) {
             logger.error("Error Initializing Global Setup Function: {}", exception.getMessage());
@@ -471,7 +471,7 @@ public class BaseTest {
             osEditTest = new OsEditTest();
             iOsReject = new OsReject(iLogin, jsonNode, page, iLogout);
             osRejectTest = new OsRejectTest();
-            iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout);
+            iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout, objectMapper, oaFlow, playwrightFactory);
             osApproveTest = new OsApproveTest();
 
 //TODO Inspection

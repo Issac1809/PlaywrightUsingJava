@@ -38,7 +38,7 @@
   "requisition" : {
     "purchaseType" : "PS",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-673.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-773.0",
     "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-432.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-364.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-259.0",
@@ -81,13 +81,13 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "1f04f7db-1f22-4458-aa53-8f20a0f91254",
+    "requisitionUid" : "0561e9fa-1c4b-419f-8004-ed957d9cba27",
     "itemImport" : true,
     "requisitionItemCount" : "3",
-    "psTransactionNumber" : "240025TRN03520",
+    "psTransactionNumber" : "240025TRN03530",
     "salesTransactionNumber" : "240025TRN03511",
     "sdTransactionNumber" : "240025TRN03469",
-    "requisitionId" : "23440"
+    "requisitionId" : "23471"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
@@ -116,10 +116,10 @@
     "milestonePaymentCount" : 2,
     "taxCode" : "PZ-Zero Rated Purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "e7fe392b-cf0f-45dd-8a1c-b63e4c6ecaf2",
-    "purchaseOrderRequestId" : "8570",
+    "purchaseOrderRequestUid" : "55e0e744-3964-42bc-82bf-eac095d9c08d",
+    "purchaseOrderRequestId" : "8593",
     "approvers" : [ "projectmanager@cormsquare.com", "buyer@cormsquare.com" ],
-    "porReferenceNumber" : "240025POR01700",
+    "porReferenceNumber" : "240025POR01707",
     "integrationStatus" : "SOSynced",
     "additionalItemName" : "Packing Charges",
     "rate" : "200.45",
@@ -131,23 +131,24 @@
     "leadTime" : "10",
     "shippingPoint" : "NA",
     "porStatus" : "ProcessingPO",
-    "poProcessed" : "false"
+    "poProcessed" : "true",
+    "poId" : "5814"
   },
   "purchaseOrders" : {
     "poReferenceId" : "",
-    "poRevisionNumber" : "0",
+    "purchaseOrderRequestUid" : "eaa700e8-22e2-4285-830e-984bcbb8c357",
+    "poRevisionNumber" : "1",
     "porRevision" : "true",
     "poValue" : 9000,
     "unitRate" : 200,
-    "purchaseOrderRequestUid" : "07e06928-cd31-476b-876c-fc4912088897",
-    "purchaseOrderReferenceId" : "755"
+    "id" : "5814"
   },
   "orderSchedules" : {
-    "orderScheduleReferenceId" : "240025OS00773",
-    "orderScheduleStatus" : ""
+    "orderScheduleStatus" : "",
+    "orderScheduleReferenceId" : "240025OS00779"
   },
   "dispatchNotes" : {
-    "dispatchNoteReferenceId" : "240025DN00330",
+    "dispatchNoteReferenceId" : "",
     "sourceCountry" : "India",
     "destinationCountry" : "India",
     "packageType" : "Drum",

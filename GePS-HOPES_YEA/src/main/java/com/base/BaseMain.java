@@ -225,7 +225,7 @@ public class BaseMain {
             page = playwrightFactory.initializePage(jsonNode);
             toastrUtil = new ToastrUtil(page);
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
-            saveToTestDataJsonUtil = new SaveToTestDataJsonUtil(playwrightFactory, jsonNode, logger, objectMapper);
+            saveToTestDataJsonUtil = new SaveToTestDataJsonUtil(playwrightFactory, objectMapper);
             prListFlow = new PR_List_Flow(page);
             msaFlow = new MSA_Flow(page);
             oaFlow = new OA_Flow(page);
@@ -275,7 +275,7 @@ public class BaseMain {
             iOsCreate = new OsCreate(iLogin, jsonNode, page, iLogout, playwrightFactory);
             iOsEdit = new OsEdit(iLogin, jsonNode, page, iLogout);
             iOsReject = new OsReject(iLogin, jsonNode, page, iLogout);
-            iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout);
+            iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout, objectMapper, oaFlow, playwrightFactory);
 
 //TODO Inspections
             iInsReadyForInspection = new InsReadyForInspection(iLogin, jsonNode, page, iLogout);
