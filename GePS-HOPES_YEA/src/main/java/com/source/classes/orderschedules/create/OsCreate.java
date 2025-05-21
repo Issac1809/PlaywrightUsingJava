@@ -52,11 +52,6 @@ public class OsCreate implements IOsCreate {
             Locator titleLocator = page.locator(getTitle(title));
             titleLocator.first().click();
 
-            Locator poReferenceId = page.locator(PO_REFERENCE_ID);
-            String getPoRefId = poReferenceId.textContent();
-
-            playwrightFactory.savePropertiesIntoJsonFile("purchaseOrders", "poReferenceId", getPoRefId);
-
             Locator createOsButtonLocator = page.locator(CREATE_OS_BUTTON);
             createOsButtonLocator.click();
 

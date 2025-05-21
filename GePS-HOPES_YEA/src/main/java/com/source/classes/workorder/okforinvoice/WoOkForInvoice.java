@@ -70,7 +70,7 @@ public class WoOkForInvoice implements IWoOkForInvoice {
 
             iLogout.performLogout();
         } catch (Exception exception) {
-            logger.error("Exception in Work Order Edit Function: {}", exception.getMessage());
+            logger.error("Exception in Work Order OK For Invoice Function: {}", exception.getMessage());
         }
         return status;
     }

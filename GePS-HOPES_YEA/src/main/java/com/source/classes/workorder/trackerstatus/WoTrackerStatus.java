@@ -55,11 +55,6 @@ public class WoTrackerStatus implements IWoTrackerStatus {
             Locator title = page.locator(getTitle(woRefId));
             title.click();
 
-            Locator woReferenceId = page.locator(WO_REFERENCE_ID);
-            String getWoRefId = woReferenceId.innerText();
-
-            playwrightFactory.savePropertiesIntoJsonFile("workOrders", "workOrderReferenceId", getWoRefId);
-
             for (String trackerStatus : STATUSES) {
                 Locator datePickerLocator = page.locator(DATE_PICKER);
                 datePickerLocator.click();
