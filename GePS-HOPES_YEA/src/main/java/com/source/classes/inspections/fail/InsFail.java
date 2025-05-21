@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.inspections.IInsFail;
 import com.source.interfaces.inspections.IInsReadyForInspection;
@@ -20,6 +21,7 @@ public class InsFail implements IInsFail {
     ILogin iLogin;
     ILogout iLogout;
     IInsReadyForInspection iInsReadyForInspection;
+    String appUrl;
 
     private InsFail() {
     }
@@ -31,9 +33,11 @@ public class InsFail implements IInsFail {
         this.page = page;
         this.iLogout = iLogout;
         this.iInsReadyForInspection = iInsReadyForInspection;
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void fail() {
+    public int fail() {
+        int status =0;
         try {
             String mailId = jsonNode.get("mailIds").get("requesterEmail").asText();
             iLogin.performLogin(mailId);
@@ -67,7 +71,12 @@ public class InsFail implements IInsFail {
             remarksLocator.fill("Failed");
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
-            acceptButtonLocator.click();
+
+            Response osResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/buyer/OrderSchedule/") && response.status() == 200,
+                    acceptButtonLocator.first()::click
+            );
+            status = osResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -79,5 +88,6 @@ public class InsFail implements IInsFail {
         } catch (Exception exception) {
             logger.error("Exception in Inspection Fail function: {}", exception.getMessage());
         }
+        return status;
     }
 }

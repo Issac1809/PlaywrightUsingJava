@@ -13,7 +13,8 @@ public class InsFailTest extends BaseTest {
     @Test(description = "Inspections Fail Test")
     public void fail(){
         try {
-            iInsFail.fail();
+            int status = iInsFail.fail();
+            Assert.assertEquals(200, status, "Inspection Fail was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Inspection Fail Test function: {}", exception.getMessage());
             Assert.fail("Exception in Inspection Fail Test Function: " + exception.getMessage());

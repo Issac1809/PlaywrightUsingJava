@@ -9,6 +9,8 @@ public class LOsCreate {
     public static final String SCHEDULE_DATE = ".scheduleDate-1";
     public static final String CREATE_BUTTON = "#btnCreate";
     public static final String ACCEPT_BUTTON = ".bootbox-accept";
+    public static final String LIST_CONTAINER = "#listContainer tr td";
+    public static final String DETAILS_BUTTON = ".btn-link";
 
 //TODO Constructor
     private LOsCreate(){

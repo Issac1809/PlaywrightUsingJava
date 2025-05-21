@@ -15,7 +15,8 @@ public class DnCreateTest extends BaseTest {
     @Parameters({"type", "purchaseType"})
     public void create(String type, String purchaseType) {
         try {
-            iDnCreate.create(type, purchaseType);
+            int status = iDnCreate.create(type, purchaseType);
+            Assert.assertEquals(200, status, "Dispatch Note Create was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Dispatch Notes Create Test function: {}", exception.getMessage());
             Assert.fail("Exception in DN Create Test Function: " + exception.getMessage());

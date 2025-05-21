@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.inspections.IInsCreate;
 import com.source.interfaces.login.ILogin;
@@ -19,6 +20,7 @@ public class InsCreate implements IInsCreate {
     ILogout iLogout;
     JsonNode jsonNode;
     Page page;
+    String appUrl;
 
     private InsCreate(){
     }
@@ -30,9 +32,11 @@ public class InsCreate implements IInsCreate {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(InsCreate.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void create(){
+    public int create(){
+        int status =0;
         try {
             String mailId = jsonNode.get("mailIds").get("requesterEmail").asText();
             iLogin.performLogin(mailId);
@@ -74,7 +78,12 @@ public class InsCreate implements IInsCreate {
             createInspectionButtonLocator.click();
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
-            acceptButtonLocator.click();
+
+            Response osResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/buyer/OrderSchedule/") && response.status() == 200,
+                    acceptButtonLocator.first()::click
+            );
+            status = osResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -84,5 +93,6 @@ public class InsCreate implements IInsCreate {
         } catch (Exception exception) {
             logger.error("Exception in Inspection Create function: {}", exception.getMessage());
         }
+        return status;
     }
 }

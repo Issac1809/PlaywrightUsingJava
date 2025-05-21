@@ -13,7 +13,8 @@ public class InsAssignTest extends BaseTest {
     @Test(description = "Inspections Assign Test")
     public void assign(){
         try {
-            iInsAssign.assign();
+            int status = iInsAssign.assign();
+            Assert.assertEquals(200, status, "Assign Inspector was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Inspection Assign Test function: {}", exception.getMessage());
             Assert.fail("Exception in Inspection Assign Test Function: " + exception.getMessage());

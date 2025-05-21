@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.inspections.IInsAssign;
 import com.source.interfaces.login.ILogin;
@@ -19,6 +20,7 @@ public class InsAssign implements IInsAssign {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    String appUrl;
 
     private InsAssign() {
     }
@@ -30,9 +32,11 @@ public class InsAssign implements IInsAssign {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(InsAssign.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void assign() {
+    public int assign() {
+        int status =0;
         try {
             String mailId = jsonNode.get("mailIds").get("requesterEmail").asText();
             iLogin.performLogin(mailId);
@@ -63,7 +67,12 @@ public class InsAssign implements IInsAssign {
             requesterMailIdLocator.first().click();
 
             Locator saveInspectorButtonLocator = page.locator(SAVE_INSPECTOR);
-            saveInspectorButtonLocator.click();
+
+            Response assignResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/buyer/OrderSchedule/") && response.status() == 200,
+                    saveInspectorButtonLocator.first()::click
+            );
+            status = assignResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -73,5 +82,6 @@ public class InsAssign implements IInsAssign {
         } catch (Exception exception) {
             logger.error("Exception in Inspection Assign function: {}", exception.getMessage());
         }
+        return status;
     }
 }
