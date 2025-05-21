@@ -13,7 +13,8 @@ public class InsCreateTest extends BaseTest {
     @Test(description = "Inspections Create Test")
     public void create(){
         try {
-            iInsCreate.create();
+            int status = iInsCreate.create();
+            Assert.assertEquals(200, status, "Inspection Create was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Inspection Create Test function: {}", exception.getMessage());
             Assert.fail("Exception in Inspection Create Test Function: " + exception.getMessage());

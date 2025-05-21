@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.inspections.IInsReadyForInspection;
 import com.source.interfaces.login.ILogin;
@@ -20,6 +21,7 @@ public class InsReadyForInspection implements IInsReadyForInspection {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    String appUrl;
 
     private InsReadyForInspection(){
     }
@@ -31,9 +33,11 @@ public class InsReadyForInspection implements IInsReadyForInspection {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(InsReadyForInspection.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void readyForInspection(){
+    public int readyForInspection(){
+        int status =0;
         try {
             String vendorMailId = jsonNode.get("mailIds").get("vendorEmail").asText();
             iLogin.performLogin(vendorMailId);
@@ -55,7 +59,12 @@ public class InsReadyForInspection implements IInsReadyForInspection {
             readyForInspectionButtonLocator.click();
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
-            acceptButtonLocator.click();
+
+            Response osResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/VP/OrderSchedules/") && response.status() == 200,
+                    acceptButtonLocator.first()::click
+            );
+            status = osResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -65,5 +74,6 @@ public class InsReadyForInspection implements IInsReadyForInspection {
         } catch (Exception exception) {
             logger.error("Exception in Ready for Inspection function: {}", exception.getMessage());
         }
+        return status;
     }
 }
