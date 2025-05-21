@@ -16,9 +16,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.file.Paths;
 import java.util.List;
-
 import static com.constants.invoices.poinvoice.LInvCreate.*;
-import static com.utils.saveReferenceIdUtil.saveReferenceIdFromResponse;
+import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
 
 public class InvCreate implements IInvCreate {
 

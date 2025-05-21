@@ -10,10 +10,9 @@ import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.orderschedules.IOsCreate;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-
 import static com.constants.orderschedules.LOsCreate.*;
 import static com.utils.GetTitleUtil.getTransactionTitle;
-import static com.utils.saveReferenceIdUtil.saveReferenceIdFromResponse;
+import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
 
 public class OsCreate implements IOsCreate {
 

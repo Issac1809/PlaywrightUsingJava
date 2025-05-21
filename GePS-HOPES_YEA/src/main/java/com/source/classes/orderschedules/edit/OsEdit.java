@@ -10,9 +10,8 @@ import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.orderschedules.IOsEdit;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-
 import static com.constants.orderschedules.LOsEdit.*;
-import static com.utils.saveReferenceIdUtil.saveReferenceIdFromResponse;
+import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
 
 public class OsEdit implements IOsEdit {
 

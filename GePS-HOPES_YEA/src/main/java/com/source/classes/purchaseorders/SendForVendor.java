@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 import static com.constants.purchaseorderrequests.LPorCreate.getTitle;
 import static com.constants.purchaseorders.LPoSendForVendor.*;
 import static com.utils.GetTitleUtil.getTransactionTitle;
-import static com.utils.saveReferenceIdUtil.saveReferenceIdFromApiResponse;
+import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromApiResponse;
 
 public class SendForVendor implements IPoSendForVendor {
 
@@ -68,6 +68,7 @@ public class SendForVendor implements IPoSendForVendor {
             APIResponse apiResponse = page.request().fetch(appUrl + "/api/PurchaseOrders/" + getUid, RequestOptions.create());
             JsonNode jsonNode = objectMapper.readTree(apiResponse.body());
             String purchaseOrderRevisionNumber = jsonNode.get("revisionNumber").asText();
+            int poId = jsonNode.get("id").asInt();
             String orderScheduleStatus = "";
             if(jsonNode.get("orderSchedule").get(0) != null){
                 jsonNode.get("orderSchedule").get(0).asText();
@@ -75,6 +76,7 @@ public class SendForVendor implements IPoSendForVendor {
             String porRevision = "true"; //TODO Set to true for revision
             saveReferenceIdFromApiResponse(apiResponse, "purchaseOrders", "poReferenceId");
             playwrightFactory.savePropertiesIntoJsonFile("purchaseOrders", "porRevision", porRevision);
+            playwrightFactory.savePropertiesIntoJsonFile("purchaseOrders", "id", String.valueOf(poId));
             playwrightFactory.savePropertiesIntoJsonFile("purchaseOrders", "poRevisionNumber", purchaseOrderRevisionNumber);
             playwrightFactory.savePropertiesIntoJsonFile("orderSchedules", "orderScheduleStatus", orderScheduleStatus);
 

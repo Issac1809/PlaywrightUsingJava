@@ -176,7 +176,7 @@ import com.source.interfaces.workorders.IWoOkForInvoice;
 import com.source.interfaces.workorders.IWoTrackerStatus;
 import com.utils.GetTitleUtil;
 import com.utils.LoggerUtil;
-import com.utils.saveReferenceIdUtil;
+import com.utils.SaveToTestDataJsonUtil;
 import com.utils.ToastrUtil;
 import com.utils.rpa.invoiceverification.IV_Flow;
 import com.utils.rpa.orderacknowledgement.OA_Flow;
@@ -195,7 +195,7 @@ public class BaseTest {
     protected static ObjectMapper objectMapper;
     protected static JsonNode jsonNode;
     protected GetTitleUtil getTitleUtil;
-    protected saveReferenceIdUtil saveReferenceIdUtil;
+    protected SaveToTestDataJsonUtil saveToTestDataJsonUtil;
     protected static PlaywrightFactory playwrightFactory;
     protected static Playwright playwright;
     protected static Browser browser;
@@ -380,7 +380,7 @@ public class BaseTest {
             playwrightFactory.startTracing(browserContext, traceFileName);
             toastrUtil = new ToastrUtil(page);
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
-            saveReferenceIdUtil = new saveReferenceIdUtil(playwrightFactory, jsonNode, logger, objectMapper);
+            saveToTestDataJsonUtil = new SaveToTestDataJsonUtil(playwrightFactory, objectMapper);
 
         } catch (Exception exception) {
             logger.error("Error Initializing Global Setup Function: {}", exception.getMessage());
@@ -471,7 +471,7 @@ public class BaseTest {
             osEditTest = new OsEditTest();
             iOsReject = new OsReject(iLogin, jsonNode, page, iLogout);
             osRejectTest = new OsRejectTest();
-            iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout);
+            iOsApprove = new OsApprove(iLogin, jsonNode, page, iLogout, objectMapper, oaFlow, playwrightFactory);
             osApproveTest = new OsApproveTest();
 
 //TODO Inspection

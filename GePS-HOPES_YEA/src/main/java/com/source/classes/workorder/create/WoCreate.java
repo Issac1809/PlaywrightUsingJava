@@ -10,11 +10,9 @@ import com.source.interfaces.logout.ILogout;
 import com.source.interfaces.workorders.IWoCreate;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-import java.util.List;
-
 import static com.constants.inspections.LInsCreate.getTitle;
 import static com.constants.workorders.LWoCreate.*;
-import static com.utils.saveReferenceIdUtil.saveReferenceIdFromResponse;
+import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
 
 public class WoCreate implements IWoCreate {
 

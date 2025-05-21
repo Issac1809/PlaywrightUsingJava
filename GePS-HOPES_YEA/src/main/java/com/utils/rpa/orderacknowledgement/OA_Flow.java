@@ -32,6 +32,7 @@ public class OA_Flow {
             String ftpUser = jsonNode.get("msa").get("ftpUser").asText();
             String ftpPassword = jsonNode.get("msa").get("ftpPassword").asText();
             String localPath = jsonNode.get("msa").get("localPath").asText();
+            String poId = jsonNode2.get("purchaseOrders").get("id").asText();
             String poReferenceId = jsonNode2.get("purchaseOrders").get("poReferenceId").asText();
             String poRevisionNumber = jsonNode2.get("purchaseOrders").get("poRevisionNumber").asText();
             String remoteOaDownloadFilePath = jsonNode.get("msa").get("remoteOaDownloadFilePath").asText();
@@ -52,7 +53,7 @@ public class OA_Flow {
 
 //TODO Step 4: Call API to Update Status
             OA_APIHelper ivApiHelper = new OA_APIHelper(page);
-            ivApiHelper.updateStatus(readOrderScheduleUrl);
+            ivApiHelper.updateStatus(readOrderScheduleUrl, poId);
         } catch (Exception exception) {
             logger.error("Exception in Order Acknowledgement Flow Function: {}", exception.getMessage());
         }
