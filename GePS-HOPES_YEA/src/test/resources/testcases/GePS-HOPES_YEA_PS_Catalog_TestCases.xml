@@ -237,12 +237,24 @@
 <!--            <class name="com.source.classes.workorders.create.WoCreateTest"/>-->
 <!--        </classes>-->
 <!--    </test>-->
+  
+<!--    <test name="Work Order Edit">-->
+<!--        <classes>-->
+<!--            <class name="com.source.classes.workorders.edit.WoEditTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
 <!--    <test name="Work Order Tracker Status">-->
 <!--        <classes>-->
 <!--            <class name="com.source.classes.workorders.trackerstatus.WoTrackerStatusTest"/>-->
 <!--        </classes>-->
 <!--    </test>-->
+
+    <test name="Work Order Ok For Invoice">
+        <classes>
+            <class name="com.source.classes.workorders.okforinvoice.WoOkForInvoiceTest"/>
+        </classes>
+    </test>
 
 <!--    <test name="PO Invoice Create">-->
 <!--        <parameter name="type" value="PS"/>-->

@@ -142,8 +142,12 @@ import com.source.classes.requisitions.suspend.BuyerManagerSuspend;
 import com.source.classes.requisitions.suspend.BuyerSuspend;
 import com.source.classes.requisitions.type.PurchaseRequisitionTypeHandler;
 import com.source.classes.workorder.create.WoCreate;
+import com.source.classes.workorder.edit.WoEdit;
+import com.source.classes.workorder.okforinvoice.WoOkForInvoice;
 import com.source.classes.workorder.trackerstatus.WoTrackerStatus;
 import com.source.classes.workorders.create.WoCreateTest;
+import com.source.classes.workorders.edit.WoEditTest;
+import com.source.classes.workorders.okforinvoice.WoOkForInvoiceTest;
 import com.source.classes.workorders.trackerstatus.WoTrackerStatusTest;
 import com.source.interfaces.currencyexchangerate.ICurrencyExchangeRate;
 import com.source.interfaces.dispatchnotes.*;
@@ -167,6 +171,8 @@ import com.source.interfaces.purchaseorders.IPoSendForVendor;
 import com.source.interfaces.requestforquotations.*;
 import com.source.interfaces.requisitions.*;
 import com.source.interfaces.workorders.IWoCreate;
+import com.source.interfaces.workorders.IWoEdit;
+import com.source.interfaces.workorders.IWoOkForInvoice;
 import com.source.interfaces.workorders.IWoTrackerStatus;
 import com.utils.GetTitleUtil;
 import com.utils.LoggerUtil;
@@ -291,8 +297,12 @@ public class BaseTest {
     protected IFfrRequote iFfrRequote;
     protected WoCreateTest woCreateTest;
     protected IWoCreate iWoCreate;
+    protected WoEditTest woEditTest;
+    protected IWoEdit iWoEdit;
     protected WoTrackerStatusTest woTrackerStatusTest;
     protected IWoTrackerStatus iWoTrackerStatus;
+    protected WoOkForInvoiceTest woOkForInvoiceTest;
+    protected IWoOkForInvoice iWoOkForInvoice;
     protected PoInvCreateTest poInvCreateTest;
     protected IInvCreate iInvCreate;
     protected PoInvHoldTest poInvHoldTest;
@@ -493,8 +503,12 @@ public class BaseTest {
 //TODO Work Order
             iWoCreate = new WoCreate(iLogin, jsonNode, page, iLogout);
             woCreateTest = new WoCreateTest();
+            iWoEdit = new WoEdit(iLogin, jsonNode, page, iLogout);
+            woEditTest = new WoEditTest();
             iWoTrackerStatus = new WoTrackerStatus(iLogin, jsonNode, page, iLogout, playwrightFactory);
             woTrackerStatusTest = new WoTrackerStatusTest();
+            iWoOkForInvoice = new WoOkForInvoice(iLogin, jsonNode, page, iLogout, playwrightFactory);
+            woOkForInvoiceTest = new WoOkForInvoiceTest();
 
 //TODO Currency Exchange Rate
             iCurrencyExchangeRate = new CurrencyExchangeRate(playwrightFactory, iLogin, jsonNode, iLogout);

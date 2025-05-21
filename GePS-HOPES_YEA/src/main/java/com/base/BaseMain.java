@@ -78,6 +78,8 @@ import com.source.classes.requisitions.suspend.BuyerManagerSuspend;
 import com.source.classes.requisitions.suspend.BuyerSuspend;
 import com.source.classes.requisitions.type.PurchaseRequisitionTypeHandler;
 import com.source.classes.workorder.create.WoCreate;
+import com.source.classes.workorder.edit.WoEdit;
+import com.source.classes.workorder.okforinvoice.WoOkForInvoice;
 import com.source.classes.workorder.trackerstatus.WoTrackerStatus;
 import com.source.interfaces.currencyexchangerate.ICurrencyExchangeRate;
 import com.source.interfaces.dispatchnotes.*;
@@ -101,6 +103,8 @@ import com.source.interfaces.purchaseorders.IPoSendForVendor;
 import com.source.interfaces.requestforquotations.*;
 import com.source.interfaces.requisitions.*;
 import com.source.interfaces.workorders.IWoCreate;
+import com.source.interfaces.workorders.IWoEdit;
+import com.source.interfaces.workorders.IWoOkForInvoice;
 import com.source.interfaces.workorders.IWoTrackerStatus;
 import com.utils.GetTitleUtil;
 import com.utils.LoggerUtil;
@@ -176,7 +180,9 @@ public class BaseMain {
     protected IFfrQuote iFfrQuote;
     protected IFfrRequote iFfrRequote;
     protected IWoCreate iWoCreate;
+    protected IWoEdit iWoEdit;
     protected IWoTrackerStatus iWoTrackerStatus;
+    protected IWoOkForInvoice iWoOkForInvoice;
     protected IInvCreate iInvCreate;
     protected IInvHold iInvHold;
     protected IInvRevert iInvRevert;
@@ -288,7 +294,9 @@ public class BaseMain {
 
 //TODO Work Orders
             iWoCreate = new WoCreate(iLogin, jsonNode, page, iLogout);
+            iWoEdit = new WoEdit(iLogin, jsonNode, page, iLogout);
             iWoTrackerStatus = new WoTrackerStatus(iLogin, jsonNode, page, iLogout, playwrightFactory);
+            iWoOkForInvoice = new WoOkForInvoice(iLogin, jsonNode, page, iLogout, playwrightFactory);
 
 //TODO Currency Exchange Rate
             iCurrencyExchangeRate = new CurrencyExchangeRate(playwrightFactory, iLogin, jsonNode, iLogout);
