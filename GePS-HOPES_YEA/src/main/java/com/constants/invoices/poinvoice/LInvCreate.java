@@ -19,13 +19,20 @@ public class LInvCreate {
     public static final String PO_NUMBER_INPUT = "#select2-poId-container";
     public static final String CURRENCY_CODE = "#currencyCode";
     public static final String GST_LOCATOR = "#USDgstId";
+    public static final String FOREIGN_CURRENCY_LOCATOR = "#USDsubtotal";
+    public static final String FOREGIN_TOTAL_GST = "#USDtotalGST";
     public static final String DOM_TRIGGER = "document.getElementById('USDgstId').value";
     public static final String SGD_SUB_TOTAL_INPUT = "#SGDsubtotalInput";
     public static final String DOM_TRIGGER_SGD_INPUT = "el => { el.dispatchEvent(new Event('keyup', { bubbles: true })); }";
     public static final String DOCUMENT_ID = "#doc1";
-    public static final String INVOICE_DOCUMENT_PATH = "C://Cormsquare//GePS-YEA//Downloads//Invoice Document.xlsx";
+    public static final String INVOICE_DOCUMENT_PATH = "C:\\My_Personal_Folder\\GePS-Testing\\GePS-HOPES_YEA\\documents\\Invoice Document.xlsx";
     public static final String CREATE_BUTTON = "#btnCreate";
     public static final String ACCEPT_BUTTON = ".bootbox-accept";
+    public static final String ADVANCEPAYMENT_AND_MILESTONEPAYMENT_BUTTON = "#advpayinvdetailsOpenPopUp";
+    public static final String ADVANCEPAYMENT_CHECKBOX = "#isAdvancePymentChecked";
+    public static final String MILESTONEPAYMENT_CHECKBOX = "#isMileStoneChecked-";
+    public static final String SAVE_BUTTON = "#saveAdvancePaymentMilePO";
+
 
 //TODO Constructor
     private LInvCreate(){
