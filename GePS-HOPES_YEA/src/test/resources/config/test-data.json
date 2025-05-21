@@ -38,7 +38,7 @@
   "requisition" : {
     "purchaseType" : "PS",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-773.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-559.0",
     "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-432.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-364.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-259.0",
@@ -81,13 +81,13 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "0561e9fa-1c4b-419f-8004-ed957d9cba27",
+    "requisitionUid" : "989144a9-7d0d-4a14-98a3-509cc54784be",
     "itemImport" : true,
     "requisitionItemCount" : "3",
-    "psTransactionNumber" : "240025TRN03530",
+    "psTransactionNumber" : "240025TRN03533",
     "salesTransactionNumber" : "240025TRN03511",
     "sdTransactionNumber" : "240025TRN03469",
-    "requisitionId" : "23471"
+    "requisitionId" : "23477"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
@@ -114,12 +114,12 @@
     "creditPeriodInDays" : "10",
     "milestonePaymentFlag" : true,
     "milestonePaymentCount" : 2,
-    "taxCode" : "PZ-Zero Rated Purchase",
+    "taxCode" : "PG-8% Foreign currency standard rate purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "55e0e744-3964-42bc-82bf-eac095d9c08d",
-    "purchaseOrderRequestId" : "8593",
+    "purchaseOrderRequestUid" : "4f5fa222-b27e-4e0e-ae62-b9a2fbdebda2",
+    "purchaseOrderRequestId" : "8596",
     "approvers" : [ "projectmanager@cormsquare.com", "buyer@cormsquare.com" ],
-    "porReferenceNumber" : "240025POR01707",
+    "porReferenceNumber" : "240025POR01710",
     "integrationStatus" : "SOSynced",
     "additionalItemName" : "Packing Charges",
     "rate" : "200.45",
@@ -131,33 +131,35 @@
     "leadTime" : "10",
     "shippingPoint" : "NA",
     "porStatus" : "ProcessingPO",
-    "poProcessed" : "true",
-    "poId" : "5814"
+    "poProcessed" : "false"
   },
   "purchaseOrders" : {
-    "poReferenceId" : "",
-    "purchaseOrderRequestUid" : "eaa700e8-22e2-4285-830e-984bcbb8c357",
-    "poRevisionNumber" : "1",
+    "poReferenceId" : "8739",
+    "poRevisionNumber" : "0",
     "porRevision" : "true",
     "poValue" : 9000,
     "unitRate" : 200,
-    "id" : "5814"
+    "purchaseOrderRequestUid" : "b1489f53-0ff1-46b5-b930-6b377cf7fd20"
   },
   "orderSchedules" : {
-    "orderScheduleStatus" : "",
-    "orderScheduleReferenceId" : "240025OS00779"
+    "orderScheduleReferenceId" : "240025OS00782",
+    "orderScheduleStatus" : ""
   },
   "dispatchNotes" : {
-    "dispatchNoteReferenceId" : "",
+    "dispatchNoteReferenceId" : "240025DN00336",
     "sourceCountry" : "India",
     "destinationCountry" : "India",
     "packageType" : "Drum",
+    "totalChargeableWeightKg" : 20,
     "grossWeightKg" : 20,
     "netWeightKg" : 20,
+    "volumeCm3" : 20
+  },
+  "freightForwarderRequests" : {
+    "freightForwarder" : "Alpha Limited",
+    "freightForwarderReferenceId" : "240025FFR00172",
     "totalChargeableWeightKg" : 20,
-    "volumeCm3" : 20,
-    "unitRate" : 300,
-    "freightForwarder" : "Alpha Limited"
+    "unitRate" : 300
   },
   "workOrders" : {
     "sourceCountry" : "India",

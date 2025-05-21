@@ -15,7 +15,8 @@ public class PoInvCreateTest extends BaseTest {
     @Parameters("type")
     public void create(String type){
         try {
-            iInvCreate.invoiceTypeHandler(type);
+            int status = iInvCreate.invoiceTypeHandler(type);
+            Assert.assertEquals(200, status, "Invoice Create was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Create Test function: {}", exception.getMessage());
             Assert.fail("Exception in PO Invoice Create Test Function: " + exception.getMessage());

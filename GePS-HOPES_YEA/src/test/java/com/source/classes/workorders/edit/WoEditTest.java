@@ -13,7 +13,8 @@ public class WoEditTest extends BaseTest {
     @Test(description = "Work Order Edit Test")
     public void edit() {
         try {
-            iWoEdit.edit();
+            int status = iWoEdit.edit();
+            Assert.assertEquals(200, status, "Work Order Edit was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Work Order Edit Test function: {}", exception.getMessage());
             Assert.fail("Exception in WO Edit Test Function: " + exception.getMessage());

@@ -10,7 +10,6 @@ import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.RequestOptions;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
-import com.source.interfaces.purchaseorderrequests.IPorRevision;
 import com.source.interfaces.purchaseorders.IPoSendForVendor;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +17,6 @@ import static com.constants.purchaseorderrequests.LPorCreate.getTitle;
 import static com.constants.purchaseorders.LPoSendForVendor.*;
 import static com.utils.GetTitleUtil.getTransactionTitle;
 import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromApiResponse;
-import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
 
 public class SendForVendor implements IPoSendForVendor {
 

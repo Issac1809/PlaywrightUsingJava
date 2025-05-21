@@ -4,6 +4,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.freightforwarderrequests.IFfrQuote;
 import com.source.interfaces.freightforwarderrequests.IFfrRequote;
@@ -16,6 +17,7 @@ import static com.constants.dispatchnotes.LDnAssign.DETAILS_BUTTON;
 import static com.constants.dispatchnotes.LDnAssign.LIST_CONTAINER;
 import static com.constants.freightforwarderrequests.LFfrQuote.*;
 import static com.constants.freightforwarderrequests.LFfrReQuote.*;
+import static com.constants.inspections.LInsCreate.getTitle;
 
 public class FfrRequote implements IFfrRequote {
 
@@ -25,6 +27,7 @@ public class FfrRequote implements IFfrRequote {
     JsonNode jsonNode;
     IFfrQuote iFfrQuote;
     Page page;
+    String appUrl;
 
     private FfrRequote(){
     }
@@ -37,9 +40,11 @@ public class FfrRequote implements IFfrRequote {
         this.iLogout = iLogout;
         this.page = page;
         this.logger = LoggerUtil.getLogger(FfrRequote.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void requote(){
+    public int[] requote(){
+        int[] status = new int[2];
         try {
             String logisticsManager = jsonNode.get("mailIds").get("logisticsManagerEmail").asText();
             iLogin.performLogin(logisticsManager);
@@ -47,24 +52,23 @@ public class FfrRequote implements IFfrRequote {
             Locator dnNavigationBarLocator = page.locator(DN_NAVIGATION_BAR);
             dnNavigationBarLocator.click();
 
-            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : containerList){
-                if(tr.contains(poReferenceId)){
-                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
-                    detailsButtonLocator.first().click();
-                    break;
-                }
-            }
+            String dnRefId = jsonNode.get("dispatchNotes").get("dispatchNoteReferenceId").asText();
+            Locator dnTitle = page.locator(getTitle(dnRefId));
+            dnTitle.click();
 
             Locator requoteButtonLocator = page.locator(REQUOTE_BUTTON);
-            requoteButtonLocator.click();
+            requoteButtonLocator.first().click();
 
             Locator saveButtonLocator = page.locator(SAVE_BUTTON);
             saveButtonLocator.last().click();
 
             Locator emailPopUpLocator = page.locator(EMAIL_POP_UP);
-            emailPopUpLocator.click();
+
+            Response dnResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/DispatchNotes/") && response.status() == 200,
+                    emailPopUpLocator.first()::click
+            );
+            status[0] = dnResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -76,21 +80,20 @@ public class FfrRequote implements IFfrRequote {
             Locator ffrNavigationBarLocator = page.locator(FFR_NAVIGATION_BAR);
             ffrNavigationBarLocator.click();
 
-            String dnReferenceId = jsonNode.get("dispatchNotes").get("dispatchNoteReferenceId").asText();
-            List<String> containerList1 = page.locator(LFfrQuote.LIST_CONTAINER).allTextContents();
-            for(String tr : containerList1){
-                if(tr.contains(dnReferenceId)){
-                    Locator detailsButtonLocator = page.locator(LFfrQuote.DETAILS_BUTTON);
-                    detailsButtonLocator.first().click();
-                    break;
-                }
-            }
+            String ffrRefId = jsonNode.get("freightForwarderRequests").get("freightForwarderReferenceId").asText();
+            Locator ffrTitle = page.locator(getTitle(ffrRefId));
+            ffrTitle.click();
 
             Locator sendReQuoteButtonLocator = page.locator(VENDOR_REQUOTE_BUTTON);
             sendReQuoteButtonLocator.click();
 
             Locator submitQuotationLocator = page.locator(SUBMIT_REQUOTE_BUTTON);
-            submitQuotationLocator.click();
+
+            Response ffrResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/VP/DnForFrightForworder/") && response.status() == 200,
+                    submitQuotationLocator.first()::click
+            );
+            status[1] = ffrResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -100,5 +103,6 @@ public class FfrRequote implements IFfrRequote {
         } catch (Exception exception) {
             logger.error("Exception in Freight Forwarder Requests Requote function: {}", exception.getMessage());
         }
+        return status;
     }
 }

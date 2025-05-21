@@ -1,8 +1,10 @@
 package com.source.classes.invoices.poinvoice.create;
 import com.factory.PlaywrightFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.currencyexchangerate.ICurrencyExchangeRate;
 import com.source.interfaces.invoices.poinvoices.IInvCreate;
@@ -14,8 +16,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.file.Paths;
 import java.util.List;
-
 import static com.constants.invoices.poinvoice.LInvCreate.*;
+import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
 
 public class InvCreate implements IInvCreate {
 
@@ -26,6 +28,7 @@ public class InvCreate implements IInvCreate {
     ILogin iLogin;
     ILogout iLogout;
     ICurrencyExchangeRate iCurrencyExchangeRate;
+    String appUrl;
 
     int EUR = 4;
     int USD = 3;
@@ -44,9 +47,11 @@ public class InvCreate implements IInvCreate {
         this.iCurrencyExchangeRate = iCurrencyExchangeRate;
         this.playwrightFactory = playwrightFactory;
         this.logger = LoggerUtil.getLogger(InvCreate.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void invoiceTypeHandler(String type) {
+    public int invoiceTypeHandler(String type) {
+        int status = 0;
         try {
             String vendorMailId = jsonNode.get("mailIds").get("vendorEmail").asText();
             iLogin.performLogin(vendorMailId);
@@ -67,11 +72,11 @@ public class InvCreate implements IInvCreate {
                 transactionNumber = sdTransactionNumber;
             }
 
-            if (!advancePaymentFlag || !milestonePaymentFlag) {
+            if (!advancePaymentFlag && !milestonePaymentFlag) {
                 create(transactionNumber);
                 double finalGSTPercentage = gst();
                 ifSgdEnable(finalGSTPercentage, transactionNumber, advancePaymentFlag, milestonePaymentFlag);
-                invoiceCreate();
+                status = invoiceCreate();
             } if (advancePaymentFlag) {
                 create(transactionNumber);
 
@@ -86,7 +91,7 @@ public class InvCreate implements IInvCreate {
 
                 double finalGSTPercentage = gst();
                 ifSgdEnable(finalGSTPercentage, transactionNumber, advancePaymentFlag, milestonePaymentFlag);
-                invoiceCreate();
+                status = invoiceCreate();
             } if (milestonePaymentFlag) {
                 create(transactionNumber);
 
@@ -103,13 +108,14 @@ public class InvCreate implements IInvCreate {
 
                 double finalGSTPercentage = gst();
                 ifSgdEnable(finalGSTPercentage, transactionNumber, advancePaymentFlag, milestonePaymentFlag);
-                invoiceCreate();
+                status = invoiceCreate();
             }
 
             iLogout.performLogout();
         } catch (Exception exception) {
             logger.error("Exception in Invoice Handler Function: {}", exception.getMessage());
         }
+        return status;
     }
 
     public void create(String transactionNumber) {
@@ -117,7 +123,7 @@ public class InvCreate implements IInvCreate {
             String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
 
             Locator invoiceNavigationBarLocator = page.locator(INVOICE_NAVIGATION_BAR);
-            invoiceNavigationBarLocator.click();
+            invoiceNavigationBarLocator.first().click();
 
             Locator invoiceSelectLocator = page.locator(INVOICE_SELECT);
             invoiceSelectLocator.first().click();
@@ -200,7 +206,9 @@ public class InvCreate implements IInvCreate {
     public void ifSgdEnable(double finalGSTPercentage, String transactionNumber, boolean advancePaymentFlag, boolean milestonePaymentFlag) {
         try {
             String currencyCode = jsonNode.get("configSettings").get("currencyCode").asText();
-            if (!currencyCode.equals("SGD") && finalGSTPercentage != 0 && (transactionNumber.startsWith(COMPANY_ID_2400) || transactionNumber.startsWith(COMPANY_ID_5K00) || transactionNumber.startsWith(COMPANY_ID_2U00) || transactionNumber.startsWith(COMPANY_ID_2W00))) {
+            if (!currencyCode.equals("SGD") && finalGSTPercentage != 0 && (transactionNumber.startsWith(COMPANY_ID_2400)
+                    || transactionNumber.startsWith(COMPANY_ID_5K00) || transactionNumber.startsWith(COMPANY_ID_2U00) ||
+                    transactionNumber.startsWith(COMPANY_ID_2W00))) {
 //TODO Foreign Sub-Total
                 Locator foreignSubTotalLocator = page.locator(FOREIGN_CURRENCY_LOCATOR);
                 String foreignSubTotalValue = foreignSubTotalLocator.getAttribute("value");
@@ -238,28 +246,28 @@ public class InvCreate implements IInvCreate {
                     case ("EUR"):
 //TODO Round off to 4 decimal places (adjust as needed)
                         BigDecimal EURValue = new BigDecimal(getSGDValue).setScale(EUR, RoundingMode.HALF_UP);
-                        Locator eurInputLocator = page.locator(SGD_SUB_TOTAL_INPUT);
+                        Locator eurInputLocator = page.locator(SGD_TOTAL_GST_INPUT);
                         eurInputLocator.fill(String.valueOf(EURValue));
                         break;
 
                     case ("USD"):
 //TODO Round off to 3 decimal places (adjust as needed)
                         BigDecimal USDValue = new BigDecimal(getSGDValue).setScale(USD, RoundingMode.HALF_UP);
-                        Locator usdInputLocator = page.locator(SGD_SUB_TOTAL_INPUT);
+                        Locator usdInputLocator = page.locator(SGD_TOTAL_GST_INPUT);
                         usdInputLocator.fill(String.valueOf(USDValue));
                         break;
 
                     case ("INR"):
 //TODO Round off to 2 decimal places (adjust as needed)
                         BigDecimal INRValue = new BigDecimal(getSGDValue).setScale(INR, RoundingMode.HALF_UP);
-                        Locator inrIputLocator = page.locator(SGD_SUB_TOTAL_INPUT);
+                        Locator inrIputLocator = page.locator(SGD_TOTAL_GST_INPUT);
                         inrIputLocator.fill(String.valueOf(INRValue));
                         break;
 
                     case ("CAD"):
 //TODO Round off to 2 decimal places (adjust as needed)
                         BigDecimal CADValue = new BigDecimal(getSGDValue).setScale(CAD, RoundingMode.HALF_UP);
-                        Locator cadIputLocator = page.locator(SGD_SUB_TOTAL_INPUT);
+                        Locator cadIputLocator = page.locator(SGD_TOTAL_GST_INPUT);
                         cadIputLocator.fill(String.valueOf(CADValue));
                         break;
 
@@ -273,7 +281,8 @@ public class InvCreate implements IInvCreate {
         }
     }
 
-    public void invoiceCreate() {
+    public int invoiceCreate() throws JsonProcessingException {
+        int status = 0;
 //TODO Invoice Document
         Locator invoiceDocumentButton = page.locator(DOCUMENT_ID);
         invoiceDocumentButton.first();
@@ -283,10 +292,34 @@ public class InvCreate implements IInvCreate {
         createButtonLocator.click();
 
         Locator acceptLocator = page.locator(ACCEPT_BUTTON);
-        acceptLocator.click();
+        Response woResponse = page.waitForResponse(
+                response -> response.url().startsWith(appUrl + "/api/VP/Invoices/Listing") && response.status() == 200,
+                acceptLocator::click
+        );
+
+        String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
+        // Locate the row containing the dynamic poReferenceId and click the <a> tag
+        Locator rows = page.locator("#listContainer tr");
+        int rowCount = rows.count();
+        for (int i = 0; i < rowCount; i++) {
+            Locator row = rows.nth(i);
+            String referenceText = row.locator("td:nth-child(3)").innerText();
+            if (referenceText.contains(poReferenceId)) {
+                Response invoiceResponse = page.waitForResponse(
+                        response -> response.url().startsWith(appUrl + "/api/VP/Invoices/") && response.status() == 200,
+                        row.locator("a").first()::click
+                );
+                saveReferenceIdFromResponse(invoiceResponse, "invoice", "invoiceReferenceId");
+
+                status = invoiceResponse.status();
+                break;
+            }
+        }
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
         PlaywrightFactory.attachScreenshotWithName("Purchase Order Invoice Create", page);
+
+        return status;
     }
 }

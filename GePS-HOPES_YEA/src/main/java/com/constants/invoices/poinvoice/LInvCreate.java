@@ -2,8 +2,8 @@ package com.constants.invoices.poinvoice;
 
 public class LInvCreate {
 
-    public static final String INVOICE_NAVIGATION_BAR = "//*[contains(text(), 'Invoices')]";
-    public static final String INVOICE_SELECT = ".btn.btn-primary";
+    public static final String INVOICE_NAVIGATION_BAR = "//a[@href='/VendorPortal/Invoices']";
+    public static final String INVOICE_SELECT = "//a[@href='/VendorPortal/Invoices/Create']";
     public static final String SELECT_COMPANY_LOCATOR = "#select2-companyId-container";
     public static final String COMPANY_RESULTS_LIST = "#select2-companyId-results";
     public static final String COMPANY_ID_2400 = "2400";
@@ -23,9 +23,10 @@ public class LInvCreate {
     public static final String FOREGIN_TOTAL_GST = "#USDtotalGST";
     public static final String DOM_TRIGGER = "document.getElementById('USDgstId').value";
     public static final String SGD_SUB_TOTAL_INPUT = "#SGDsubtotalInput";
+    public static final String SGD_TOTAL_GST_INPUT = "#SGDtotalGSTInput";
     public static final String DOM_TRIGGER_SGD_INPUT = "el => { el.dispatchEvent(new Event('keyup', { bubbles: true })); }";
     public static final String DOCUMENT_ID = "#doc1";
-    public static final String INVOICE_DOCUMENT_PATH = "C:\\My_Personal_Folder\\GePS-Testing\\GePS-HOPES_YEA\\documents\\Invoice Document.xlsx";
+    public static final String INVOICE_DOCUMENT_PATH = "documents\\Invoice Document.xlsx";
     public static final String CREATE_BUTTON = "#btnCreate";
     public static final String ACCEPT_BUTTON = ".bootbox-accept";
     public static final String ADVANCEPAYMENT_AND_MILESTONEPAYMENT_BUTTON = "#advpayinvdetailsOpenPopUp";

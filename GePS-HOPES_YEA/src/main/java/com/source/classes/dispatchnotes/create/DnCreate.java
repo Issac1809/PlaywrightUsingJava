@@ -10,9 +10,7 @@ import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-
 import java.util.Properties;
-
 import static com.constants.dispatchnotes.LDnCreate.*;
 import static com.utils.GetTitleUtil.getTransactionTitle;
 import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;

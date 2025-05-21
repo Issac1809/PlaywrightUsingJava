@@ -13,7 +13,8 @@ public class FfrQuoteTest extends BaseTest {
     @Test(description = "Freight Forwarder Quote Test")
     public void quote(){
         try {
-            iFfrQuote.quote();
+            int status = iFfrQuote.quote();
+            Assert.assertEquals(200, status, "FFR Quote was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Freight Forwarder Requests Quote Test function: {}", exception.getMessage());
             Assert.fail("Exception in FFR Quote Test Function: " + exception.getMessage());

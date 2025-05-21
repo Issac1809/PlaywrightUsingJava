@@ -10,11 +10,10 @@ import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-import java.util.List;
+
 import static com.constants.dispatchnotes.LDnEdit.*;
 import static com.constants.dispatchnotes.LDnReturn.ACCEPT_BUTTON;
 import static com.constants.inspections.LInsCreate.getTitle;
-import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
 
 public class DnEdit implements IDnEdit {
 
