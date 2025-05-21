@@ -1,5 +1,5 @@
 package com.source.interfaces.dispatchnotes;
 
 public interface IDnCancel {
-    void cancel(String type, String purchaseType);
+    int cancel(String type, String purchaseType);
 }

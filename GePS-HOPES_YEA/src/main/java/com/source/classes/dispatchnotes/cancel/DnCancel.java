@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.dispatchnotes.IDnCancel;
 import com.source.interfaces.dispatchnotes.IDnCreate;
@@ -12,6 +13,7 @@ import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
 import static com.constants.dispatchnotes.LDnCancel.*;
+import static com.constants.inspections.LInsCreate.getTitle;
 
 public class DnCancel implements IDnCancel {
 
@@ -21,6 +23,7 @@ public class DnCancel implements IDnCancel {
     ILogin iLogin;
     ILogout iLogout;
     IDnCreate iDnCreate;
+    String appUrl;
 
     private DnCancel(){
     }
@@ -33,9 +36,11 @@ public class DnCancel implements IDnCancel {
         this.iLogout = iLogout;
         this.iDnCreate = iDnCreate;
         this.logger = LoggerUtil.getLogger(DnCancel.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void cancel(String type, String purchaseType) {
+    public int cancel(String type, String purchaseType) {
+        int status =0;
         try {
             String logisticsManagerMailId = jsonNode.get("mailIds").get("logisticsManagerEmail").asText();
             iLogin.performLogin(logisticsManagerMailId);
@@ -43,15 +48,9 @@ public class DnCancel implements IDnCancel {
             Locator dnNavigationBarLocator = page.locator(DN_NAVIGATION_BAR);
             dnNavigationBarLocator.click();
 
-            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : containerList){
-                if(tr.contains(poReferenceId)){
-                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
-                    detailsButtonLocator.first().click();
-                    break;
-                }
-            }
+            String dnRefId = jsonNode.get("dispatchNotes").get("dispatchNoteReferenceId").asText();
+            Locator dnTitle = page.locator(getTitle(dnRefId));
+            dnTitle.click();
 
             Locator dropDownLocator = page.locator(DROP_DOWN);
             dropDownLocator.click();
@@ -60,7 +59,12 @@ public class DnCancel implements IDnCancel {
             cancelButtonLocator.click();
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
-            acceptButtonLocator.click();
+
+            Response dnResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/DispatchNotes/") && response.status() == 200,
+                    acceptButtonLocator.first()::click
+            );
+            status = dnResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -72,5 +76,6 @@ public class DnCancel implements IDnCancel {
         } catch (Exception exception) {
             logger.error("Exception in Dispatch Notes Cancel function: {}", exception.getMessage());
         }
+        return status;
     }
 }

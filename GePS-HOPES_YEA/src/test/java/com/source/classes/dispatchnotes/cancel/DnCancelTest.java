@@ -15,7 +15,8 @@ public class DnCancelTest extends BaseTest {
     @Parameters({"type", "purchaseType"})
     public void cancel(String type, String purchaseType) {
         try {
-            iDnCancel.cancel(type, purchaseType);
+            int status= iDnCancel.cancel(type, purchaseType);
+            Assert.assertEquals(200, status, "Dispatch Note Cancel was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Dispatch Notes Cancel Test function: {}", exception.getMessage());
             Assert.fail("Exception in DN Cancel Test Function: " + exception.getMessage());

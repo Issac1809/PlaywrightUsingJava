@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.dispatchnotes.IDnAssign;
 import com.source.interfaces.login.ILogin;
@@ -11,6 +12,7 @@ import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
 import static com.constants.dispatchnotes.LDnAssign.*;
+import static com.constants.inspections.LInsCreate.getTitle;
 
 public class DnAssign implements IDnAssign {
 
@@ -20,6 +22,7 @@ public class DnAssign implements IDnAssign {
     ILogin iLogin;
     ILogout iLogout;
     PlaywrightFactory playwrightFactory;
+    String appUrl;
 
     private DnAssign(){
     }
@@ -32,9 +35,11 @@ public class DnAssign implements IDnAssign {
         this.iLogout = iLogout;
         this.playwrightFactory = playwrightFactory;
         this.logger = LoggerUtil.getLogger(DnAssign.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void assign() {
+    public int assign() {
+        int status =0;
         try {
             String logisticsManagerMailId = jsonNode.get("mailIds").get("logisticsManagerEmail").asText();
             iLogin.performLogin(logisticsManagerMailId);
@@ -42,20 +47,9 @@ public class DnAssign implements IDnAssign {
             Locator dnNavigationBarLocator = page.locator(DN_NAVIGATION_BAR);
             dnNavigationBarLocator.click();
 
-            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : containerList){
-                if(tr.contains(poReferenceId)){
-                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
-                    detailsButtonLocator.first().click();
-                    break;
-                }
-            }
-
-            Locator dnReferenceId = page.locator(DISPATCH_NOTES_REFERENCE_ID);
-            String getDnRefId = dnReferenceId.innerText();
-
-            playwrightFactory.savePropertiesIntoJsonFile("dispatchNotes", "dispatchNoteReferenceId", getDnRefId);
+            String dnRefId = jsonNode.get("dispatchNotes").get("dispatchNoteReferenceId").asText();
+            Locator dnTitle = page.locator(getTitle(dnRefId));
+            dnTitle.click();
 
             Locator dropDownLocator = page.locator(DROP_DOWN);
             dropDownLocator.click();
@@ -73,8 +67,13 @@ public class DnAssign implements IDnAssign {
             getLogisticsManagerMailId.click();
 
             Locator saveButtonLocator = page.locator(SAVE_BUTTON);
-            saveButtonLocator.click();
 
+            Response dnResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/DispatchNotes/") && response.status() == 200,
+                    saveButtonLocator.first()::click
+            );
+
+            status = dnResponse.status();
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
             PlaywrightFactory.attachScreenshotWithName("Dispatch Notes Assign", page);
@@ -83,5 +82,6 @@ public class DnAssign implements IDnAssign {
         } catch (Exception exception) {
             logger.error("Exception in Dispatch Notes Assign function: {}", exception.getMessage());
         }
+        return status;
     }
 }
