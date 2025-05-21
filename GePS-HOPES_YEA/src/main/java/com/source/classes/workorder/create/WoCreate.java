@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -10,7 +11,10 @@ import com.source.interfaces.workorders.IWoCreate;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
+
+import static com.constants.inspections.LInsCreate.getTitle;
 import static com.constants.workorders.LWoCreate.*;
+import static com.utils.saveReferenceIdUtil.saveReferenceIdFromResponse;
 
 public class WoCreate implements IWoCreate {
 
@@ -19,6 +23,7 @@ public class WoCreate implements IWoCreate {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    String appUrl;
 
     private WoCreate(){
     }
@@ -30,9 +35,11 @@ public class WoCreate implements IWoCreate {
         this.iLogin = iLogin;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(WoCreate.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void create() {
+    public int create() {
+        int status = 0;
         try {
             String logisticsManager = jsonNode.get("mailIds").get("logisticsManagerEmail").asText();
             iLogin.performLogin(logisticsManager);
@@ -40,15 +47,9 @@ public class WoCreate implements IWoCreate {
             Locator dnNavigationBarLocator = page.locator(DN_NAVIGATION_BAR);
             dnNavigationBarLocator.click();
 
-            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : containerList){
-                if(tr.contains(poReferenceId)){
-                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
-                    detailsButtonLocator.first().click();
-                    break;
-                }
-            }
+            String dnRefId = jsonNode.get("dispatchNotes").get("dispatchNoteReferenceId").asText();
+            Locator dnTitle = page.locator(getTitle(dnRefId));
+            dnTitle.click();
 
             Locator dropDownLocator = page.locator(ACTION_DROPDOWN);
             dropDownLocator.click();
@@ -59,7 +60,7 @@ public class WoCreate implements IWoCreate {
             Locator selectFreightForwarderLocator = page.locator(FREIGHT_FORWARDER_DROPDOWN);
             selectFreightForwarderLocator.first().click();
 
-            String vendorId = jsonNode.get("dispatchNotes").get("freightForwarder").asText();
+            String vendorId = jsonNode.get("freightForwarderRequests").get("freightForwarder").asText();
             Locator searchField = page.locator(SEARCH_FIELD);
             searchField.fill(vendorId);
 
@@ -89,7 +90,30 @@ public class WoCreate implements IWoCreate {
             emailPopUpLocator.click();
 
             Locator acceptLocator = page.locator(ACCEPT_BUTTON);
-            acceptLocator.click();
+
+            Response dnResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/WorkOrder/Listing") && response.status() == 200,
+                    acceptLocator.first()::click
+            );
+
+            String poNumber = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
+            // Locate the row containing the dynamic poReferenceId and click the <a> tag
+            Locator rows = page.locator("#listContainer tr");
+            int rowCount = rows.count();
+            for (int i = 0; i < rowCount; i++) {
+                Locator row = rows.nth(i);
+                String referenceText = row.locator("td:nth-child(3)").innerText();
+                if (referenceText.contains(poNumber)) {
+                    Response woResponse = page.waitForResponse(
+                            response -> response.url().startsWith(appUrl + "/api/WorkOrder/") && response.status() == 200,
+                            row.locator("a").first()::click
+                    );
+                    saveReferenceIdFromResponse(woResponse, "workOrders", "workOrderReferenceId");
+
+                    status = woResponse.status();
+                    break;
+                }
+            }
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -99,5 +123,6 @@ public class WoCreate implements IWoCreate {
         } catch (Exception exception) {
             logger.error("Exception in Work Order Create function: {}", exception.getMessage());
         }
+        return status;
     }
 }

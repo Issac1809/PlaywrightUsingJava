@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.freightforwarderrequests.IFfrQuote;
 import com.source.interfaces.login.ILogin;
@@ -11,6 +12,7 @@ import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
 import static com.constants.freightforwarderrequests.LFfrQuote.*;
+import static com.constants.inspections.LInsCreate.getTitle;
 
 public class FfrQuote implements IFfrQuote {
 
@@ -19,6 +21,7 @@ public class FfrQuote implements IFfrQuote {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    String appUrl;
 
     private FfrQuote(){
     }
@@ -30,9 +33,11 @@ public class FfrQuote implements IFfrQuote {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(FfrQuote.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void quote() {
+    public int quote() {
+        int status = 0;
         try {
             String vendorMailId = jsonNode.get("mailIds").get("vendorEmail").asText();
             iLogin.performLogin(vendorMailId);
@@ -40,29 +45,29 @@ public class FfrQuote implements IFfrQuote {
             Locator ffrNavigationBarLocator = page.locator(FFR_NAVIGATION_BAR);
             ffrNavigationBarLocator.click();
 
-            String dnReferenceId = jsonNode.get("dispatchNotes").get("dispatchNoteReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : containerList){
-                if(tr.contains(dnReferenceId)){
-                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
-                    detailsButtonLocator.first().click();
-                    break;
-                }
-            }
+            String ffrRefId = jsonNode.get("freightForwarderRequests").get("freightForwarderReferenceId").asText();
+            Locator ffrTitle = page.locator(getTitle(ffrRefId));
+            ffrTitle.click();
 
             Locator sendQuoteButtonLocator = page.locator(SEND_QUOTE_BUTTON);
             sendQuoteButtonLocator.click();
 
-            String totalChargeableWeight = jsonNode.get("dispatchNotes").get("totalChargeableWeightKg").asText();
+            String totalChargeableWeight = jsonNode.get("freightForwarderRequests").get("totalChargeableWeightKg").asText();
             Locator totalChargeableWeightLocator = page.locator(TOTAL_CHARGEABLE_WEIGHT);
             totalChargeableWeightLocator.fill(totalChargeableWeight);
 
-            String unitRate = jsonNode.get("dispatchNotes").get("unitRate").asText();
+            String unitRate = jsonNode.get("freightForwarderRequests").get("unitRate").asText();
             Locator unitRateLocator = page.locator(UNIT_RATE);
             unitRateLocator.fill(unitRate);
 
             Locator submitQuotationLocator = page.locator(SUBMIT_BUTTON);
             submitQuotationLocator.click();
+
+            Response ffrResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/VP/DnForFrightForworder/") && response.status() == 200,
+                    submitQuotationLocator.first()::click
+            );
+            status = ffrResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -72,5 +77,6 @@ public class FfrQuote implements IFfrQuote {
         } catch (Exception exception) {
             logger.error("Exception in Freight Forwarder Requests Quote function: {}", exception.getMessage());
         }
+        return status;
     }
 }
