@@ -77,7 +77,6 @@ public class WoEdit implements IWoEdit {
                             response -> response.url().startsWith(appUrl + "/api/WorkOrder/") && response.status() == 200,
                             row.locator("a").first()::click
                     );
-                    saveReferenceIdFromResponse(woResponse, "workOrders", "workOrderReferenceId");
 
                     status = woResponse.status();
                     break;
