@@ -13,7 +13,8 @@ public class DnAssignTest extends BaseTest {
     @Test(description = "Dispatch Notes Assign Test")
     public void assign(){
         try {
-            iDnAssign.assign();
+            int status = iDnAssign.assign();
+            Assert.assertEquals(200, status, "Dispatch Note Assign was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Dispatch Notes Assign Test function: {}", exception.getMessage());
             Assert.fail("Exception in DN Assign Test Function: " + exception.getMessage());

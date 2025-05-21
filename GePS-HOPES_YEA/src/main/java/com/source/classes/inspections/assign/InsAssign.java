@@ -44,15 +44,9 @@ public class InsAssign implements IInsAssign {
             Locator osNavigationBarLocator = page.locator(OS_NAVIGATION_BAR);
             osNavigationBarLocator.click();
 
-            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : containerList){
-                if(tr.contains(poReferenceId)){
-                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
-                    detailsButtonLocator.first().click();
-                    break;
-                }
-            }
+            String osRefId = jsonNode.get("orderSchedules").get("orderScheduleReferenceId").asText();
+            Locator osTitle = page.locator(getTitle(osRefId));
+            osTitle.click();
 
             Locator assignButtonLocator = page.locator(ASSIGN_INSPECTOR_BUTTON);
             assignButtonLocator.click();

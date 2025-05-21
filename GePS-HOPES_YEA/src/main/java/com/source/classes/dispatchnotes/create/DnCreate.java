@@ -11,13 +11,11 @@ import com.source.interfaces.logout.ILogout;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 import java.util.Properties;
 
-import static com.constants.dispatchnotes.LDnAssign.DETAILS_BUTTON;
-import static com.constants.dispatchnotes.LDnAssign.LIST_CONTAINER;
 import static com.constants.dispatchnotes.LDnCreate.*;
 import static com.utils.GetTitleUtil.getTransactionTitle;
+import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
 
 public class DnCreate implements IDnCreate {
 
@@ -120,17 +118,20 @@ public class DnCreate implements IDnCreate {
             );
 
             String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : containerList){
-                if(tr.contains(poReferenceId)){
-                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
-                    detailsButtonLocator.first().click();
-
-                    Response woResponse = page.waitForResponse(
+            // Locate the row containing the dynamic poReferenceId and click the <a> tag
+            Locator rows = page.locator("#listContainer tr");
+            int rowCount = rows.count();
+            for (int i = 0; i < rowCount; i++) {
+                Locator row = rows.nth(i);
+                String referenceText = row.locator("td:nth-child(3)").innerText();
+                if (referenceText.contains(poReferenceId)) {
+                    Response dnResponse = page.waitForResponse(
                             response -> response.url().startsWith(appUrl + "/api/VP/DispatchNotes/") && response.status() == 200,
-                            detailsButtonLocator.first()::click
+                            row.locator("a").first()::click
                     );
-                    status = woResponse.status();
+                    saveReferenceIdFromResponse(dnResponse, "dispatchNotes", "dispatchNoteReferenceId");
+
+                    status = dnResponse.status();
                     break;
                 }
             }

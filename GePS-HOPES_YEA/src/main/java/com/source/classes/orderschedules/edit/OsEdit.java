@@ -15,6 +15,7 @@ import java.util.List;
 import static com.constants.orderschedules.LOsCreate.DETAILS_BUTTON;
 import static com.constants.orderschedules.LOsCreate.LIST_CONTAINER;
 import static com.constants.orderschedules.LOsEdit.*;
+import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
 
 public class OsEdit implements IOsEdit {
 
@@ -47,15 +48,9 @@ public class OsEdit implements IOsEdit {
             Locator osNavigationBarLocator = page.locator(OS_NAVIGATION_BAR);
             osNavigationBarLocator.click();
 
-            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : containerList){
-                if(tr.contains(poReferenceId)){
-                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
-                    detailsButtonLocator.first().click();
-                    break;
-                }
-            }
+            String osRefId = jsonNode.get("orderSchedules").get("orderScheduleReferenceId").asText();
+            Locator osTitle = page.locator(getTitle(osRefId));
+            osTitle.click();
 
             Locator editButtonLocator = page.locator(EDIT_BUTTON);
             editButtonLocator.click();
@@ -69,16 +64,19 @@ public class OsEdit implements IOsEdit {
                     acceptButtonLocator.first()::click
             );
 
-            String poNumber = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList1 = page.locator(LIST_CONTAINER).allTextContents();
-            for (String tr : containerList1) {
-                if (tr.contains(poNumber)) {
-                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
-
+            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
+            Locator rows = page.locator("#listContainer tr");
+            int rowCount = rows.count();
+            for (int i = 0; i < rowCount; i++) {
+                Locator row = rows.nth(i);
+                String referenceText = row.locator("td:nth-child(3)").innerText();
+                if (referenceText.contains(poReferenceId)) {
                     Response osResponse = page.waitForResponse(
                             response -> response.url().startsWith(appUrl + "/api/VP/OrderSchedules/") && response.status() == 200,
-                            detailsButtonLocator.first()::click
+                            row.locator("a").first()::click
                     );
+                    saveReferenceIdFromResponse(osResponse, "orderSchedules", "orderScheduleReferenceId");
+
                     status = osResponse.status();
                     break;
                 }

@@ -15,6 +15,7 @@ import java.util.List;
 
 import static com.constants.orderschedules.LOsCreate.*;
 import static com.utils.GetTitleUtil.getTransactionTitle;
+import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
 
 public class OsCreate implements IOsCreate {
 
@@ -77,19 +78,24 @@ public class OsCreate implements IOsCreate {
             );
 
             String poNumber = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for (String tr : containerList) {
-                if (tr.contains(poNumber)) {
-                    Locator detailsButtonLocator = page.locator(DETAILS_BUTTON);
-
+// Locate the row containing the dynamic poReferenceId and click the <a> tag
+            Locator rows = page.locator("#listContainer tr");
+            int rowCount = rows.count();
+            for (int i = 0; i < rowCount; i++) {
+                Locator row = rows.nth(i);
+                String referenceText = row.locator("td:nth-child(3)").innerText();
+                if (referenceText.contains(poNumber)) {
                     Response osResponse = page.waitForResponse(
                             response -> response.url().startsWith(appUrl + "/api/VP/OrderSchedules/") && response.status() == 200,
-                            detailsButtonLocator.first()::click
+                            row.locator("a").first()::click
                     );
+                    saveReferenceIdFromResponse(osResponse, "orderSchedules", "orderScheduleReferenceId");
+
                     status = osResponse.status();
                     break;
                 }
             }
+
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
             PlaywrightFactory.attachScreenshotWithName("Order Schedule Create", page);

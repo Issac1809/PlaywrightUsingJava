@@ -162,17 +162,17 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="Inspection Assign">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.inspections.assign.InsAssignTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+<!--&lt;!&ndash;    <test name="Inspection Assign">&ndash;&gt;-->
+<!--&lt;!&ndash;        <classes>&ndash;&gt;-->
+<!--&lt;!&ndash;            <class name="com.source.classes.inspections.assign.InsAssignTest"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </classes>&ndash;&gt;-->
+<!--&lt;!&ndash;    </test>&ndash;&gt;-->
 
-<!--    <test name="Inspection Fail">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.inspections.fail.InsFailTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+<!--&lt;!&ndash;    <test name="Inspection Fail">&ndash;&gt;-->
+<!--&lt;!&ndash;        <classes>&ndash;&gt;-->
+<!--&lt;!&ndash;            <class name="com.source.classes.inspections.fail.InsFailTest"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </classes>&ndash;&gt;-->
+<!--&lt;!&ndash;    </test>&ndash;&gt;-->
 
 <!--    <test name="Inspection Create">-->
 <!--        <classes>-->
@@ -188,13 +188,13 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-    <test name="Dispatch Note Cancel">
-        <parameter name="type" value="PS"/>
-        <parameter name="purchaseType" value="Catalog"/>
-        <classes>
-            <class name="com.source.classes.dispatchnotes.cancel.DnCancelTest"/>
-        </classes>
-    </test>
+<!--    <test name="Dispatch Note Cancel">-->
+<!--        <parameter name="type" value="PS"/>-->
+<!--        <parameter name="purchaseType" value="Catalog"/>-->
+<!--        <classes>-->
+<!--            <class name="com.source.classes.dispatchnotes.cancel.DnCancelTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
 <!--    <test name="Dispatch Note Assign">-->
 <!--        <classes>-->
@@ -202,17 +202,17 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="Dispatch Note Return">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.dispatchnotes.dnreturn.DnReturnTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Dispatch Note Return">
+        <classes>
+            <class name="com.source.classes.dispatchnotes.dnreturn.DnReturnTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="Dispatch Note Edit">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.dispatchnotes.edit.DnEditTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Dispatch Note Edit">
+        <classes>
+            <class name="com.source.classes.dispatchnotes.edit.DnEditTest"/>
+        </classes>
+    </test>
 
 <!--    <test name="Freight Forwarder Invite">-->
 <!--        <classes>-->
@@ -256,12 +256,12 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-    <test name="PO Invoice Create">
-        <parameter name="type" value="PS"/>
-        <classes>
-            <class name="com.source.classes.invoices.poinvoice.create.PoInvCreateTest"/>
-        </classes>
-    </test>
+<!--    <test name="PO Invoice Create">-->
+<!--        <parameter name="type" value="PS"/>-->
+<!--        <classes>-->
+<!--            <class name="com.source.classes.invoices.poinvoice.create.PoInvCreateTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
 <!--    <test name="PO Invoice Cancel">-->
 <!--    <parameter name="type" value="PS"/>-->

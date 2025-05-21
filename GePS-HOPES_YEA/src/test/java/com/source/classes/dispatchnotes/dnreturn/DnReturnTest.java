@@ -13,7 +13,8 @@ public class DnReturnTest extends BaseTest {
     @Test(description = "Dispatch Notes Return Test")
     public void dnReturn(){
         try {
-            iDnReturn.dnReturn();
+            int status = iDnReturn.dnReturn();
+            Assert.assertEquals(200, status, "Dispatch Note Return was not Successful");
         }  catch (Exception exception) {
             logger.error("Exception in Dispatch Notes Return Test function: {}", exception.getMessage());
             Assert.fail("Exception in DN Return Test Function: " + exception.getMessage());
