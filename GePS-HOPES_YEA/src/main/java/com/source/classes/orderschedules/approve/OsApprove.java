@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
@@ -20,6 +21,7 @@ public class OsApprove implements IOsApprove {
     Page page;
     ILogin iLogin;
     ILogout iLogout;
+    String appUrl;
 
     private OsApprove(){
     }
@@ -31,9 +33,11 @@ public class OsApprove implements IOsApprove {
         this.page = page;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(OsApprove.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void approve(String type, String purchaseType){
+    public int approve(String type, String purchaseType){
+        int status =0;
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             iLogin.performLogin(buyerMailId);
@@ -52,7 +56,12 @@ public class OsApprove implements IOsApprove {
             approveButtonLocator.click();
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
-            acceptButtonLocator.click();
+
+            Response approveResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/PurchaseOrders/GetOrderSchedules/") && response.status() == 200,
+                    acceptButtonLocator.first()::click
+            );
+            status = approveResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -62,5 +71,6 @@ public class OsApprove implements IOsApprove {
         } catch (Exception exception) {
             logger.error("Exception in OS Approve function: {}", exception.getMessage());
         }
+        return status;
     }
 }

@@ -13,7 +13,8 @@ public class InsReadyForInspectionTest extends BaseTest {
     @Test(description = "Inspections Ready For Inspection Test")
     public void readyForInspection(){
         try {
-            iInsReadyForInspection.readyForInspection();
+            int status = iInsReadyForInspection.readyForInspection();
+            Assert.assertEquals(200, status, "Send For Inspection was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in Ready for Inspection Test function: {}", exception.getMessage());
             Assert.fail("Exception in Ready For Inspection Test Function: " + exception.getMessage());

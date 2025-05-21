@@ -15,7 +15,8 @@ public class OsCreateTest extends BaseTest {
     @Parameters({"type", "purchaseType"})
     public void create(String type, String purchaseType) {
         try {
-            iOsCreate.create(type, purchaseType);
+            int status = iOsCreate.create(type, purchaseType);
+            Assert.assertEquals(200, status, "OS Create was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in OS Create Test Function: {}", exception.getMessage());
             Assert.fail("Exception in OS Create Test Function: " + exception.getMessage());
