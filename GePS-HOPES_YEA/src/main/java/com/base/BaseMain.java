@@ -311,10 +311,10 @@ public class BaseMain {
             iInvChecklistAccept = new InvChecklistAccept(iLogin, jsonNode, page, iLogout);
             iInvChecklistReject = new InvChecklistReject(iLogin, jsonNode, page, iLogout);
             iInvSendForApproval = new InvSendForApproval(iLogin, jsonNode, page, iLogout);
-            iInvReturn = new InvReturn(iLogin, jsonNode, page, iLogout, iInvSendForApproval);
+            iInvReturn = new InvReturn(iLogin, jsonNode, page, iLogout);
             iInvVerify = new InvVerify(iLogin, jsonNode, page, iLogout);
             iInvEdit = new InvEdit(iLogin, jsonNode, page, iLogout);
-            iInvReject = new InvReject(iLogin, jsonNode, page, iLogout, iInvSendForApproval);
+            iInvReject = new InvReject(iLogin, jsonNode, page, iLogout, iInvSendForApproval, iInvVerify);
             iInvApproval = new InvApproval(iLogin, jsonNode, page, iLogout);
 
 //TODO Work Order Invoices

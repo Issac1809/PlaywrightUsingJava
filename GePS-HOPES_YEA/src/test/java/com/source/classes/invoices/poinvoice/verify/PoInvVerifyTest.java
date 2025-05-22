@@ -14,7 +14,8 @@ public class PoInvVerifyTest extends BaseTest {
     @Test(dataProvider = "invoiceData", dataProviderClass = PoInvTrnUtil.class, description = "Purchase Order Invoice Verify Test")
     public void verify(String referenceId, String transactionId, String uid){
         try {
-            iInvVerify.verify(referenceId, transactionId, uid);
+            int status = iInvVerify.verify(referenceId, transactionId, uid);
+            Assert.assertEquals(200, status, "Invoice Verify was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Verify Test function: {}", exception.getMessage());
             Assert.fail("Exception in PO Invoice Verify Test Function: " + exception.getMessage());

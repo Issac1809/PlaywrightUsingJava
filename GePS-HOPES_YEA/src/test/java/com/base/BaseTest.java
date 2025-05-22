@@ -529,13 +529,13 @@ public class BaseTest {
             poInvChecklistRejectTest = new PoInvChecklistRejectTest();
             iInvSendForApproval = new InvSendForApproval(iLogin, jsonNode, page, iLogout);
             poInvSendForApprovalTest = new PoInvSendForApprovalTest();
-            iInvReturn = new InvReturn(iLogin, jsonNode, page, iLogout, iInvSendForApproval);
+            iInvReturn = new InvReturn(iLogin, jsonNode, page, iLogout);
             poInvReturnTest = new PoInvReturnTest();
             iInvVerify = new InvVerify(iLogin, jsonNode, page, iLogout);
             poInvVerifyTest = new PoInvVerifyTest();
             iInvEdit = new InvEdit(iLogin, jsonNode, page, iLogout);
             poInvEditTest = new PoInvEditTest();
-            iInvReject = new InvReject(iLogin, jsonNode, page, iLogout, iInvSendForApproval);
+            iInvReject = new InvReject(iLogin, jsonNode, page, iLogout, iInvSendForApproval, iInvVerify);
             poInvRejectTest = new PoInvRejectTest();
             iInvApproval = new InvApproval(iLogin, jsonNode, page, iLogout);
             poInvApprovalTest = new PoInvApprovalTest();

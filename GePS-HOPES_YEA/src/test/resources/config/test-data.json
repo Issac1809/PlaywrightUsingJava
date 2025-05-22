@@ -177,13 +177,13 @@
     "poInvoiceNumber" : "INV-AUT-PO-",
     "woInvoiceNumber" : "INV-AUT-WO-",
     "invoiceTransactionDetails" : [ {
-      "referenceId" : "240025INV00513",
+      "referenceId" : "240025INV00527",
       "transactionId" : "240025TRN03538",
-      "uid" : "33968e43-588d-46c4-a259-7d2f359762e5"
+      "uid" : "5ec34e61-d213-4c71-bf01-1a6674ca9c9f"
     }, {
-      "referenceId" : "240025INV00512",
+      "referenceId" : "240025INV00526",
       "transactionId" : "240025TRN03538",
-      "uid" : "5ed76f23-d040-4476-b46b-82fb1e0b94c4"
+      "uid" : "dc9fe5aa-c73c-466f-9018-28f39a0089ec"
     } ]
   }
 }

@@ -2,5 +2,5 @@ package com.source.interfaces.invoices.poinvoices;
 
 public interface IInvApproval {
 
-    void approval(String referenceId, String transactionId, String uid);
+    int approval(String referenceId, String transactionId, String uid);
 }

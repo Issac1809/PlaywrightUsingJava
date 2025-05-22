@@ -3,14 +3,15 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.invoices.poinvoices.IInvSendForApproval;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-import java.util.List;
 import static com.constants.invoices.poinvoice.LInvSendForApproval.*;
+import static com.constants.requisitions.LPrApprove.getTitle;
 
 public class InvSendForApproval implements IInvSendForApproval {
 
@@ -32,28 +33,29 @@ public class InvSendForApproval implements IInvSendForApproval {
         this.logger = LoggerUtil.getLogger(InvSendForApproval.class);
     }
 
-    public void sendForApproval(String referenceId, String transactionId, String uid){
+    public int sendForApproval(String referenceId, String transactionId, String uid){
+        int status = 0;
         try {
-            String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
+            String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
+            String buyerMailId = jsonNode.get("mailIds").get("financeCheckerEmail").asText();
             iLogin.performLogin(buyerMailId);
 
             Locator invoiceNavigationBarLocator = page.locator(INVOICE_NAVIGATION_BAR);
             invoiceNavigationBarLocator.click();
 
-            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : containerList){
-                if(tr.contains(poReferenceId)){
-                    Locator detailsButtonLocator = page.locator(INVOICE_SELECT);
-                    detailsButtonLocator.first().click();
-                }
-            }
+            Locator invoiceTitle = page.locator(getTitle(referenceId));
+            invoiceTitle.click();
 
             Locator sendForApprovalLocator = page.locator(SEND_FOR_APPROVAL_BUTTON);
             sendForApprovalLocator.click();
 
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
-            acceptButtonLocator.click();
+
+            Response invoiceResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/Invoices/") && response.status() == 200,
+                    acceptButtonLocator::click);
+
+            status = invoiceResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -63,5 +65,6 @@ public class InvSendForApproval implements IInvSendForApproval {
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Send For Approval function: {}", exception.getMessage());
         }
+        return status;
     }
 }

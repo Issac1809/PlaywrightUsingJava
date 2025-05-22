@@ -1,6 +1,5 @@
 package com.source.classes.invoices.poinvoice.create;
 import com.factory.PlaywrightFactory;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -287,18 +286,18 @@ public class InvCreate implements IInvCreate {
             createButtonLocator.click();
 
             Locator acceptLocator = page.locator(ACCEPT_BUTTON);
-            Response woResponse = page.waitForResponse(
+            Response invResponse = page.waitForResponse(
                     response -> response.url().startsWith(appUrl + "/api/VP/Invoices/Listing") && response.status() == 200,
                     acceptLocator::click
             );
 
             String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
             // Locate the row containing the dynamic poReferenceId and click the <a> tag
-            Locator rows = page.locator("#listContainer tr");
+            Locator rows = page.locator(LIST_CONTAINER);
             int rowCount = rows.count();
             for (int i = 0; i < rowCount; i++) {
                 Locator row = rows.nth(i);
-                String referenceText = row.locator("td:nth-child(3)").innerText();
+                String referenceText = row.locator(PO_REFERENCE_ID).innerText();
                 if (referenceText.contains(poReferenceId)) {
                     Response invoiceResponse = page.waitForResponse(
                             response -> response.url().startsWith(appUrl + "/api/VP/Invoices/") && response.status() == 200,

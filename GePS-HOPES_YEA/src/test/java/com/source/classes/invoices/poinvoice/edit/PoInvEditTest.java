@@ -14,7 +14,8 @@ public class PoInvEditTest extends BaseTest {
     @Test(dataProvider = "invoiceData", dataProviderClass = PoInvTrnUtil.class, description = "Purchase Order Invoice Edit Test")
     public void edit(String referenceId, String transactionId, String uid){
         try {
-            iInvEdit.edit(referenceId, transactionId, uid);
+            int status = iInvEdit.edit(referenceId, transactionId, uid);
+            Assert.assertEquals(200, status, "Invoice Edit was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Edit Test function: {}", exception.getMessage());
             Assert.fail("Exception in PO Invoice Edit Test Function: " + exception.getMessage());
