@@ -34,7 +34,7 @@ public class InvChecklistAccept implements IInvChecklistAccept {
         this.logger = LoggerUtil.getLogger(InvChecklistAccept.class);
     }
 
-    public void accept(){
+    public void accept(String referenceId, String transactionId, String uid){
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             iLogin.performLogin(buyerMailId);

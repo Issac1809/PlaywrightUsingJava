@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.invoices.poinvoices.IInvCancel;
 import com.source.interfaces.invoices.poinvoices.IInvCreate;
@@ -14,6 +15,8 @@ import java.util.List;
 import static com.constants.dispatchnotes.LDnAssign.LIST_CONTAINER;
 import static com.constants.invoices.poinvoice.LInvApproval.INVOICE_SELECT;
 import static com.constants.invoices.poinvoice.LInvCancel.*;
+import static com.constants.orderschedules.LOsEdit.getTitle;
+import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
 
 public class InvCancel implements IInvCancel {
 
@@ -37,22 +40,18 @@ public class InvCancel implements IInvCancel {
         this.logger = LoggerUtil.getLogger(InvCancel.class);
     }
 
-    public void cancel(String type){
+    public void cancel(String referenceId, String transactionId, String uid){
         try {
-            String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
+            String buyerMailId = jsonNode.get("mailIds").get("financeCheckerEmail").asText();
             iLogin.performLogin(buyerMailId);
 
             Locator invoiceNavigationBarLocator = page.locator(INVOICE_NAVIGATION_BAR);
             invoiceNavigationBarLocator.click();
 
-            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : containerList){
-                if(tr.contains(poReferenceId)){
-                    Locator detailsButtonLocator = page.locator(INVOICE_SELECT);
-                    detailsButtonLocator.first().click();
-                }
-            }
+            Locator invoiceTitle = page.locator(getTitle(referenceId));
+            invoiceTitle.click();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             Locator suspendButtonLocator = page.locator(SUSPEND_BUTTON);
             suspendButtonLocator.click();
@@ -68,8 +67,6 @@ public class InvCancel implements IInvCancel {
             PlaywrightFactory.attachScreenshotWithName("Purchase Order Invoice Cancel", page);
 
             iLogout.performLogout();
-
-            iInvCreate.invoiceTypeHandler(type);
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Cancel function: {}", exception.getMessage());
         }

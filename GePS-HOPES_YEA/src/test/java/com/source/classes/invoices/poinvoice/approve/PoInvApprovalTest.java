@@ -1,5 +1,6 @@
 package com.source.classes.invoices.poinvoice.approve;
 import com.base.BaseTest;
+import com.util.PoInvTrnUtil;
 import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -10,10 +11,10 @@ public class PoInvApprovalTest extends BaseTest {
     @Feature("Purchase Order Invoice Approve")
     @Severity(SeverityLevel.NORMAL)
     @Description("Test Description: Verify Approver Can Able To Approve The Purchase Order Invoice")
-    @Test(description = "Purchase Order Invoice Approve Test")
-    public void approval(){
+    @Test(dataProvider = "invoiceData", dataProviderClass = PoInvTrnUtil.class, description = "Purchase Order Invoice Approve Test")
+    public void approval(String referenceId, String transactionId, String uid){
         try {
-            iInvApproval.approval();
+            iInvApproval.approval(referenceId, transactionId, uid);
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Approval Test function: {}", exception.getMessage());
             Assert.fail("Exception in PO Invoice Approval Test Function: " + exception.getMessage());

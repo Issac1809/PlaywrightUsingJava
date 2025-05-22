@@ -250,25 +250,23 @@
         </classes>
     </test>
 
-<!--    <test name="Work Order Ok For Invoice">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.workorders.okforinvoice.WoOkForInvoiceTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Work Order Ok For Invoice">
+        <classes>
+            <class name="com.source.classes.workorders.okforinvoice.WoOkForInvoiceTest"/>
+        </classes>
+    </test>
 
     <test name="PO Invoice Create">
-        <parameter name="type" value="PS"/>
         <classes>
             <class name="com.source.classes.invoices.poinvoice.create.PoInvCreateTest"/>
         </classes>
     </test>
 
-<!--    <test name="PO Invoice Cancel">-->
-<!--    <parameter name="type" value="PS"/>-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.poinvoice.cancel.PoInvCancelTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="PO Invoice Cancel">
+        <classes>
+            <class name="com.source.classes.invoices.poinvoice.cancel.PoInvCancelTest"/>
+        </classes>
+    </test>
 
 <!--    <test name="PO Invoice Checklist Reject">-->
 <!--        <classes>-->

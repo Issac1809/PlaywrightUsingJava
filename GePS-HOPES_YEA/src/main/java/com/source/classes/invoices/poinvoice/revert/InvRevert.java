@@ -33,7 +33,7 @@ public class InvRevert implements IInvRevert {
         this.logger = LoggerUtil.getLogger(InvRevert.class);
     }
 
-    public void revert(){
+    public void revert(String referenceId, String transactionId, String uid){
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             iLogin.performLogin(buyerMailId);

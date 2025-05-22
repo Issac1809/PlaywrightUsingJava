@@ -34,7 +34,7 @@ public class InvChecklistReject implements IInvChecklistReject {
         this.logger = LoggerUtil.getLogger(InvChecklistReject.class);
     }
 
-    public void reject(){
+    public void reject(String referenceId, String transactionId, String uid){
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             iLogin.performLogin(buyerMailId);

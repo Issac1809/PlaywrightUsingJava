@@ -1,8 +1,10 @@
 package com.factory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.microsoft.playwright.*;
+import com.utils.InvoicePOJOUtil;
 import com.utils.LoggerUtil;
 import io.qameta.allure.Allure;
 import org.apache.logging.log4j.Logger;
@@ -168,6 +170,29 @@ public class PlaywrightFactory {
             }
         } catch (Exception exception) {
             logger.error("Error in Save Properties Into Json File Function: {}", exception.getMessage());
+        }
+    }
+
+    public void saveInvoiceListIntoJsonFile(String parentKey, String arrayKey, List<InvoicePOJOUtil> invTxnList) {
+        try {
+            if (jsonNode.has(parentKey) && jsonNode.get(parentKey).isObject()) {
+                ObjectNode parentNode = (ObjectNode) jsonNode.get(parentKey);
+
+//TODO Convert the List<InvTxnDetail> to a JSON array node
+                ArrayNode arrayNode = objectMapper.valueToTree(invTxnList);
+
+//TODO Put the array into the parent node
+                parentNode.set(arrayKey, arrayNode);
+
+//TODO try is used to close the file writer or the json file will be empty
+                try (FileWriter fileWriter = new FileWriter("./src/test/resources/config/test-data.json")) {
+                    objectMapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, jsonNode);
+                }
+            } else {
+                logger.warn("Parent key '{}' not found or not an object in JSON", parentKey);
+            }
+        } catch (Exception exception) {
+            logger.error("Error saving invoice list to JSON: {}", exception.getMessage());
         }
     }
 

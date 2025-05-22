@@ -36,9 +36,9 @@ public class InvReject implements IInvReject {
         this.logger = LoggerUtil.getLogger(InvReject.class);
     }
 
-    public void reject(){
+    public void reject(String referenceId, String transactionId, String uid){
         try {
-            iInvSendForApproval.sendForApproval();
+            iInvSendForApproval.sendForApproval(referenceId, transactionId, uid);
 
             String financeCheckerMailId = jsonNode.get("mailIds").get("financeCheckerEmail").asText();
             iLogin.performLogin(financeCheckerMailId);

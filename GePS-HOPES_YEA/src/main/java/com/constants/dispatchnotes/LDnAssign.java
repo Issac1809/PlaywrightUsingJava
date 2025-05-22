@@ -3,7 +3,7 @@ package com.constants.dispatchnotes;
 public class LDnAssign {
 
     public static final String DN_NAVIGATION_BAR = "//*[contains(text(), 'Dispatch Notes')]";
-    public static final String LIST_CONTAINER = "#listContainer tr td";
+    public static final String LIST_CONTAINER = "#listContainer tr";
     public static final String DETAILS_BUTTON = ".btn-link";
     public static final String DISPATCH_NOTES_REFERENCE_ID = "#dispatchNote";
     public static final String DROP_DOWN = "#dnActionDropdown";

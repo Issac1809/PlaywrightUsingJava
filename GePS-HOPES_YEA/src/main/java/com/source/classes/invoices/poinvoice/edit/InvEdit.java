@@ -34,7 +34,7 @@ public class InvEdit implements IInvEdit {
         this.logger = LoggerUtil.getLogger(InvEdit.class);
     }
 
-    public void edit(){
+    public void edit(String referenceId, String transactionId, String uid){
         try {
             String vendorMailId = jsonNode.get("mailIds").get("vendorEmail").asText();
             iLogin.performLogin(vendorMailId);

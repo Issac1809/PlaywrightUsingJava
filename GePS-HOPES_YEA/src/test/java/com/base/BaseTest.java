@@ -174,10 +174,7 @@ import com.source.interfaces.workorders.IWoCreate;
 import com.source.interfaces.workorders.IWoEdit;
 import com.source.interfaces.workorders.IWoOkForInvoice;
 import com.source.interfaces.workorders.IWoTrackerStatus;
-import com.utils.GetTitleUtil;
-import com.utils.LoggerUtil;
-import com.utils.SaveToTestDataJsonUtil;
-import com.utils.ToastrUtil;
+import com.utils.*;
 import com.utils.rpa.invoiceverification.IV_Flow;
 import com.utils.rpa.orderacknowledgement.OA_Flow;
 import com.utils.rpa.purchaseorderrequest.MSA_Flow;
@@ -196,6 +193,7 @@ public class BaseTest {
     protected static JsonNode jsonNode;
     protected GetTitleUtil getTitleUtil;
     protected SaveToTestDataJsonUtil saveToTestDataJsonUtil;
+    protected GetInvoiceReferenceIdUtil getInvoiceReferenceIdUtil;
     protected static PlaywrightFactory playwrightFactory;
     protected static Playwright playwright;
     protected static Browser browser;
@@ -381,7 +379,6 @@ public class BaseTest {
             toastrUtil = new ToastrUtil(page);
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
             saveToTestDataJsonUtil = new SaveToTestDataJsonUtil(playwrightFactory, objectMapper);
-
         } catch (Exception exception) {
             logger.error("Error Initializing Global Setup Function: {}", exception.getMessage());
         }
@@ -568,6 +565,9 @@ public class BaseTest {
             woInvRejectTest = new WoInvRejectTest();
             iWoInvApproval = new WoInvApproval(iLogin, jsonNode, page, iLogout);
             woInvApprovalTest = new WoInvApprovalTest();
+
+            getInvoiceReferenceIdUtil = new GetInvoiceReferenceIdUtil(playwright, playwrightFactory, page, iLogin, jsonNode, objectMapper, iLogout);
+
         } catch (Exception exception) {
             logger.error("Error Initializing SetUp Function: {}", exception.getMessage());
         }

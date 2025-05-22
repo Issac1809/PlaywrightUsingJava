@@ -63,10 +63,12 @@ public class SendForVendor implements IPoSendForVendor {
             String url = page.url();
             String[] urlArray = url.split("=");
             String getUid = urlArray[1];
-            playwrightFactory.savePropertiesIntoJsonFile("purchaseOrders", "purchaseOrderRequestUid", getUid);
+            playwrightFactory.savePropertiesIntoJsonFile("purchaseOrders", "purchaseOrderUid", getUid);
 
             APIResponse apiResponse = page.request().fetch(appUrl + "/api/PurchaseOrders/" + getUid, RequestOptions.create());
             JsonNode jsonNode = objectMapper.readTree(apiResponse.body());
+            String poTitle = jsonNode.get("title").asText();
+            String poTransactionId = jsonNode.get("transactionId").asText();
             String purchaseOrderRevisionNumber = jsonNode.get("revisionNumber").asText();
             int poId = jsonNode.get("id").asInt();
             String orderScheduleStatus = "";
@@ -75,6 +77,8 @@ public class SendForVendor implements IPoSendForVendor {
             }
             String porRevision = "true"; //TODO Set to true for revision
             saveReferenceIdFromApiResponse(apiResponse, "purchaseOrders", "poReferenceId");
+            playwrightFactory.savePropertiesIntoJsonFile("purchaseOrders", "poTitle", poTitle);
+            playwrightFactory.savePropertiesIntoJsonFile("purchaseOrders", "poTransactionId", poTransactionId);
             playwrightFactory.savePropertiesIntoJsonFile("purchaseOrders", "porRevision", porRevision);
             playwrightFactory.savePropertiesIntoJsonFile("purchaseOrders", "id", String.valueOf(poId));
             playwrightFactory.savePropertiesIntoJsonFile("purchaseOrders", "poRevisionNumber", purchaseOrderRevisionNumber);
