@@ -12,15 +12,13 @@ public class PoInvCreateTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Description("Test Description: Verify Vendor Can Able To Create The Purchase Order Invoice")
     @Test(description = "Purchase Order Invoice Create Test")
-    @Parameters("type")
-    public void create(String type){
+    public void create(){
         try {
-            int status = iInvCreate.invoiceTypeHandler(type);
+            int status = iInvCreate.invoiceTypeHandler();
             Assert.assertEquals(200, status, "Invoice Create was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Create Test function: {}", exception.getMessage());
             Assert.fail("Exception in PO Invoice Create Test Function: " + exception.getMessage());
-
         }
     }
 }

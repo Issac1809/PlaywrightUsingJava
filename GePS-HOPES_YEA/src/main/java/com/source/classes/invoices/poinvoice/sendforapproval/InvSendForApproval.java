@@ -32,7 +32,7 @@ public class InvSendForApproval implements IInvSendForApproval {
         this.logger = LoggerUtil.getLogger(InvSendForApproval.class);
     }
 
-    public void sendForApproval(){
+    public void sendForApproval(String referenceId, String transactionId, String uid){
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             iLogin.performLogin(buyerMailId);

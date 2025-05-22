@@ -2,7 +2,7 @@ package com.constants.invoices.woinvoice;
 
 public class LInvCreate {
 
-    public static final String INVOICE_NAVIGATION_BAR = "//*[contains(text(), 'Invoices')]";
+    public static final String INVOICE_NAVIGATION_BAR = "//a[@href='/VendorPortal/Invoices']";
     public static final String INVOICE_SELECT = ".btn.btn-primary";
     public static final String SELECT_COMPANY_LOCATOR = "#select2-companyId-container";
     public static final String COMPANY_RESULTS_LIST = "#select2-companyId-results";

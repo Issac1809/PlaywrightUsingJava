@@ -17,6 +17,7 @@ import java.math.RoundingMode;
 import java.nio.file.Paths;
 import java.util.List;
 import static com.constants.invoices.poinvoice.LInvCreate.*;
+import static com.utils.GetInvoiceReferenceIdUtil.getInvoiceReferenceIds;
 import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
 
 public class InvCreate implements IInvCreate {
@@ -50,7 +51,7 @@ public class InvCreate implements IInvCreate {
         this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public int invoiceTypeHandler(String type) {
+    public int invoiceTypeHandler() {
         int status = 0;
         try {
             String vendorMailId = jsonNode.get("mailIds").get("vendorEmail").asText();
@@ -60,17 +61,7 @@ public class InvCreate implements IInvCreate {
             boolean milestonePaymentFlag = jsonNode.get("purchaseOrderRequests").get("milestonePaymentFlag").asBoolean();
             int milestoneCount = jsonNode.get("purchaseOrderRequests").get("milestonePaymentCount").asInt();
 
-            String transactionNumber = "";
-            String psTransactionNumber = jsonNode.get("requisition").get("psTransactionNumber").asText();
-            String salesTransactionNumber = jsonNode.get("requisition").get("salesTransactionNumber").asText();
-            String sdTransactionNumber = jsonNode.get("requisition").get("sdTransactionNumber").asText();
-            if(type.equalsIgnoreCase("PS")){
-                transactionNumber = psTransactionNumber;
-            } else if(type.equalsIgnoreCase("Sales")) {
-                transactionNumber = salesTransactionNumber;
-            } else if(type.equalsIgnoreCase("SD")){
-                transactionNumber = sdTransactionNumber;
-            }
+            String transactionNumber = jsonNode.get("purchaseOrders").get("poTransactionId").asText();
 
             if (!advancePaymentFlag && !milestonePaymentFlag) {
                 create(transactionNumber);
@@ -112,6 +103,8 @@ public class InvCreate implements IInvCreate {
             }
 
             iLogout.performLogout();
+
+            getInvoiceReferenceIds();
         } catch (Exception exception) {
             logger.error("Exception in Invoice Handler Function: {}", exception.getMessage());
         }
@@ -281,45 +274,49 @@ public class InvCreate implements IInvCreate {
         }
     }
 
-    public int invoiceCreate() throws JsonProcessingException {
+    public int invoiceCreate() {
         int status = 0;
+        try {
+            status = 0;
 //TODO Invoice Document
-        Locator invoiceDocumentButton = page.locator(DOCUMENT_ID);
-        invoiceDocumentButton.first();
-        invoiceDocumentButton.setInputFiles(Paths.get(INVOICE_DOCUMENT_PATH));
+            Locator invoiceDocumentButton = page.locator(DOCUMENT_ID);
+            invoiceDocumentButton.first();
+            invoiceDocumentButton.setInputFiles(Paths.get(INVOICE_DOCUMENT_PATH));
 
-        Locator createButtonLocator = page.locator(CREATE_BUTTON);
-        createButtonLocator.click();
+            Locator createButtonLocator = page.locator(CREATE_BUTTON);
+            createButtonLocator.click();
 
-        Locator acceptLocator = page.locator(ACCEPT_BUTTON);
-        Response woResponse = page.waitForResponse(
-                response -> response.url().startsWith(appUrl + "/api/VP/Invoices/Listing") && response.status() == 200,
-                acceptLocator::click
-        );
+            Locator acceptLocator = page.locator(ACCEPT_BUTTON);
+            Response woResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/VP/Invoices/Listing") && response.status() == 200,
+                    acceptLocator::click
+            );
 
-        String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-        // Locate the row containing the dynamic poReferenceId and click the <a> tag
-        Locator rows = page.locator("#listContainer tr");
-        int rowCount = rows.count();
-        for (int i = 0; i < rowCount; i++) {
-            Locator row = rows.nth(i);
-            String referenceText = row.locator("td:nth-child(3)").innerText();
-            if (referenceText.contains(poReferenceId)) {
-                Response invoiceResponse = page.waitForResponse(
-                        response -> response.url().startsWith(appUrl + "/api/VP/Invoices/") && response.status() == 200,
-                        row.locator("a").first()::click
-                );
-                saveReferenceIdFromResponse(invoiceResponse, "invoice", "invoiceReferenceId");
+            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
+            // Locate the row containing the dynamic poReferenceId and click the <a> tag
+            Locator rows = page.locator("#listContainer tr");
+            int rowCount = rows.count();
+            for (int i = 0; i < rowCount; i++) {
+                Locator row = rows.nth(i);
+                String referenceText = row.locator("td:nth-child(3)").innerText();
+                if (referenceText.contains(poReferenceId)) {
+                    Response invoiceResponse = page.waitForResponse(
+                            response -> response.url().startsWith(appUrl + "/api/VP/Invoices/") && response.status() == 200,
+                            row.locator("a").first()::click
+                    );
+                    saveReferenceIdFromResponse(invoiceResponse, "invoice", "invoiceReferenceId");
 
-                status = invoiceResponse.status();
-                break;
+                    status = invoiceResponse.status();
+                    break;
+                }
             }
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            PlaywrightFactory.attachScreenshotWithName("Purchase Order Invoice Create", page);
+        } catch (Exception exception) {
+            logger.error("Exception in Invoice Create Function: {} ", exception.getMessage());
         }
-
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-
-        PlaywrightFactory.attachScreenshotWithName("Purchase Order Invoice Create", page);
-
         return status;
     }
 }

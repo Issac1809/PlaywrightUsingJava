@@ -38,7 +38,7 @@
   "requisition" : {
     "purchaseType" : "PS",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-559.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-178.0",
     "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-432.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-364.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-259.0",
@@ -81,13 +81,13 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "989144a9-7d0d-4a14-98a3-509cc54784be",
+    "requisitionUid" : "f5c2df9c-ec35-475b-af4a-807444689d1c",
     "itemImport" : true,
     "requisitionItemCount" : "3",
-    "psTransactionNumber" : "240025TRN03533",
+    "psTransactionNumber" : "240025TRN03538",
     "salesTransactionNumber" : "240025TRN03511",
     "sdTransactionNumber" : "240025TRN03469",
-    "requisitionId" : "23477"
+    "requisitionId" : "23488"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
@@ -116,10 +116,10 @@
     "milestonePaymentCount" : 2,
     "taxCode" : "PG-8% Foreign currency standard rate purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "4f5fa222-b27e-4e0e-ae62-b9a2fbdebda2",
-    "purchaseOrderRequestId" : "8596",
+    "purchaseOrderRequestUid" : "a3470671-49c7-4ca6-9d81-91d469894fe4",
+    "purchaseOrderRequestId" : "8607",
     "approvers" : [ "projectmanager@cormsquare.com", "buyer@cormsquare.com" ],
-    "porReferenceNumber" : "240025POR01710",
+    "porReferenceNumber" : "240025POR01714",
     "integrationStatus" : "SOSynced",
     "additionalItemName" : "Packing Charges",
     "rate" : "200.45",
@@ -131,18 +131,22 @@
     "leadTime" : "10",
     "shippingPoint" : "NA",
     "porStatus" : "ProcessingPO",
-    "poProcessed" : "false"
+    "poProcessed" : "false",
+    "poId" : "5822"
   },
   "purchaseOrders" : {
-    "poReferenceId" : "8739",
+    "poReferenceId" : "1086",
     "poRevisionNumber" : "0",
     "porRevision" : "true",
     "poValue" : 9000,
     "unitRate" : 200,
-    "purchaseOrderRequestUid" : "b1489f53-0ff1-46b5-b930-6b377cf7fd20"
+    "purchaseOrderUid" : "c62a291f-95ae-42ef-a218-1b4578e192e1",
+    "poTitle" : "PS-AUTOMATION-CATALOG-178.0",
+    "poTransactionId" : "240025TRN03538",
+    "id" : "5822"
   },
   "orderSchedules" : {
-    "orderScheduleReferenceId" : "240025OS00782",
+    "orderScheduleReferenceId" : "240025OS00785",
     "orderScheduleStatus" : ""
   },
   "dispatchNotes" : {
@@ -171,6 +175,15 @@
     "vendorReferenceId" : "",
     "invoiceReferenceId" : "",
     "poInvoiceNumber" : "INV-AUT-PO-",
-    "woInvoiceNumber" : "INV-AUT-WO-"
+    "woInvoiceNumber" : "INV-AUT-WO-",
+    "invoiceTransactionDetails" : [ {
+      "referenceId" : "240025INV00513",
+      "transactionId" : "240025TRN03538",
+      "uid" : "33968e43-588d-46c4-a259-7d2f359762e5"
+    }, {
+      "referenceId" : "240025INV00512",
+      "transactionId" : "240025TRN03538",
+      "uid" : "5ed76f23-d040-4476-b46b-82fb1e0b94c4"
+    } ]
   }
 }

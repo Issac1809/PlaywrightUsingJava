@@ -34,7 +34,7 @@ public class InvHold implements IInvHold {
         this.logger = LoggerUtil.getLogger(InvHold.class);
     }
 
-    public void hold(){
+    public void hold(String referenceId, String transactionId, String uid){
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             iLogin.performLogin(buyerMailId);

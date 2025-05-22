@@ -37,9 +37,9 @@ public class InvReturn implements IInvReturn {
         this.logger = LoggerUtil.getLogger(InvReturn.class);
     }
 
-    public void invReturn(){
+    public void invReturn(String referenceId, String transactionId, String uid){
         try {
-            iInvSendForApproval.sendForApproval();
+            iInvSendForApproval.sendForApproval(referenceId, transactionId, uid);
 
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             iLogin.performLogin(buyerMailId);

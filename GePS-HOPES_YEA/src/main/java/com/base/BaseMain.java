@@ -106,10 +106,7 @@ import com.source.interfaces.workorders.IWoCreate;
 import com.source.interfaces.workorders.IWoEdit;
 import com.source.interfaces.workorders.IWoOkForInvoice;
 import com.source.interfaces.workorders.IWoTrackerStatus;
-import com.utils.GetTitleUtil;
-import com.utils.LoggerUtil;
-import com.utils.SaveToTestDataJsonUtil;
-import com.utils.ToastrUtil;
+import com.utils.*;
 import com.utils.rpa.invoiceverification.IV_Flow;
 import com.utils.rpa.orderacknowledgement.OA_Flow;
 import com.utils.rpa.purchaseorderrequest.MSA_Flow;
@@ -125,6 +122,7 @@ public class BaseMain {
     protected JsonNode jsonNode;
     protected GetTitleUtil getTitleUtil;
     protected SaveToTestDataJsonUtil saveToTestDataJsonUtil;
+    protected GetInvoiceReferenceIdUtil getInvoiceReferenceIdUtil;
     protected Playwright playwright;
     protected Browser browser;
     protected BrowserContext browserContext;
@@ -223,17 +221,18 @@ public class BaseMain {
             playwrightFactory.initializeBrowserContext();
             browserContext = playwrightFactory.getBrowserContext();
             page = playwrightFactory.initializePage(jsonNode);
+            iLogin = new Login(jsonNode, page);
+            iLogout = new Logout(page);
             toastrUtil = new ToastrUtil(page);
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
             saveToTestDataJsonUtil = new SaveToTestDataJsonUtil(playwrightFactory, objectMapper);
+            getInvoiceReferenceIdUtil = new GetInvoiceReferenceIdUtil(playwright, playwrightFactory, page, iLogin, jsonNode, objectMapper, iLogout);
             prListFlow = new PR_List_Flow(page);
             msaFlow = new MSA_Flow(page);
             oaFlow = new OA_Flow(page);
             ivFlow = new IV_Flow(page);
 
 //TODO Requisition
-            iLogin = new Login(jsonNode, page);
-            iLogout = new Logout(page);
             iPrCreate = new Create(playwrightFactory, objectMapper, iLogin, jsonNode, page, iLogout);
             iPrType = new PurchaseRequisitionTypeHandler(iPrCreate);
             iPrEdit = new Edit(iLogin, jsonNode, page, iLogout);

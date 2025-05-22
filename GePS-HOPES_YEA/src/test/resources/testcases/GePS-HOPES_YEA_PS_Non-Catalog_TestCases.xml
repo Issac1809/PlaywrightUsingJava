@@ -355,13 +355,15 @@
 
     <!--    <test name="PO Invoice Create">-->
     <!--        <parameter name="type" value="PS"/>-->
-    <!--        <parameter name="purchaseType" value="Catalog"/>-->
+    <!--        <parameter name="purchaseType" value="NonCatalog"/>-->
     <!--        <classes>-->
     <!--            <class name="com.source.classes.invoices.poinvoice.create.PoInvCreateTest"/>-->
     <!--        </classes>-->
     <!--    </test>-->
 
     <!--    <test name="PO Invoice Cancel">-->
+    <!--        <parameter name="type" value="PS"/>-->
+    <!--        <parameter name="purchaseType" value="NonCatalog"/>-->
     <!--        <classes>-->
     <!--            <class name="com.source.classes.invoices.poinvoice.cancel.PoInvCancelTest"/>-->
     <!--        </classes>-->

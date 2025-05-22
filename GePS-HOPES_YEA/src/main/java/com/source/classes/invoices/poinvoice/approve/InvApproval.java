@@ -33,7 +33,7 @@ public class InvApproval implements IInvApproval {
         this.logger = LoggerUtil.getLogger(InvApproval.class);
     }
 
-    public void approval(){
+    public void approval(String referenceId, String transactionId, String uid){
         try {
             String financeChecker = jsonNode.get("mailIds").get("financeCheckerEmail").asText();
             iLogin.performLogin(financeChecker);

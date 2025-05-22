@@ -32,7 +32,7 @@ public class InvVerify implements IInvVerify {
         this.logger = LoggerUtil.getLogger(InvVerify.class);
     }
 
-    public void verify(){
+    public void verify(String referenceId, String transactionId, String uid){
         try {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             iLogin.performLogin(buyerMailId);
