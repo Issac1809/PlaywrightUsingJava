@@ -48,6 +48,64 @@ public class InvApproval implements IInvApproval {
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
+            Locator updateFinanceFields = page.locator(UPDATE_FINANCE_FIELDS);
+            updateFinanceFields.click();
+
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            Locator bankAccountDropdownLocator = page.locator(BANK_ACCOUNT);
+            if(bankAccountDropdownLocator.count() > 0 && bankAccountDropdownLocator.isVisible()){
+                bankAccountDropdownLocator.click();
+            }
+            Locator bankAccountDataLocator = page.locator(BANK_ACCOUNT_DATA);
+            if(bankAccountDataLocator.count() > 0 && bankAccountDataLocator.isVisible()){
+                bankAccountDataLocator.click();
+            }
+
+            Locator accountTypeDropdownLocator = page.locator(ACCOUNT_TYPE);
+            if(accountTypeDropdownLocator.count() > 0 && accountTypeDropdownLocator.isVisible()){
+                accountTypeDropdownLocator.click();
+            }
+            Locator accountTypeDataLocator = page.locator(ACCOUNT_TYPE_DATA);
+            if(accountTypeDataLocator.count() > 0 && accountTypeDataLocator.isVisible()){
+                accountTypeDataLocator.click();
+            }
+
+            Locator documentTypeDropdownLocator =page.locator(DOCUMENT_TYPE);
+            if(documentTypeDropdownLocator.count() > 0 && documentTypeDropdownLocator.isVisible()){
+                documentTypeDropdownLocator.click();
+            }
+            Locator documentTypeDataLocator = page.locator(DOCUMENT_TYPE_DATA);
+            if(documentTypeDataLocator.count() > 0 && documentTypeDataLocator.isVisible()){
+                documentTypeDataLocator.click();
+            }
+
+            Locator generalLedgerDropdownLocator =page.locator(GENERAL_LEDGER);
+            if(generalLedgerDropdownLocator.count() > 0 && generalLedgerDropdownLocator.isVisible()){
+                generalLedgerDropdownLocator.click();
+            }
+            Locator generalLedgerDataLocator = page.locator(GENERAL_LEDGER_DATA);
+            if(generalLedgerDataLocator.count() > 0 && generalLedgerDataLocator.isVisible()){
+                generalLedgerDataLocator.click();
+            }
+
+            Locator textLocator = page.locator(TEXT);
+            if(textLocator.count() > 0 && textLocator.isVisible()){
+                textLocator.fill("Finance Field");
+            }
+
+            Locator taxCodeDropdownLocator = page.locator(TAX_CODE);
+            if(taxCodeDropdownLocator.count() > 0 && taxCodeDropdownLocator.isVisible()){
+                taxCodeDropdownLocator.click();
+            }
+            Locator taxCodeDataLocator = page.locator(TAX_CODE_DATA);
+            if(taxCodeDataLocator.count() > 0 && taxCodeDataLocator.isVisible()){
+                taxCodeDataLocator.click();
+            }
+
+            Locator saveFinanceFieldsLocator = page.locator(SAVE_FINANCE_FIELDS);
+            saveFinanceFieldsLocator.click();
+
             Locator approveButtonLocator = page.locator(APPROVE_BUTTON);
             approveButtonLocator.click();
 

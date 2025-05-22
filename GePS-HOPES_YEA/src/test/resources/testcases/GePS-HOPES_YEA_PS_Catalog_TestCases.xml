@@ -256,71 +256,71 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="PO Invoice Create">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.poinvoice.create.PoInvCreateTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="PO Invoice Create">
+        <classes>
+            <class name="com.source.classes.invoices.poinvoice.create.PoInvCreateTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="PO Invoice Cancel">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.poinvoice.cancel.PoInvCancelTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="PO Invoice Cancel">
+        <classes>
+            <class name="com.source.classes.invoices.poinvoice.cancel.PoInvCancelTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="PO Invoice Checklist Reject">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.poinvoice.checklist.PoInvChecklistRejectTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="PO Invoice Checklist Reject">
+        <classes>
+            <class name="com.source.classes.invoices.poinvoice.checklist.PoInvChecklistRejectTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="PO Invoice Return">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.poinvoice.invreturn.PoInvReturnTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="PO Invoice Return">
+        <classes>
+            <class name="com.source.classes.invoices.poinvoice.invreturn.PoInvReturnTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="PO Invoice Edit">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.poinvoice.edit.PoInvEditTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="PO Invoice Edit">
+        <classes>
+            <class name="com.source.classes.invoices.poinvoice.edit.PoInvEditTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="PO Invoice Checklist Accept">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.poinvoice.checklist.PoInvChecklistAcceptTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="PO Invoice Checklist Accept">
+        <classes>
+            <class name="com.source.classes.invoices.poinvoice.checklist.PoInvChecklistAcceptTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="PO Invoice Verify">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.poinvoice.verify.PoInvVerifyTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="PO Invoice Verify">
+        <classes>
+            <class name="com.source.classes.invoices.poinvoice.verify.PoInvVerifyTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="PO Invoice Hold">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.poinvoice.hold.PoInvHoldTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="PO Invoice Hold">
+        <classes>
+            <class name="com.source.classes.invoices.poinvoice.hold.PoInvHoldTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="PO Invoice Revert">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.poinvoice.revert.PoInvRevertTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="PO Invoice Revert">
+        <classes>
+            <class name="com.source.classes.invoices.poinvoice.revert.PoInvRevertTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="PO Invoice Send For Approval">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.poinvoice.sendforapproval.PoInvSendForApprovalTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="PO Invoice Send For Approval">
+        <classes>
+            <class name="com.source.classes.invoices.poinvoice.sendforapproval.PoInvSendForApprovalTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="PO Invoice Reject">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.poinvoice.reject.PoInvRejectTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="PO Invoice Reject">
+        <classes>
+            <class name="com.source.classes.invoices.poinvoice.reject.PoInvRejectTest"/>
+        </classes>
+    </test>
 
     <test name="PO Invoice Approve">
         <classes>
