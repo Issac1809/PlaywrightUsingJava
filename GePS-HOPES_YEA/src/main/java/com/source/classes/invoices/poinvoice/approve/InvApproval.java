@@ -51,7 +51,7 @@ public class InvApproval implements IInvApproval {
             Locator updateFinanceFields = page.locator(UPDATE_FINANCE_FIELDS);
             updateFinanceFields.click();
 
-            page.waitForLoadState(LoadState.NETWORKIDLE);
+            Thread.sleep(3000);
 
             Locator bankAccountDropdownLocator = page.locator(BANK_ACCOUNT);
             if(bankAccountDropdownLocator.count() > 0 && bankAccountDropdownLocator.isVisible()){
