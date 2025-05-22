@@ -12,4 +12,8 @@ public class LInvCancel {
 //TODO Constructor
     private LInvCancel(){
     }
+
+    public static String getTitle(String title){
+        return "//span[contains(text(), '"+ title +"')]";
+    }
 }

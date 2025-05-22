@@ -12,4 +12,7 @@ public class LInvChecklistReject {
 //TODO Constructor
     private LInvChecklistReject(){
     }
+    public static String getTitle(String title){
+        return "//span[contains(text(), '"+ title +"')]";
+    }
 }

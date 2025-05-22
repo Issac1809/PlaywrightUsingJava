@@ -13,7 +13,8 @@ public class WoInvRevertTest extends BaseTest {
     @Test(description = "Work Order Invoice Revert Test")
     public void revert() {
         try {
-            iWoInvRevert.revert();
+            int status = iWoInvRevert.revert();
+            Assert.assertEquals(status, 200, "WO Invoice Revert was not Successful");
         }  catch (Exception exception) {
             logger.error("Exception in WO Invoice Revert Test function: {}", exception.getMessage());
             Assert.fail("Exception in WO Invoice Revert Test Function: " + exception.getMessage());

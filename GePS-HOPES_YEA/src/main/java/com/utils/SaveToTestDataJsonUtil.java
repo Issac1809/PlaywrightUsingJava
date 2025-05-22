@@ -55,4 +55,22 @@ public class SaveToTestDataJsonUtil {
             logger.error("Exception in Save Reference Id from API Response function: {}", exception.getMessage());
         }
     }
+
+    public static String saveAndReturNextApprover(Response response) {
+        String nextApproverEmail = "";
+        try {
+            JsonNode responseJson = objectMapper.readTree(response.body());
+            for(int i = 0; i < responseJson.get("approvers").size(); i++) {
+                String approverStatus = responseJson.get("approvers").get(i).get("approverStatus").asText();
+                if(approverStatus.equalsIgnoreCase("Pending")) {
+                    nextApproverEmail = responseJson.get("approvers").get(i).get("email").asText();
+                    break;
+                }
+            }
+            playwrightFactory.savePropertiesIntoJsonFile("invoices", "nextApprover", nextApproverEmail);
+        } catch(Exception exception) {
+            logger.error("Exception in Save Reference Id from Response function (First Index Node): {}", exception.getMessage());
+        }
+        return nextApproverEmail;
+    }
 }

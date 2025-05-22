@@ -13,7 +13,8 @@ public class WoInvHoldTest extends BaseTest {
     @Test(description = "Work Order Invoice Hold Test")
     public void hold(){
         try {
-            iWoInvHold.hold();
+            int status = iWoInvHold.hold();
+            Assert.assertEquals(status, 200, "WO Invoice Hold was not Successful");
         }  catch (Exception exception) {
             logger.error("Exception in WO Invoice Hold Test function: {}", exception.getMessage());
             Assert.fail("Exception in WO Invoice Hold Test Function: " + exception.getMessage());

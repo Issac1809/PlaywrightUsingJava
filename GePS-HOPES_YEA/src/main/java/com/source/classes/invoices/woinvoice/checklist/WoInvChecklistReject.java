@@ -3,6 +3,7 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.invoices.woinvoices.IWoInvChecklistReject;
 import com.source.interfaces.login.ILogin;
@@ -20,6 +21,7 @@ public class WoInvChecklistReject implements IWoInvChecklistReject {
     JsonNode jsonNode;
     ILogin iLogin;
     ILogout iLogout;
+    String appUrl;
 
     private WoInvChecklistReject(){
     }
@@ -31,31 +33,31 @@ public class WoInvChecklistReject implements IWoInvChecklistReject {
         this.iLogin = iLogin;
         this.iLogout = iLogout;
         this.logger = LoggerUtil.getLogger(WoInvChecklistReject.class);
+        this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
     }
 
-    public void reject(){
+    public int reject(){
+        int status = 0;
         try {
-            String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
+            String buyerMailId = jsonNode.get("mailIds").get("financeCheckerEmail").asText();
             iLogin.performLogin(buyerMailId);
 
             Locator invoiceNaviagtionBarLocator = page.locator(INVOICE_NAVIGATION_BAR);
             invoiceNaviagtionBarLocator.click();
 
-            String woReferenceId = jsonNode.get("workOrders").get("workOrderReferenceId").asText();
-            List<String> invoiceContainer = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : invoiceContainer){
-                if (tr.contains(woReferenceId)){
-                    Locator invoiceSelectLocator = page.locator(INVOICE_SELECT);
-                    invoiceSelectLocator.first().click();
-                }
-                break;
-            }
+            String woReferenceId = jsonNode.get("invoices").get("workOrderInvoiceReferenceId").asText();
+            Locator invoiceTitle = page.locator(getTitle(woReferenceId));
+            invoiceTitle.click();
 
             Locator checkListLocator = page.locator(CHECKLIST_BUTTON);
-            checkListLocator.click();
-
+            checkListLocator.first().click();
             Locator addToReviewQuequeLocator = page.locator(REJECT_CHECKLIST_BUTTON);
-            addToReviewQuequeLocator.click();
+
+            Response invResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/Invoices/") && response.status() == 200,
+                    addToReviewQuequeLocator::click
+            );
+            status = invResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -65,5 +67,6 @@ public class WoInvChecklistReject implements IWoInvChecklistReject {
         } catch (Exception exception) {
             logger.error("Exception in WO Invoice Reject function: {}", exception.getMessage());
         }
+        return status;
     }
 }

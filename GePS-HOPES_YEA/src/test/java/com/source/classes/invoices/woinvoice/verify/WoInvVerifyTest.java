@@ -13,7 +13,8 @@ public class WoInvVerifyTest extends BaseTest {
     @Test(description = "Work Order Invoice Verify Test")
     public void verify(){
         try {
-            iWoInvVerify.verify();
+            int status = iWoInvVerify.verify();
+            Assert.assertEquals(status, 200, "WO Invoice Verify was not Successful");
         }  catch (Exception exception) {
             logger.error("Exception in WO Invoice Verify Test function: {}", exception.getMessage());
             Assert.fail("Exception in WO Invoice Verify Test Function: " + exception.getMessage());
