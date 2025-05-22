@@ -25,8 +25,8 @@ public class OA_Flow {
         try {
             FTPClient ftpClient = new FTPClient();
             ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(new File("C:\\My_Personal_Folder\\GePS-Testing\\GePS-HOPES_YEA\\src\\test\\resources\\config\\msa-config.json"));
-            JsonNode jsonNode2 = objectMapper.readTree(new File("C:\\My_Personal_Folder\\GePS-Testing\\GePS-HOPES_YEA\\src\\test\\resources\\config\\test-data.json"));
+            JsonNode jsonNode = objectMapper.readTree(new File("src\\test\\resources\\config\\msa-config.json"));
+            JsonNode jsonNode2 = objectMapper.readTree(new File("src\\test\\resources\\config\\test-data.json"));
             String ftpHost = jsonNode.get("msa").get("ftpHost").asText();
             int ftpPort = jsonNode.get("msa").get("ftpPort").asInt();
             String ftpUser = jsonNode.get("msa").get("ftpUser").asText();

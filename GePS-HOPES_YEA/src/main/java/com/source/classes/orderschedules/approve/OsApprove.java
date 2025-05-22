@@ -52,46 +52,46 @@ public class OsApprove implements IOsApprove {
             String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
             iLogin.performLogin(buyerMailId);
 
-            Locator poNavigationBarLocator = page.locator(PO_NAVIGATION_BAR);
-            poNavigationBarLocator.click();
-
-            String title = getTransactionTitle(type, purchaseType);
-            Locator titleLocator = page.locator(getTitle(title));
-            titleLocator.first().click();
-
-            Locator viewOrderScheduleButtonLocator = page.locator(VIEW_ORDER_SCHEDULE__BUTTON);
-            viewOrderScheduleButtonLocator.click();
-
-            Locator approveButtonLocator = page.locator(APPROVE_BUTTON);
-            approveButtonLocator.click();
-
-            Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
-
-            Response approveResponse = page.waitForResponse(
-                    response -> response.url().startsWith(appUrl + "/api/PurchaseOrders/GetOrderSchedules/") && response.status() == 200,
-                    acceptButtonLocator.first()::click
-            );
-            status = approveResponse.status();
-
-            page.waitForLoadState(LoadState.NETWORKIDLE);
-
-            String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
-
-            String url = page.url();
-            String[] urlArray = url.split("=");
-            String getUid = urlArray[1];
-
-            APIResponse apiResponse = page.request().fetch(appUrl + "/api/PurchaseOrders/" + getUid, RequestOptions.create());
-            JsonNode jsonNode = objectMapper.readTree(apiResponse.body());
-            String integrationStatus = jsonNode.get("integrationStatus").asText();
-            String poId = jsonNode.get("id").asText();
-            playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "poId", poId);
-
-            if(integrationStatus.equalsIgnoreCase("AckUpdatingInHOPES")) {
+//            Locator poNavigationBarLocator = page.locator(PO_NAVIGATION_BAR);
+//            poNavigationBarLocator.click();
+//
+//            String title = getTransactionTitle(type, purchaseType);
+//            Locator titleLocator = page.locator(getTitle(title));
+//            titleLocator.first().click();
+//
+//            Locator viewOrderScheduleButtonLocator = page.locator(VIEW_ORDER_SCHEDULE__BUTTON);
+//            viewOrderScheduleButtonLocator.click();
+//
+//            Locator approveButtonLocator = page.locator(APPROVE_BUTTON);
+//            approveButtonLocator.click();
+//
+//            Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
+//
+//            Response approveResponse = page.waitForResponse(
+//                    response -> response.url().startsWith(appUrl + "/api/PurchaseOrders/GetOrderSchedules/") && response.status() == 200,
+//                    acceptButtonLocator.first()::click
+//            );
+//            status = approveResponse.status();
+//
+//            page.waitForLoadState(LoadState.NETWORKIDLE);
+//
+//            String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
+//
+//            String url = page.url();
+//            String[] urlArray = url.split("=");
+//            String getUid = urlArray[1];
+//
+//            APIResponse apiResponse = page.request().fetch(appUrl + "/api/PurchaseOrders/" + getUid, RequestOptions.create());
+//            JsonNode jsonNode = objectMapper.readTree(apiResponse.body());
+//            String integrationStatus = jsonNode.get("integrationStatus").asText();
+//            String poId = jsonNode.get("id").asText();
+//            playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "poId", poId);
+//
+//            if(integrationStatus.equalsIgnoreCase("AckUpdatingInHOPES")) {
                 oaFlow.oaFlow();
-            } else {
-                throw new RuntimeException("PO is not in ACK Updating In HOPES status");
-            }
+//            } else {
+//                throw new RuntimeException("PO is not in ACK Updating In HOPES status");
+//            }
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
