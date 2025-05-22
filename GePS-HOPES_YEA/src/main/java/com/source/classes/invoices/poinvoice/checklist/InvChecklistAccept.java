@@ -3,16 +3,15 @@ import com.factory.PlaywrightFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.LoadState;
 import com.source.interfaces.invoices.poinvoices.IInvChecklistAccept;
 import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-import java.util.List;
-import static com.constants.dispatchnotes.LDnAssign.LIST_CONTAINER;
-import static com.constants.invoices.poinvoice.LInvApproval.INVOICE_SELECT;
 import static com.constants.invoices.poinvoice.LInvChecklistAccept.*;
+import static com.constants.requisitions.LPrApprove.getTitle;
 
 public class InvChecklistAccept implements IInvChecklistAccept {
 
@@ -34,34 +33,32 @@ public class InvChecklistAccept implements IInvChecklistAccept {
         this.logger = LoggerUtil.getLogger(InvChecklistAccept.class);
     }
 
-    public void accept(String referenceId, String transactionId, String uid){
+    public int accept(String referenceId, String transactionId, String uid){
+        int status = 0;
         try {
-            String buyerMailId = jsonNode.get("mailIds").get("buyerEmail").asText();
+            String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
+            String buyerMailId = jsonNode.get("mailIds").get("financeCheckerEmail").asText();
             iLogin.performLogin(buyerMailId);
 
             Locator invoiceNavigationBarLocator = page.locator(INVOICE_NAVIGATION_BAR);
             invoiceNavigationBarLocator.click();
 
-            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            List<String> containerList = page.locator(LIST_CONTAINER).allTextContents();
-            for(String tr : containerList){
-                if(tr.contains(poReferenceId)){
-                    Locator detailsButtonLocator = page.locator(INVOICE_SELECT);
-                    detailsButtonLocator.first().click();
-                }
-            }
+            Locator invoiceTitle = page.locator(getTitle(referenceId));
+            invoiceTitle.click();
 
             Locator checklistLocator = page.locator(CHECKLIST_BUTTON);
-            checklistLocator.click();
+            checklistLocator.first().click();
 
             Locator selectAllCheckBoxesLocator = page.locator(SELECT_ALL_CHECKBOXES);
             selectAllCheckBoxesLocator.first().click();
 
             Locator acceptChecklistLocator = page.locator(ACCEPT_CHECKLIST_BUTTON);
-            acceptChecklistLocator.click();
 
-            Locator acceptLocator = page.locator(ACCEPT_BUTTON);
-            acceptLocator.click();
+            Response invoiceResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/Invoices/") && response.status() == 200,
+                    acceptChecklistLocator::click);
+
+            status = invoiceResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -71,5 +68,6 @@ public class InvChecklistAccept implements IInvChecklistAccept {
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Checklist Accept function: {}", exception.getMessage());
         }
+        return status;
     }
 }

@@ -14,7 +14,8 @@ public class PoInvChecklistAcceptTest extends BaseTest {
     @Test(dataProvider = "invoiceData", dataProviderClass = PoInvTrnUtil.class, description = "Purchase Order Invoice CheckList Accept Test")
     public void accept(String referenceId, String transactionId, String uid){
         try {
-            iInvChecklistAccept.accept(referenceId, transactionId, uid);
+            int status = iInvChecklistAccept.accept(referenceId, transactionId, uid);
+            Assert.assertEquals(200, status, "Invoice Checklist Accept was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice CheckList Accept Test function: {}", exception.getMessage());
             Assert.fail("Exception in PO Invoice Checklist Accept Test Function: " + exception.getMessage());

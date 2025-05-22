@@ -14,7 +14,8 @@ public class PoInvSendForApprovalTest extends BaseTest {
     @Test(dataProvider = "invoiceData", dataProviderClass = PoInvTrnUtil.class, description = "Purchase Order Invoice Send For Approval Test")
     public void sendForApproval(String referenceId, String transactionId, String uid){
         try {
-            iInvSendForApproval.sendForApproval(referenceId, transactionId, uid);
+            int status = iInvSendForApproval.sendForApproval(referenceId, transactionId, uid);
+            Assert.assertEquals(200, status, "Invoice Send For Approval was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Send For Approval Test function: {}", exception.getMessage());
             Assert.fail("Exception in PO Invoice Send For Approval Test Function: " + exception.getMessage());

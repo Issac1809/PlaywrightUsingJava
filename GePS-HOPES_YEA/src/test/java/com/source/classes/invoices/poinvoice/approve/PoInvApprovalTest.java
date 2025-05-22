@@ -14,7 +14,8 @@ public class PoInvApprovalTest extends BaseTest {
     @Test(dataProvider = "invoiceData", dataProviderClass = PoInvTrnUtil.class, description = "Purchase Order Invoice Approve Test")
     public void approval(String referenceId, String transactionId, String uid){
         try {
-            iInvApproval.approval(referenceId, transactionId, uid);
+            int status = iInvApproval.approval(referenceId, transactionId, uid);
+            Assert.assertEquals(200, status, "Invoice Approve was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Approval Test function: {}", exception.getMessage());
             Assert.fail("Exception in PO Invoice Approval Test Function: " + exception.getMessage());

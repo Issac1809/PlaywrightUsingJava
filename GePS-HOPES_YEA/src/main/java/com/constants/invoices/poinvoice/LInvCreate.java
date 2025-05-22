@@ -6,6 +6,8 @@ public class LInvCreate {
     public static final String INVOICE_SELECT = "//a[@href='/VendorPortal/Invoices/Create']";
     public static final String SELECT_COMPANY_LOCATOR = "#select2-companyId-container";
     public static final String COMPANY_RESULTS_LIST = "#select2-companyId-results";
+    public static final String LIST_CONTAINER = "#listContainer tr";
+    public static final String PO_REFERENCE_ID = "td:nth-child(3)";
     public static final String COMPANY_ID_2400 = "2400";
     public static final String COMPANY_ID_5K00 = "5K00";
     public static final String COMPANY_ID_2U00 = "2U00";

@@ -11,12 +11,8 @@ import com.source.interfaces.login.ILogin;
 import com.source.interfaces.logout.ILogout;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
-import java.util.List;
-import static com.constants.dispatchnotes.LDnAssign.LIST_CONTAINER;
-import static com.constants.invoices.poinvoice.LInvApproval.INVOICE_SELECT;
 import static com.constants.invoices.poinvoice.LInvCancel.*;
 import static com.constants.orderschedules.LOsEdit.getTitle;
-import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
 
 public class InvCancel implements IInvCancel {
 
@@ -40,8 +36,10 @@ public class InvCancel implements IInvCancel {
         this.logger = LoggerUtil.getLogger(InvCancel.class);
     }
 
-    public void cancel(String referenceId, String transactionId, String uid){
+    public int cancel(String referenceId, String transactionId, String uid){
+        int status = 0;
         try {
+            String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
             String buyerMailId = jsonNode.get("mailIds").get("financeCheckerEmail").asText();
             iLogin.performLogin(buyerMailId);
 
@@ -60,7 +58,12 @@ public class InvCancel implements IInvCancel {
             remarksInputLocator.fill("Cancelled");
 
             Locator acceptLocator = page.locator(ACCEPT_BUTTON);
-            acceptLocator.click();
+
+            Response invoiceResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/Invoices/") && response.status() == 200,
+                    acceptLocator::click);
+
+            status = invoiceResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -70,5 +73,6 @@ public class InvCancel implements IInvCancel {
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Cancel function: {}", exception.getMessage());
         }
+        return status;
     }
 }

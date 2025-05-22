@@ -14,7 +14,8 @@ public class PoInvHoldTest extends BaseTest {
     @Test(dataProvider = "invoiceData", dataProviderClass = PoInvTrnUtil.class, description = "Purchase Order Invoice Hold Test")
     public void hold(String referenceId, String transactionId, String uid){
         try {
-            iInvHold.hold(referenceId, transactionId, uid);
+            int status = iInvHold.hold(referenceId, transactionId, uid);
+            Assert.assertEquals(200, status, "Invoice Hold was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Hold Test function: {}", exception.getMessage());
             Assert.fail("Exception in PO Invoice Hold Test Function: " + exception.getMessage());

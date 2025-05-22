@@ -14,7 +14,8 @@ public class PoInvRevertTest extends BaseTest {
     @Test(dataProvider = "invoiceData", dataProviderClass = PoInvTrnUtil.class, description = "Purchase Order Invoice Revert Test")
     public void revert(String referenceId, String transactionId, String uid) {
         try {
-            iInvRevert.revert(referenceId, transactionId, uid);
+            int status = iInvRevert.revert(referenceId, transactionId, uid);
+            Assert.assertEquals(200, status, "Invoice Revert was not Successful");
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Revert Test function: {}", exception.getMessage());
             Assert.fail("Exception in PO Invoice Revert Test Function: " + exception.getMessage());
