@@ -13,7 +13,8 @@ public class WoInvChecklistRejectTest extends BaseTest {
     @Test(description = "Work Order Invoice Checklist Reject Test")
     public void reject(){
         try {
-            iWoInvReject.reject();
+            int status = iWoInvChecklistReject.reject();
+            Assert.assertEquals(200, status,"WO Invoice Checklist Reject was not Successful");
         }  catch (Exception exception) {
             logger.error("Exception in WO Invoice CheckList Reject Test function: {}", exception.getMessage());
             Assert.fail("Exception in WO Invoice Checklist Reject Test Function: " + exception.getMessage());

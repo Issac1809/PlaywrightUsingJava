@@ -16,6 +16,8 @@ public class WoInvCreateTest extends BaseTest {
             iWoInvCreate.create();
             double finalGSTPercentage = iWoInvCreate.gst();
             iWoInvCreate.ifSgdEnable(finalGSTPercentage);
+            int status = iWoInvCreate.invoiceCreate();
+            Assert.assertEquals(200, status, "WO Invoice Create was not Successful");
         }  catch (Exception exception) {
             logger.error("Exception in WO Invoice Create Test function: {}", exception.getMessage());
             Assert.fail("Exception in WO Invoice Create Test Function: " + exception.getMessage());

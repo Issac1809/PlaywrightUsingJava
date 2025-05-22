@@ -13,7 +13,8 @@ public class WoInvSendForApprovalTest extends BaseTest {
     @Test(description = "Work Order Invoice Send For Approval Test")
     public void sendForApproval(){
         try {
-            iWoInvSendForApproval.sendForApproval();
+            int status = iWoInvSendForApproval.sendForApproval();
+            Assert.assertEquals(status, 200, "WO Invoice Send For Approval was not Successful");
         }  catch (Exception exception) {
             logger.error("Exception in WO Invoice Send For Approval Test function: {}", exception.getMessage());
             Assert.fail("Exception in WO Invoice Send For Approval Test Function: " + exception.getMessage());

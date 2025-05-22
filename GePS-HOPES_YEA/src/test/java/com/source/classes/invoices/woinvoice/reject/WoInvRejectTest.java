@@ -13,7 +13,8 @@ public class WoInvRejectTest extends BaseTest {
     @Test(description = "Work Order Invoice Reject Test")
     public void reject() {
         try {
-            iWoInvReject.reject();
+            int status = iWoInvReject.reject();
+            Assert.assertEquals(status, 200, "WO Invoice Reject was not Successful");
         }  catch (Exception exception) {
             logger.error("Exception in WO Invoice Reject Test function: {}", exception.getMessage());
             Assert.fail("Exception in WO Invoice Reject Test Function: " + exception.getMessage());

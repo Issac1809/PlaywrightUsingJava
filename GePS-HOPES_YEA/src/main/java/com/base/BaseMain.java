@@ -328,7 +328,7 @@ public class BaseMain {
             iWoInvReturn = new WoInvReturn(iLogin, jsonNode, page, iLogout, iWoInvSendForApproval);
             iWoInvVerify = new WoInvVerify(iLogin, jsonNode, page, iLogout);
             iWoInvEdit = new WoInvEdit(iLogin, jsonNode, page, iLogout);
-            iWoInvReject = new WoInvReject(iLogin, jsonNode, page, iLogout, iWoInvSendForApproval);
+            iWoInvReject = new WoInvReject(iLogin, jsonNode, page, iLogout, iWoInvSendForApproval, iWoInvVerify);
             iWoInvApproval = new WoInvApproval(iLogin, jsonNode, page, iLogout);
         } catch (Exception exception) {
             logger.error("Error Initializing BaseMain Constructor: {}", exception.getMessage());

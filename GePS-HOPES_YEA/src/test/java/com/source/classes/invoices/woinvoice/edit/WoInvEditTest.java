@@ -13,7 +13,8 @@ public class WoInvEditTest extends BaseTest {
     @Test(description = "Work Order Invoice Edit Test")
     public void edit(){
         try {
-            iWoInvEdit.edit();
+            int status = iWoInvEdit.edit();
+            Assert.assertEquals(status, 200, "Work Order Invoice Edit Test Failed");
         }  catch (Exception exception) {
             logger.error("Exception in WO Invoice Edit Test function: {}", exception.getMessage());
             Assert.fail("Exception in WO Invoice Edit Test Function: " + exception.getMessage());

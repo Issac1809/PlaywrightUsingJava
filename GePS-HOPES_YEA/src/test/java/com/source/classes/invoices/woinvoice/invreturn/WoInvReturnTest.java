@@ -13,7 +13,8 @@ public class WoInvReturnTest extends BaseTest {
     @Test(description = "Work Order Invoice Return Test")
     public void returnMethod(){
         try {
-            iWoInvReturn.returnMethod();
+            int status = iWoInvReturn.returnMethod();
+            Assert.assertEquals(200, status,"WO Invoice Return was not Successful");
         }  catch (Exception exception) {
             logger.error("Exception in WO Invoice Return Test function: {}", exception.getMessage());
             Assert.fail("Exception in WO Invoice Return Test Function: " + exception.getMessage());

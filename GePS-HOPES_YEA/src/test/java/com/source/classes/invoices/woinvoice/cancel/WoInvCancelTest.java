@@ -13,7 +13,12 @@ public class WoInvCancelTest extends BaseTest {
     @Test(description = "Work Order Invoice Cancel Test")
     public void cancel(){
         try {
-            iWoInvCancel.cancel();
+            int status = iWoInvCancel.cancel();
+            Assert.assertEquals(200, status, "WO Invoice Cancel was not Successful");
+            iWoInvCreate.create();
+            double finalGSTPercentage = iWoInvCreate.gst();
+            iWoInvCreate.ifSgdEnable(finalGSTPercentage);
+            iWoInvCreate.invoiceCreate();
         }  catch (Exception exception) {
             logger.error("Exception in WO Invoice Cancel Test function: {}", exception.getMessage());
             Assert.fail("Exception in WO Invoice Cancel Test Function: " + exception.getMessage());

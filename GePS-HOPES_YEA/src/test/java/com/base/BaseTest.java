@@ -561,7 +561,7 @@ public class BaseTest {
             woInvVerifyTest = new WoInvVerifyTest();
             iWoInvEdit = new WoInvEdit(iLogin, jsonNode, page, iLogout);
             woInvEditTest = new WoInvEditTest();
-            iWoInvReject = new WoInvReject(iLogin, jsonNode, page, iLogout, iWoInvSendForApproval);
+            iWoInvReject = new WoInvReject(iLogin, jsonNode, page, iLogout, iWoInvSendForApproval, iWoInvVerify);
             woInvRejectTest = new WoInvRejectTest();
             iWoInvApproval = new WoInvApproval(iLogin, jsonNode, page, iLogout);
             woInvApprovalTest = new WoInvApprovalTest();
