@@ -40,7 +40,7 @@ public class InvCancel implements IInvCancel {
         int status = 0;
         try {
             String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
-            String buyerMailId = jsonNode.get("mailIds").get("financeCheckerEmail").asText();
+            String buyerMailId = jsonNode.get("invoices").get("verifierEmail").asText();
             iLogin.performLogin(buyerMailId);
 
             Locator invoiceNavigationBarLocator = page.locator(INVOICE_NAVIGATION_BAR);

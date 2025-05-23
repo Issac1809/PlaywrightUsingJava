@@ -38,7 +38,7 @@
   "requisition" : {
     "purchaseType" : "PS",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-178.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-762.0",
     "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-432.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-364.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-259.0",
@@ -81,13 +81,13 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "f5c2df9c-ec35-475b-af4a-807444689d1c",
+    "requisitionUid" : "b38e3e52-fe3f-4a20-a10b-1f31b53deac8",
     "itemImport" : true,
     "requisitionItemCount" : "3",
-    "psTransactionNumber" : "240025TRN03538",
+    "psTransactionNumber" : "240025TRN03549",
     "salesTransactionNumber" : "240025TRN03511",
     "sdTransactionNumber" : "240025TRN03469",
-    "requisitionId" : "23488"
+    "requisitionId" : "23517"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
@@ -109,17 +109,17 @@
     "requestForQuotationId" : "3682"
   },
   "purchaseOrderRequests" : {
-    "advancePaymentFlag" : true,
+    "advancePaymentFlag" : false,
     "advancePaymentPercentage" : "30",
     "creditPeriodInDays" : "10",
-    "milestonePaymentFlag" : true,
+    "milestonePaymentFlag" : false,
     "milestonePaymentCount" : 2,
     "taxCode" : "PG-8% Foreign currency standard rate purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "a3470671-49c7-4ca6-9d81-91d469894fe4",
-    "purchaseOrderRequestId" : "8607",
+    "purchaseOrderRequestUid" : "8c003eed-b5f1-463e-8e71-d09a5ad91312",
+    "purchaseOrderRequestId" : "8630",
     "approvers" : [ "projectmanager@cormsquare.com", "buyer@cormsquare.com" ],
-    "porReferenceNumber" : "240025POR01714",
+    "porReferenceNumber" : "240025POR01724",
     "integrationStatus" : "SOSynced",
     "additionalItemName" : "Packing Charges",
     "rate" : "200.45",
@@ -132,25 +132,25 @@
     "shippingPoint" : "NA",
     "porStatus" : "ProcessingPO",
     "poProcessed" : "false",
-    "poId" : "5822"
+    "poId" : "5836"
   },
   "purchaseOrders" : {
-    "poReferenceId" : "1086",
+    "poReferenceId" : "1354",
     "poRevisionNumber" : "0",
     "porRevision" : "true",
     "poValue" : 9000,
     "unitRate" : 200,
-    "purchaseOrderUid" : "c62a291f-95ae-42ef-a218-1b4578e192e1",
-    "poTitle" : "PS-AUTOMATION-CATALOG-178.0",
-    "poTransactionId" : "240025TRN03538",
-    "id" : "5822"
+    "purchaseOrderUid" : "3a03b78c-68fa-4a46-a9a1-f1815989cb35",
+    "poTitle" : "PS-AUTOMATION-CATALOG-762.0",
+    "poTransactionId" : "240025TRN03549",
+    "id" : "5836"
   },
   "orderSchedules" : {
-    "orderScheduleReferenceId" : "240025OS00785",
+    "orderScheduleReferenceId" : "240025OS00797",
     "orderScheduleStatus" : ""
   },
   "dispatchNotes" : {
-    "dispatchNoteReferenceId" : "240025DN00336",
+    "dispatchNoteReferenceId" : "240025DN00348",
     "sourceCountry" : "India",
     "destinationCountry" : "India",
     "packageType" : "Drum",
@@ -161,7 +161,7 @@
   },
   "freightForwarderRequests" : {
     "freightForwarder" : "Alpha Limited",
-    "freightForwarderReferenceId" : "240025FFR00172",
+    "freightForwarderReferenceId" : "240025FFR00177",
     "totalChargeableWeightKg" : 20,
     "unitRate" : 300
   },
@@ -169,27 +169,22 @@
     "sourceCountry" : "India",
     "priority" : "High",
     "destinationCountry" : "India",
-    "workOrderReferenceId" : ""
+    "workOrderReferenceId" : "240025WO00199",
+    "gstPercentage" : 8
   },
   "invoices" : {
     "vendorReferenceId" : "",
     "invoiceReferenceId" : "",
-    "invoiceId" : "",
     "poInvoiceNumber" : "INV-AUT-PO-",
     "woInvoiceNumber" : "INV-AUT-WO-",
+    "woInvoiceRate" : 1000,
     "invoiceTransactionDetails" : [ {
-      "referenceId" : "240025INV00544",
-      "transactionId" : "240025TRN03538",
-      "uid" : "ad955e5a-37b1-4cae-81c7-4e5f7c692764"
-    }, {
-      "referenceId" : "240025INV00543",
-      "transactionId" : "240025TRN03538",
-      "uid" : "899d90e6-7732-40a4-bb00-ff0570f4c14d"
+      "referenceId" : "240025INV00574",
+      "transactionId" : "240025TRN03549",
+      "uid" : "c045a759-8952-4822-951f-88f32971c268"
     } ],
-    "accountType" : "A-Assets",
-    "documentType" : "document1-doc",
-    "generalLedger" : "A-Down Payments",
-    "bankAccount" : "Cash on hand-11110000",
-    "taxCode" : "Permanent Account Numbers-7% Foreign currency standard rate purchases"
+    "nextApprover" : "financechecker@cormsquare.com",
+    "workOrderInvoiceReferenceId" : "240025INV00572",
+    "verifierEmail" : "financechecker@cormsquare.com"
   }
 }

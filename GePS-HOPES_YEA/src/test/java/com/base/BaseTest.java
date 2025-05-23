@@ -378,7 +378,7 @@ public class BaseTest {
             playwrightFactory.startTracing(browserContext, traceFileName);
             toastrUtil = new ToastrUtil(page);
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
-            saveToTestDataJsonUtil = new SaveToTestDataJsonUtil(playwrightFactory, objectMapper);
+            saveToTestDataJsonUtil = new SaveToTestDataJsonUtil(playwrightFactory, objectMapper, jsonNode);
         } catch (Exception exception) {
             logger.error("Error Initializing Global Setup Function: {}", exception.getMessage());
         }

@@ -58,6 +58,11 @@ public class LInvCreate {
     }
 
     public static String getPoReferenceId(String poReferenceId){
-        return "//li[contains(text(), '" + poReferenceId + "')]";
+        return "//li[text()='" + poReferenceId + "']";
     }
+
+    public static String getTitle(String title){
+        return "//span[contains(text(), '" + title + "')]";
+    }
+
 }

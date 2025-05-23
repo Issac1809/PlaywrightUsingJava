@@ -6,23 +6,27 @@ import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Response;
 import org.apache.logging.log4j.Logger;
 
+import static com.utils.GetTitleUtil.jsonNode;
+
 public class SaveToTestDataJsonUtil {
 
     static PlaywrightFactory playwrightFactory;
     static Logger logger;
+    static JsonNode jsonNode;
     static ObjectMapper objectMapper;
 
 //TODO Constructor
     private SaveToTestDataJsonUtil(){
     }
 
-    public SaveToTestDataJsonUtil(PlaywrightFactory playwrightFactory, ObjectMapper objectMapper) {
+    public SaveToTestDataJsonUtil(PlaywrightFactory playwrightFactory, ObjectMapper objectMapper, JsonNode jsonNode) {
         this.playwrightFactory = playwrightFactory;
         this.objectMapper = objectMapper;
+        this.jsonNode = jsonNode;
         this.logger = LoggerUtil.getLogger(SaveToTestDataJsonUtil.class);
     }
 
-
+// POST PO REFERENCE ID METHODS START
     public static void saveReferenceIdFromResponse(Response response, String parentKey, String attributeKey) {
         try {
             String responseBody = response.text();
@@ -55,6 +59,30 @@ public class SaveToTestDataJsonUtil {
             logger.error("Exception in Save Reference Id from API Response function: {}", exception.getMessage());
         }
     }
+// POST PO REFERENCE ID METHODS END
+
+// INVOICE METHODS START
+    public static void saveVerifierEmail(Response response, String parentKey, String attributeKey) {
+        try {
+            String responseBody = response.text();
+            JsonNode responseJson = objectMapper.readTree(responseBody);
+            String verifierRole = responseJson.get("verifierRole").asText();
+            String verifierEmail = "";
+            switch (verifierRole){
+                case "Finance Checker":
+                    verifierEmail = jsonNode.get("mailIds").get("financeCheckerEmail").asText();
+                    break;
+                case "Buyer":
+                    verifierEmail = jsonNode.get("mailIds").get("buyerEmail").asText();
+                    break;
+                default :
+                    break;
+            }
+            playwrightFactory.savePropertiesIntoJsonFile(parentKey, attributeKey, verifierEmail);
+        } catch(Exception exception) {
+            logger.error("Exception in Save Reference Id from Response function: {}", exception.getMessage());
+        }
+    }
 
     public static String saveAndReturNextApprover(Response response) {
         String nextApproverEmail = "";
@@ -73,4 +101,6 @@ public class SaveToTestDataJsonUtil {
         }
         return nextApproverEmail;
     }
+// INVOICE METHODS END
+
 }

@@ -16,8 +16,10 @@ import java.math.RoundingMode;
 import java.nio.file.Paths;
 import java.util.List;
 import static com.constants.invoices.poinvoice.LInvCreate.*;
+import static com.constants.invoices.woinvoice.LInvCreate.getCompanyId;
 import static com.utils.GetInvoiceReferenceIdUtil.getInvoiceReferenceIds;
 import static com.utils.SaveToTestDataJsonUtil.saveReferenceIdFromResponse;
+import static com.utils.SaveToTestDataJsonUtil.saveVerifierEmail;
 
 public class InvCreate implements IInvCreate {
 
@@ -29,6 +31,7 @@ public class InvCreate implements IInvCreate {
     ILogout iLogout;
     ICurrencyExchangeRate iCurrencyExchangeRate;
     String appUrl;
+    String invoiceTitle;
 
     int EUR = 4;
     int USD = 3;
@@ -48,61 +51,44 @@ public class InvCreate implements IInvCreate {
         this.playwrightFactory = playwrightFactory;
         this.logger = LoggerUtil.getLogger(InvCreate.class);
         this.appUrl = jsonNode.get("configSettings").get("appUrl").asText();
+        this.invoiceTitle="";
     }
 
     public int invoiceTypeHandler() {
         int status = 0;
         try {
+            // Get required values
             String vendorMailId = jsonNode.get("mailIds").get("vendorEmail").asText();
             iLogin.performLogin(vendorMailId);
 
             boolean advancePaymentFlag = jsonNode.get("purchaseOrderRequests").get("advancePaymentFlag").asBoolean();
             boolean milestonePaymentFlag = jsonNode.get("purchaseOrderRequests").get("milestonePaymentFlag").asBoolean();
             int milestoneCount = jsonNode.get("purchaseOrderRequests").get("milestonePaymentCount").asInt();
-
             String transactionNumber = jsonNode.get("purchaseOrders").get("poTransactionId").asText();
 
+// Handle invoice creation based on payment flags
             if (!advancePaymentFlag && !milestonePaymentFlag) {
                 create(transactionNumber);
-                double finalGSTPercentage = gst();
-                ifSgdEnable(finalGSTPercentage, transactionNumber, advancePaymentFlag, milestonePaymentFlag);
-                status = invoiceCreate();
-            } if (advancePaymentFlag) {
+            } else if (advancePaymentFlag) {
                 create(transactionNumber);
-
-                Locator advancePaymentAndMilesToneButton = page.locator(ADVANCEPAYMENT_AND_MILESTONEPAYMENT_BUTTON);
-                advancePaymentAndMilesToneButton.click();
-
-                Locator advancePaymentCheckbox = page.locator(ADVANCEPAYMENT_CHECKBOX);
-                advancePaymentCheckbox.click();
-
-                Locator submitButton = page.locator(SAVE_BUTTON);
-                submitButton.click();
-
-                double finalGSTPercentage = gst();
-                ifSgdEnable(finalGSTPercentage, transactionNumber, advancePaymentFlag, milestonePaymentFlag);
-                status = invoiceCreate();
-            } if (milestonePaymentFlag) {
+                page.locator(ADVANCEPAYMENT_AND_MILESTONEPAYMENT_BUTTON).click();
+                page.locator(ADVANCEPAYMENT_CHECKBOX).click();
+                page.locator(SAVE_BUTTON).click();
+            } else if (milestonePaymentFlag) {
                 create(transactionNumber);
-
-                Locator advancePaymentAndMilesToneButton = page.locator(ADVANCEPAYMENT_AND_MILESTONEPAYMENT_BUTTON);
-                advancePaymentAndMilesToneButton.click();
-
+                page.locator(ADVANCEPAYMENT_AND_MILESTONEPAYMENT_BUTTON).click();
                 for (int i = 1; i <= milestoneCount; i++) {
-                    Locator milestonePaymentCheckbox = page.locator(MILESTONEPAYMENT_CHECKBOX + i);
-                    milestonePaymentCheckbox.click();
+                    page.locator(MILESTONEPAYMENT_CHECKBOX + i).click();
                 }
-
-                Locator submitButton = page.locator(SAVE_BUTTON);
-                submitButton.click();
-
-                double finalGSTPercentage = gst();
-                ifSgdEnable(finalGSTPercentage, transactionNumber, advancePaymentFlag, milestonePaymentFlag);
-                status = invoiceCreate();
+                page.locator(SAVE_BUTTON).click();
             }
 
-            iLogout.performLogout();
+// GST and SGD logic (common for all cases)
+            double finalGSTPercentage = gst();
+            ifSgdEnable(finalGSTPercentage, transactionNumber, advancePaymentFlag, milestonePaymentFlag);
+            status = invoiceCreate();
 
+            iLogout.performLogout();
             getInvoiceReferenceIds();
         } catch (Exception exception) {
             logger.error("Exception in Invoice Handler Function: {}", exception.getMessage());
@@ -123,23 +109,9 @@ public class InvCreate implements IInvCreate {
             Locator selectCompanyLocator = page.locator(SELECT_COMPANY_LOCATOR);
             selectCompanyLocator.click();
 
-            List<String> companyIds = page.locator(COMPANY_RESULTS_LIST).allTextContents();
-            int getCompanyIdSize = companyIds.size();
-            for (int i = 0; i < getCompanyIdSize; i++) {
-                if (transactionNumber.startsWith(COMPANY_ID_2400)) {
-                    Locator string2400Locator = page.locator(get2400Id());
-                    string2400Locator.last().click();
-                } else if (transactionNumber.startsWith(COMPANY_ID_5K00)) {
-                    Locator string5K00Locator = page.locator(get5K00Id());
-                    string5K00Locator.last().click();
-                } else if (transactionNumber.startsWith(COMPANY_ID_2U00)) {
-                    Locator string2U00Locator = page.locator(get2U00Id());
-                    string2U00Locator.last().click();
-                } else if (transactionNumber.startsWith(COMPANY_ID_2W00)) {
-                    Locator string2W00Locator = page.locator(get2W00Id());
-                    string2W00Locator.last().click();
-                }
-            }
+            String companyId = jsonNode.get("purchaseOrders").get("poTransactionId").asText().substring(0, 4);
+            Locator companyLocator = page.locator(getCompanyId(companyId));
+            companyLocator.click();
 
             Locator selectTypeLocator = page.locator(SELECT_TYPE);
             selectTypeLocator.last().click();
@@ -153,7 +125,8 @@ public class InvCreate implements IInvCreate {
             String invoiceNumber = jsonNode.get("invoices").get("poInvoiceNumber").asText();
             int randomNumber = (int) (Math.random() * 1000);
             Locator invoiceNumberLocator = page.locator(INVOICE_NUMBER_LOCATOR);
-            invoiceNumberLocator.fill(invoiceNumber + randomNumber);
+            invoiceTitle = invoiceNumber + randomNumber;
+            invoiceNumberLocator.fill(invoiceTitle);
 
             Locator invoiceDateLocator = page.getByPlaceholder(DATE_PLACE_HOLDER);
             invoiceDateLocator.last().click();
@@ -198,75 +171,40 @@ public class InvCreate implements IInvCreate {
     public void ifSgdEnable(double finalGSTPercentage, String transactionNumber, boolean advancePaymentFlag, boolean milestonePaymentFlag) {
         try {
             String currencyCode = jsonNode.get("configSettings").get("currencyCode").asText();
-            if (!currencyCode.equals("SGD") && finalGSTPercentage != 0 && (transactionNumber.startsWith(COMPANY_ID_2400)
-                    || transactionNumber.startsWith(COMPANY_ID_5K00) || transactionNumber.startsWith(COMPANY_ID_2U00) ||
-                    transactionNumber.startsWith(COMPANY_ID_2W00))) {
-//TODO Foreign Sub-Total
-                Locator foreignSubTotalLocator = page.locator(FOREIGN_CURRENCY_LOCATOR);
-                String foreignSubTotalValue = foreignSubTotalLocator.getAttribute("value");
-                String foreignSubTotal = foreignSubTotalValue.replaceAll("[^\\d.]", "");
-                double finalForeignSubTotal = Double.parseDouble(foreignSubTotal);
+            if (!currencyCode.equals("SGD") && finalGSTPercentage != 0 &&
+                    (transactionNumber.startsWith(COMPANY_ID_2400) ||
+                            transactionNumber.startsWith(COMPANY_ID_5K00) ||
+                            transactionNumber.startsWith(COMPANY_ID_2U00) ||
+                            transactionNumber.startsWith(COMPANY_ID_2W00))) {
 
-//TODO Input Sub-Total
+                double foreignSubTotal = Double.parseDouble(
+                        page.locator(FOREIGN_CURRENCY_LOCATOR).getAttribute("value").replaceAll("[^\\d.]", "")
+                );
                 double currencyExchangeRate = iCurrencyExchangeRate.findCurrency();
-                double sgdEquivalentSubTotal = finalForeignSubTotal * currencyExchangeRate;
+                double sgdEquivalentSubTotal = foreignSubTotal * currencyExchangeRate;
 
                 Locator sgdInputLocator = page.locator(SGD_SUB_TOTAL_INPUT);
                 sgdInputLocator.fill(String.valueOf(sgdEquivalentSubTotal));
+                sgdInputLocator.evaluate(DOM_TRIGGER_SGD_INPUT);
 
-//TODO Manually trigger the input and change events to ensure JavaScript logic executes
-                Locator triggerSGDInputLocator = page.locator(SGD_SUB_TOTAL_INPUT);
-                triggerSGDInputLocator.evaluate(DOM_TRIGGER_SGD_INPUT);
+                double foreignTotalGst = Double.parseDouble(
+                        page.locator(FOREGIN_TOTAL_GST).getAttribute("value").replaceAll("[^\\d.]", "")
+                );
+                double getSGDValue = (sgdEquivalentSubTotal / foreignSubTotal) * foreignTotalGst;
 
-//TODO Currency Exchange Rate
-                double totalCurrencyExchangeRate = sgdEquivalentSubTotal / finalForeignSubTotal;
-
-//TODO Currency Exchange Rate * Total GST
-                Locator foreignTotalGstLocator = page.locator(FOREGIN_TOTAL_GST);
-                String foreignTotalGstValue = foreignTotalGstLocator.getAttribute("value");
-                String foreignTotalGst = foreignTotalGstValue.replaceAll("[^\\d.]", "");
-                double finalForeignTotalGst = Double.parseDouble(foreignTotalGst);
-                double inputTotalGst = totalCurrencyExchangeRate * finalForeignTotalGst;
-                String sgdTotalGST = String.valueOf(inputTotalGst);
-
-//TODO Keep only digits and the decimal point
-                String replaceSGDTotalGST = sgdTotalGST.replaceAll("[^\\d.]", "");
-//TODO Convert to double for rounding
-                double getSGDValue = Double.parseDouble(replaceSGDTotalGST);
-
+                int scale;
                 switch (currencyCode) {
-                    case ("EUR"):
-//TODO Round off to 4 decimal places (adjust as needed)
-                        BigDecimal EURValue = new BigDecimal(getSGDValue).setScale(EUR, RoundingMode.HALF_UP);
-                        Locator eurInputLocator = page.locator(SGD_TOTAL_GST_INPUT);
-                        eurInputLocator.fill(String.valueOf(EURValue));
-                        break;
-
-                    case ("USD"):
-//TODO Round off to 3 decimal places (adjust as needed)
-                        BigDecimal USDValue = new BigDecimal(getSGDValue).setScale(USD, RoundingMode.HALF_UP);
-                        Locator usdInputLocator = page.locator(SGD_TOTAL_GST_INPUT);
-                        usdInputLocator.fill(String.valueOf(USDValue));
-                        break;
-
-                    case ("INR"):
-//TODO Round off to 2 decimal places (adjust as needed)
-                        BigDecimal INRValue = new BigDecimal(getSGDValue).setScale(INR, RoundingMode.HALF_UP);
-                        Locator inrIputLocator = page.locator(SGD_TOTAL_GST_INPUT);
-                        inrIputLocator.fill(String.valueOf(INRValue));
-                        break;
-
-                    case ("CAD"):
-//TODO Round off to 2 decimal places (adjust as needed)
-                        BigDecimal CADValue = new BigDecimal(getSGDValue).setScale(CAD, RoundingMode.HALF_UP);
-                        Locator cadIputLocator = page.locator(SGD_TOTAL_GST_INPUT);
-                        cadIputLocator.fill(String.valueOf(CADValue));
-                        break;
-
+                    case "EUR": scale = EUR; break;
+                    case "USD": scale = USD; break;
+                    case "INR": scale = INR; break;
+                    case "CAD": scale = CAD; break;
                     default:
                         System.out.println("Not a valid currency code");
-                        break;
+                        return;
                 }
+                BigDecimal roundedValue = new BigDecimal(getSGDValue).setScale(scale, RoundingMode.HALF_UP);
+                Locator gstInputLocator = page.locator(SGD_TOTAL_GST_INPUT);
+                gstInputLocator.fill(String.valueOf(roundedValue));
             }
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice SGD Enable function: {}", exception.getMessage());
@@ -276,7 +214,6 @@ public class InvCreate implements IInvCreate {
     public int invoiceCreate() {
         int status = 0;
         try {
-            status = 0;
 //TODO Invoice Document
             Locator invoiceDocumentButton = page.locator(DOCUMENT_ID);
             invoiceDocumentButton.first();
@@ -286,29 +223,18 @@ public class InvCreate implements IInvCreate {
             createButtonLocator.click();
 
             Locator acceptLocator = page.locator(ACCEPT_BUTTON);
-            Response invResponse = page.waitForResponse(
-                    response -> response.url().startsWith(appUrl + "/api/VP/Invoices/Listing") && response.status() == 200,
-                    acceptLocator::click
+            acceptLocator.click();
+
+            page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+
+            Locator invoiceTitleLocator = page.locator(getTitle(invoiceTitle));
+            Response invoiceResponse = page.waitForResponse(
+                    response -> response.url().startsWith(appUrl + "/api/VP/Invoices/") && response.status() == 200,
+                    invoiceTitleLocator::click
             );
-
-            String poReferenceId = jsonNode.get("purchaseOrders").get("poReferenceId").asText();
-            // Locate the row containing the dynamic poReferenceId and click the <a> tag
-            Locator rows = page.locator(LIST_CONTAINER);
-            int rowCount = rows.count();
-            for (int i = 0; i < rowCount; i++) {
-                Locator row = rows.nth(i);
-                String referenceText = row.locator(PO_REFERENCE_ID).innerText();
-                if (referenceText.contains(poReferenceId)) {
-                    Response invoiceResponse = page.waitForResponse(
-                            response -> response.url().startsWith(appUrl + "/api/VP/Invoices/") && response.status() == 200,
-                            row.locator("a").first()::click
-                    );
-                    saveReferenceIdFromResponse(invoiceResponse, "invoice", "invoiceReferenceId");
-
-                    status = invoiceResponse.status();
-                    break;
-                }
-            }
+            saveReferenceIdFromResponse(invoiceResponse, "invoice", "invoiceReferenceId");
+            saveVerifierEmail(invoiceResponse,"invoices", "verifierEmail");
+            status = invoiceResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 

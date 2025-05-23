@@ -328,76 +328,76 @@
         </classes>
     </test>
 
-<!--    <test name="WO Invoice Create">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.woinvoice.create.WoInvCreateTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="WO Invoice Create">
+        <classes>
+            <class name="com.source.classes.invoices.woinvoice.create.WoInvCreateTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="WO Invoice Cancel">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.woinvoice.cancel.WoInvCancelTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="WO Invoice Cancel">
+        <classes>
+            <class name="com.source.classes.invoices.woinvoice.cancel.WoInvCancelTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="WO Invoice Checklist Reject">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.woinvoice.checklist.WoInvChecklistRejectTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="WO Invoice Checklist Reject">
+        <classes>
+            <class name="com.source.classes.invoices.woinvoice.checklist.WoInvChecklistRejectTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="WO Invoice Return">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.woinvoice.invreturn.WoInvReturnTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="WO Invoice Return">
+        <classes>
+            <class name="com.source.classes.invoices.woinvoice.invreturn.WoInvReturnTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="WO Invoice Edit">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.woinvoice.edit.WoInvEditTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="WO Invoice Edit">
+        <classes>
+            <class name="com.source.classes.invoices.woinvoice.edit.WoInvEditTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="WO Invoice Checklist Accept">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.woinvoice.checklist.WoInvChecklistAcceptTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="WO Invoice Checklist Accept">
+        <classes>
+            <class name="com.source.classes.invoices.woinvoice.checklist.WoInvChecklistAcceptTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="WO Invoice Verify">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.woinvoice.verify.WoInvVerifyTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="WO Invoice Verify">
+        <classes>
+            <class name="com.source.classes.invoices.woinvoice.verify.WoInvVerifyTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="WO Invoice Hold">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.woinvoice.hold.WoInvHoldTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="WO Invoice Hold">
+        <classes>
+            <class name="com.source.classes.invoices.woinvoice.hold.WoInvHoldTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="WO Invoice Revert">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.woinvoice.revert.WoInvRevertTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="WO Invoice Revert">
+        <classes>
+            <class name="com.source.classes.invoices.woinvoice.revert.WoInvRevertTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="WO Invoice Send For Approval">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.woinvoice.sendforapproval.WoInvSendForApprovalTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="WO Invoice Send For Approval">
+        <classes>
+            <class name="com.source.classes.invoices.woinvoice.sendforapproval.WoInvSendForApprovalTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="WO Invoice Reject">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.woinvoice.reject.WoInvRejectTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="WO Invoice Reject">
+        <classes>
+            <class name="com.source.classes.invoices.woinvoice.reject.WoInvRejectTest"/>
+        </classes>
+    </test>
 
-<!--    <test name="WO Invoice Approve">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.invoices.woinvoice.approve.WoInvApprovalTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="WO Invoice Approve">
+        <classes>
+            <class name="com.source.classes.invoices.woinvoice.approve.WoInvApprovalTest"/>
+        </classes>
+    </test>
 
 </suite>
