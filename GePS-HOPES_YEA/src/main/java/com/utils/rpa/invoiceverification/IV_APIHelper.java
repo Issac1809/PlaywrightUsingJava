@@ -15,10 +15,9 @@ public class IV_APIHelper {
         this.logger = LoggerUtil.getLogger(IV_APIHelper.class);
     }
 
-    public void updateStatus(String apiUrl) {
+    public void updateStatus(String apiUrl, String invoiceId) {
         try {
-            page.request().fetch(apiUrl + "7808", RequestOptions.create());
-            page.close();
+            page.request().fetch(apiUrl + invoiceId, RequestOptions.create());
         } catch (Exception exception) {
             logger.error("Exception in Update Status Function: {}", exception.getMessage());
         }

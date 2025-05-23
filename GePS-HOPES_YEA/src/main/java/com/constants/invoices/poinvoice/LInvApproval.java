@@ -12,16 +12,31 @@ public class LInvApproval {
     public static final String DOCUMENT_TYPE = "#select2-documentTypeId-container";
     public static final String GENERAL_LEDGER = "#select2-generalLedgerId-container";
     public static final String SAVE_FINANCE_FIELDS = "#updateFinanceFieldsDetails";
-    public static final String ACCOUNT_TYPE_DATA = "//li[contains(text(), 'A-Assets')]";
-    public static final String DOCUMENT_TYPE_DATA = "//li[contains(text(), 'document1-doc')]";
-    public static final String GENERAL_LEDGER_DATA = "//li[contains(text(), 'A-Down Payments')]";
     public static final String BANK_ACCOUNT = "#select2-bankAccountId-container";
-    public static final String BANK_ACCOUNT_DATA = "//li[contains(text(), 'Cash on hand-11110000')]";
     public static final String TEXT = "#text";
     public static final String TAX_CODE = "#select2-taxCodeId-container";
-    public static final String TAX_CODE_DATA = "//li[contains(text(), 'Permanent Account Numbers-7% Foreign currency standard rate purchases')]";
 
 //TODO Constructor
     private LInvApproval(){
+    }
+
+    public static String getAccountType(String accountType) {
+        return "//li[contains(text(), '"+ accountType +"')]";
+    }
+
+    public static String getDocumentType(String documentType) {
+        return "//li[contains(text(), '"+ documentType +"')]";
+    }
+
+    public static String getGeneralLedger(String generalLedger) {
+        return "//li[contains(text(), '"+ generalLedger +"')]";
+    }
+
+    public static String getBankAccount(String bankAccount) {
+        return "//li[contains(text(), '"+ bankAccount +"')]";
+    }
+
+    public static String getTaxCode(String taxCode) {
+        return "//li[contains(text(), '"+ taxCode +"')]";
     }
 }

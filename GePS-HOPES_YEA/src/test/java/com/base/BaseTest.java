@@ -537,7 +537,7 @@ public class BaseTest {
             poInvEditTest = new PoInvEditTest();
             iInvReject = new InvReject(iLogin, jsonNode, page, iLogout, iInvSendForApproval, iInvVerify);
             poInvRejectTest = new PoInvRejectTest();
-            iInvApproval = new InvApproval(iLogin, jsonNode, page, iLogout);
+            iInvApproval = new InvApproval(iLogin, jsonNode, page, iLogout, objectMapper, playwrightFactory, ivFlow);
             poInvApprovalTest = new PoInvApprovalTest();
 
 //TODO Work Order Invoice

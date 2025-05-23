@@ -315,7 +315,7 @@ public class BaseMain {
             iInvVerify = new InvVerify(iLogin, jsonNode, page, iLogout);
             iInvEdit = new InvEdit(iLogin, jsonNode, page, iLogout);
             iInvReject = new InvReject(iLogin, jsonNode, page, iLogout, iInvSendForApproval, iInvVerify);
-            iInvApproval = new InvApproval(iLogin, jsonNode, page, iLogout);
+            iInvApproval = new InvApproval(iLogin, jsonNode, page, iLogout, objectMapper, playwrightFactory, ivFlow);
 
 //TODO Work Order Invoices
             iWoInvCreate = new WoInvCreate(playwrightFactory, iLogin, jsonNode, page, iLogout, iCurrencyExchangeRate);

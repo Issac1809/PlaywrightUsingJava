@@ -38,6 +38,7 @@ public class IV_Flow {
             String remoteIvDownloadFilePath = jsonNode.get("msa").get("remoteIvDownloadFilePath").asText();
             String remoteIvUploadFilePath = jsonNode.get("msa").get("remoteIvUploadFilePath").asText();
             String readIvNumberUrl = jsonNode.get("msa").get("readIvNumberUrl").asText();
+            String invoiceId = jsonNode2.get("invoices").get("invoiceId").asText();
 
 //TODO Step 1: Connect to FTP and Download File
             IV_FTPHelper ivFtpHelper = new IV_FTPHelper(ftpClient);
@@ -53,7 +54,7 @@ public class IV_Flow {
 
 //TODO Step 4: Call API to Update Status
             IV_APIHelper ivApiHelper = new IV_APIHelper(page);
-            ivApiHelper.updateStatus(readIvNumberUrl);
+            ivApiHelper.updateStatus(readIvNumberUrl, invoiceId);
         } catch (Exception exception) {
             logger.error("Exception in PR List and SO File Automation Flow Function: {}", exception.getMessage());
         }
