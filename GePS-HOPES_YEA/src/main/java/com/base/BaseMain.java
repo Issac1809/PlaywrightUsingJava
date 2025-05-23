@@ -225,7 +225,7 @@ public class BaseMain {
             iLogout = new Logout(page);
             toastrUtil = new ToastrUtil(page);
             getTitleUtil = new GetTitleUtil(jsonNode, logger);
-            saveToTestDataJsonUtil = new SaveToTestDataJsonUtil(playwrightFactory, objectMapper);
+            saveToTestDataJsonUtil = new SaveToTestDataJsonUtil(playwrightFactory, objectMapper, jsonNode);
             getInvoiceReferenceIdUtil = new GetInvoiceReferenceIdUtil(playwright, playwrightFactory, page, iLogin, jsonNode, objectMapper, iLogout);
             prListFlow = new PR_List_Flow(page);
             msaFlow = new MSA_Flow(page);

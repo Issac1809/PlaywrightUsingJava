@@ -40,7 +40,7 @@ public class WoInvCancel implements IWoInvCancel {
     public int cancel(){
         int status = 0;
         try {
-            String buyerMailId = jsonNode.get("mailIds").get("financeCheckerEmail").asText();
+            String buyerMailId = jsonNode.get("invoices").get("verifierEmail").asText();
             iLogin.performLogin(buyerMailId);
 
             Locator invoiceNavigationBarLocator = page.locator(INVOICE_NAVIGATION_BAR);

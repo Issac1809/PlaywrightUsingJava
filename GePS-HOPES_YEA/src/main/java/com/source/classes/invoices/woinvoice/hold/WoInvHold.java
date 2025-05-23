@@ -41,7 +41,7 @@ public class WoInvHold implements IWoInvHold {
     public int hold(){
         int status = 0;
         try {
-            String buyerMailId = jsonNode.get("mailIds").get("financeCheckerEmail").asText();
+            String buyerMailId = jsonNode.get("invoices").get("verifierEmail").asText();
             iLogin.performLogin(buyerMailId);
 
             Locator invoiceNaviagtionBarLocator = page.locator(INVOICE_NAVIGATION_BAR);
