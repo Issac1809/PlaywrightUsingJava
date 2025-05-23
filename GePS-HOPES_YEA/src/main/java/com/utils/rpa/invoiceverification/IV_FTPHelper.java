@@ -60,7 +60,7 @@ public class IV_FTPHelper {
             connectionEstablish(server, port, user, password);
 
 //TODO IV File Upload
-            uploadIvFile(localIvFilePath, remoteIvFolderPath);
+            uploadIvFile(localIvFilePath, remoteIvFolderPath + excelFileName);
         } catch (Exception exception) {
             logger.error("Exception in call upload file function: {}", exception.getMessage());
         }
