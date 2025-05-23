@@ -12,6 +12,7 @@ import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import static com.constants.invoices.poinvoice.LInvSendForApproval.*;
 import static com.constants.requisitions.LPrApprove.getTitle;
+import static com.utils.SaveToTestDataJsonUtil.saveAndReturNextApprover;
 
 public class InvSendForApproval implements IInvSendForApproval {
 
@@ -52,10 +53,14 @@ public class InvSendForApproval implements IInvSendForApproval {
             Locator acceptButtonLocator = page.locator(ACCEPT_BUTTON);
 
             Response invoiceResponse = page.waitForResponse(
-                    response -> response.url().startsWith(appUrl + "/api/Invoices/") && response.status() == 200,
-                    acceptButtonLocator::click);
-
+                    response -> response.url().startsWith(appUrl + "/api/Invoices/")
+                            && response.status() == 200
+                            && response.request().method().equals("GET"),
+                    acceptButtonLocator::click
+            );
             status = invoiceResponse.status();
+
+            saveAndReturNextApprover(invoiceResponse);
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 

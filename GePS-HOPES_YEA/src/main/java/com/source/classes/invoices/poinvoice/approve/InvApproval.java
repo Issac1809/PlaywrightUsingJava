@@ -12,6 +12,7 @@ import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import static com.constants.invoices.poinvoice.LInvApproval.*;
 import static com.constants.orderschedules.LOsEdit.getTitle;
+import static com.utils.SaveToTestDataJsonUtil.saveAndReturNextApprover;
 
 public class InvApproval implements IInvApproval {
 
@@ -37,8 +38,9 @@ public class InvApproval implements IInvApproval {
         int status = 0;
         try {
             String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
-            String financeChecker = jsonNode.get("mailIds").get("financeCheckerEmail").asText();
-            iLogin.performLogin(financeChecker);
+            String financeCheckerEmail = jsonNode.get("mailIds").get("financeCheckerEmail").asText();
+            String approver = jsonNode.get("invoices").get("nextApprover").asText();
+            iLogin.performLogin(approver);
 
             Locator invoiceNavigationBarLocator = page.locator(INVOICE_NAVIGATION_BAR);
             invoiceNavigationBarLocator.click();
@@ -48,63 +50,65 @@ public class InvApproval implements IInvApproval {
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
-            Locator updateFinanceFields = page.locator(UPDATE_FINANCE_FIELDS);
-            updateFinanceFields.click();
+            if(approver.equalsIgnoreCase(financeCheckerEmail)) {
+                Locator updateFinanceFields = page.locator(UPDATE_FINANCE_FIELDS);
+                updateFinanceFields.click();
 
-            Thread.sleep(3000);
+                Thread.sleep(3000);
 
-            Locator bankAccountDropdownLocator = page.locator(BANK_ACCOUNT);
-            if(bankAccountDropdownLocator.count() > 0 && bankAccountDropdownLocator.isVisible()){
-                bankAccountDropdownLocator.click();
-            }
-            Locator bankAccountDataLocator = page.locator(BANK_ACCOUNT_DATA);
-            if(bankAccountDataLocator.count() > 0 && bankAccountDataLocator.isVisible()){
-                bankAccountDataLocator.click();
-            }
+                Locator bankAccountDropdownLocator = page.locator(BANK_ACCOUNT);
+                if(bankAccountDropdownLocator.count() > 0 && bankAccountDropdownLocator.isVisible()){
+                    bankAccountDropdownLocator.click();
+                }
+                Locator bankAccountDataLocator = page.locator(BANK_ACCOUNT_DATA);
+                if(bankAccountDataLocator.count() > 0 && bankAccountDataLocator.isVisible()){
+                    bankAccountDataLocator.click();
+                }
 
-            Locator accountTypeDropdownLocator = page.locator(ACCOUNT_TYPE);
-            if(accountTypeDropdownLocator.count() > 0 && accountTypeDropdownLocator.isVisible()){
-                accountTypeDropdownLocator.click();
-            }
-            Locator accountTypeDataLocator = page.locator(ACCOUNT_TYPE_DATA);
-            if(accountTypeDataLocator.count() > 0 && accountTypeDataLocator.isVisible()){
-                accountTypeDataLocator.click();
-            }
+                Locator accountTypeDropdownLocator = page.locator(ACCOUNT_TYPE);
+                if(accountTypeDropdownLocator.count() > 0 && accountTypeDropdownLocator.isVisible()){
+                    accountTypeDropdownLocator.click();
+                }
+                Locator accountTypeDataLocator = page.locator(ACCOUNT_TYPE_DATA);
+                if(accountTypeDataLocator.count() > 0 && accountTypeDataLocator.isVisible()){
+                    accountTypeDataLocator.click();
+                }
 
-            Locator documentTypeDropdownLocator =page.locator(DOCUMENT_TYPE);
-            if(documentTypeDropdownLocator.count() > 0 && documentTypeDropdownLocator.isVisible()){
-                documentTypeDropdownLocator.click();
-            }
-            Locator documentTypeDataLocator = page.locator(DOCUMENT_TYPE_DATA);
-            if(documentTypeDataLocator.count() > 0 && documentTypeDataLocator.isVisible()){
-                documentTypeDataLocator.click();
-            }
+                Locator documentTypeDropdownLocator =page.locator(DOCUMENT_TYPE);
+                if(documentTypeDropdownLocator.count() > 0 && documentTypeDropdownLocator.isVisible()){
+                    documentTypeDropdownLocator.click();
+                }
+                Locator documentTypeDataLocator = page.locator(DOCUMENT_TYPE_DATA);
+                if(documentTypeDataLocator.count() > 0 && documentTypeDataLocator.isVisible()){
+                    documentTypeDataLocator.click();
+                }
 
-            Locator generalLedgerDropdownLocator =page.locator(GENERAL_LEDGER);
-            if(generalLedgerDropdownLocator.count() > 0 && generalLedgerDropdownLocator.isVisible()){
-                generalLedgerDropdownLocator.click();
-            }
-            Locator generalLedgerDataLocator = page.locator(GENERAL_LEDGER_DATA);
-            if(generalLedgerDataLocator.count() > 0 && generalLedgerDataLocator.isVisible()){
-                generalLedgerDataLocator.click();
-            }
+                Locator generalLedgerDropdownLocator =page.locator(GENERAL_LEDGER);
+                if(generalLedgerDropdownLocator.count() > 0 && generalLedgerDropdownLocator.isVisible()){
+                    generalLedgerDropdownLocator.click();
+                }
+                Locator generalLedgerDataLocator = page.locator(GENERAL_LEDGER_DATA);
+                if(generalLedgerDataLocator.count() > 0 && generalLedgerDataLocator.isVisible()){
+                    generalLedgerDataLocator.click();
+                }
 
-            Locator textLocator = page.locator(TEXT);
-            if(textLocator.count() > 0 && textLocator.isVisible()){
-                textLocator.fill("Finance Field");
-            }
+                Locator textLocator = page.locator(TEXT);
+                if(textLocator.count() > 0 && textLocator.isVisible()){
+                    textLocator.fill("Finance Field");
+                }
 
-            Locator taxCodeDropdownLocator = page.locator(TAX_CODE);
-            if(taxCodeDropdownLocator.count() > 0 && taxCodeDropdownLocator.isVisible()){
-                taxCodeDropdownLocator.click();
-            }
-            Locator taxCodeDataLocator = page.locator(TAX_CODE_DATA);
-            if(taxCodeDataLocator.count() > 0 && taxCodeDataLocator.isVisible()){
-                taxCodeDataLocator.click();
-            }
+                Locator taxCodeDropdownLocator = page.locator(TAX_CODE);
+                if(taxCodeDropdownLocator.count() > 0 && taxCodeDropdownLocator.isVisible()){
+                    taxCodeDropdownLocator.click();
+                }
+                Locator taxCodeDataLocator = page.locator(TAX_CODE_DATA);
+                if(taxCodeDataLocator.count() > 0 && taxCodeDataLocator.isVisible()){
+                    taxCodeDataLocator.click();
+                }
 
-            Locator saveFinanceFieldsLocator = page.locator(SAVE_FINANCE_FIELDS);
-            saveFinanceFieldsLocator.click();
+                Locator saveFinanceFieldsLocator = page.locator(SAVE_FINANCE_FIELDS);
+                saveFinanceFieldsLocator.click();
+            }
 
             Locator approveButtonLocator = page.locator(APPROVE_BUTTON);
             approveButtonLocator.click();
@@ -112,9 +116,11 @@ public class InvApproval implements IInvApproval {
             Locator acceptLocator = page.locator(ACCEPT_BUTTON);
 
             Response invoiceResponse = page.waitForResponse(
-                    response -> response.url().startsWith(appUrl + "/api/Invoices/") && response.status() == 200,
-                    acceptLocator::click);
-
+                    response -> response.url().startsWith(appUrl + "/api/Invoices/")
+                            && response.status() == 200
+                            && response.request().method().equals("GET"),
+                    acceptLocator::click
+            );
             status = invoiceResponse.status();
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
@@ -122,6 +128,11 @@ public class InvApproval implements IInvApproval {
             PlaywrightFactory.attachScreenshotWithName("Purchase Order Invoice Approve", page);
 
             iLogout.performLogout();
+
+            String nextApprover = saveAndReturNextApprover(invoiceResponse);
+            if(!nextApprover.equalsIgnoreCase("")){
+                approval(referenceId, transactionId, uid);
+            }
         } catch (Exception exception) {
             logger.error("Exception in PO Invoice Approval function: {}", exception.getMessage());
         }

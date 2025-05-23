@@ -44,8 +44,8 @@ public class InvReject implements IInvReject {
         int status = 0;
         try {
             String appUrl = jsonNode.get("configSettings").get("appUrl").asText();
-            String financeCheckerMailId = jsonNode.get("mailIds").get("financeCheckerEmail").asText();
-            iLogin.performLogin(financeCheckerMailId);
+            String approver = jsonNode.get("invoices").get("nextApprover").asText();
+            iLogin.performLogin(approver);
 
             Locator invoiceNavigationBarLocator = page.locator(INVOICE_NAVIGATION_BAR);
             invoiceNavigationBarLocator.click();

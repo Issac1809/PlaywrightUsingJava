@@ -2,6 +2,10 @@
 **/target/
 **/test-output/
 
+# Ignore all allure-report and allure-results directories recursively
+**/allure-report/
+**/allure-results/
+
 # IntelliJ project files
 .idea/
 *.iml

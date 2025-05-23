@@ -73,7 +73,6 @@ public class WoInvApproval implements IWoInvApproval {
             if(!nextApprover.equalsIgnoreCase("")){
                 approval();
             }
-
         } catch (Exception exception) {
             logger.error("Exception in WO Invoice Approval function: {}", exception.getMessage());
         }
