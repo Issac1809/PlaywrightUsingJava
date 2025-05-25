@@ -362,7 +362,7 @@ public class BaseTest {
         try {
             logger = LoggerUtil.getLogger(BaseTest.class);
             objectMapper = new ObjectMapper();
-            jsonNode = objectMapper.readTree(new File("./src/test/resources/config/test-data.json"));
+            jsonNode = objectMapper.readTree(new File("src/test/resources/config/test-data.json"));
 
             String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             traceFileName = "trace_suite_" + timestamp + ".zip";
@@ -563,7 +563,7 @@ public class BaseTest {
             woInvEditTest = new WoInvEditTest();
             iWoInvReject = new WoInvReject(iLogin, jsonNode, page, iLogout, iWoInvSendForApproval, iWoInvVerify);
             woInvRejectTest = new WoInvRejectTest();
-            iWoInvApproval = new WoInvApproval(iLogin, jsonNode, page, iLogout);
+            iWoInvApproval = new WoInvApproval(iLogin, jsonNode, page, iLogout, objectMapper, playwrightFactory, ivFlow);
             woInvApprovalTest = new WoInvApprovalTest();
 
             getInvoiceReferenceIdUtil = new GetInvoiceReferenceIdUtil(playwright, playwrightFactory, page, iLogin, jsonNode, objectMapper, iLogout);

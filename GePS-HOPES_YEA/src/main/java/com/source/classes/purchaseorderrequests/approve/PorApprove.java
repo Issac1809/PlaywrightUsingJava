@@ -211,6 +211,8 @@ public class PorApprove implements IPorApprove {
                     playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "porStatus", porStatus);
                     playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "poProcessed", String.valueOf(poProcessed));
 
+                    page.waitForLoadState(LoadState.NETWORKIDLE);
+
                     if(porStatus.equalsIgnoreCase("ProcessingPO")) {
                         msaFlow.msaFlow();
                     } else {

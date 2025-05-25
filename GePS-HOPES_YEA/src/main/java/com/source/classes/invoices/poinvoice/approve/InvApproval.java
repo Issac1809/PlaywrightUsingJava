@@ -147,15 +147,15 @@ public class InvApproval implements IInvApproval {
             APIResponse apiResponse = page.request().fetch(appUrl + "/api/Invoices/" + getUid, RequestOptions.create());
             JsonNode jsonNode = objectMapper.readTree(apiResponse.body());
             String invoiceReferenceId = jsonNode.get("referenceId").asText();
-            String vendorReferenceId = jsonNode.get("vendorReferenceId").asText();
+            String vendorReferenceId = jsonNode.get("purchaseOrder").get("vendorReferenceId").asText();
             String invoiceId = jsonNode.get("id").asText();
             String invoiceStatus = jsonNode.get("status").asText();
-            String companyCode = jsonNode.get("companyCode").asText();
+            String companyCode = jsonNode.get("purchaseOrder").get("companyCode").asText();
 
             playwrightFactory.savePropertiesIntoJsonFile("invoices", "status", invoiceStatus);
             playwrightFactory.savePropertiesIntoJsonFile("invoices", "companyCode", companyCode);
             playwrightFactory.savePropertiesIntoJsonFile("invoices", "invoiceReferenceId", invoiceReferenceId);
-            playwrightFactory.savePropertiesIntoJsonFile("invoices", "poInvoiceNumber", vendorReferenceId);
+            playwrightFactory.savePropertiesIntoJsonFile("invoices", "vendorReferenceId", vendorReferenceId);
             playwrightFactory.savePropertiesIntoJsonFile("invoices", "invoiceId", invoiceId);
 
             if(invoiceStatus.equalsIgnoreCase("InvoiceProcessing")) {
