@@ -35,12 +35,11 @@ public class IV_FTPHelper {
         }
     }
 
-    public String downloadIvFile(String remotePath, String localPath, String vendorReferenceId, String poReferenceId, String invoiceReferenceId) {
+    public String downloadIvFile(String remotePath, String localPath, String vendorReferenceId, String poReferenceId, String invoiceReferenceId, String companyCode) {
         try {
             File localDir = new File(localPath);
             if (!localDir.exists() && !localDir.mkdirs());
 
-            String companyCode = poReferenceId.substring(0, 4); //TODO Extracts the first 4 characters
             excelFileName = "IV_" + vendorReferenceId + "_" + poReferenceId + "_" + invoiceReferenceId + "_" + companyCode + "_GePS-HOPES.xls";
             excelRemoteFilePath = remotePath + excelFileName;
             excelLocalFile = new File(localDir, excelFileName);

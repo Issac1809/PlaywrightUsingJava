@@ -229,10 +229,11 @@ public class InvCreate implements IInvCreate {
 
             Locator invoiceTitleLocator = page.locator(getTitle(invoiceTitle));
             Response invoiceResponse = page.waitForResponse(
-                    response -> response.url().startsWith(appUrl + "/api/VP/Invoices/") && response.status() == 200,
+                    response -> response.url().startsWith(appUrl + "/api/VP/Invoices/") && response.status() == 200
+                    && response.request().method().equalsIgnoreCase("GET"),
                     invoiceTitleLocator::click
             );
-            saveReferenceIdFromResponse(invoiceResponse, "invoice", "invoiceReferenceId");
+            saveReferenceIdFromResponse(invoiceResponse, "invoices", "invoiceReferenceId");
             saveVerifierEmail(invoiceResponse,"invoices", "verifierEmail");
             status = invoiceResponse.status();
 

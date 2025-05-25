@@ -59,6 +59,8 @@ public class PorSendForApproval implements IPorSendForApproval {
             Locator titleLocator = page.locator(getTitle(title));
             titleLocator.first().click();
 
+            page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+
             Locator sendForApprovalButtonLocator = page.locator(SEND_FOR_APPROVAL__BUTTON);
 
             String porType;
@@ -143,8 +145,6 @@ public class PorSendForApproval implements IPorSendForApproval {
             }
 
             playwrightFactory.savePropertiesIntoJsonFile("purchaseOrderRequests", "approvers", email);
-
-            page.waitForLoadState(LoadState.NETWORKIDLE);
 
             PlaywrightFactory.attachScreenshotWithName("Purchase Order Request Send For Approval", page);
 

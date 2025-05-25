@@ -39,18 +39,19 @@ public class IV_Flow {
             String remoteIvUploadFilePath = jsonNode.get("msa").get("remoteIvUploadFilePath").asText();
             String readIvNumberUrl = jsonNode.get("msa").get("readIvNumberUrl").asText();
             String invoiceId = jsonNode2.get("invoices").get("invoiceId").asText();
+            String companyCode = jsonNode2.get("invoices").get("companyCode").asText();
 
 //TODO Step 1: Connect to FTP and Download File
             IV_FTPHelper ivFtpHelper = new IV_FTPHelper(ftpClient);
             ivFtpHelper.connectionEstablish(ftpHost, ftpPort, ftpUser, ftpPassword);
-            String localExcelFilePath = ivFtpHelper.downloadIvFile(remoteIvDownloadFilePath, localPath, vendorReferenceId, poReferenceId, invoiceReferenceId);
+            String localExcelFilePath = ivFtpHelper.downloadIvFile(remoteIvDownloadFilePath, localPath, vendorReferenceId, poReferenceId, invoiceReferenceId, companyCode);
 
 //TODO Step 2: Update the IV File
             IV_ExcelHelper ivExcelHelper = new IV_ExcelHelper();
             ivExcelHelper.updateExcel(localExcelFilePath);
 
 //TODO Step 3: Upload the IV File
-            ivFtpHelper.connectionEstablishAndUploadFiles(ftpHost, ftpPort, ftpUser, ftpPassword, localPath, remoteIvUploadFilePath);
+            ivFtpHelper.connectionEstablishAndUploadFiles(ftpHost, ftpPort, ftpUser, ftpPassword, localExcelFilePath, remoteIvUploadFilePath);
 
 //TODO Step 4: Call API to Update Status
             IV_APIHelper ivApiHelper = new IV_APIHelper(page);
