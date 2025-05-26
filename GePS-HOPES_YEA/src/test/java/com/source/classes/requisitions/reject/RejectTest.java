@@ -16,9 +16,11 @@ public class RejectTest extends BaseTest {
     public void reject(String type, String purchaseType) {
         try {
             int status = iPrReject.reject(type, purchaseType);
+            if(status != 1){
             iPrEdit.edit(type, purchaseType);
             iPrSendForApproval.sendForApproval(type, purchaseType);
             Assert.assertEquals(200, status, "Requisition Edit was not successful");
+            }
         } catch (Exception exception) {
             logger.error("Exception in Requisition Reject Test Function: {}", exception.getMessage());
             Assert.fail("Exception in Requisition Reject Test Function: " + exception.getMessage());

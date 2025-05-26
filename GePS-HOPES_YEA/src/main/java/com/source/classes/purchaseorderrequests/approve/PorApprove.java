@@ -150,9 +150,14 @@ public class PorApprove implements IPorApprove {
             savePorAprovers(type, purchaseType);
             JsonNode approvers = jsonNode.get("purchaseOrderRequests").get("approvers");
 
+            if(approvers.size() == 1){
+                return 200; //skip approval if only one approver is present
+            }
+
             for(int i = 0; i < approvers.size(); i++) {
                 if (i == 0) {
-                    continue; //TODO to skip first approval
+                    continue;
+                    //TODO to skip first approval
                 }
                 String approver = approvers.get(i).asText();
                 iLogin.performLogin(approver);

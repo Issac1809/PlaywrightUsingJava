@@ -44,10 +44,18 @@ public class Approve implements IPrApprove {
 
     public int approve(String type, String purchaseType) {
         int status = 0;
+        int approved = 0;
+
         try {
             String requisitionStatus = "";
             String[] approvers = jsonNode.get("requisition").get("requisitionApprovers").asText().split(",");
             String remarks = jsonNode.get("commonRemarks").get("approveRemarks").asText();
+
+            if(approvers[0].equalsIgnoreCase("")) {
+                logger.error("No approvers found for the requisition");
+                approved = 1;
+                return approved;
+            }
 
             for(String approver : approvers) {
                 iLogin.performLogin(approver);

@@ -39,9 +39,16 @@ public class Reject implements IPrReject {
 
     public int reject(String type, String purchaseType) {
         int rejectStatus = 0;
+        int approved = 0;
         String uid = jsonNode.get("requisition").get("requisitionUid").asText();
         try {
             String[] approvers = jsonNode.get("requisition").get("requisitionApprovers").asText().split(",");
+            if(approvers[0].equalsIgnoreCase("")) {
+                logger.error("No approvers found for the requisition");
+                approved = 1;
+                return approved;
+            }
+
             String remarks = jsonNode.get("commonRemarks").get("rejectRemarks").asText();
 
             String approver1 = approvers[0];

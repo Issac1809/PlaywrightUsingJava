@@ -109,6 +109,9 @@ public class SendForApproval implements IPrSendForApproval {
                 playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionApprovers", approver);
             }
         }
+        else{
+            playwrightFactory.savePropertiesIntoJsonFile("requisition", "requisitionApprovers", "");
+        }
 
             iLogout.performLogout();
         } catch (Exception exception) {
