@@ -23,22 +23,18 @@ public class LDnCreate {
     }
 
     public static String getTitle(String title){
-        String title1 = "//*[contains(text(), '"+ title +"')]";
-        return title1;
+        return "//*[contains(text(), '"+ title +"')]";
     }
 
     public static String getSourceCountry(String sourceCountry){
-        String sourceCountryCode = "//li[contains(text(), '"+ sourceCountry +"')]";
-        return sourceCountryCode;
+        return "//li[contains(text(), '"+ sourceCountry +"')]";
     }
 
     public static String getDestinationCountry(String destinationCountry){
-        String destinationCountryCode = "//li[contains(text(), '"+ destinationCountry +"')]";
-        return destinationCountryCode;
+        return "//li[contains(text(), '"+ destinationCountry +"')]";
     }
 
     public static String getPackageType(String packageType){
-        String packageType1 = "//li[contains(text(), '"+ packageType +"')]";
-        return packageType1;
+        return "//li[contains(text(), '"+ packageType +"')]";
     }
 }

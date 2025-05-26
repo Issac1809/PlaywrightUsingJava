@@ -16,7 +16,6 @@ public class LFfrInvite {
     }
 
     public static String getFreightForwarder(String id){
-        String freightForwarderLocator = "//li[contains(text(), '"+ id +"')]";
-        return freightForwarderLocator;
+        return "//li[contains(text(), '"+ id +"')]";
     }
 }

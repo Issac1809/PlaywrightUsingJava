@@ -1,31 +1,41 @@
 package com.factory;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.microsoft.playwright.*;
-import com.microsoft.playwright.options.WaitForSelectorState;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.utils.InvoicePOJOUtil;
+import com.utils.LoggerUtil;
+import io.qameta.allure.Allure;
+import org.apache.logging.log4j.Logger;
+
+import java.io.ByteArrayInputStream;
+import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.Properties;
+import java.util.List;
 
 public class PlaywrightFactory {
 
+    ObjectMapper objectMapper;
+    JsonNode jsonNode;
+    static Logger logger;
     Playwright playwright;
-    FileInputStream fileInputStream;
-    FileOutputStream fileOutputStream;
-    Properties properties;
 
 //TODO Constructor
-    public PlaywrightFactory() {
+    public PlaywrightFactory(ObjectMapper objectMapper, JsonNode jsonNode) {
+        this.objectMapper = objectMapper;
+        this.jsonNode = jsonNode;
+        logger = LoggerUtil.getLogger(PlaywrightFactory.class);
     }
 
-//TODO Thread Local
+//TODO Thread Local to execute parallel tests
     private static final ThreadLocal<Playwright> localPlaywright = new ThreadLocal<>();
     private static final ThreadLocal<Browser> localBrowser = new ThreadLocal<>();
     private static final ThreadLocal<BrowserContext> localBrowserContext = new ThreadLocal<>();
     private static final ThreadLocal<Page> localPage = new ThreadLocal<>();
-    
-//TODO Playwright Instance
+
     public void setPlaywright() {
         playwright = Playwright.create();
         localPlaywright.set(playwright);
@@ -36,7 +46,6 @@ public class PlaywrightFactory {
         return localPlaywright.get();
     }
 
-//TODO Browser
     public Browser getBrowser() {
         return localBrowser.get();
     }
@@ -49,83 +58,182 @@ public class PlaywrightFactory {
         return localPage.get();
     }
 
-    public Properties initializeProperties() {
+    public void initializeBrowser(JsonNode jsonNode) {
         try {
-            fileInputStream = new FileInputStream("./src/test/resources/config/Properties");
-            properties = new Properties();
-            properties.load(fileInputStream);
-        } catch (IOException error) {
-            throw new RuntimeException(error);
+            String browserName = jsonNode.get("configSettings").get("browserName").asText().toUpperCase();
+            boolean runConfig = jsonNode.get("configSettings").get("runHeadless").asBoolean();
+
+            switch (browserName) {
+                case "CHROMIUM":
+                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(runConfig)));
+                    break;
+                case "CHROME":
+                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(runConfig)));
+                    break;
+                case "EDGE":
+                    localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("msedge").setHeadless(runConfig)));
+                    break;
+                case "SAFARI":
+                    localBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(runConfig)));
+                    break;
+                case "FIREFOX":
+                    localBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(runConfig)));
+                    break;
+                default:
+                    System.out.println("--Enter Proper Browser Name--");
+                    break;
+            }
+        } catch (Exception exception) {
+            System.out.println("Error initializing browser: " + exception.getMessage());
         }
-        return properties;
     }
 
-    public Page initializePage(Properties properties) {
-        String browserName = properties.getProperty("browserType").trim().toUpperCase();
-        switch (browserName.toUpperCase()) {
-            case "CHROMIUM":
-                localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
-                break;
-            case "CHROME":
-                localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false)));
-                break;
-            case "EDGE":
-                localBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("msedge").setHeadless(false)));
-                break;
-            case "SAFARI":
-                localBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(false)));
-                break;
-            case "FIREFOX":
-                localBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(false)));
-                break;
-            default:
-                System.out.println("--Enter Proper Browser Name--");
-                break;
+    public void initializeBrowserContext() {
+        try {
+            BrowserContext context = getBrowser().newContext(new Browser.NewContextOptions()
+                    .setRecordVideoDir(Paths.get("test-output/videos"))
+            );
+            localBrowserContext.set(context);
+        } catch (Exception exception) {
+            System.out.println("Error initializing browser context: " + exception.getMessage());
         }
-        localBrowserContext.set(getBrowser().newContext());
-        localPage.set(getBrowser().newPage());
-        getPage().navigate(properties.getProperty("appUrl").trim());
+    }
+
+    public Page initializePage(JsonNode jsonNode) {
+        try {
+            Page page = getBrowserContext().newPage();
+            localPage.set(page);
+            page.navigate(jsonNode.get("configSettings").get("appUrl").asText().trim());
+        } catch (Exception exception) {
+            System.out.println("Error initializing page: " + exception.getMessage());
+        }
         return getPage();
     }
 
-    public static void waitForLocator(Locator locator){
+    public void startTracing(BrowserContext context, String traceFileName) {
         try {
-            locator.waitFor(new Locator.WaitForOptions().setTimeout(5000).setState(WaitForSelectorState.VISIBLE));
-        } catch (Exception error) {
-            System.out.println("What is the Error: " + error);
+            context.tracing().start(new Tracing.StartOptions()
+                    .setScreenshots(true)
+                    .setSnapshots(true)
+                    .setSources(true)
+                    .setTitle("Test Trace")
+                    .setName(traceFileName)
+            );
+        } catch (Exception exception) {
+            logger.error("Error in Start Tracing Function: {}", exception.getMessage());
         }
     }
 
-    public void saveToPropertiesFile(String attributeKey, String attributeValue) {
+    public void stopTracing(BrowserContext context, String traceFileName) {
+        Path traceDir = Paths.get("test-output/traces");
         try {
-            fileOutputStream = new FileOutputStream("./src/test/resources/config/Properties");
-            properties.setProperty(attributeKey, attributeValue);
-            properties.store(fileOutputStream, "PoReferenceId");
-        } catch (IOException error) {
-            throw new RuntimeException(error);
+            Files.createDirectories(traceDir);
+            context.tracing().stop(new Tracing.StopOptions().setPath(traceDir.resolve(traceFileName)));
+        } catch (Exception exception) {
+            logger.error("Error in Stop Tracing Function: {}", exception.getMessage());
         }
     }
 
-    public static String takeScreenshot(){
-        String path = System.getProperty("user.dir") + "/screenshot/" + System.currentTimeMillis() + ".png";
-        byte[] buffer = getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
-        String base64Path = Base64.getEncoder().encodeToString(buffer);
-        return base64Path;
+    public void savePropertiesIntoJsonFile(String parentKey, String attributeKey, String attributeValue) {
+        try {
+            if (jsonNode.has(parentKey) && jsonNode.get(parentKey).isObject()) {
+                ObjectNode parentNode = (ObjectNode) jsonNode.get(parentKey);
+                parentNode.put(attributeKey, attributeValue);
+
+//TODO try is used to close the file writer or the json file will be empty
+                try (FileWriter fileWriter = new FileWriter("./src/test/resources/config/test-data.json")) {
+                    objectMapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, jsonNode);
+                }
+            } else {
+                logger.warn("Parent key '{}' not found or not an object in JSON", parentKey);
+            }
+        } catch (Exception exception) {
+            logger.error("Error in Save Properties Into Json File Function: {}", exception.getMessage());
+        }
     }
 
-    public void tearDown() {
+    public void savePorApproversIntoJsonFile(String parentKey, String attributeKey, List<String> attributeValue) {
         try {
-            getPage().context().browser().close();
-        } catch (Exception error) {
-            System.out.println("Error :" + error);
+            if (jsonNode.has(parentKey) && jsonNode.get(parentKey).isObject()) {
+                ObjectNode parentNode = (ObjectNode) jsonNode.get(parentKey);
+
+                //TODO Convert List<String> to JsonNode
+                JsonNode listNode = objectMapper.valueToTree(attributeValue);
+                parentNode.set(attributeKey, listNode);
+
+//TODO try is used to close the file writer or the json file will be empty
+                try (FileWriter fileWriter = new FileWriter("./src/test/resources/config/test-data.json")) {
+                    objectMapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, jsonNode);
+                }
+            } else {
+                logger.warn("Parent key '{}' not found or not an object in JSON", parentKey);
+            }
+        } catch (Exception exception) {
+            logger.error("Error in Save Properties Into Json File Function: {}", exception.getMessage());
         }
+    }
+
+    public void saveInvoiceListIntoJsonFile(String parentKey, String arrayKey, List<InvoicePOJOUtil> invTxnList) {
+        try {
+            if (jsonNode.has(parentKey) && jsonNode.get(parentKey).isObject()) {
+                ObjectNode parentNode = (ObjectNode) jsonNode.get(parentKey);
+
+//TODO Convert the List<InvTxnDetail> to a JSON array node
+                ArrayNode arrayNode = objectMapper.valueToTree(invTxnList);
+
+//TODO Put the array into the parent node
+                parentNode.set(arrayKey, arrayNode);
+
+//TODO try is used to close the file writer or the json file will be empty
+                try (FileWriter fileWriter = new FileWriter("./src/test/resources/config/test-data.json")) {
+                    objectMapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, jsonNode);
+                }
+            } else {
+                logger.warn("Parent key '{}' not found or not an object in JSON", parentKey);
+            }
+        } catch (Exception exception) {
+            logger.error("Error saving invoice list to JSON: {}", exception.getMessage());
+        }
+    }
+
+    public static byte[] saveScreenshot(Page page) {
+        byte[] screenshot = null;
+        try {
+            screenshot = page.screenshot(new Page.ScreenshotOptions().setFullPage(true));
+        } catch (Exception exception) {
+            logger.error("Error in Save Screenshot Function: {}", exception.getMessage());
+        }
+        return screenshot;
+    }
+
+    public static void attachScreenshotWithName(String screenshotName, Page page) {
+        try {
+            byte[] screenshot = saveScreenshot(page);
+            if (screenshot != null) {
+                Allure.addAttachment(screenshotName, "image/png", new ByteArrayInputStream(screenshot), ".png");
+            }
+        } catch (Exception exception) {
+            logger.error("Error in Attach Screenshot With Name Function: {}", exception.getMessage());
+        }
+    }
+
+    public Page getCurrencyExchangeRate() {
+        Page page = null;
+        try {
+            BrowserContext browserContext = getBrowser().newContext();
+            page = browserContext.newPage();
+            page.navigate(jsonNode.get("configSettings").get("appUrl").asText().trim());
+        } catch (Exception exception) {
+            logger.error("Exception in Get Currency Exchange Rate: {}", exception.getMessage());
+        }
+        return page;
     }
 
     public void tearDown(Page page) {
         try {
-            getPage().context().browser().close();
-        } catch (Exception error) {
-            System.out.println("Error :" + error);
+            page.context().close();
+        } catch (Exception exception) {
+            logger.error("Error in Tear Down Function: {}", exception.getMessage());
         }
     }
 }

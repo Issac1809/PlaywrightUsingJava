@@ -38,7 +38,7 @@
   "requisition" : {
     "purchaseType" : "PS",
     "orderTitle" : "-AUTOMATION",
-    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-684.0",
+    "psCatalogTitle" : "PS-AUTOMATION-CATALOG-975.0",
     "psNonCatalogTitle" : "PS-AUTOMATION-NONCATALOG-432.0",
     "salesCatalogTitle" : "SALES-AUTOMATION-CATALOG-364.0",
     "salesNonCatalogTitle" : "SALES-AUTOMATION-NONCATALOG-259.0",
@@ -81,13 +81,13 @@
     "requisitionFileType" : "Internal",
     "requisitionApprovers" : "projectmanager@cormsquare.com",
     "requisitionAttachmentsTypes" : "internal,external",
-    "requisitionUid" : "f1351a51-d12d-4b5e-811a-c18dda27a654",
+    "requisitionUid" : "751dc962-0762-417b-a52c-f39db3a4b317",
     "itemImport" : true,
     "requisitionItemCount" : "3",
-    "psTransactionNumber" : "240025TRN03560",
+    "psTransactionNumber" : "240025TRN03565",
     "salesTransactionNumber" : "240025TRN03511",
     "sdTransactionNumber" : "240025TRN03469",
-    "requisitionId" : "23546"
+    "requisitionId" : "23559"
   },
   "requestForQuotation" : {
     "rfqNotes" : "Request For Quotation Notes and Attachments",
@@ -116,10 +116,10 @@
     "milestonePaymentCount" : 2,
     "taxCode" : "PG-8% Foreign currency standard rate purchase",
     "purchaseOrderNotes" : "Purchase Order Request Notes",
-    "purchaseOrderRequestUid" : "0615ebe8-346e-4421-8bb9-a4265bd96b9a",
-    "purchaseOrderRequestId" : "8653",
+    "purchaseOrderRequestUid" : "110942b9-3523-4590-815b-b072e9c7e449",
+    "purchaseOrderRequestId" : "8663",
     "approvers" : [ "projectmanager@cormsquare.com", "buyer@cormsquare.com" ],
-    "porReferenceNumber" : "240025POR01734",
+    "porReferenceNumber" : "240025POR01736",
     "integrationStatus" : "SOSynced",
     "additionalItemName" : "Packing Charges",
     "rate" : "200.45",
@@ -132,25 +132,25 @@
     "shippingPoint" : "NA",
     "porStatus" : "ProcessingPO",
     "poProcessed" : "true",
-    "poId" : "5847"
+    "poId" : "5851"
   },
   "purchaseOrders" : {
-    "poReferenceId" : "1091",
+    "poReferenceId" : "3752",
     "poRevisionNumber" : "1",
     "porRevision" : "true",
     "poValue" : 9000,
     "unitRate" : 200,
-    "purchaseOrderUid" : "7398c1f0-6d6d-4a82-827c-80b86cecf604",
-    "poTitle" : "PS-AUTOMATION-CATALOG-684.0",
-    "poTransactionId" : "240025TRN03560",
-    "id" : "5847"
+    "purchaseOrderUid" : "fa13f28b-103a-45e2-bdde-729f79b6f132",
+    "poTitle" : "PS-AUTOMATION-CATALOG-494.0",
+    "poTransactionId" : "240025TRN03563",
+    "id" : "5851"
   },
   "orderSchedules" : {
-    "orderScheduleReferenceId" : "240025OS00804",
+    "orderScheduleReferenceId" : "240025OS00806",
     "orderScheduleStatus" : ""
   },
   "dispatchNotes" : {
-    "dispatchNoteReferenceId" : "240025DN00355",
+    "dispatchNoteReferenceId" : "240025DN00359",
     "sourceCountry" : "India",
     "destinationCountry" : "India",
     "packageType" : "Drum",
@@ -161,7 +161,7 @@
   },
   "freightForwarderRequests" : {
     "freightForwarder" : "Alpha Limited",
-    "freightForwarderReferenceId" : "240025FFR00181",
+    "freightForwarderReferenceId" : "240025FFR00183",
     "totalChargeableWeightKg" : 20,
     "unitRate" : 300
   },
@@ -169,19 +169,19 @@
     "sourceCountry" : "India",
     "priority" : "High",
     "destinationCountry" : "India",
-    "workOrderReferenceId" : "240025WO00204",
+    "workOrderReferenceId" : "240025WO00206",
     "gstPercentage" : 8
   },
   "invoices" : {
     "vendorReferenceId" : "VEN-00084",
-    "invoiceReferenceId" : "240025INV00610",
+    "invoiceReferenceId" : "240025INV00615",
     "poInvoiceNumber" : "INV-AUT-PO-",
     "woInvoiceNumber" : "INV-AUT-WO-",
     "woInvoiceRate" : 1000,
     "invoiceTransactionDetails" : [ {
-      "referenceId" : "240025INV00604",
-      "transactionId" : "240025TRN03560",
-      "uid" : "c30ff788-5f9e-4080-8035-d4a32ed9715e"
+      "referenceId" : "240025INV00615",
+      "transactionId" : "240025TRN03563",
+      "uid" : "b2ca3f5f-4250-413e-ab43-baaa8a6f04fd"
     } ],
     "nextApprover" : "financechecker@cormsquare.com",
     "workOrderInvoiceReferenceId" : "240025INV00610",

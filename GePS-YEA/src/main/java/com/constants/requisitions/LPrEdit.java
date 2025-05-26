@@ -11,7 +11,7 @@ public class LPrEdit {
     }
 
     public static String getTitle(String title){
-        String title1 = "//*[contains(text(), '" + title + "')]";
-        return title1;
+        String getTitle = "//*[contains(text(), '" + title + "')]";
+        return getTitle;
     }
 }

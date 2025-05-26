@@ -1,19 +1,20 @@
 package com.procurement;
-import com.poc.base.BaseMain;
+import com.base.BaseMain;
 
 public class GePS {
 
     static BaseMain baseMain;
 
-    //TODO Constructor
+//TODO Constructor
     private GePS(){
     }
 
     public static void main(String[] args) {
         try {
             baseMain = new BaseMain();
-        } catch (Exception error) {
-            System.out.println("What is the error: " + error.getMessage());
+
+        } catch (Exception exception) {
+            System.out.println("Error initializing main function: " + exception.getMessage());
         }
     }
 }

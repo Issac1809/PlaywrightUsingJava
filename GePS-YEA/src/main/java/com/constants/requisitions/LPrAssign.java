@@ -6,6 +6,8 @@ public class LPrAssign {
     public static final String SEARCHBOX = ".select2-search__field";
     public static final String SELECT_ASSIGN_USER = "#select2-bgUser-container";
     public static final String SAVE_USER = "#saveBuyerUser";
+    public static final String SAVE_USER_SALES = "#saveBGAssign";
+
 
 //TODO Constructor
 

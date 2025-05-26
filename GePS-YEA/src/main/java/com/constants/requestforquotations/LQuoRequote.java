@@ -2,7 +2,7 @@ package com.constants.requestforquotations;
 
 public class LQuoRequote {
 
-    public static final String RFQ_NAVIGATION_BAR_BUTTON = "//*[contains(text(), 'Request For Quotations')]";
+    public static final String RFQ_NAVIGATION_BAR_BUTTON = "//span[contains(text(), 'Request For Quotations')]";
     public static final String REQUOTE_BUTTON = "//a[contains(text(), ' Requote')]";
     public static final String REMARKS = "Regret";
     public static final String ACCEPT_REMARKS_POP_UP = ".bootbox-accept";
@@ -14,7 +14,6 @@ public class LQuoRequote {
     }
 
     public static String getTitle(String title){
-        String title1 = "//span[contains(text(), '"+ title +"')]";
-        return title1;
+        return "//span[contains(text(), '"+ title +"')]";
     }
 }

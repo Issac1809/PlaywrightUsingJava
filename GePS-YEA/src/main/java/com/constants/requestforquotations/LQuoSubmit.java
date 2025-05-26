@@ -2,7 +2,7 @@ package com.constants.requestforquotations;
 
 public class LQuoSubmit {
 
-    public static final String RFQ_NAVIGATION_BAR = "//*[contains(text(), 'Request For Quotations')]";
+    public static final String RFQ_NAVIGATION_BAR = "//span[contains(text(), 'Request For Quotations')]";
     public static final String INVITE_VENDORS = "#addRequestForQuotationVendors";
     public static final String VENDOR_SEARCH_FIELD = "#select2-vendorId-container";
     public static final String VENDOR_SEARCH = ".select2-search__field";
@@ -39,27 +39,22 @@ public class LQuoSubmit {
     }
 
     public static String getTitle(String title){
-        String title1 = "//span[contains(text(), '"+ title +"')]";
-        return title1;
+        return "//span[contains(text(), '"+ title +"')]";
     }
 
     public static String getVendor(String vendor){
-        String vendor1 = "//li[contains(text(), '"+ vendor +"')]";
-        return vendor1;
+        return "//li[contains(text(), '"+ vendor +"')]";
     }
 
     public static String getThirtyOne(int num){
-        String num1 = "//span[contains(text(), '" + num + "')]";
-        return num1;
+        return "//span[contains(text(), '" + num + "')]";
     }
 
     public static String getNextDay(int num){
-        String nextDayLocator = "//span[contains(text(), '" + num + "')]";
-        return nextDayLocator;
+        return "//span[contains(text(), '" + num + "')]";
     }
 
     public static String getAttatmentType(String type){
-        String attachmentType = "//li[contains(text(), '" + type + "')]";
-        return attachmentType;
+        return "//li[contains(text(), '" + type + "')]";
     }
 }

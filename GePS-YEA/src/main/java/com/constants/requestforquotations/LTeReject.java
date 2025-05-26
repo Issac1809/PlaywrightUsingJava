@@ -2,7 +2,7 @@ package com.constants.requestforquotations;
 
 public class LTeReject {
 
-    public static final String RFQ_NAVIGATION_BAR = "//*[contains(text(), 'Request For Quotations')]";
+    public static final String RFQ_NAVIGATION_BAR = "//span[contains(text(), 'Request For Quotations')]";
     public static final String TE_CREATE_BUTTON = "#btnCreateTE";
     public static final String VENDOR_SELECT_CHECKBOX = ".border-primary";
     public static final String CREATE_TECHNICAL_EVALUATION_BUTTON = "#btnCreate";
@@ -13,18 +13,18 @@ public class LTeReject {
     public static final String REJECT_BUTTON = "#btnReject";
     public static final String YES = ".bootbox-accept";
     public static final String REMARKS_INPUT_LOCATOR = ".bootbox-input";
+    public static final String MY_APPROVALS = "//span[contains(text(), 'My Approvals')]";
 
-//TODO Constructor
+
+    //TODO Constructor
     private LTeReject(){
     }
 
     public static String getTitle(String title){
-        String title1 = "//*[contains(text(), '" + title + "')]";
-        return title1;
+        return "//*[contains(text(), '" + "TE : " + title + "')]";
     }
 
     public static String getTeApprover(String approver){
-        String approver1 = "//li[contains(text(), '"+ approver +"')]";
-        return approver1;
+        return "//li[contains(text(), '"+ approver +"')]";
     }
 }

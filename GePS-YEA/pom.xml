@@ -1,30 +1,47 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com</groupId>
-  <artifactId>YCA</artifactId>
+  <artifactId>GePS-HOPES_YEA</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
-  <name>YCA</name>
-  <url>https://github.com/Issac1809</url>
+  <name>GePS-HOPES_YEA</name>
+  <url>https://github.com/CormSquare/GePS-Testing/tree/main/GePS-HOPES_YEA</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>18</maven.compiler.source>
     <maven.compiler.target>18</maven.compiler.target>
+    <log4j-core-version>2.24.3</log4j-core-version>
+    <log4j-api-version>2.24.3</log4j-api-version>
     <testNG-version> 7.10.2 </testNG-version>
-    <extend-reports-version> 5.1.2 </extend-reports-version>
-    <allure-testng-reports-version> 2.29.0 </allure-testng-reports-version>
-    <allure-maven-reports-version> 2.14.0 </allure-maven-reports-version>
+    <chaintest-testng-version>1.0.7</chaintest-testng-version>
     <playwright-version>1.51.0</playwright-version>
     <maven-compiler-version>3.13.0</maven-compiler-version>
     <maven-surefire-plugin>3.2.5</maven-surefire-plugin>
-    <jackson-plugin-version>2.14.2</jackson-plugin-version>
-    <log4j-version>2.24.1</log4j-version>
+    <jackson-api-version>2.18.2</jackson-api-version>
+    <commons-net-version>3.11.1</commons-net-version>
+    <poi-ooxml-version>5.4.0</poi-ooxml-version>
+    <httpclient5-version>5.4.2</httpclient5-version>
+    <pdfbox-version>2.0.29</pdfbox-version> <!--TODO Don't upgrade the version. Will cause an issue with the load() function -->
+    <allure-testng-version>2.29.1</allure-testng-version>
   </properties>
 
   <dependencies>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${log4j-core-version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>${log4j-api-version}</version>
+    </dependency>
 
     <dependency>
       <groupId>org.testng</groupId>
@@ -34,23 +51,10 @@
     </dependency>
 
     <dependency>
-      <groupId>io.qameta.allure</groupId>
-      <artifactId>allure-testng</artifactId>
-      <version>${allure-testng-reports-version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>io.qameta.allure</groupId>
-      <artifactId>allure-maven</artifactId>
-      <version>${allure-maven-reports-version}</version>
-    </dependency>
-
-    <dependency>
       <groupId>com.aventstack</groupId>
-      <artifactId>extentreports</artifactId>
-      <version>${extend-reports-version}</version>
+      <artifactId>chaintest-testng</artifactId>
+      <version>${chaintest-testng-version}</version>
     </dependency>
-
 
     <dependency>
       <groupId>com.microsoft.playwright</groupId>
@@ -61,49 +65,64 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>${jackson-plugin-version}</version>
+      <version>${jackson-api-version}</version>
+    </dependency>
+
+    <!-- FTP Client / Connect to the Server -->
+    <dependency>
+      <groupId>commons-net</groupId>
+      <artifactId>commons-net</artifactId>
+      <version>${commons-net-version}</version>
+    </dependency>
+
+    <!-- MSA Excel Processing -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>${poi-ooxml-version}</version>
+    </dependency>
+
+    <!-- HTTP Client for API Calls -->
+    <dependency>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
+      <version>${httpclient5-version}</version>
+    </dependency>
+
+    <!-- PDF Box to update the Name -->
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>pdfbox</artifactId>
+      <version>${pdfbox-version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>${log4j-version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api</artifactId>
-      <version>${log4j-version}</version>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-testng</artifactId>
+      <version>${allure-testng-version}</version>
     </dependency>
 
   </dependencies>
 
   <build>
-
     <pluginManagement>
-
       <plugins>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${maven-compiler-version}</version>
-          <!--          <configuration>-->
-          <!--            <compilerArgs>-->
-          <!--              <arg>&#45;&#45;add-exports</arg>-->
-          <!--              <arg>jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>-->
-          <!--              <arg>&#45;&#45;add-exports</arg>-->
-          <!--              <arg>jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</arg>-->
-          <!--              <arg>&#45;&#45;add-exports</arg>-->
-          <!--              <arg>jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>-->
-          <!--              <arg>&#45;&#45;add-opens</arg>-->
-          <!--              <arg>jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>-->
-          <!--              <arg>&#45;&#45;add-opens</arg>-->
-          <!--              <arg>jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</arg>-->
-          <!--              <arg>&#45;&#45;add-opens</arg>-->
-          <!--              <arg>jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>-->
-          <!--            </compilerArgs>-->
-          <!--          </configuration>-->
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven-surefire-plugin}</version>
+          <configuration>
+            <systemPropertyVariables>
+              <allure.results.directory>allure-results</allure.results.directory>
+            </systemPropertyVariables>
+          </configuration>
         </plugin>
 
         <plugin>
@@ -112,25 +131,12 @@
           <version>${maven-surefire-plugin}</version>
           <configuration>
             <suiteXmlFiles>
-              <suiteXmlFile>src/test/resources/testrunners/testng_functional.xml</suiteXmlFile>
+              <suiteXmlFile>src/test/resources/testrunners/GePS-HOPES_YEA_functional-test.xml</suiteXmlFile>
             </suiteXmlFiles>
           </configuration>
         </plugin>
 
-        <plugin>
-          <groupId>io.qameta.allure</groupId>
-          <artifactId>allure-maven-plugin</artifactId>
-          <version>${allure-maven-plugin-version}</version>
-          <configuration>
-            <resultsDirectory>target/allure-results</resultsDirectory>
-            <reportDirectory>target/allure-report</reportDirectory>
-          </configuration>
-        </plugin>
-
       </plugins>
-
     </pluginManagement>
-
   </build>
-
 </project>

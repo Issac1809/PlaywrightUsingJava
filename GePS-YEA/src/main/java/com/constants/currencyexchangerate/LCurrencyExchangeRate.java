@@ -7,4 +7,7 @@ public class LCurrencyExchangeRate {
     public static final String SEARCH_BOX = "//input[contains(@type,'search')]";
     public static final String LIST_CONTAINER = "#tableCurrencyExchangeRate tbody tr td";
 
+//TODO Constructor
+    private LCurrencyExchangeRate() {
+    }
 }

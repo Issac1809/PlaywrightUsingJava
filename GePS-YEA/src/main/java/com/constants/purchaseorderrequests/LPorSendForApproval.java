@@ -2,13 +2,14 @@ package com.constants.purchaseorderrequests;
 
 public class LPorSendForApproval {
 
-    public static final String POR_NAVIGATION_BAR = "//*[contains(text(), 'Purchase Order Requests')]";
+    public static final String POR_NAVIGATION_BAR = "//span[contains(text(), 'Purchase Order Requests')]";
     public static final String SEND_FOR_APPROVAL__BUTTON = "#btnNewSendApproval";
     public static final String APPROVAL_POP_UP = "//h3[contains(text(), 'Purchase Order Request Send For Approval')]";
-    public static final String CFO_DROPDOWN_LOCATOR = "#role-7";
+    public static final String CFO1_DROPDOWN_LOCATOR = "#select2-role-6-container";
+    public static final String CFO2_DROPDOWN_LOCATOR = "#select2-role-7-container";
+    public static final String SEARCH_FIELD = ".select2-search__field";
     public static final String PRESIDENT_DROPDOWN_LOCATOR = "#select2-role-8-container";
-    public static final String SUBMIT_BUTTON = "btnSendUserFromPM";
-    public static final String APPROVERS_LIST = "#approvalData tbody tr td";
+    public static final String SUBMIT_BUTTON = "#btnSendForApproval";
     public static final String YES = ".bootbox-accept";
 
 //TODO Constructor
@@ -16,17 +17,14 @@ public class LPorSendForApproval {
     }
 
     public static String getTitle(String title){
-        String title1 = "//span[contains(text(), '"+ title +"')]";
-        return title1;
+        return "//span[contains(text(), '"+ title +"')]";
     }
 
     public static String getCfoId(String id){
-        String cfoId = "//span[contains(text(), '"+ id +"')]";
-        return cfoId;
+        return "//li[contains(text(), '"+ id +"')]";
     }
 
     public static String getPresidentId(String id){
-        String presidentId = "//li[contains(text(), '" + id + "')]";
-        return presidentId;
+        return "//li[contains(text(), '"+ id +"')]";
     }
 }

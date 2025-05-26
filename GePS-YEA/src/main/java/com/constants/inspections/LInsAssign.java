@@ -16,12 +16,10 @@ public class LInsAssign {
     }
 
     public static String getTitle(String title){
-        String title1 = "//span[contains(text(), '"+ title +"')]";
-        return title1;
+        return "//span[contains(text(), '"+ title +"')]";
     }
 
     public static String getRequestorId(String id){
-        String id1 = "//li[contains(text(), '"+ id +"')]";
-        return id1;
+        return "//li[contains(text(), '"+ id +"')]";
     }
 }

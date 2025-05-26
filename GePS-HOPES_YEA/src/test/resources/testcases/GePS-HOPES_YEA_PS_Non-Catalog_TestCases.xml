@@ -223,282 +223,282 @@
     </test>
 
 
-<!--    <test name="Order Schedule Create">-->
-    <!--        <parameter name="type" value="PS"/>-->
-    <!--        <parameter name="purchaseType" value="Catalog"/>-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.orderschedules.create.OsCreateTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+    <test name="Order Schedule Create">
+            <parameter name="type" value="PS"/>
+            <parameter name="purchaseType" value="Catalog"/>
+            <classes>
+                <class name="com.source.classes.orderschedules.create.OsCreateTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Order Schedule Reject">-->
-    <!--        <parameter name="type" value="PS"/>-->
-    <!--        <parameter name="purchaseType" value="Catalog"/>-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.orderschedules.reject.OsRejectTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Order Schedule Reject">
+            <parameter name="type" value="PS"/>
+            <parameter name="purchaseType" value="Catalog"/>
+            <classes>
+                <class name="com.source.classes.orderschedules.reject.OsRejectTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Order Schedule Edit">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.orderschedules.edit.OsEditTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Order Schedule Edit">
+            <classes>
+                <class name="com.source.classes.orderschedules.edit.OsEditTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Order Schedule Approve">-->
-    <!--        <parameter name="type" value="PS"/>-->
-    <!--        <parameter name="purchaseType" value="Catalog"/>-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.orderschedules.approval.OsApproveTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Order Schedule Approve">
+            <parameter name="type" value="PS"/>
+            <parameter name="purchaseType" value="Catalog"/>
+            <classes>
+                <class name="com.source.classes.orderschedules.approval.OsApproveTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Ready For Inspection">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.inspections.readyforinspection.InsReadyForInspectionTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Ready For Inspection">
+            <classes>
+                <class name="com.source.classes.inspections.readyforinspection.InsReadyForInspectionTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Inspection Assign">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.inspections.assign.InsAssignTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Inspection Assign">
+            <classes>
+                <class name="com.source.classes.inspections.assign.InsAssignTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Inspection Fail">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.inspections.fail.InsFailTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Inspection Fail">
+            <classes>
+                <class name="com.source.classes.inspections.fail.InsFailTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Inspection Create">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.inspections.create.InsCreateTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Inspection Create">
+            <classes>
+                <class name="com.source.classes.inspections.create.InsCreateTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Dispatch Note Create">-->
-    <!--        <parameter name="type" value="PS"/>-->
-    <!--        <parameter name="purchaseType" value="Catalog"/>-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.dispatchnotes.create.DnCreateTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Dispatch Note Create">
+            <parameter name="type" value="PS"/>
+            <parameter name="purchaseType" value="Catalog"/>
+            <classes>
+                <class name="com.source.classes.dispatchnotes.create.DnCreateTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Dispatch Note Cancel">-->
-    <!--        <parameter name="type" value="PS"/>-->
-    <!--        <parameter name="purchaseType" value="Catalog"/>-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.dispatchnotes.cancel.DnCancelTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Dispatch Note Cancel">
+            <parameter name="type" value="PS"/>
+            <parameter name="purchaseType" value="Catalog"/>
+            <classes>
+                <class name="com.source.classes.dispatchnotes.cancel.DnCancelTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Dispatch Note Assign">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.dispatchnotes.assign.DnAssignTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Dispatch Note Assign">
+            <classes>
+                <class name="com.source.classes.dispatchnotes.assign.DnAssignTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Dispatch Note Return">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.dispatchnotes.dnreturn.DnReturnTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Dispatch Note Return">
+            <classes>
+                <class name="com.source.classes.dispatchnotes.dnreturn.DnReturnTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Dispatch Note Edit">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.dispatchnotes.edit.DnEditTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Dispatch Note Edit">
+            <classes>
+                <class name="com.source.classes.dispatchnotes.edit.DnEditTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Freight Forwarder Invite">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.freightforwarderrequests.invite.FfrInviteTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Freight Forwarder Invite">
+            <classes>
+                <class name="com.source.classes.freightforwarderrequests.invite.FfrInviteTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Freight Forwarder Quote">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.freightforwarderrequests.quote.FfrQuoteTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Freight Forwarder Quote">
+            <classes>
+                <class name="com.source.classes.freightforwarderrequests.quote.FfrQuoteTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Freight Forwarder Requote">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.freightforwarderrequests.requote.FfrRequoteTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Freight Forwarder Requote">
+            <classes>
+                <class name="com.source.classes.freightforwarderrequests.requote.FfrRequoteTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="Work Order Create">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.workorders.create.WoCreateTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Work Order Create">
+            <classes>
+                <class name="com.source.classes.workorders.create.WoCreateTest"/>
+            </classes>
+        </test>
 
-<!--    <test name="Work Order Edit">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.workorders.edit.WoEditTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Work Order Edit">
+        <classes>
+            <class name="com.source.classes.workorders.edit.WoEditTest"/>
+        </classes>
+    </test>
 
-    <!--    <test name="Work Order Tracker Status">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.workorders.trackerstatus.WoTrackerStatusTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="Work Order Tracker Status">
+            <classes>
+                <class name="com.source.classes.workorders.trackerstatus.WoTrackerStatusTest"/>
+            </classes>
+        </test>
 
-<!--    <test name="Work Order Ok For Invoice">-->
-<!--        <classes>-->
-<!--            <class name="com.source.classes.workorders.okforinvoice.WoOkForInvoiceTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Work Order Ok For Invoice">
+        <classes>
+            <class name="com.source.classes.workorders.okforinvoice.WoOkForInvoiceTest"/>
+        </classes>
+    </test>
 
-    <!--    <test name="PO Invoice Create">-->
-    <!--        <parameter name="type" value="PS"/>-->
-    <!--        <parameter name="purchaseType" value="NonCatalog"/>-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.poinvoice.create.PoInvCreateTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="PO Invoice Create">
+            <parameter name="type" value="PS"/>
+            <parameter name="purchaseType" value="NonCatalog"/>
+            <classes>
+                <class name="com.source.classes.invoices.poinvoice.create.PoInvCreateTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="PO Invoice Cancel">-->
-    <!--        <parameter name="type" value="PS"/>-->
-    <!--        <parameter name="purchaseType" value="NonCatalog"/>-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.poinvoice.cancel.PoInvCancelTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="PO Invoice Cancel">
+            <parameter name="type" value="PS"/>
+            <parameter name="purchaseType" value="NonCatalog"/>
+            <classes>
+                <class name="com.source.classes.invoices.poinvoice.cancel.PoInvCancelTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="PO Invoice Checklist Reject">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.poinvoice.checklist.PoInvChecklistRejectTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="PO Invoice Checklist Reject">
+            <classes>
+                <class name="com.source.classes.invoices.poinvoice.checklist.PoInvChecklistRejectTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="PO Invoice Return">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.poinvoice.invreturn.PoInvReturnTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="PO Invoice Return">
+            <classes>
+                <class name="com.source.classes.invoices.poinvoice.invreturn.PoInvReturnTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="PO Invoice Edit">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.poinvoice.edit.PoInvEditTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="PO Invoice Edit">
+            <classes>
+                <class name="com.source.classes.invoices.poinvoice.edit.PoInvEditTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="PO Invoice Checklist Accept">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.poinvoice.checklist.PoInvChecklistAcceptTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="PO Invoice Checklist Accept">
+            <classes>
+                <class name="com.source.classes.invoices.poinvoice.checklist.PoInvChecklistAcceptTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="PO Invoice Verify">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.poinvoice.verify.PoInvVerifyTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="PO Invoice Verify">
+            <classes>
+                <class name="com.source.classes.invoices.poinvoice.verify.PoInvVerifyTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="PO Invoice Hold">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.poinvoice.hold.PoInvHoldTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="PO Invoice Hold">
+            <classes>
+                <class name="com.source.classes.invoices.poinvoice.hold.PoInvHoldTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="PO Invoice Revert">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.poinvoice.revert.PoInvRevertTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="PO Invoice Revert">
+            <classes>
+                <class name="com.source.classes.invoices.poinvoice.revert.PoInvRevertTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="PO Invoice Send For Approval">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.poinvoice.sendforapproval.PoInvSendForApprovalTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="PO Invoice Send For Approval">
+            <classes>
+                <class name="com.source.classes.invoices.poinvoice.sendforapproval.PoInvSendForApprovalTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="PO Invoice Reject">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.poinvoice.reject.PoInvRejectTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="PO Invoice Reject">
+            <classes>
+                <class name="com.source.classes.invoices.poinvoice.reject.PoInvRejectTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="PO Invoice Approve">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.poinvoice.approve.PoInvApprovalTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="PO Invoice Approve">
+            <classes>
+                <class name="com.source.classes.invoices.poinvoice.approve.PoInvApprovalTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="WO Invoice Create">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.woinvoice.create.WoInvCreateTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="WO Invoice Create">
+            <classes>
+                <class name="com.source.classes.invoices.woinvoice.create.WoInvCreateTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="WO Invoice Cancel">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.woinvoice.cancel.WoInvCancelTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="WO Invoice Cancel">
+            <classes>
+                <class name="com.source.classes.invoices.woinvoice.cancel.WoInvCancelTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="WO Invoice Checklist Reject">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.woinvoice.checklist.WoInvChecklistRejectTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="WO Invoice Checklist Reject">
+            <classes>
+                <class name="com.source.classes.invoices.woinvoice.checklist.WoInvChecklistRejectTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="WO Invoice Return">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.woinvoice.invreturn.WoInvReturnTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="WO Invoice Return">
+            <classes>
+                <class name="com.source.classes.invoices.woinvoice.invreturn.WoInvReturnTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="WO Invoice Edit">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.woinvoice.edit.WoInvEditTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="WO Invoice Edit">
+            <classes>
+                <class name="com.source.classes.invoices.woinvoice.edit.WoInvEditTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="WO Invoice Checklist Accept">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.woinvoice.checklist.WoInvChecklistAcceptTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="WO Invoice Checklist Accept">
+            <classes>
+                <class name="com.source.classes.invoices.woinvoice.checklist.WoInvChecklistAcceptTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="WO Invoice Verify">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.woinvoice.verify.WoInvVerifyTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="WO Invoice Verify">
+            <classes>
+                <class name="com.source.classes.invoices.woinvoice.verify.WoInvVerifyTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="WO Invoice Hold">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.woinvoice.hold.WoInvHoldTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="WO Invoice Hold">
+            <classes>
+                <class name="com.source.classes.invoices.woinvoice.hold.WoInvHoldTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="WO Invoice Revert">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.woinvoice.revert.WoInvRevertTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="WO Invoice Revert">
+            <classes>
+                <class name="com.source.classes.invoices.woinvoice.revert.WoInvRevertTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="WO Invoice Send For Approval">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.woinvoice.sendforapproval.WoInvSendForApprovalTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="WO Invoice Send For Approval">
+            <classes>
+                <class name="com.source.classes.invoices.woinvoice.sendforapproval.WoInvSendForApprovalTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="WO Invoice Reject">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.woinvoice.reject.WoInvRejectTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="WO Invoice Reject">
+            <classes>
+                <class name="com.source.classes.invoices.woinvoice.reject.WoInvRejectTest"/>
+            </classes>
+        </test>
 
-    <!--    <test name="WO Invoice Approve">-->
-    <!--        <classes>-->
-    <!--            <class name="com.source.classes.invoices.woinvoice.approve.WoInvApprovalTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+        <test name="WO Invoice Approve">
+            <classes>
+                <class name="com.source.classes.invoices.woinvoice.approve.WoInvApprovalTest"/>
+            </classes>
+        </test>
 
 </suite>

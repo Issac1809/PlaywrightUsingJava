@@ -16,7 +16,6 @@ public class LDnReturn {
     }
 
     public static String getTitle(String title){
-        String title1 = "//*[contains(text(), '"+ title +"')]";
-        return title1;
+        return "//*[contains(text(), '"+ title +"')]";
     }
 }

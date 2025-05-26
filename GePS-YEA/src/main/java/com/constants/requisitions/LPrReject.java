@@ -3,8 +3,8 @@ package com.constants.requisitions;
 public class LPrReject {
 
     public static final String REJECT_BUTTON = "#btnReject";
-    public static final String REMARKS = ".bootbox-input";
-    public static final String YES = ".bootbox-accept";
+    public static final String REJECTED_REMARKS = ".bootbox-input";
+    public static final String SUBMIT_BUTTON = ".bootbox-accept";
 
     //TODO Constructor
     private LPrReject(){

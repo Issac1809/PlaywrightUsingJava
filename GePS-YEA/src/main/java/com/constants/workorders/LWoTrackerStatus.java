@@ -18,7 +18,6 @@ public class LWoTrackerStatus {
     }
 
     public static String getStatus(String status) {
-        String status1 = "//li[contains(text(), '" + status + "')]";
-        return status1;
+        return "//li[contains(text(), '" + status + "')]";
     }
 }
