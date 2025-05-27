@@ -73,38 +73,38 @@ public class InvApproval implements IInvApproval {
 
                 Locator bankAccountDropdownLocator = page.locator(BANK_ACCOUNT);
                 if(bankAccountDropdownLocator.count() > 0 && bankAccountDropdownLocator.isVisible()){
-                    bankAccountDropdownLocator.click();
+                    bankAccountDropdownLocator.first().click();
                 }
                 Locator bankAccountDataLocator = page.locator(getBankAccount(bankAccount));
                 if(bankAccountDataLocator.count() > 0 && bankAccountDataLocator.isVisible()){
-                    bankAccountDataLocator.click();
+                    bankAccountDataLocator.first().click();
                 }
 
                 Locator accountTypeDropdownLocator = page.locator(ACCOUNT_TYPE);
                 if(accountTypeDropdownLocator.count() > 0 && accountTypeDropdownLocator.isVisible()){
-                    accountTypeDropdownLocator.click();
+                    accountTypeDropdownLocator.first().click();
                 }
                 Locator accountTypeDataLocator = page.locator(getAccountType(accountType));
                 if(accountTypeDataLocator.count() > 0 && accountTypeDataLocator.isVisible()){
-                    accountTypeDataLocator.click();
+                    accountTypeDataLocator.first().click();
                 }
 
                 Locator documentTypeDropdownLocator = page.locator(DOCUMENT_TYPE);
                 if(documentTypeDropdownLocator.count() > 0 && documentTypeDropdownLocator.isVisible()){
-                    documentTypeDropdownLocator.click();
+                    documentTypeDropdownLocator.first().click();
                 }
                 Locator documentTypeDataLocator = page.locator(getDocumentType(documentType));
                 if(documentTypeDataLocator.count() > 0 && documentTypeDataLocator.isVisible()){
-                    documentTypeDataLocator.click();
+                    documentTypeDataLocator.first().click();
                 }
 
                 Locator generalLedgerDropdownLocator = page.locator(GENERAL_LEDGER);
                 if(generalLedgerDropdownLocator.count() > 0 && generalLedgerDropdownLocator.isVisible()){
-                    generalLedgerDropdownLocator.click();
+                    generalLedgerDropdownLocator.first().click();
                 }
                 Locator generalLedgerDataLocator = page.locator(getGeneralLedger(generalLedger));
                 if(generalLedgerDataLocator.count() > 0 && generalLedgerDataLocator.isVisible()){
-                    generalLedgerDataLocator.click();
+                    generalLedgerDataLocator.first().click();
                 }
 
                 Locator textLocator = page.locator(TEXT);
@@ -114,19 +114,19 @@ public class InvApproval implements IInvApproval {
 
                 Locator taxCodeDropdownLocator = page.locator(TAX_CODE);
                 if(taxCodeDropdownLocator.count() > 0 && taxCodeDropdownLocator.isVisible()){
-                    taxCodeDropdownLocator.click();
+                    taxCodeDropdownLocator.first().click();
                 }
                 Locator taxCodeDataLocator = page.locator(getTaxCode(taxCode));
                 if(taxCodeDataLocator.count() > 0 && taxCodeDataLocator.isVisible()){
-                    taxCodeDataLocator.click();
+                    taxCodeDataLocator.first().click();
                 }
 
                 Locator saveFinanceFieldsLocator = page.locator(SAVE_FINANCE_FIELDS);
-                saveFinanceFieldsLocator.click();
+                saveFinanceFieldsLocator.first().click();
             }
 
             Locator approveButtonLocator = page.locator(APPROVE_BUTTON);
-            approveButtonLocator.click();
+            approveButtonLocator.first().click();
 
             Locator acceptLocator = page.locator(ACCEPT_BUTTON);
 

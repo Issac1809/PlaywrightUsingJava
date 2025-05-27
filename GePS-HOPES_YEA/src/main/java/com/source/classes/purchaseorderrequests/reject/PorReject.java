@@ -14,6 +14,7 @@ import com.source.interfaces.purchaseorderrequests.IPorEdit;
 import com.utils.LoggerUtil;
 import org.apache.logging.log4j.Logger;
 import static com.constants.purchaseorderrequests.LPorApprove.ADD_APPROVERS;
+import static com.constants.purchaseorderrequests.LPorApprove.MY_APPROVALS;
 import static com.constants.purchaseorderrequests.LPorReject.*;
 import static com.utils.GetTitleUtil.getTransactionTitle;
 
@@ -53,7 +54,7 @@ public class PorReject implements IPorReject {
 
             iLogin.performLogin(approver);
 
-            Locator porNavigationBar = page.locator(POR_NAVIGATION_BAR);
+            Locator porNavigationBar = page.locator(MY_APPROVALS);
             porNavigationBar.click();
 
             String title = getTransactionTitle(type, purchaseType);

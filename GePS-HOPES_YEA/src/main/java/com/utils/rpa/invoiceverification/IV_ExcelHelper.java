@@ -37,13 +37,13 @@ public class IV_ExcelHelper {
             updateCell(sheet, 12, 3, String.valueOf(randomNumber * 2)); //TODO Payment Clearing Document Number
             updateCell(sheet, 13, 3, "12/12/2025"); //TODO Payment Clearing Document Date
 
-            String getAdvancePaymentFlag = sheet.getRow(2).getCell(6).getStringCellValue();
-            String getMilestonePaymentFlag = sheet.getRow(11).getCell(6).getStringCellValue();
+            String getAdvancePaymentFlag = sheet.getRow(1).getCell(5).getStringCellValue();
+            String getMilestonePaymentFlag = sheet.getRow(10).getCell(5).getStringCellValue();
             
             if(getAdvancePaymentFlag.equalsIgnoreCase("Yes")) {
-                updateCell(sheet, 2, 6, String.valueOf(randomNumber)); //TODO Advance Payment Number
+                updateCell(sheet, 7, 5, String.valueOf(randomNumber)); //TODO Advance Payment Number
             } else if (getMilestonePaymentFlag.equalsIgnoreCase("Yes")) {
-                updateCell(sheet, 11, 6, String.valueOf(randomNumber)); //TODO Milestone Payment Number
+                updateCell(sheet, 13, 5, String.valueOf(randomNumber)); //TODO Milestone Payment Number
             }
 //TODO Save Changes
             try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
